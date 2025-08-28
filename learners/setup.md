@@ -2,53 +2,35 @@
 title: Setup
 ---
 
-FIXME: Setup instructions live in this document. Please specify the tools and
-the data sets the Learner needs to have installed.
+## Software Setup - Python
 
-## Data Sets
+This workshop relies on an installation of python on your device. You will need to have at least
+python version 3.9 or later for the project that we will create here.
 
-<!--
-FIXME: place any data you want learners to use in `episodes/data` and then use
-       a relative link ( [data zip file](data/lesson-data.zip) ) to provide a
-       link to it, replacing the example.com link.
--->
-Download the [data zip file](https://example.com/FIXME) and unzip it to your Desktop
+If you do not already have python installed on the device you are bringing to the workshop, you can
+go to the [python.org downloads page](https://www.python.org/downloads/) and download the most
+recent version.
 
-## Software Setup
-
-::::::::::::::::::::::::::::::::::::::: discussion
-
-### Details
-
-Setup for different systems can be presented in dropdown menus via a `solution`
-tag. They will join to this discussion block, so you can give a general overview
-of the software used in this lesson here and fill out the individual operating
-systems (and potentially add more, e.g. online setup) in the solutions blocks.
-
-:::::::::::::::::::::::::::::::::::::::::::::::::::
-
-:::::::::::::::: solution
+::: tab
 
 ### Windows
 
-Use PuTTY
+You can check the version of python you have installed by opening up a new command line / terminal
+and typing `python --version`:
 
-:::::::::::::::::::::::::
+![Command line terminal showing the results of python --version](./fig/python-version.PNG){alt='Viewing the python version in the command line'}
 
-:::::::::::::::: solution
+### Mac
 
-### MacOS
-
-Use Terminal.app
-
-:::::::::::::::::::::::::
-
-
-:::::::::::::::: solution
+TBD
 
 ### Linux
 
-Use Terminal
+TBD
 
-:::::::::::::::::::::::::
+:::
 
+## Software Setup - UV
+
+We will also be working with the UV package management tool. You can follow the install
+instructions found [on the project website](https://docs.astral.sh/uv/getting-started/installation/).
