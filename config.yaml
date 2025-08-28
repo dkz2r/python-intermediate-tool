@@ -66,6 +66,7 @@ contact: 'team@carpentries.org'
 # Order of episodes in your lesson
 episodes:
 - 01-virtual-environments.md
+- 02-creating-a-module.md
 
 # Information for Learners
 learners:

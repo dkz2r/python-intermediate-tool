@@ -6,14 +6,15 @@ exercises: 0
 
 :::::::::::::::::::::::::::::::::::::: questions
 
-- How do you write a lesson using R Markdown and `{sandpaper}`?
+- What is a Virtual Environment? / Why use a Virtual Environment?
+- How do I create a Virtual Environment?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain how to use markdown with the new lesson template
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- Create a new virtual environment using `uv`
+- Push our new project to a gitlab repository.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -94,6 +95,77 @@ We can see that there are four files created by this command:
 - `pyproject.toml`: This file is used to manage project dependencies and settings.
 - `README.md`: This file contains human written information about the project.
 
+If we take a look at the `pyproject.toml` file, we can see that it contains some basic information
+about our project in a fairly readable format:
+
+```toml
+[project]
+name = "textanalysis-tool"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = []
+```
+
+The `requires-python` field may vary depending on the exact version of python you're working with.
+
+## Creating a Virtual Environment
+
+To create a virtual environment with UV, we can use the `uv venv` command. This will create a new
+virtual environment in a directory called `.venv` within our project folder.
+
+```bash
+uv venv
+```
+
+Before we activate our environment, let's quickly check the location of the current python
+executable you are using is by starting a python interpreter with the `python` keyword, and running
+the following comands:
+
+```python
+import sys
+sys.executable
+```
+
+You can type `exit` to leave the python interpreter
+
+You should see the path to the location of the python executable on your machine. Now let's activate
+our environment. The exact command will depend on your operating system, but if you look above the
+python code to the output of the `uv venv` command, you should see the correct command.
+
+```bash
+source .venv/bin/activate
+```
+
+If this command works properly, you should see that before your prompt is now some text in
+parenthesis:
+
+```
+(textanalysis-tool) D:\Documents\Projects\textanalysis-tool>
+```
+
+Let's start up the python interpreter again and check the location of our executable:
+
+```python
+import sys
+sys.executable
+```
+
+What you should now see is that the executable is located in the .venv/Scripts directory of our
+project:
+
+```
+(textanalysis-tool) D:\Documents\Projects\textanalysis-tool>python
+Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import sys
+>>> sys.executable
+'D:\\Documents\\Projects\\textanalysis-tool\\.venv\\Scripts\\python.exe'
+```
+
+Exit out of the interpreter and deactivate the virtual environment with `deactivate`.
+
 ## Git Commit and Pushing to our Repository
 
 We also want to create another file called `.gitignore`, to control which files are added to our
@@ -122,7 +194,7 @@ Next, let's set up a repository on GitHub to store our code. We'll make an entir
 repository, with the same name as our project: "textanalysis-tool".
 
 ![Creating a new repository](./fig/01-virtual-environments/new-repo.PNG){alt='The Github interface
-for creating a new repository}
+for creating a new repository'}
 
 ::: callout
 
@@ -156,41 +228,20 @@ Github interface showing the initial commit'}
 
 And with that, we're ready to start writing our tool!
 
-::::::::::::::::::::::::::::::::::::: challenge
+::: discussion
 
-## Challenge 1: Can you do it?
+## Discussion Topic
 
-What is the output of this command?
+TBD
 
-```r
-paste("This", "new", "lesson", "looks", "good")
-```
-
-:::::::::::::::::::::::: solution
-
-## Output
-
-```output
-[1] "This new lesson looks good"
-```
-
-:::::::::::::::::::::::::::::::::
-
-
-## Challenge 2: how do you nest solutions within challenge blocks?
-
-:::::::::::::::::::::::: solution
-
-You can add a line with at least three colons and a `solution` tag.
-
-:::::::::::::::::::::::::::::::::
-::::::::::::::::::::::::::::::::::::::::::::::::
+:::
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- Setting up a virtual environment is useful for managing project dependencies.
+- Using `uv` simplifies the process of creating and managing virtual environments.
+- There are several options other than `uv` for managing virtual environments, such as `venv` and
+    `conda`.
+- It's important to version control your project from the start, including a `.gitignore` file.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
