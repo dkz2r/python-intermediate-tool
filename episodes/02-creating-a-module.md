@@ -214,7 +214,6 @@ repository.
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-
 ## Challenge 1: Add a Sub Module
 
 Create a directory under `src/textanalysis_tool` called `sub_module` and add a file called
@@ -227,7 +226,7 @@ It's nice to meet you!
 
 How do you call this function from your testing script?
 
-:::::::::::::::::::::::: solution
+:::::::::::::::: solution
 
 ```python
 from textanalysis_tool.sub_module.greetings import greet
@@ -247,8 +246,10 @@ or add another `__init__.py` and include the following line:
 from textanalysis_tool.sub_module.greetings import greet
 ```
 
-:::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
 
+::::::::::::::::::::::::::::::::::::: challenge
 
 ## Challenge 2: Inter-Module imports
 
@@ -256,7 +257,7 @@ Building on the last challenge, the first line of our greeting is identical to t
 `hello` function. How can we avoid code duplication by calling the `hello` function from within our
 `greet` function?
 
-:::::::::::::::::::::::: solution
+:::::::::::::::: solution
 
 In our greetings.py file:
 
@@ -268,9 +269,29 @@ def greet(name):
     print("It's nice to meet you!")
 ```
 
-:::::::::::::::::::::::::::::::::
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
 
-:::::::::::::::::::::::::::::::::::::
+::: spoiler
+
+Why are you bothering to write out the entire module path in greetings.py? Can't you just do this:
+
+```python
+from ..my_module import hello
+
+def greet(name):
+    hello(name)
+    print("It's nice to meet you!")
+```
+
+Yes, you absolutely can! The dot-notation used in python pathing can use `..` to refer to the
+parent directory, or even `...` to refer to a grandparent directory.
+
+The reason we're not doing this here is for clarity, as reccomended in
+[PEP8](https://www.python.org/dev/peps/pep-0008/#imports).
+
+:::
+
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
