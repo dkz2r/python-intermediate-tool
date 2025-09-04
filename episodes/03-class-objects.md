@@ -58,6 +58,13 @@ Class names in reality can be anything you like, but this is the standard in the
 
 :::
 
+
+Some of this might look familiar if you think about how we define functions in Python. There's a
+`def` keyword, followed by the function name and parentheses. Inside the parentheses, we can define
+parameters, and these parameters can contain default values. We can also include type hints, for
+both parameters and return values. However all of this is indented one level, underneath the
+`class` keyword, which is followed by our class name.
+
 Note that this is just our blueprint - it doesn't refer to any specific car, just the general idea
 of a car. Also note the `__init__` method. This is a special method which is called whenever you
 "instantiate" a new object. The parameters for this function are supplied when we first create an
@@ -115,7 +122,7 @@ Lets start writing our class object in a new file: `src/textanalysis_tool/docume
 ```python
 
 class Document:
-    def __init__(self, filepath: str, title: str, author: str, id: int):
+    def __init__(self, filepath: str, title: str, author: str = "", id: int = 0):
         self.filepath = filepath
         self.title = title
         self.author = author
@@ -127,11 +134,101 @@ class Document:
             return file.read()
 
     def get_line_count(self) -> int:
-        return self._content.count('\n')
+        return len(self._content.splitlines())
 
     def get_word_occurance(self, word: str) -> int:
         return self._content.lower().count(word.lower())
 ```
+
+Our class object `Document` is a "blueprint" for a collection of methods. When we define it, we
+have to provide the class with a filepath, a title, an author, and an id. Only the filepath and the
+title are required, while the author and id are optional.
+
+The `__init__` method is called as soon as the object is created, and we can see that in addition
+to storing the parameters to their `self` counterparts, there is an additional property called
+`self._content`. This property is used to store the entire text content of the document. We obtain
+this by calling the `self._read` method, which reads the content from the specified file.
+
+::: callout
+
+## Principle of Least Astonishment (or, We're All Adults Here)
+
+Unlike other programming languages, python doesn't have the concept of "private" or "internal"
+variables and methods. Instead there is a convention which says that any variable or method that is
+intended for internal use should be prefixed with an underscore (e.g. `_content`). This is however
+just a convention - there is nothing stopping you from accessing these variables and methods from
+outside the class if you really want to.
+
+:::
+
+There are also two methods that we've defined - `get_line_count` and `get_word_occurance`. Neither
+of these will be called directly on the class itself, but rather on instances of the class that we
+create (as indicated by the use of `self` within the class methods). Note that these methods make
+use of the `self._content` property - this is a variable that is not defined within the method,
+so you may expect it to be out of scope. However the `self` keyword refers to the specific instance
+of the class itself, and so it has access to all of its properties and methods, including the
+`self._content` property.
+
+## Trying out Our Class Object
+
+Let's try out our new class object. Create a file in our "tests" directory called
+`example_file.txt` and add some text to it:
+
+```
+This is a test document. It contains words.
+It is only a test document.
+```
+
+Next, let's create another test file. Our last one was called `test_my_modue.py`, so let's call this
+`test_document.py`:
+
+```python
+from textanalysis_tool.document import Document
+
+total_tests = 3
+passed_tests = 0
+failed_tests = 0
+
+# Check that we can create a Document object
+doc = Document(filepath="tests/example_file.txt", title="Test Document")
+if doc.title == "Test Document" and doc.filepath == "tests/example_file.txt":
+    passed_tests += 1
+else:
+    failed_tests += 1
+
+# Test the methods
+if doc.get_line_count() == 2:
+    passed_tests += 1
+else:
+    failed_tests += 1
+
+if doc.get_word_occurance("test") == 2:
+    passed_tests += 1
+else:
+    failed_tests += 1
+
+print(f"Total tests: {total_tests}")
+print(f"Passed tests: {passed_tests}")
+print(f"Failed tests: {failed_tests}")
+```
+
+Now we'll run this file using our uv environment:
+
+```bash
+uv run tests/test_document.py
+```
+
+You should see the output:
+
+```
+Total tests: 3
+Passed tests: 3
+Failed tests: 0
+```
+
+Neat! We've successfully created and used a class object in our module. But certainly there's a
+better way to test this, right? In the next episode, we'll look at how to write proper unit tests
+for our class object with `pytest`.
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 

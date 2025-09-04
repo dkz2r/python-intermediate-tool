@@ -55,12 +55,12 @@ additional code to initialize the package or set up any necessary imports, as we
 
 :::
 
-Let's create a code file now, called `my_module.py` and put a simple function in it:
+Let's create a code file now, called `say_hello.py` and put a simple function in it:
 
 ```python
 
 def hello(name: str = "User"):
-   print(f"Hello, {name}!")
+   return f"Hello, {name}!"
 
 ```
 
@@ -71,7 +71,7 @@ textanalysis-tool/
 ├── src/
 │   └── textanalysis_tool/
 │       ├── __init__.py
-│       └── my_module.py
+│       └── say_hello.py
 ├── .gitignore
 ├── .python-version
 ├── pyproject.toml
@@ -83,14 +83,19 @@ textanalysis-tool/
 It's all well and good to write some code in here, but how can we actually use it? Let's create a
 python script to test our module.
 
-Let's create a directory called "tests", and start a new file called `test_my_module.py` in it.
+Let's create a directory called "tests", and start a new file called `test_say_hello.py` in it.
 
 Add the following code to it:
 
 ```python
 import textanalysis_tool
 
-textanalysis_tool.my_module.hello("My Name")
+result = textanalysis_tool.say_hello.hello("My Name")
+
+if result == "Hello, My Name!":
+    print("Test passed!")
+else:
+    print("Test failed!")
 ```
 
 ::: callout
@@ -103,15 +108,15 @@ we'll see how useful this is.
 :::
 
 Let's run the script from our command line. If you're in the root directory of the project, your
-command will look something like `uv run tests/test_my_module.py`.
+command will look something like `uv run tests/test_say_hello.py`.
 
 Aaaand... It doesn't work!
 
 ```python
-D:\Documents\Projects\textanalysis-tool>uv run tests/test_my_module.py
+D:\Documents\Projects\textanalysis-tool>uv run tests/test_say_hello.py
 Traceback (most recent call last):
-  File "D:\Documents\Projects\textanalysis-tool\tests\test_my_module.py", line 1, in <module>
-    from textanalysis_tool.my_module import hello
+  File "D:\Documents\Projects\textanalysis-tool\tests\test_say_hello.py", line 1, in <module>
+    from textanalysis_tool.say_hello import hello
 ModuleNotFoundError: No module named 'textanalysis_tool'
 ```
 
@@ -140,9 +145,14 @@ the path:
 import sys
 sys.path.insert(0, "./src")
 
-from textanalysis_tool.my_module import hello
+from textanalysis_tool.say_hello import hello
 
-hello("My Name")
+result = textanalysis_tool.say_hello.hello("My Name")
+
+if result == "Hello, My Name!":
+    print("Test passed!")
+else:
+    print("Test failed!")
 ```
 
 This time it works! And if we modify the `hello` function to print out something slightly
@@ -170,9 +180,14 @@ or module. We can also modify our import to make the code a little neater:
 import sys
 sys.path.insert(0, "./src")
 
-from textanalysis_tool import my_module
+from textanalysis_tool import say_hello
 
-my_module.hello("My Name")
+result = say_hello.hello("My Name")
+
+if result == "Hello, My Name!":
+    print("Test passed!")
+else:
+    print("Test failed!")
 ```
 
 or even better:
@@ -183,7 +198,12 @@ sys.path.insert(0, "./src")
 
 from textanalysis_tool.my_module import hello
 
-hello("My Name")
+result = hello("My Name")
+
+if result == "Hello, My Name!":
+    print("Test passed!")
+else:
+    print("Test failed!")
 ```
 
 ## The __init__.py File
@@ -204,7 +224,12 @@ now leave out the `.my_module` part:
 ```python
 from textanalysis_tool import hello
 
-hello("My Name")
+result = hello("My Name")
+
+if result == "Hello, My Name!":
+    print("Test passed!")
+else:
+    print("Test failed!")
 ```
 
 ## Git Add / Commit
@@ -216,8 +241,8 @@ repository.
 
 ## Challenge 1: Add a Sub Module
 
-Create a directory under `src/textanalysis_tool` called `sub_module` and add a file called
-`greetings.py` with a function called greet that prints out the following:
+Create a directory under `src/textanalysis_tool` called `greetings` and add a file called
+`greet.py` with a function called greet that prints out the following:
 
 ```
 Hello {User}!
@@ -229,7 +254,7 @@ How do you call this function from your testing script?
 :::::::::::::::: solution
 
 ```python
-from textanalysis_tool.sub_module.greetings import greet
+from textanalysis_tool.say_hello.greetings import greet
 
 greet("My Name")
 ```
@@ -237,13 +262,13 @@ greet("My Name")
 You could also include this line in our existing `__init__.py` file:
 
 ```python
-from textanalysis_tool.sub_module.greetings import greet
+from textanalysis_tool.say_hello.greetings import greet
 ```
 
 or add another `__init__.py` and include the following line:
 
 ```python
-from textanalysis_tool.sub_module.greetings import greet
+from textanalysis_tool.say_hello.greetings import greet
 ```
 
 :::::::::::::::::::::::::
@@ -265,8 +290,7 @@ In our greetings.py file:
 from textanalysis_tool import hello
 
 def greet(name):
-    hello(name)
-    print("It's nice to meet you!")
+    return hello(name) + "\nIt's nice to meet you!"
 ```
 
 :::::::::::::::::::::::::
