@@ -136,7 +136,7 @@ class Document:
     def get_line_count(self) -> int:
         return len(self._content.splitlines())
 
-    def get_word_occurance(self, word: str) -> int:
+    def get_word_occurrence(self, word: str) -> int:
         return self._content.lower().count(word.lower())
 ```
 
@@ -161,7 +161,7 @@ outside the class if you really want to.
 
 :::
 
-There are also two methods that we've defined - `get_line_count` and `get_word_occurance`. Neither
+There are also two methods that we've defined - `get_line_count` and `get_word_occurrence`. Neither
 of these will be called directly on the class itself, but rather on instances of the class that we
 create (as indicated by the use of `self` within the class methods). Note that these methods make
 use of the `self._content` property - this is a variable that is not defined within the method,
@@ -202,7 +202,7 @@ if doc.get_line_count() == 2:
 else:
     failed_tests += 1
 
-if doc.get_word_occurance("test") == 2:
+if doc.get_word_occurrence("test") == 2:
     passed_tests += 1
 else:
     failed_tests += 1
@@ -225,6 +225,235 @@ Total tests: 3
 Passed tests: 3
 Failed tests: 0
 ```
+
+
+
+
+
+# This should be a challenge
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 1: Testing Out Our Class on Real Data
+
+Let's download a real text file from Project Gutenberg and see how our class object handles it.
+You can pick any file you like, or you can use the same one we looked at earlier:
+[Meditations, by Marcus Aurelius](https://www.gutenberg.org/cache/epub/2680/pg2680.txt).
+
+Modify your `test_document.py` file to create a new Document object using the real text file,
+and then test out the `get_line_count` and `get_word_occurrence` methods on it. What do you get?
+What issues might there be when we start using this class on our actual data?
+
+How can we improve our class to handle these issues?
+
+::: hint
+
+The Metadata at the start of the document is always gated by a line that says
+`*** START OF THE PROJECT GUTENBERG EBOOK {the title of the book} ***` and at the end of the
+document with the line `*** END OF THE PROJECT GUTENBERG EBOOK {the title of the book} ***`.
+
+:::
+
+::: hint
+
+There is a python module called `re` that allows us to work with regular expressions. This can be
+used to match specific patterns in text, or for extracting specific parts of a string. You can
+use the following regex pattern to match the content between the start and end markers:
+
+```python
+pattern = r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"
+```
+
+:::
+
+:::::::::::::::: solution
+
+The Project Gutenberg text files have a lot of metadata at the start and end of the file, which
+will affect the line count and word occurrence counts. We might want to modify our `_read` method
+to strip out this metadata before storing the content in `self._content`.
+
+One possible solution would look like this:
+
+```python
+
+import re
+
+class Document:
+
+    CONTENT_PATTERN = r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"
+
+    def __init__(self, filepath: str, title: str, author: str = "", id: int = 0):
+        self.filepath = filepath
+        self.title = title
+        self.author = author
+        self.id = id
+        raw_text = self._read(self.filepath)
+
+        if not raw_text:
+            raise ValueError(f"File {self.filepath} contains no content.")
+
+        self._content = self._get_content(raw_text)
+
+
+    def _get_content(self, content: str) -> str:
+        match = re.search(self.CONTENT_PATTERN, content, re.DOTALL)
+        if match:
+            return match.group(1).strip()
+        raise ValueError(f"File {self.filepath} is not a valid Project Gutenberg Text file.")
+
+    def _read(self, file_path: str) -> None:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            return file.read()
+
+    def get_line_count(self) -> int:
+        return len(self._content.splitlines())
+
+
+    def get_word_occurrence(self, word: str) -> int:
+        return self._content.lower().count(word.lower())
+
+```
+
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 2: Extracting the Metadata
+
+From the previous challenge, we saw that the Project Gutenberg text files have a lot of metadata
+at the start and end of the file. This metadata includes the title, author, release date, and other
+information about the book which we currently are adding to our file using parameters.
+
+Instead of passing this information in as parameters, can you modify the class so that it extracts
+the title, author and id from the metadata in the text file itself?
+
+::: hint
+
+As before, we can use the `re` module to extract this information. The title and author are
+contained in lines that start with `Title:` and `Author:` respectively. The ID can be found in the
+line that starts with `Release Date:`. You can use the following regex patterns to match these
+lines:
+
+```python
+TITLE_PATTERN = r"^Title:\s*(.*?)\s*$"
+AUTHOR_PATTERN = r"^Author:\s*(.*?)\s*$"
+ID_PATTERN = r"^Release date:\s*.*?\[eBook #(\d+)\]"
+```
+
+:::
+
+:::::::::::::::: solution
+
+There's any number of ways to do this, but one possible solution would look like this:
+
+```python
+
+import re
+
+class Document:
+
+    TITLE_PATTERN = r"^Title:\s*(.*?)\s*$"
+    AUTHOR_PATTERN = r"^Author:\s*(.*?)\s*$"
+    ID_PATTERN = r"^Release date:\s*.*?\[eBook #(\d+)\]"
+    CONTENT_PATTERN = r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"
+
+    def __init__(self, filepath: str):
+        self.filepath = filepath
+        raw_text = self._read(self.filepath)
+
+        if not raw_text:
+            raise ValueError(f"File {self.filepath} contains no content.")
+
+        self.title = self._get_metadata(raw_text, self.TITLE_PATTERN)
+        self.author = self._get_metadata(raw_text, self.AUTHOR_PATTERN)
+        extracted_id = self._get_metadata(raw_text, self.ID_PATTERN)
+        self.id = int(extracted_id) if extracted_id else None
+
+        self._content = self._get_content(raw_text)
+
+
+    def _get_content(self, content: str) -> str:
+        match = re.search(self.CONTENT_PATTERN, content, re.DOTALL)
+        if match:
+            return match.group(1).strip()
+        raise ValueError(f"File {self.filepath} is not a valid Project Gutenberg Text file.")
+
+    def _get_metadata(self, content: str, pattern: str) -> str | None:
+        match = re.search(pattern, content, re.MULTILINE)
+        if match:
+            return match.group(1).strip()
+        return None
+
+    def _read(self, file_path: str) -> None:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            return file.read()
+
+    def get_line_count(self) -> int:
+        return len(self._content.splitlines())
+
+
+    def get_word_occurrence(self, word: str) -> int:
+        return self._content.lower().count(word.lower())
+
+```
+
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 3: Properties
+
+In our current implementation, the `title`, `author`, and `id` attributes are publicly accessible
+from outside the class, which means that they can be modified directly. There are instances where
+it might be preferable for the attributes to be read-only, so that they can only be set when the
+object is created, and not modified afterwards, or to allow us to create variables that are based
+or calculated from other variables and should not be set directly.
+
+We can do this with the `@property` decorator. This is a special decorator that allows us to define
+"getter" and "setter" methods for a property. It works much the same as a normal method, but it is
+accessed like an attribute.
+
+We can convert our `get_line_count` method to a property like this:
+
+```python
+    ...
+
+    @property
+    def line_count(self) -> int:
+        return len(self._content.splitlines())
+
+    ...
+```
+
+The links to the project gutenberg files are based on the id, which we extracted from the metadata.
+Create a new property called `gutenberg_url` that returns the url for the document based on the id.
+
+::: hint
+
+The url for a Project Gutenberg text file is of the form:
+`https://www.gutenberg.org/cache/epub/<id>/pg<id>.txt`
+
+:::
+
+:::::::::::::::: solution
+
+There's any number of ways to do this, but one possible solution would look like this:
+
+```python
+
+    @property
+    def gutenberg_url(self) -> str | None:
+        if self.id:
+            return f"https://www.gutenberg.org/cache/epub/{self.id}/pg{self.id}.txt"
+        return None
+
+```
+
+:::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::
 
 Neat! We've successfully created and used a class object in our module. But certainly there's a
 better way to test this, right? In the next episode, we'll look at how to write proper unit tests
