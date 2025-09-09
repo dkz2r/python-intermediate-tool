@@ -66,6 +66,77 @@ and `PlainTextDocument`, that both inherit from the `Document` class. This will 
 all of the common functionality in the `Document` class, but to add any additional functionality
 specific to each document type.
 
+Most of what we've written so far is specific to reading and parsing data out of the plain text
+files, so almost all of the code from `Document` can be copied. We'll leave the functions for
+`gutenberg_url`, `get_line_count`, and `get_word_occurrence`.
+
+In addition, we'll need an `__init__` in our `Document` class. At the moment, all it does is save
+the filename in the `filename` property, but we might expand this in the future. We'll also need a
+reference to the `super().__init__()` in our `PlainTextDocument`. At the moment, our classes look
+like this:
+
+```python
+class Document:
+    @property
+    def gutenberg_url(self) -> str | None:
+        if self.id:
+            return f"https://www.gutenberg.org/cache/epub/{self.id}/pg{self.id}.txt"
+        return None
+
+    def __init__(self, filepath: str):
+        self.filepath = filepath
+
+    def get_line_count(self) -> int:
+        return len(self._content.splitlines())
+
+    def get_word_occurrence(self, word: str) -> int:
+        return self._content.lower().count(word.lower())
+```
+
+```python
+import re
+
+from textanalysis_tool.document import Document
+
+class PlainTextDocument(Document):
+    TITLE_PATTERN = r"^Title:\s*(.*?)\s*$"
+    AUTHOR_PATTERN = r"^Author:\s*(.*?)\s*$"
+    ID_PATTERN = r"^Release date:\s*.*?\[eBook #(\d+)\]"
+    CONTENT_PATTERN = r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"
+
+    def __init__(self, filepath: str):
+        super().__init__(filepath=filepath)
+        raw_text = self._read(self.filepath)
+
+        if not raw_text:
+            raise ValueError(f"File {self.filepath} contains no content.")
+
+        if isinstance(raw_text, bytes):
+            raise ValueError(f"File {self.filepath} is not a valid text file.")
+
+        self.title = self._get_metadata(raw_text, self.TITLE_PATTERN)
+        self.author = self._get_metadata(raw_text, self.AUTHOR_PATTERN)
+        extracted_id = self._get_metadata(raw_text, self.ID_PATTERN)
+        self.id = int(extracted_id) if extracted_id else None
+
+        self._content = self._get_content(raw_text)
+
+    def _get_content(self, content: str) -> str:
+        match = re.search(self.CONTENT_PATTERN, content, re.DOTALL)
+        if match:
+            return match.group(1).strip()
+        raise ValueError(f"File {self.filepath} is not a valid Project Gutenberg Text file.")
+
+    def _get_metadata(self, content: str, pattern: str) -> str | None:
+        match = re.search(pattern, content, re.MULTILINE)
+        if match:
+            return match.group(1).strip()
+        return None
+
+    def _read(self, file_path: str) -> None:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            return file.read()
+```
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints

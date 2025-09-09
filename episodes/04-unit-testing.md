@@ -289,6 +289,7 @@ from textanalysis_tool.document import Document
 
 @pytest.fixture
 def doc():
+    Document.CONTENT_PATTERN = r"(.*)"
     return Document(filepath="tests/example_file.txt", title="Test Document")
 
 def test_create_document(doc):
@@ -301,6 +302,15 @@ def test_document_word_count(doc):
 def test_document_word_occurrence(doc):
     assert doc.get_word_occurrence("test") == 2
 ```
+
+::: callout
+
+Because our Documents are validated by searching for a starting and ending regex pattern, our test
+files will not have that. We could ensure that our test files would, or we can just temporiarily
+alter the search pattern for the duration of the test. `CONTENT_PATTERN` is a class level variable,
+so we need to modify it before the instance is created.
+
+:::
 
 Let's run our tests again. Nothing changed in the output, but our code is now cleaner and easier
 to maintain.
