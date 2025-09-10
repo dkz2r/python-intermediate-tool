@@ -56,7 +56,7 @@ method of the ConvertibleCar class also has a call to `super().__init__()`. The 
 is a way to refer specifically to the parent class, in this case, the Car class. This allows us to
 call the `__init__` method of the Car class, which sets up all of the properties that a Car has.
 
-### Appling Inheritance to Our Document Class
+### Applying Inheritance to Our Document Class
 
 For our `Document` class, we have a few different types of documents available from the
 Project Gutenberg website. We are currently using plain text files, but there are also HTML files
@@ -138,6 +138,19 @@ class PlainTextDocument(Document):
             return file.read()
 ```
 
+We'll also have another class for reading HTML files. This will be similar to the
+´´PlainTextDocument´´ class, but it will use the ´BeautifulSoup´ library to parse the HTML file and
+extract the content and metadata. Rather than type out the entire class now, you can either copy
+and paste the code below into a new file called ´html_document.py´, or you can download the file
+from the [Workshop Resources]().
+
+::: spoiler
+
+´´´python
+
+´´´
+
+:::
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
