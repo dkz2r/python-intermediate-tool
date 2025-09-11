@@ -142,7 +142,7 @@ We'll also have another class for reading HTML files. This will be similar to th
 ´´PlainTextDocument´´ class, but it will use the ´BeautifulSoup´ library to parse the HTML file and
 extract the content and metadata. Rather than type out the entire class now, you can either copy
 and paste the code below into a new file called ´html_document.py´, or you can download the file
-from the [Workshop Resources]().
+from the [Workshop Resources TODO]().
 
 ::: spoiler
 
@@ -197,6 +197,23 @@ class HTMLDocument(Document):
 ´´´
 
 :::
+
+Now let's try testing out our classes. We already have the `pg2680.txt` file in our ´scratch´
+folder, now let's download the HTML version of the same book from Project Gutenberg. You can
+download it from [this link](https://www.gutenberg.org/cache/epub/55317/pg55317-h.zip). (Note
+that the file is zipped, as it also contains images. We won't be using the images, but you'll need
+to unzip the file to get to the HTML file.) Once you have the HTML file, place it in the ´scratch´
+folder alongside the ´pg2680.txt´ file.
+
+You can either copy and paste the code below into a new file called `test_inheritance.py`, or you
+can download the file from the [Workshop Resources TODO]().
+
+```python
+import sys
+sys.path.insert(0, "./src")
+
+
+´´´
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 

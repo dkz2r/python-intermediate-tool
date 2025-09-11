@@ -168,18 +168,30 @@ Open up `test_document.py` and replace the contents with the following:
 from textanalysis_tool.document import Document
 
 def test_create_document():
-    doc = Document(filepath="tests/example_file.txt", title="Test Document")
-    assert doc.title == "Test Document"
+    Document.CONTENT_PATTERN = r"(.*)"
+    doc = Document(filepath="tests/example_file.txt")
     assert doc.filepath == "tests/example_file.txt"
 
+
 def test_document_word_count():
-    doc = Document(filepath="tests/example_file.txt", title="Test Document")
+    Document.CONTENT_PATTERN = r"(.*)"
+    doc = Document(filepath="tests/example_file.txt")
     assert doc.get_line_count() == 2
 
+
 def test_document_word_occurrence():
-    doc = Document(filepath="tests/example_file.txt", title="Test Document")
+    Document.CONTENT_PATTERN = r"(.*)"
+    doc = Document(filepath="tests/example_file.txt")
     assert doc.get_word_occurrence("test") == 2
 ```
+
+::: callout
+
+Our example file doesn't exactly look like a Project Gutenberg text file, so we need to change the
+`CONTENT_PATTERN` to match everything. This is a class level variable, so we can change it on the
+class itself, rather than on the instance.
+
+:::
 
 Let's run our tests again:
 
@@ -233,9 +245,17 @@ test to say that if the user provides an empty string, we want to raise a `Value
 ```python
 import pytest
 
+from textanalysis_tool.say_hello import hello
+
+
+def test_hello():
+    assert hello("My Name") == "Hello, My Name!"
+
+
 def test_hello_empty_string():
     with pytest.raises(ValueError):
         hello("")
+
 ```
 
 Run the tests again:
@@ -275,7 +295,7 @@ Then, add the following code below the imports:
 ```python
 @pytest.fixture
 def doc():
-    return Document(filepath="tests/example_file.txt", title="Test Document")
+    return Document(filepath="tests/example_file.txt")
 ```
 
 Now, we can use this fixture in our tests. Update the test functions to accept a parameter called
@@ -290,7 +310,7 @@ from textanalysis_tool.document import Document
 @pytest.fixture
 def doc():
     Document.CONTENT_PATTERN = r"(.*)"
-    return Document(filepath="tests/example_file.txt", title="Test Document")
+    return Document(filepath="tests/example_file.txt")
 
 def test_create_document(doc):
     assert doc.title == "Test Document"
@@ -306,7 +326,7 @@ def test_document_word_occurrence(doc):
 ::: callout
 
 Because our Documents are validated by searching for a starting and ending regex pattern, our test
-files will not have that. We could ensure that our test files would, or we can just temporiarily
+files will not have that. We could ensure that our test files would, or we can just temporarily
 alter the search pattern for the duration of the test. `CONTENT_PATTERN` is a class level variable,
 so we need to modify it before the instance is created.
 
@@ -376,7 +396,7 @@ def test_empty_file(monkeypatch):
     monkeypatch.setattr("builtins.open", mock)
 
     with pytest.raises(ValueError):
-        Document(filepath="empty_file.txt", title="Empty File")
+        Document(filepath="empty_file.txt")
 ```
 
 ::: callout
@@ -385,7 +405,7 @@ Because we are monkeypatching the `open` function, we don't actually need to hav
 `empty_file.txt` in our tests directory. The `open` function will be replaced with our mock
 function that returns an empty string. We are providing a file name here to be consistent with the
 `Document` class initialization, and we are using the name to act as additional information for
-later devlopers to clarify the intent of the test.
+later developers to clarify the intent of the test.
 
 :::
 

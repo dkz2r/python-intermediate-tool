@@ -60,7 +60,7 @@ Let's create a code file now, called `say_hello.py` and put a simple function in
 ```python
 
 def hello(name: str = "User"):
-   return f"Hello, {name}!"
+    return f"Hello, {name}!"
 
 ```
 
@@ -147,7 +147,7 @@ sys.path.insert(0, "./src")
 
 from textanalysis_tool.say_hello import hello
 
-result = textanalysis_tool.say_hello.hello("My Name")
+result = hello("My Name")
 
 if result == "Hello, My Name!":
     print("Test passed!")

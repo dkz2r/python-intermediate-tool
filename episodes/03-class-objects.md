@@ -183,6 +183,10 @@ Next, let's create another test file. Our last one was called `test_my_modue.py`
 `test_document.py`:
 
 ```python
+import sys
+
+sys.path.insert(0, "./src")
+
 from textanalysis_tool.document import Document
 
 total_tests = 3
@@ -226,11 +230,6 @@ Passed tests: 3
 Failed tests: 0
 ```
 
-
-
-
-
-# This should be a challenge
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
