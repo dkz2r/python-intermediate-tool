@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/01-virtual-environments.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/02-creating-a-module.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/03-class-objects.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/04-unit-testing.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/05-extending-classes.html</loc>
+  </url>
+  <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/404.html</loc>
   </url>
   <url>
@@ -17,6 +32,21 @@
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/index.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/01-virtual-environments.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/02-creating-a-module.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/03-class-objects.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/04-unit-testing.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/05-extending-classes.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/404.html</loc>

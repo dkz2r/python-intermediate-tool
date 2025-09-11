@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<title>Lesson Title: All in One View</title>
+<title>Intermediate Python - Concepts, Tools and Packaging: All in One View</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="../assets/themetoggle.js"></script><link rel="stylesheet" type="text/css" href="../assets/styles.css">
 <script src="../assets/scripts.js" type="text/javascript"></script><!-- mathjax --><script type="text/x-mathjax-config">
@@ -94,7 +94,7 @@
       <img class="small-logo" alt="Carpentries Incubator" src="../assets/images/incubator-logo-sm.svg">
 </div>
     <div class="lesson-title-md">
-      Lesson Title
+      Intermediate Python - Concepts, Tools and Packaging
     </div>
     <div class="search-icon-sm">
       <!-- TODO: do not show until we have search
@@ -105,7 +105,7 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 <li class="nav-item">
           <span class="lesson-title">
-            Lesson Title
+            Intermediate Python - Concepts, Tools and Packaging
           </span>
         </li>
         <li class="nav-item">
@@ -142,7 +142,7 @@
   </div>
 <!--/div.container-fluid -->
 </nav><div class="col-md-12 mobile-title">
-  Lesson Title
+  Intermediate Python - Concepts, Tools and Packaging
 </div>
 
 <aside class="col-md-12 lesson-progress"><div style="width: %" class="percentage">
@@ -244,7 +244,55 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="introduction.html">1. introduction</a>
+        <a href="01-virtual-environments.html">1. Virtual Environments</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush3">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading3">
+        <a href="02-creating-a-module.html">2. Creating A Module</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush4">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading4">
+        <a href="03-class-objects.html">3. Class Objects</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush5">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading5">
+        <a href="04-unit-testing.html">4. Unit Testing</a>
+    </div>
+<!--/div.accordion-header-->
+
+  </div>
+<!--/div.accordion-item-->
+</div>
+<!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush6">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading6">
+        <a href="05-extending-classes.html">5. 05-extending-classes</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -308,11 +356,309 @@
     <main id="main-content" class="main-content"><div class="container lesson-content">
         
         
-<section id="aio-introduction"><p>Content from <a href="introduction.html">introduction</a></p>
+<section id="aio-01-virtual-environments"><p>Content from <a href="01-virtual-environments.html">Virtual Environments</a></p>
 <hr>
-<p>Last updated on 2025-09-09 |
+<p>Last updated on 2025-09-11 |
 
-        <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/introduction.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+        <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/01-virtual-environments.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 0 minutes</p>
+<div class="text-end">
+          <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
+        </div>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>What is a Virtual Environment? / Why use a Virtual Environment?</li>
+<li>How do I create a Virtual Environment?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Create a new virtual environment using <code>uv</code>
+</li>
+<li>Push our new project to a gitlab repository.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="what-is-a-virtual-environment">What is a Virtual Environment?<a class="anchor" aria-label="anchor" href="#what-is-a-virtual-environment"></a>
+</h2>
+<hr class="half-width">
+<p>A virtual environment is an isolated workspace where you can install
+python packages and run python code without worrying about affecting the
+tools, executables, and packages installed in either the global python
+enviroment or in other projects.</p>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>What is the difference between a “package manager” and a “virtual
+environment”?</p>
+<p>A package manager helps automate the process of installing,
+upgrading, and removing software packages. Each package is usually built
+on top of several other packages, and rely on the methods and objects
+provided. However as projects are upgraded and changed over time, the
+available methods and objects can change. A package manager solves the
+complex “dependncy web” created by the packages you would like to
+install and finds the version of all required packages that meets your
+needs.</p>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="why-would-i-use-a-virtual-environment">Why Would I use a Virtual Environment?<a class="anchor" aria-label="anchor" href="#why-would-i-use-a-virtual-environment"></a>
+</h2>
+<hr class="half-width">
+<p>If you are only ever working on your own projects, or on scripts for
+a single project, it’s absoultely fine to never worry about virtual
+environments. But as soon as you start creating new projects working on
+code written by other people, it becomes incredibly important to know
+that the code that you are running is running on the exact same versions
+of libraries.</p>
+<p>In the past, it was notoriously difficult to manage envrironments
+with python:</p>
+<p><a href="https://xkcd.com/1987/" class="external-link">XKCD comic</a></p>
+<p>There have been a number of attempts to create a “one size fits all”
+approach to virtual environments and dependency management:</p>
+<ul>
+<li>venv</li>
+<li>virtualenv</li>
+<li>conda</li>
+<li>pipenv</li>
+<li>pyenv</li>
+<li>poetry</li>
+</ul>
+<p>We’re going to use <a href="https://docs.astral.sh/uv/" class="external-link">uv</a> for
+the purposes of this workwhop. UV is a another tool that promises to
+slot in to the needs of environment and dependency management, however
+there are a few key elements that set it apart:</p>
+<ol style="list-style-type: decimal">
+<li>It is written in Rust, which gives it a significant speed
+improvement over pip and conda.</li>
+<li>It works with the <code>pyproject.toml</code> and
+<code>uv.lock</code> files, which allow for human and computer readable
+project files.</li>
+<li>It can install and manage it’s own python versions.</li>
+<li>It works as a drop-in replacement for pip, eliminating the need to
+learn new commands.</li>
+</ol></section><section><h2 class="section-heading" id="creating-a-project-with-uv">Creating a project with UV<a class="anchor" aria-label="anchor" href="#creating-a-project-with-uv"></a>
+</h2>
+<hr class="half-width">
+<p>Before the workshop, you should have had a chance to install and
+check that your python and uv executables were working. If you have not
+yet had a chance to do this, please refer to the <a href="">setup</a>
+page for this workshop.</p>
+<p>We’re going to start with a totally blank project, so let’s create a
+directory called “textanalysis-tool”. Navigate to this directory in your
+command line. Let’s quickly make sure we have UV installed and working
+by typing <code>uv --version</code>. You should see something like the
+following (the exact version number might be different):</p>
+<figure><img src=".././fig/01-virtual-environments/uv_version.PNG" alt='Checking that uv is installed by running "uv --version"' class="figure mx-auto d-block"><div class="figcaption">Checking that UV is installed</div>
+</figure><p>We can start off with a new project with UV by running the command
+<code>uv init</code>. This will automatically create a couple files for
+us:</p>
+<figure><img src=".././fig/01-virtual-environments/uv_init.PNG" alt='Files created by running "uv init"' class="figure mx-auto d-block"><div class="figcaption">Files created by “uv init”</div>
+</figure><p>We can see that there are four files created by this command:</p>
+<ul>
+<li>
+<code>.python-version</code>: This file is used to optionally
+specify the Python version for the project.</li>
+<li>
+<code>main.py</code>: This is the main Python script for the
+project.</li>
+<li>
+<code>pyproject.toml</code>: This file is used to manage project
+dependencies and settings.</li>
+<li>
+<code>README.md</code>: This file contains human written information
+about the project.</li>
+</ul>
+<p>If we take a look at the <code>pyproject.toml</code> file, we can see
+that it contains some basic information about our project in a fairly
+readable format:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="kw">[project]</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"textanalysis-tool"</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.1.0"</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"Add your description here"</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.md"</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="dt">requires-python</span> <span class="op">=</span> <span class="st">"&gt;=3.13"</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="dt">dependencies</span> <span class="op">=</span> <span class="op">[]</span></span></code></pre>
+</div>
+<p>The <code>requires-python</code> field may vary depending on the
+exact version of python you’re working with.</p>
+</section><section><h2 class="section-heading" id="creating-a-virtual-environment">Creating a Virtual Environment<a class="anchor" aria-label="anchor" href="#creating-a-virtual-environment"></a>
+</h2>
+<hr class="half-width">
+<p>To create a virtual environment with UV, we can use the
+<code>uv venv</code> command. This will create a new virtual environment
+in a directory called <code>.venv</code> within our project folder.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="ex">uv</span> venv</span></code></pre>
+</div>
+<p>Before we activate our environment, let’s quickly check the location
+of the current python executable you are using is by starting a python
+interpreter with the <code>python</code> keyword, and running the
+following comands:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>sys.executable</span></code></pre>
+</div>
+<p>You can type <code>exit</code> to leave the python interpreter</p>
+<p>You should see the path to the location of the python executable on
+your machine. Now let’s activate our environment. The exact command will
+depend on your operating system, but if you look above the python code
+to the output of the <code>uv venv</code> command, you should see the
+correct command.</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="bu">source</span> .venv/bin/activate</span></code></pre>
+</div>
+<p>If this command works properly, you should see that before your
+prompt is now some text in parenthesis:</p>
+<pre><code>(textanalysis-tool) D:\Documents\Projects\textanalysis-tool&gt;</code></pre>
+<p>Let’s start up the python interpreter again and check the location of
+our executable:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>sys.executable</span></code></pre>
+</div>
+<p>What you should now see is that the executable is located in the
+.venv/Scripts directory of our project:</p>
+<pre><code>(textanalysis-tool) D:\Documents\Projects\textanalysis-tool&gt;python
+Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.executable
+'D:\\Documents\\Projects\\textanalysis-tool\\.venv\\Scripts\\python.exe'</code></pre>
+<p>Exit out of the interpreter and deactivate the virtual environment
+with <code>deactivate</code>.</p>
+</section><section><h2 class="section-heading" id="git-commit-and-pushing-to-our-repository">Git Commit and Pushing to our Repository<a class="anchor" aria-label="anchor" href="#git-commit-and-pushing-to-our-repository"></a>
+</h2>
+<hr class="half-width">
+<p>We also want to create another file called <code>.gitignore</code>,
+to control which files are added to our git repository. It’s generally a
+good idea to create this file early on, and update it whenever you
+notice files or folders you want to explicitly prevent from being added
+to the repository.</p>
+<p>We can create a gitignore from the command line with
+<code>type nul &gt; .gitignore</code> (Windows), or
+<code>touch .gitignore</code> (Mac/Linux). There are several pre-written
+gitignores that we can optionally use, but for this project we’ll
+maintain our own. Open up the file and add the following lines to
+it:</p>
+<pre><code>__pycache__/
+dist/
+*.egg-info/</code></pre>
+<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
+  <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
+</button>
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div class="accordion-body">
+<p>A commonly used gitignore is the Python.gitignore maintained by
+GitHub. You can find it <a href="https://github.com/github/gitignore/blob/main/Python.gitignore" class="external-link">here</a>.</p>
+</div>
+</div>
+</div>
+</div>
+<p>Next, let’s set up a repository on GitHub to store our code. We’ll
+make an entirely blank repository, with the same name as our project:
+“textanalysis-tool”.</p>
+<figure><img src=".././fig/01-virtual-environments/new-repo.PNG" alt="The Github interface for creating a new repository" class="figure mx-auto d-block"><div class="figcaption">Creating a new repository</div>
+</figure><div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>We’re creating the files on our local machine first, then the remote
+repository. There’s no reason you can’t go the other way around,
+creating the remote repository then cloning it to your local
+machine.</p>
+</div>
+</div>
+</div>
+<p>First, we’ll initialize a git repository locally, making an intial
+commit with the files that uv generated:</p>
+<pre><code>git init
+git add .gitignore .python-version README.md main.py pyproject.toml
+git commit -m "Initial commit"</code></pre>
+<p>Then we’ll follow the directions for creating a new repository:</p>
+<pre><code>git remote add origin https://github.com/{username}/textanalysis-tool.git
+git branch -M main
+git push -u origin main</code></pre>
+<p>If all goes well, we’ll see our code appear in the new
+repository:</p>
+<figure><img src=".././fig/01-virtual-environments/first-commit.PNG" alt="The Github interface showing the initial commit" class="figure mx-auto d-block"><div class="figcaption">New repository with initial commit</div>
+</figure><p>And with that, we’re ready to start writing our tool!</p>
+<div id="discussion-topic" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div id="discussion-topic" class="callout-inner">
+<h3 class="callout-title">Discussion Topic</h3>
+<div class="callout-content">
+<p>TBD</p>
+</div>
+</div>
+</div>
+<div id="keypoints1" class="callout keypoints">
+<div class="callout-square">
+<i class="callout-icon" data-feather="key"></i>
+</div>
+<span class="callout-header">Key Points</span>
+<div class="callout-inner">
+<div class="callout-content">
+<ul>
+<li>Setting up a virtual environment is useful for managing project
+dependencies.</li>
+<li>Using <code>uv</code> simplifies the process of creating and
+managing virtual environments.</li>
+<li>There are several options other than <code>uv</code> for managing
+virtual environments, such as <code>venv</code> and
+<code>conda</code>.</li>
+<li>It’s important to version control your project from the start,
+including a <code>.gitignore</code> file.</li>
+</ul>
+</div>
+</div>
+</div>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</section></section><section id="aio-02-creating-a-module"><p>Content from <a href="02-creating-a-module.html">Creating A Module</a></p>
+<hr>
+<p>Last updated on 2025-09-11 |
+
+        <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/02-creating-a-module.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 12 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
@@ -345,86 +691,320 @@ challenge blocks</li>
 </div>
 </div>
 </div>
-<section><h2 class="section-heading" id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+<section><h2 class="section-heading" id="project-organization">Project Organization<a class="anchor" aria-label="anchor" href="#project-organization"></a>
 </h2>
 <hr class="half-width">
-<p>This is a lesson created via The Carpentries Workbench. It is written
-in <a href="https://pandoc.org/MANUAL.html" class="external-link">Pandoc-flavored Markdown</a>
-for static files (with extension <code>.md</code>) and <a href="https://rmarkdown.rstudio.com/" class="external-link">R Markdown</a> for dynamic files
-that can render code into output (with extension <code>.Rmd</code>).
-Please refer to the <a href="https://carpentries.github.io/sandpaper-docs/" class="external-link">Introduction to The
-Carpentries Workbench</a> for full documentation.</p>
-<p>What you need to know is that there are three sections required for a
-valid Carpentries lesson template:</p>
-<ol style="list-style-type: decimal">
-<li>
-<code>questions</code> are displayed at the beginning of the episode
-to prime the learner for the content.</li>
-<li>
-<code>objectives</code> are the learning objectives for an episode
-displayed with the questions.</li>
-<li>
-<code>keypoints</code> are displayed at the end of the episode to
-reinforce the objectives.</li>
-</ol>
-<div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
-  <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
-</button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
-<div class="accordion-body">
-<p>Inline instructor notes can help inform instructors of timing
-challenges associated with the lessons. They appear in the “Instructor
-View”</p>
+<p>In order to keep our project organized, we’ll start by creating some
+directories to put our code in. So that we can keep the “source” code of
+our project separate from other aspects, we’ll start by creating a
+directory called “src”. In this directory, we’ll create a second
+directory with the name of our module, in this case “textanalysis-tool”.
+We can also delete the “main.py” file that was generated automatically
+by uv. Your project folder should now look like this:</p>
+<pre><code>textanalysis-tool/
+├── src/
+│   └── textanalysis_tool/
+├── .gitignore
+├── .python-version
+├── pyproject.toml
+└── README.md</code></pre>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Note that the interior folder has an underscore instead of a hyphen.
+We will import the module using the name of the interior folder,
+<code>textanalysis_tool</code>. This is important as hyphens are not a
+valid character in Python module names.</p>
 </div>
 </div>
 </div>
+<p>Next, we’ll create a file called <code>__init__.py</code> in the
+<code>src/textanalysis_tool</code> directory. This file will make Python
+treat the directory as a package. Next to the <code>__init__.py</code>
+file, we can create other Python files that will contain the code for
+our module.</p>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="challenge-1-can-you-do-it" class="callout challenge">
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>The <code>__init__.py</code> file is a special filename in python
+that indicated that the directory should be treated as a package. Often
+these files are simply blank, however we can also include some
+additional code to initialize the package or set up any necessary
+imports, as we will see later.</p>
+</div>
+</div>
+</div>
+<p>Let’s create a code file now, called <code>say_hello.py</code> and
+put a simple function in it:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="kw">def</span> hello(name: <span class="bu">str</span> <span class="op">=</span> <span class="st">"User"</span>):</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"Hello, </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">!"</span></span></code></pre>
+</div>
+<p>Our project folder should now look like this:</p>
+<pre><code>textanalysis-tool/
+├── src/
+│   └── textanalysis_tool/
+│       ├── __init__.py
+│       └── say_hello.py
+├── .gitignore
+├── .python-version
+├── pyproject.toml
+└── README.md</code></pre>
+</section><section><h2 class="section-heading" id="previewing-our-module">Previewing Our Module<a class="anchor" aria-label="anchor" href="#previewing-our-module"></a>
+</h2>
+<hr class="half-width">
+<p>It’s all well and good to write some code in here, but how can we
+actually use it? Let’s create a python script to test our module.</p>
+<p>Let’s create a directory called “tests”, and start a new file called
+<code>test_say_hello.py</code> in it.</p>
+<p>Add the following code to it:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="im">import</span> textanalysis_tool</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>result <span class="op">=</span> textanalysis_tool.say_hello.hello(<span class="st">"My Name"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="cf">if</span> result <span class="op">==</span> <span class="st">"Hello, My Name!"</span>:</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Test passed!"</span>)</span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Test failed!"</span>)</span></code></pre>
+</div>
+<div id="callout3" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>One of the really nice things about using <code>uv</code> is that we
+can replace <code>python</code> in our commands with <code>uv run</code>
+and it will use the environment we have created for the project to run
+the code. At the moment, this doesn’t make a difference, but once we
+start adding dependencies to our project we’ll see how useful this
+is.</p>
+</div>
+</div>
+</div>
+<p>Let’s run the script from our command line. If you’re in the root
+directory of the project, your command will look something like
+<code>uv run tests/test_say_hello.py</code>.</p>
+<p>Aaaand… It doesn’t work!</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>D:\Documents\Projects\textanalysis<span class="op">-</span>tool<span class="op">&gt;</span>uv run tests<span class="op">/</span>test_say_hello.py</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>Traceback (most recent call last):</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>  File <span class="st">"D:\Documents\Projects</span><span class="ch">\t</span><span class="st">extanalysis-tool</span><span class="ch">\t</span><span class="st">ests</span><span class="ch">\t</span><span class="st">est_say_hello.py"</span>, line <span class="dv">1</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>    <span class="im">from</span> textanalysis_tool.say_hello <span class="im">import</span> hello</span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="pp">ModuleNotFoundError</span>: No module named <span class="st">'textanalysis_tool'</span></span></code></pre>
+</div>
+<p>The reason for this is that we never actually told python where it
+can find our code!</p>
+</section><section><h2 class="section-heading" id="the-python-path">The Python PATH<a class="anchor" aria-label="anchor" href="#the-python-path"></a>
+</h2>
+<hr class="half-width">
+<p>When you run a command like <code>import pandas</code>, what python
+actually does is search the a series of directories in order looking for
+a module file called <code>pandas.py</code>. We can see what directories
+will be checked by printing the <code>sys.path</code> variable.</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="bu">print</span>(sys.path)</span></code></pre>
+</div>
+<p>We are only interested in checking our current code, not in
+installing it as a package. However because we have the
+<code>__init__.py</code> file in our package directory, if we add the
+exact or relative path to our package directory to our
+<code>sys.path</code> variable, python will look there for modules as
+well.</p>
+<p>Let’s add a quick line to the top of our testing script to add our
+specific module directory to the path:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="st">"./src"</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.say_hello <span class="im">import</span> hello</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>result <span class="op">=</span> hello(<span class="st">"My Name"</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="cf">if</span> result <span class="op">==</span> <span class="st">"Hello, My Name!"</span>:</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Test passed!"</span>)</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Test failed!"</span>)</span></code></pre>
+</div>
+<p>This time it works! And if we modify the <code>hello</code> function
+to print out something slightly different, we can see that running the
+script changes the output right away!</p>
+<div id="callout4" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>We used <code>sys.path.insert</code> instead of
+<code>sys.path.append</code> because we want to give our module
+directory the highest priority when searching for modules. This way, if
+there are any naming conflicts with other installed packages, our local
+module will be found first.</p>
+<p>Ideally you would never be working with a package name that has a
+conflict elsewhere in the path directories, but just in case, this
+avoids some potential issues.</p>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="dot-notation-in-imports">Dot Notation in Imports<a class="anchor" aria-label="anchor" href="#dot-notation-in-imports"></a>
+</h2>
+<hr class="half-width">
+<p>You probably noticed that our function call mimics the file and
+directory structure of the project. We have the project directory
+(<code>textanalysis_tool</code>), then the filename
+(<code>my_module</code>), and finally the function name
+(<code>hello</code>). Python treats all of these similarly when trying
+to locate a function or module. We can also modify our import to make
+the code a little neater:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="st">"./src"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="im">from</span> textanalysis_tool <span class="im">import</span> say_hello</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>result <span class="op">=</span> say_hello.hello(<span class="st">"My Name"</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="cf">if</span> result <span class="op">==</span> <span class="st">"Hello, My Name!"</span>:</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Test passed!"</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Test failed!"</span>)</span></code></pre>
+</div>
+<p>or even better:</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="st">"./src"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.my_module <span class="im">import</span> hello</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>result <span class="op">=</span> hello(<span class="st">"My Name"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="cf">if</span> result <span class="op">==</span> <span class="st">"Hello, My Name!"</span>:</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Test passed!"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Test failed!"</span>)</span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="the-init-py-file">The <strong>init</strong>.py File<a class="anchor" aria-label="anchor" href="#the-init-py-file"></a>
+</h2>
+<hr class="half-width">
+<p>We can see that in order to import our function, we have to include
+both the name of the module and the name of the file before specifying
+the name of the function. Sometimes this can get tedious, especially if
+there is a directory in our project with lots of files and different
+functions in each file. This is where we can simplify things a little by
+adding a tiny bit of code to our <code>__init__.py</code> file:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="im">from</span> .my_module <span class="im">import</span> hello</span></code></pre>
+</div>
+<p>We can run our testing script just the same way as before and it will
+still work, but we can also now leave out the <code>.my_module</code>
+part:</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="im">from</span> textanalysis_tool <span class="im">import</span> hello</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>result <span class="op">=</span> hello(<span class="st">"My Name"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="cf">if</span> result <span class="op">==</span> <span class="st">"Hello, My Name!"</span>:</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Test passed!"</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Test failed!"</span>)</span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="git-add-commit">Git Add / Commit<a class="anchor" aria-label="anchor" href="#git-add-commit"></a>
+</h2>
+<hr class="half-width">
+<p>Before we forget, now that we have some simple code up and running,
+let’s add it to our git repository.</p>
+<div id="challenge-1-add-a-sub-module" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-1-can-you-do-it" class="callout-inner">
-<h3 class="callout-title">Challenge 1: Can you do it?</h3>
+<div id="challenge-1-add-a-sub-module" class="callout-inner">
+<h3 class="callout-title">Challenge 1: Add a Sub Module</h3>
 <div class="callout-content">
-<p>What is the output of this command?</p>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">paste</span><span class="op">(</span><span class="st">"This"</span>, <span class="st">"new"</span>, <span class="st">"lesson"</span>, <span class="st">"looks"</span>, <span class="st">"good"</span><span class="op">)</span></span></code></pre>
-</div>
+<p>Create a directory under <code>src/textanalysis_tool</code> called
+<code>greetings</code> and add a file called <code>greet.py</code> with
+a function called greet that prints out the following:</p>
+<pre><code>Hello {User}!
+It's nice to meet you!</code></pre>
+<p>How do you call this function from your testing script?</p>
 </div>
 </div>
 </div>
 <div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1"> Output </h4>
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>[1] "This new lesson looks good"</code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.say_hello.greetings <span class="im">import</span> greet</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>greet(<span class="st">"My Name"</span>)</span></code></pre>
+</div>
+<p>You could also include this line in our existing
+<code>__init__.py</code> file:</p>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.say_hello.greetings <span class="im">import</span> greet</span></code></pre>
+</div>
+<p>or add another <code>__init__.py</code> and include the following
+line:</p>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.say_hello.greetings <span class="im">import</span> greet</span></code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div id="challenge-2-how-do-you-nest-solutions-within-challenge-blocks" class="callout challenge">
+<div id="challenge-2-inter-module-imports" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-2-how-do-you-nest-solutions-within-challenge-blocks" class="callout-inner">
-<h3 class="callout-title">Challenge 2: how do you nest solutions within
-challenge blocks?</h3>
+<div id="challenge-2-inter-module-imports" class="callout-inner">
+<h3 class="callout-title">Challenge 2: Inter-Module imports</h3>
 <div class="callout-content">
-
+<p>Building on the last challenge, the first line of our greeting is
+identical to the output from our <code>hello</code> function. How can we
+avoid code duplication by calling the <code>hello</code> function from
+within our <code>greet</code> function?</p>
 </div>
 </div>
 </div>
@@ -435,41 +1015,46 @@ challenge blocks?</h3>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
-<p>You can add a line with at least three colons and a
-<code>solution</code> tag.</p>
-</div>
-</div>
-</div>
-</div>
-</section><section><h2 class="section-heading" id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a>
-</h2>
-<hr class="half-width">
-<p>You can include figures generated from R Markdown:</p>
-<div class="codewrapper sourceCode" id="cb3">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+<p>In our greetings.py file:</p>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">pie</span><span class="op">(</span></span>
-<span>  <span class="fu">c</span><span class="op">(</span>Sky <span class="op">=</span> <span class="fl">78</span>, <span class="st">"Sunny side of pyramid"</span> <span class="op">=</span> <span class="fl">17</span>, <span class="st">"Shady side of pyramid"</span> <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, </span>
-<span>  init.angle <span class="op">=</span> <span class="fl">315</span>, </span>
-<span>  col <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="st">"deepskyblue"</span>, <span class="st">"yellow"</span>, <span class="st">"yellow3"</span><span class="op">)</span>, </span>
-<span>  border <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="im">from</span> textanalysis_tool <span class="im">import</span> hello</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="kw">def</span> greet(name):</span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    <span class="cf">return</span> hello(name) <span class="op">+</span> <span class="st">"</span><span class="ch">\n</span><span class="st">It's nice to meet you!"</span></span></code></pre>
 </div>
-<figure style="text-align: center"><img src="../fig/introduction-rendered-pyramid-1.png" alt="pie chart illusion of a pyramid" class="figure mx-auto d-block"><figcaption>
-Sun arise each and every morning
-</figcaption></figure><p>Or you can use pandoc markdown for static figures with the following
-syntax:</p>
-<p><code>![optional caption that appears below the figure](figure url){alt='alt text for accessibility purposes'}</code></p>
-<figure><img src="https://raw.githubusercontent.com/carpentries/logo/master/Badge_Carpentries.svg" alt="Blue Carpentries hex person logo with no text." class="figure mx-auto d-block"><div class="figcaption">You belong in The Carpentries!</div>
-</figure></section><section><h2 class="section-heading" id="math">Math<a class="anchor" aria-label="anchor" href="#math"></a>
-</h2>
-<hr class="half-width">
-<p>One of our episodes contains <span class="math inline">\(\LaTeX\)</span> equations when describing how to
-create dynamic reports with {knitr}, so we now use mathjax to describe
-this:</p>
-<p><code>$\alpha = \dfrac{1}{(1 - \beta)^2}$</code> becomes: <span class="math inline">\(\alpha = \dfrac{1}{(1 - \beta)^2}\)</span></p>
-<p>Cool, right?</p>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
+  <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
+</button>
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div class="accordion-body">
+<p>Why are you bothering to write out the entire module path in
+greetings.py? Can’t you just do this:</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="im">from</span> ..my_module <span class="im">import</span> hello</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="kw">def</span> greet(name):</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>    hello(name)</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"It's nice to meet you!"</span>)</span></code></pre>
+</div>
+<p>Yes, you absolutely can! The dot-notation used in python pathing can
+use <code>..</code> to refer to the parent directory, or even
+<code>...</code> to refer to a grandparent directory.</p>
+<p>The reason we’re not doing this here is for clarity, as reccomended
+in <a href="https://www.python.org/dev/peps/pep-0008/#imports" class="external-link">PEP8</a>.</p>
+</div>
+</div>
+</div>
+</div>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -494,6 +1079,1531 @@ locally</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
+</section></section><section id="aio-03-class-objects"><p>Content from <a href="03-class-objects.html">Class Objects</a></p>
+<hr>
+<p>Last updated on 2025-09-11 |
+
+        <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/03-class-objects.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 12 minutes</p>
+<div class="text-end">
+          <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
+        </div>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>What is a class object?</li>
+<li>How can I defined a class object in Python?</li>
+<li>How can I use a class object in my module?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Create a Class object in our module.</li>
+<li>Demonstrate how to use our Class object in a sample script.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="what-is-a-class-object">What is a Class Object?<a class="anchor" aria-label="anchor" href="#what-is-a-class-object"></a>
+</h2>
+<hr class="half-width">
+<p>You can think of a class object as a kind of “blueprint” for an
+object. It defines what properties the object can have, and what methods
+it can perform. Once a class is defined, you can create any number of
+objects based on that class, each of which is referred to as an
+“instance” of that class.</p>
+<p>As an example, let’s imagine a Car. A Car has many properties and can
+do many things, but for our purposes, let’s limit them slightly. Our Car
+will have a make, model, year, and color, and it will be able to honk,
+and be painted.</p>
+<p>The make, model, year, and color are all “properties” of the car.
+Honking a horn and being painted are both “methods” of the car. Here’s a
+diagram of our car object:</p>
+<figure><img src=".././fig/03-class-objects/car_class.PNG" alt="Car Class object example" class="figure mx-auto d-block"><div class="figcaption">Car Class object example</div>
+</figure><p>In python we can define a class object like this:</p>
+<pre><code>class Car:
+    def __init__(self, make: str, model: str, year: int, color: str = "grey"):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.color = color
+
+    def honk(self) -&gt; str:
+        return "beep"
+
+    def paint(self, new_color: str) -&gt; None:
+        self.color = new_color</code></pre>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>The convention in python is that all classes should be named in
+CamelCase, with no underscores. Class names in reality can be anything
+you like, but this is the standard in the python community.</p>
+</div>
+</div>
+</div>
+<p>Some of this might look familiar if you think about how we define
+functions in Python. There’s a <code>def</code> keyword, followed by the
+function name and parentheses. Inside the parentheses, we can define
+parameters, and these parameters can contain default values. We can also
+include type hints, for both parameters and return values. However all
+of this is indented one level, underneath the <code>class</code>
+keyword, which is followed by our class name.</p>
+<p>Note that this is just our blueprint - it doesn’t refer to any
+specific car, just the general idea of a car. Also note the
+<code>__init__</code> method. This is a special method which is called
+whenever you “instantiate” a new object. The parameters for this
+function are supplied when we first create an object and function
+similarly to a method, in that if no default value is provided, it is
+required in order to create the object, and if a default value is
+provided, it is optional.</p>
+<p>An instance of a car, in this case called “my_car” might look
+something like this:</p>
+<figure><img src=".././fig/03-class-objects/car_instance.PNG" alt="Car Instance example" class="figure mx-auto d-block"><div class="figcaption">Car Instance Example</div>
+</figure><p>Also note that each of the methods within the class object definition
+starts with a “self” argument. This is a reference to the current
+instance of the class, and is used to access variables that belong to
+the class. In our example, we store the make, model, year and color as
+properties of the class. When we call the <code>paint</code> method, we
+use <code>self.color</code> to refer to the current instance’s color
+property.</p>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>The <code>__init__</code> method is called a “dunder” (double
+underlined) method in python. There are a number of other dunder methods
+that we can define, that will interact with various built-in functions
+and operators. For example, we can define a <code>__str__</code> method,
+that will allow us to specify how our object should be represented as a
+string when we call <code>str()</code> on it. Likewise, we can define
+<code>__eq__</code>, which would tell python how to behave when we
+compare two objects for equality.</p>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="a-class-object-for-our-project">A Class object for Our project<a class="anchor" aria-label="anchor" href="#a-class-object-for-our-project"></a>
+</h2>
+<hr class="half-width">
+<p>Let’s create a class object for our text analysis project. We’re
+going to be downloading some books from <a href="https://www.gutenberg.org/" class="external-link">Project Gutenberg</a>. To make things
+easy to begin with, we’ll limit ourselves to just the .txt files.</p>
+<p>Since we’re going to create some useful objects and methods for
+working with documents, let’s define a <code>Document</code> class.</p>
+<div id="discussion1" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Take a look a an example txt document from Project Gutenberg: <a href="https://www.gutenberg.org/cache/epub/2680/pg2680.txt" class="external-link">Meditations,
+by Marcus Aurelius</a></p>
+<p>What properties and methods might we want to include in our Document
+class?</p>
+</div>
+</div>
+</div>
+<p>It looks like there’s a standard metadata section in these documents,
+with a Title, Author, Release Date, Language, and Credits. Those will
+probably be useful metadata. Looking at the url for this file, it also
+looks like there’s an ID on Project Gutenberg.</p>
+<p>For methods, we’ll need to be able to read the document from a file.
+And for some simple methods, let’s count the number of lines in a
+document, and another method to get the number of times a particular
+word appears.</p>
+<p>Lets start writing our class object in a new file:
+<code>src/textanalysis_tool/document.py</code>:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="kw">class</span> Document:</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>, title: <span class="bu">str</span>, author: <span class="bu">str</span> <span class="op">=</span> <span class="st">""</span>, <span class="bu">id</span>: <span class="bu">int</span> <span class="op">=</span> <span class="dv">0</span>):</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> title</span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> author</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> <span class="bu">id</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>        <span class="va">self</span>._content <span class="op">=</span> <span class="va">self</span>._read(<span class="va">self</span>.filepath)</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a>    <span class="kw">def</span> _read(<span class="va">self</span>, file_path: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">file</span>.read()</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>    <span class="kw">def</span> get_line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>._content.splitlines())</span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>    <span class="kw">def</span> get_word_occurrence(<span class="va">self</span>, word: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._content.lower().count(word.lower())</span></code></pre>
+</div>
+<p>Our class object <code>Document</code> is a “blueprint” for a
+collection of methods. When we define it, we have to provide the class
+with a filepath, a title, an author, and an id. Only the filepath and
+the title are required, while the author and id are optional.</p>
+<p>The <code>__init__</code> method is called as soon as the object is
+created, and we can see that in addition to storing the parameters to
+their <code>self</code> counterparts, there is an additional property
+called <code>self._content</code>. This property is used to store the
+entire text content of the document. We obtain this by calling the
+<code>self._read</code> method, which reads the content from the
+specified file.</p>
+<div id="principle-of-least-astonishment-or-were-all-adults-here" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div id="principle-of-least-astonishment-or-were-all-adults-here" class="callout-inner">
+<h3 class="callout-title">Principle of Least Astonishment (or, We’re All
+Adults Here)</h3>
+<div class="callout-content">
+<p>Unlike other programming languages, python doesn’t have the concept
+of “private” or “internal” variables and methods. Instead there is a
+convention which says that any variable or method that is intended for
+internal use should be prefixed with an underscore
+(e.g. <code>_content</code>). This is however just a convention - there
+is nothing stopping you from accessing these variables and methods from
+outside the class if you really want to.</p>
+</div>
+</div>
+</div>
+<p>There are also two methods that we’ve defined -
+<code>get_line_count</code> and <code>get_word_occurrence</code>.
+Neither of these will be called directly on the class itself, but rather
+on instances of the class that we create (as indicated by the use of
+<code>self</code> within the class methods). Note that these methods
+make use of the <code>self._content</code> property - this is a variable
+that is not defined within the method, so you may expect it to be out of
+scope. However the <code>self</code> keyword refers to the specific
+instance of the class itself, and so it has access to all of its
+properties and methods, including the <code>self._content</code>
+property.</p>
+</section><section><h2 class="section-heading" id="trying-out-our-class-object">Trying out Our Class Object<a class="anchor" aria-label="anchor" href="#trying-out-our-class-object"></a>
+</h2>
+<hr class="half-width">
+<p>Let’s try out our new class object. Create a file in our “tests”
+directory called <code>example_file.txt</code> and add some text to
+it:</p>
+<pre><code>This is a test document. It contains words.
+It is only a test document.</code></pre>
+<p>Next, let’s create another test file. Our last one was called
+<code>test_my_modue.py</code>, so let’s call this
+<code>test_document.py</code>:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="st">"./src"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.document <span class="im">import</span> Document</span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>total_tests <span class="op">=</span> <span class="dv">3</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>passed_tests <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>failed_tests <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co"># Check that we can create a Document object</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>doc <span class="op">=</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>, title<span class="op">=</span><span class="st">"Test Document"</span>)</span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="cf">if</span> doc.title <span class="op">==</span> <span class="st">"Test Document"</span> <span class="kw">and</span> doc.filepath <span class="op">==</span> <span class="st">"tests/example_file.txt"</span>:</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>    passed_tests <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a>    failed_tests <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a><span class="co"># Test the methods</span></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="cf">if</span> doc.get_line_count() <span class="op">==</span> <span class="dv">2</span>:</span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>    passed_tests <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a>    failed_tests <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a><span class="cf">if</span> doc.get_word_occurrence(<span class="st">"test"</span>) <span class="op">==</span> <span class="dv">2</span>:</span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>    passed_tests <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>    failed_tests <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Total tests: </span><span class="sc">{</span>total_tests<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Passed tests: </span><span class="sc">{</span>passed_tests<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Failed tests: </span><span class="sc">{</span>failed_tests<span class="sc">}</span><span class="ss">"</span>)</span></code></pre>
+</div>
+<p>Now we’ll run this file using our uv environment:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">uv</span> run tests/test_document.py</span></code></pre>
+</div>
+<p>You should see the output:</p>
+<pre><code>Total tests: 3
+Passed tests: 3
+Failed tests: 0</code></pre>
+<div id="challenge-1-testing-out-our-class-on-real-data" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-1-testing-out-our-class-on-real-data" class="callout-inner">
+<h3 class="callout-title">Challenge 1: Testing Out Our Class on Real
+Data</h3>
+<div class="callout-content">
+<p>Let’s download a real text file from Project Gutenberg and see how
+our class object handles it. You can pick any file you like, or you can
+use the same one we looked at earlier: <a href="https://www.gutenberg.org/cache/epub/2680/pg2680.txt" class="external-link">Meditations,
+by Marcus Aurelius</a>.</p>
+<p>Modify your <code>test_document.py</code> file to create a new
+Document object using the real text file, and then test out the
+<code>get_line_count</code> and <code>get_word_occurrence</code> methods
+on it. What do you get? What issues might there be when we start using
+this class on our actual data?</p>
+<p>How can we improve our class to handle these issues?</p>
+</div>
+</div>
+</div>
+<div id="accordionHint1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
+  <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
+</button>
+<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
+<div class="accordion-body">
+<p>The Metadata at the start of the document is always gated by a line
+that says
+<code>*** START OF THE PROJECT GUTENBERG EBOOK {the title of the book} ***</code>
+and at the end of the document with the line
+<code>*** END OF THE PROJECT GUTENBERG EBOOK {the title of the book} ***</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionHint2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint2" aria-expanded="false" aria-controls="collapseHint2">
+  <h4 class="accordion-header" id="headingHint2"> Give me a hint </h4>
+</button>
+<div id="collapseHint2" class="accordion-collapse collapse" data-bs-parent="#accordionHint2" aria-labelledby="headingHint2">
+<div class="accordion-body">
+<p>There is a python module called <code>re</code> that allows us to
+work with regular expressions. This can be used to match specific
+patterns in text, or for extracting specific parts of a string. You can
+use the following regex pattern to match the content between the start
+and end markers:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<p>The Project Gutenberg text files have a lot of metadata at the start
+and end of the file, which will affect the line count and word
+occurrence counts. We might want to modify our <code>_read</code> method
+to strip out this metadata before storing the content in
+<code>self._content</code>.</p>
+<p>One possible solution would look like this:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="kw">class</span> Document:</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>, title: <span class="bu">str</span>, author: <span class="bu">str</span> <span class="op">=</span> <span class="st">""</span>, <span class="bu">id</span>: <span class="bu">int</span> <span class="op">=</span> <span class="dv">0</span>):</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> title</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> author</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> <span class="bu">id</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>        raw_text <span class="op">=</span> <span class="va">self</span>._read(<span class="va">self</span>.filepath)</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> raw_text:</span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> contains no content."</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>        <span class="va">self</span>._content <span class="op">=</span> <span class="va">self</span>._get_content(raw_text)</span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a>    <span class="kw">def</span> _get_content(<span class="va">self</span>, content: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a>        match <span class="op">=</span> re.search(<span class="va">self</span>.CONTENT_PATTERN, content, re.DOTALL)</span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> is not a valid Project Gutenberg Text file."</span>)</span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a>    <span class="kw">def</span> _read(<span class="va">self</span>, file_path: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">file</span>.read()</span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a>    <span class="kw">def</span> get_line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>._content.splitlines())</span>
+<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a></span>
+<span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a></span>
+<span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a>    <span class="kw">def</span> get_word_occurrence(<span class="va">self</span>, word: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._content.lower().count(word.lower())</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="challenge-2-extracting-the-metadata" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-2-extracting-the-metadata" class="callout-inner">
+<h3 class="callout-title">Challenge 2: Extracting the Metadata</h3>
+<div class="callout-content">
+<p>From the previous challenge, we saw that the Project Gutenberg text
+files have a lot of metadata at the start and end of the file. This
+metadata includes the title, author, release date, and other information
+about the book which we currently are adding to our file using
+parameters.</p>
+<p>Instead of passing this information in as parameters, can you modify
+the class so that it extracts the title, author and id from the metadata
+in the text file itself?</p>
+</div>
+</div>
+</div>
+<div id="accordionHint3" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint3" aria-expanded="false" aria-controls="collapseHint3">
+  <h4 class="accordion-header" id="headingHint3"> Give me a hint </h4>
+</button>
+<div id="collapseHint3" class="accordion-collapse collapse" data-bs-parent="#accordionHint3" aria-labelledby="headingHint3">
+<div class="accordion-body">
+<p>As before, we can use the <code>re</code> module to extract this
+information. The title and author are contained in lines that start with
+<code>Title:</code> and <code>Author:</code> respectively. The ID can be
+found in the line that starts with <code>Release Date:</code>. You can
+use the following regex patterns to match these lines:</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>TITLE_PATTERN <span class="op">=</span> <span class="vs">r"^Title:\s*(.*?)\s*$"</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>AUTHOR_PATTERN <span class="op">=</span> <span class="vs">r"^Author:\s*(.*?)\s*$"</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>ID_PATTERN <span class="op">=</span> <span class="vs">r"^Release date:\s*.*?\[eBook #(\d+)\]"</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<p>There’s any number of ways to do this, but one possible solution
+would look like this:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="kw">class</span> Document:</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>    TITLE_PATTERN <span class="op">=</span> <span class="vs">r"^Title:\s*(.*?)\s*$"</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>    AUTHOR_PATTERN <span class="op">=</span> <span class="vs">r"^Author:\s*(.*?)\s*$"</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>    ID_PATTERN <span class="op">=</span> <span class="vs">r"^Release date:\s*.*?\[eBook #(\d+)\]"</span></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>):</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>        raw_text <span class="op">=</span> <span class="va">self</span>._read(<span class="va">self</span>.filepath)</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> raw_text:</span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> contains no content."</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> <span class="va">self</span>._get_metadata(raw_text, <span class="va">self</span>.TITLE_PATTERN)</span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> <span class="va">self</span>._get_metadata(raw_text, <span class="va">self</span>.AUTHOR_PATTERN)</span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a>        extracted_id <span class="op">=</span> <span class="va">self</span>._get_metadata(raw_text, <span class="va">self</span>.ID_PATTERN)</span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> <span class="bu">int</span>(extracted_id) <span class="cf">if</span> extracted_id <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>        <span class="va">self</span>._content <span class="op">=</span> <span class="va">self</span>._get_content(raw_text)</span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a></span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a></span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a>    <span class="kw">def</span> _get_content(<span class="va">self</span>, content: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a>        match <span class="op">=</span> re.search(<span class="va">self</span>.CONTENT_PATTERN, content, re.DOTALL)</span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
+<span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> is not a valid Project Gutenberg Text file."</span>)</span>
+<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="#cb10-32" tabindex="-1"></a>    <span class="kw">def</span> _get_metadata(<span class="va">self</span>, content: <span class="bu">str</span>, pattern: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb10-33"><a href="#cb10-33" tabindex="-1"></a>        match <span class="op">=</span> re.search(pattern, content, re.MULTILINE)</span>
+<span id="cb10-34"><a href="#cb10-34" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
+<span id="cb10-35"><a href="#cb10-35" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
+<span id="cb10-36"><a href="#cb10-36" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb10-37"><a href="#cb10-37" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" tabindex="-1"></a>    <span class="kw">def</span> _read(<span class="va">self</span>, file_path: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb10-39"><a href="#cb10-39" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb10-40"><a href="#cb10-40" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">file</span>.read()</span>
+<span id="cb10-41"><a href="#cb10-41" tabindex="-1"></a></span>
+<span id="cb10-42"><a href="#cb10-42" tabindex="-1"></a>    <span class="kw">def</span> get_line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb10-43"><a href="#cb10-43" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>._content.splitlines())</span>
+<span id="cb10-44"><a href="#cb10-44" tabindex="-1"></a></span>
+<span id="cb10-45"><a href="#cb10-45" tabindex="-1"></a></span>
+<span id="cb10-46"><a href="#cb10-46" tabindex="-1"></a>    <span class="kw">def</span> get_word_occurrence(<span class="va">self</span>, word: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb10-47"><a href="#cb10-47" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._content.lower().count(word.lower())</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="challenge-3-properties" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-3-properties" class="callout-inner">
+<h3 class="callout-title">Challenge 3: Properties</h3>
+<div class="callout-content">
+<p>In our current implementation, the <code>title</code>,
+<code>author</code>, and <code>id</code> attributes are publicly
+accessible from outside the class, which means that they can be modified
+directly. There are instances where it might be preferable for the
+attributes to be read-only, so that they can only be set when the object
+is created, and not modified afterwards, or to allow us to create
+variables that are based or calculated from other variables and should
+not be set directly.</p>
+<p>We can do this with the <code>@property</code> decorator. This is a
+special decorator that allows us to define “getter” and “setter” methods
+for a property. It works much the same as a normal method, but it is
+accessed like an attribute.</p>
+<p>We can convert our <code>get_line_count</code> method to a property
+like this:</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>    ...</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    <span class="kw">def</span> line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>._content.splitlines())</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>    ...</span></code></pre>
+</div>
+<p>The links to the project gutenberg files are based on the id, which
+we extracted from the metadata. Create a new property called
+<code>gutenberg_url</code> that returns the url for the document based
+on the id.</p>
+</div>
+</div>
+</div>
+<div id="accordionHint4" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint4" aria-expanded="false" aria-controls="collapseHint4">
+  <h4 class="accordion-header" id="headingHint4"> Give me a hint </h4>
+</button>
+<div id="collapseHint4" class="accordion-collapse collapse" data-bs-parent="#accordionHint4" aria-labelledby="headingHint4">
+<div class="accordion-body">
+<p>The url for a Project Gutenberg text file is of the form:
+<code>https://www.gutenberg.org/cache/epub/&lt;id&gt;/pg&lt;id&gt;.txt</code></p>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
+</button>
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div class="accordion-body">
+<p>There’s any number of ways to do this, but one possible solution
+would look like this:</p>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>    <span class="kw">def</span> gutenberg_url(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.<span class="bu">id</span>:</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>            <span class="cf">return</span> <span class="ss">f"https://www.gutenberg.org/cache/epub/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">/pg</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">.txt"</span></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Neat! We’ve successfully created and used a class object in our
+module. But certainly there’s a better way to test this, right? In the
+next episode, we’ll look at how to write proper unit tests for our class
+object with <code>pytest</code>.</p>
+<div id="keypoints1" class="callout keypoints">
+<div class="callout-square">
+<i class="callout-icon" data-feather="key"></i>
+</div>
+<span class="callout-header">Key Points</span>
+<div class="callout-inner">
+<div class="callout-content">
+<ul>
+<li>foo</li>
+</ul>
+</div>
+</div>
+</div>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</section></section><section id="aio-04-unit-testing"><p>Content from <a href="04-unit-testing.html">Unit Testing</a></p>
+<hr>
+<p>Last updated on 2025-09-11 |
+
+        <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/04-unit-testing.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 12 minutes</p>
+<div class="text-end">
+          <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
+        </div>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>What is unit testing?</li>
+<li>Why is unit testing important?</li>
+<li>How do you write a unit test in Python?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Explain the concept of unit testing</li>
+<li>Demonstrate how to write and run unit tests in Python using
+<code>pytest</code>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="unit-testing">Unit Testing<a class="anchor" aria-label="anchor" href="#unit-testing"></a>
+</h2>
+<hr class="half-width">
+<p>We have our two little test files, but you might imagine that it’s
+not particuarly efficient to always write individual scripts to test our
+code. What if we had a lot of functions or classes? Or a lot of
+different ideas to test? What if our objects changed down the line? Our
+existing modules are going to be diffucult to maintain, and, as you may
+have expected, there is alredy a solution for this problem.</p>
+<div class="section level3">
+<h3 id="what-makes-for-a-good-test">What Makes For a Good Test?<a class="anchor" aria-label="anchor" href="#what-makes-for-a-good-test"></a>
+</h3>
+<p>A good test is one that is: - <strong>Isolated</strong>: A good test
+should be able to run independently of other tests, and should not rely
+on external resources such as databases or web services. -
+<strong>Repeatable</strong>: A good test should produce the same results
+every time it is run. - <strong>Fast</strong>: A good test should run
+quickly, so that it can be run frequently during development. -
+<strong>Clear</strong>: A good test should be easy to understand, so
+that other developers can easily see what is being tested and why. Not
+just in the output provided by the test, but the variables, function
+names, and structure of the test should be clear and descriptive.</p>
+<p>It can be easy to get carried away with testing everything and
+writing tests that cover every single case that you can come up with.
+However having a massive test suite that is cumbersome to update and
+takes a long time to run is not useful. A good rule of thumb is to focus
+on testing the most important parts of your code, and the parts that are
+most likely to break. This often means focusing on edge cases and error
+handling, rather than trying to test every possible input.</p>
+<p>Generally, a good test module will test the basic functionality of an
+object or function, as well as a few edge cases.</p>
+<div id="discussion1" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<span class="callout-header">Discussion</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>What are some edge cases that you can think of for the
+<code>hello</code> function we wrote earlier?</p>
+<p>What about the <code>Document</code> class?</p>
+</div>
+</div>
+</div>
+<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
+  <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
+</button>
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div class="accordion-body">
+<p>Some edge cases for the <code>hello</code> function could
+include:</p>
+<ul>
+<li>Passing in an empty string</li>
+<li>Passing in a very long string</li>
+<li>Passing in something that is not a string (e.g. a number or a
+list)</li>
+</ul>
+<p>Some edge cases for the <code>Document</code> class could
+include:</p>
+<ul>
+<li>Passing in a file path that does not exist</li>
+<li>Passing in a file that is not a text file</li>
+<li>Passing in a file that is empty</li>
+<li>Passing in a word that does not exist in the document when testing
+<code>get_word_occurrence</code>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="pytest">pytest<a class="anchor" aria-label="anchor" href="#pytest"></a>
+</h2>
+<hr class="half-width">
+<p><code>pytest</code> is a testing framework for Python that helps to
+write simple and scalable test cases. It is widely used in the python
+community, and has in-depth and comprehensive documentation. We won’t be
+getting into all of the different things you can do with pytest, but we
+will cover the basics here.</p>
+<p>To start off with, we need to add pytest to our environment. However
+unlike our previous packages, <code>pytest</code> is not required for
+our module to work, it is only used by us as we are writing code.
+Therefore it is a “development dependency”. We can still add this to our
+<code>pyproject.toml</code> file via uv, but we need to add a special
+flag to our command so that it goes in the correct place.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">uv</span> add pytest <span class="at">--dev</span></span></code></pre>
+</div>
+<p>If you open up your <code>pyproject.toml</code> file, you should see
+that <code>pytest</code> has been added under a new called “dependency
+groups” (your version number may be different):</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="kw">[dependency-groups]</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="dt">dev</span> <span class="op">=</span> <span class="op">[</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="st">"pytest&gt;=8.4.2"</span><span class="op">,</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="op">]</span></span></code></pre>
+</div>
+<p>Now we can start creating our tests.</p>
+<div class="section level3">
+<h3 id="writing-a-pytest-test-file">Writing a pytest Test File<a class="anchor" aria-label="anchor" href="#writing-a-pytest-test-file"></a>
+</h3>
+<p>Part of <code>pytest</code> is the concept of “test discovery”. This
+means that pytest will automatically find any test files that follow a
+certain naming convention. By default, pytest will look for files that
+start with <code>test_</code> or end with <code>_test.py</code>. Inside
+these files, pytest will look for functions that start with
+<code>test_</code>.</p>
+<p>Now, our files already have the correct names, so we just need to
+change the contents. Let’s start with <code>test_say_hello.py</code>.
+Open it up and replace the contents with the following:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.say_hello <span class="im">import</span> hello</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="kw">def</span> test_hello():</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a>    <span class="cf">assert</span> hello(<span class="st">"My Name"</span>) <span class="op">==</span> <span class="st">"Hello, My Name!"</span></span></code></pre>
+</div>
+<p>In our previous test file, we had to add the path to our module each
+time. Now that we are using <code>pytest</code>, we can use a special
+file called <code>conftest.py</code> to add this path automatically.
+Create a file called <code>conftest.py</code> in the <code>tests</code>
+directory and add the following code to it:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="st">"./src"</span>)</span></code></pre>
+</div>
+<div id="accordionInstructor1" class="accordion instructor-note accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
+  <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
+</button>
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div class="accordion-body">
+<p>This is how I always do it, but I assume there’s a better way.</p>
+</div>
+</div>
+</div>
+</div>
+<p>Now, we just need to run the tests. We can do this with the following
+command:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">uv</span> run pytest</span></code></pre>
+</div>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Note that we are using <code>uv run</code> to run pytest, this
+ensures that pytest is run in the correct environment with all the
+dependencies we have installed.</p>
+</div>
+</div>
+</div>
+<p>You should see output similar to the following:</p>
+<pre><code>============================= test session starts ==============================
+platform win32 -- Python 3.13.7, pytest-8.4.2, pluggy-1.6.0
+rootdir: D:\Documents\Projects\textanalysis-tool
+configfile: pyproject.toml
+collected 1 item
+
+tests\test_say_hello.py .                                          [100%]
+============================== 1 passed in 0.12s ===============================</code></pre>
+<p>Why didn’t it run the other test file? Because even though the file
+is named correctly, it doesn’t contain any functions that start with
+<code>test_</code>. Let’s fix that now.</p>
+<p>Open up <code>test_document.py</code> and replace the contents with
+the following:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.document <span class="im">import</span> Document</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="kw">def</span> test_create_document():</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"(.*)"</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    doc <span class="op">=</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    <span class="cf">assert</span> doc.filepath <span class="op">==</span> <span class="st">"tests/example_file.txt"</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="kw">def</span> test_document_word_count():</span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"(.*)"</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a>    doc <span class="op">=</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>    <span class="cf">assert</span> doc.get_line_count() <span class="op">==</span> <span class="dv">2</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="kw">def</span> test_document_word_occurrence():</span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"(.*)"</span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>    doc <span class="op">=</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>    <span class="cf">assert</span> doc.get_word_occurrence(<span class="st">"test"</span>) <span class="op">==</span> <span class="dv">2</span></span></code></pre>
+</div>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Our example file doesn’t exactly look like a Project Gutenberg text
+file, so we need to change the <code>CONTENT_PATTERN</code> to match
+everything. This is a class level variable, so we can change it on the
+class itself, rather than on the instance.</p>
+</div>
+</div>
+</div>
+<p>Let’s run our tests again:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="ex">uv</span> run pytest</span></code></pre>
+</div>
+<p>You should see output similar to the following:</p>
+<pre><code>============================= test session starts ==============================
+platform win32 -- Python 3.13.7, pytest-8.4.2, pluggy-1.6.0
+rootdir: D:\Documents\Projects\textanalysis-tool
+configfile: pyproject.toml
+collected 4 items
+
+tests\test_document.py ...                                      [ 75%]
+tests\test_say_hello.py .                                       [100%]
+============================== 4 passed in 0.15s ===============================</code></pre>
+<p>You can see that all of the tests have passed. There is a small green
+pip for each test that was performed, and a summary at the end. Compare
+this to the test file we had before. We got rid of all of the if
+statements, and just use the <code>assert</code> statement to check if
+the output is what we expect.</p>
+</div>
+<div class="section level3">
+<h3 id="testing-edge-cases-exceptions">Testing Edge Cases / Exceptions<a class="anchor" aria-label="anchor" href="#testing-edge-cases-exceptions"></a>
+</h3>
+<p>Let’s add an edge case to our tests. Open up
+<code>test_say_hello.py</code> and add a test case for an empty
+string:</p>
+<div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.say_hello <span class="im">import</span> hello</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a><span class="kw">def</span> test_hello():</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>    <span class="cf">assert</span> hello(<span class="st">"My Name"</span>) <span class="op">==</span> <span class="st">"Hello, My Name!"</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="kw">def</span> test_hello_empty_string():</span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>    <span class="cf">assert</span> hello(<span class="st">""</span>) <span class="op">==</span> <span class="st">"Hello, !"</span></span></code></pre>
+</div>
+<p>Run the tests again:</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="ex">uv</span> run pytest</span></code></pre>
+</div>
+<p>We get passing tests, which is what we expect. But we are the ones in
+charge of the function, what if we say that if the user doesn’t provide
+a name, we want to raise an exception? Let’s change the test to say that
+if the user provides an empty string, we want to raise a
+<code>ValueError</code>:</p>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.say_hello <span class="im">import</span> hello</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a><span class="kw">def</span> test_hello():</span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>    <span class="cf">assert</span> hello(<span class="st">"My Name"</span>) <span class="op">==</span> <span class="st">"Hello, My Name!"</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a><span class="kw">def</span> test_hello_empty_string():</span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>):</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>        hello(<span class="st">""</span>)</span></code></pre>
+</div>
+<p>Run the tests again:</p>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="ex">uv</span> run pytest</span></code></pre>
+</div>
+<p>This time, we get a failing test, because the <code>hello</code>
+function DID NOT raise a <code>ValueError</code>. Let’s change the
+<code>hello</code> function to raise a <code>ValueError</code> if the
+name is an empty string:</p>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="kw">def</span> hello(name: <span class="bu">str</span> <span class="op">=</span> <span class="st">"User"</span>):</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>    <span class="cf">if</span> name <span class="op">==</span> <span class="st">""</span>:</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Name cannot be empty"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>    <span class="cf">return</span> <span class="ss">f"Hello, </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">!"</span></span></code></pre>
+</div>
+<p>Running the tests again, we can see that all the tests pass.</p>
+</div>
+<div class="section level3">
+<h3 id="fixtures">Fixtures<a class="anchor" aria-label="anchor" href="#fixtures"></a>
+</h3>
+<p>One of the great features of pytest is the ability to use fixtures.
+Fixtures are a way to provide data, state or configurations to your
+tests. For example, we have a line in each of our tests that creates a
+new <code>Document</code> object. We can use a fixture to create this
+object once, and then use it in each of our tests. That way, if we need
+to change the way we create the object in the future, we only need to
+change it in one place.</p>
+<p>Let’s create a fixture for our <code>Document</code> object. Open up
+<code>test_document.py</code> and add the following import at the
+top:</p>
+<div class="codewrapper sourceCode" id="cb15">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a><span class="im">import</span> pytest</span></code></pre>
+</div>
+<p>Then, add the following code below the imports:</p>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="at">@pytest.fixture</span></span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="kw">def</span> doc():</span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a>    <span class="cf">return</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span></code></pre>
+</div>
+<p>Now, we can use this fixture in our tests. Update the test functions
+to accept a parameter called <code>doc</code>, and remove the line that
+creates the <code>Document</code> object. The updated test file should
+look like this:</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.document <span class="im">import</span> Document</span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a></span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="at">@pytest.fixture</span></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="kw">def</span> doc():</span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"(.*)"</span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>    <span class="cf">return</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="kw">def</span> test_create_document(doc):</span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a>    <span class="cf">assert</span> doc.title <span class="op">==</span> <span class="st">"Test Document"</span></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a>    <span class="cf">assert</span> doc.filepath <span class="op">==</span> <span class="st">"tests/example_file.txt"</span></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a></span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a><span class="kw">def</span> test_document_word_count(doc):</span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a>    <span class="cf">assert</span> doc.get_line_count() <span class="op">==</span> <span class="dv">2</span></span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a></span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a><span class="kw">def</span> test_document_word_occurrence(doc):</span>
+<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a>    <span class="cf">assert</span> doc.get_word_occurrence(<span class="st">"test"</span>) <span class="op">==</span> <span class="dv">2</span></span></code></pre>
+</div>
+<div id="callout3" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Because our Documents are validated by searching for a starting and
+ending regex pattern, our test files will not have that. We could ensure
+that our test files would, or we can just temporarily alter the search
+pattern for the duration of the test. <code>CONTENT_PATTERN</code> is a
+class level variable, so we need to modify it before the instance is
+created.</p>
+</div>
+</div>
+</div>
+<p>Let’s run our tests again. Nothing changed in the output, but our
+code is now cleaner and easier to maintain.</p>
+</div>
+<div class="section level3">
+<h3 id="monkey-patching">Monkey Patching<a class="anchor" aria-label="anchor" href="#monkey-patching"></a>
+</h3>
+<p>Another useful feature of pytest is monkey patching. Monkey patching
+is a way to modify or extend the behavior of a function or class during
+testing. This is useful when you want to test a function that depends on
+an external resource, such as a database, file system or web resource.
+Instead of actually accessing the external resource, you can use monkey
+patching to replace the function that accesses the resource with a mock
+function that returns a predefined value.</p>
+<p>In our use case, we have a file called <code>example_file.txt</code>
+that we use to test our <code>Document</code> class. However, if we
+wanted to test the <code>Document</code> class with files that have
+different contents, would need to create a whole array of different test
+files. Instead, we can use monkey patching to replace the
+<code>open</code> function, so that instead of actually opening a file,
+it returns a string that we define.</p>
+<p>Let’s monkey patch the <code>open</code> function in our
+<code>test_document.py</code> file. First, we need to import the
+<code>monkeypatch</code> fixture from <code>unittest.mock</code> (a
+python built-in module). Add the following import at the top of the
+file:</p>
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="im">from</span> unittest.mock <span class="im">import</span> mock_open</span></code></pre>
+</div>
+<p>Then, we can create a new fixture that monkey patches the
+<code>open</code> function. Add the following code below the
+<code>doc</code> fixture:</p>
+<div class="codewrapper sourceCode" id="cb19">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" tabindex="-1"></a><span class="at">@pytest.fixture</span>(autouse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" tabindex="-1"></a><span class="kw">def</span> mock_file(monkeypatch):</span>
+<span id="cb19-3"><a href="#cb19-3" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span><span class="st">"This is a test document. It contains words.</span><span class="ch">\n</span><span class="st">It is only a test document."</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
+<span id="cb19-5"><a href="#cb19-5" tabindex="-1"></a>    <span class="cf">return</span> mock</span></code></pre>
+</div>
+<p>The other difference you’ll notice is that we added the parameter
+<code>autouse=True</code> to the fixture. This means that, within this
+test file, this specific fixture will be automatically applied to all
+tests, without needing to explicitly include it as a parameter in each
+test function.</p>
+<p>Go ahead and delete the <code>example_file.txt</code> file, and run
+the tests again. Your tests should still pass, even though the file
+doesn’t exist anymore. This is because we are using monkey patching to
+replace the <code>open</code> function with a mock function that returns
+the string we defined.</p>
+</div>
+<div class="section level3">
+<h3 id="edge-cases-again-test-driven-development">Edge Cases Again / Test Driven Development<a class="anchor" aria-label="anchor" href="#edge-cases-again-test-driven-development"></a>
+</h3>
+<p>Let’s go back and think about other things that might go wrong with
+our <code>Document</code> class. What if the user provides a file path
+that doesn’t exist? What if the user provides a file that is not a text
+file? Or a file that is empty of content? Rather than write these into
+our class object, we can first write tests that will check for the
+behavior we expect or want in these edge cases, see if they fail, and
+then update our class object to make the tests pass. This is called
+“Test Driven Development” (TDD), and is a common practice in software
+development.</p>
+<p>Let’s add a test for a file that is empty. In this case, we would
+want the initialization of the object to fail with a
+<code>ValueError</code>. However for this test, we can’t use our
+fixtures from above, so we’ll have to code it into the test. Add the
+following to <code>test_document.py</code>:</p>
+<div class="codewrapper sourceCode" id="cb20">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" tabindex="-1"></a><span class="kw">def</span> test_empty_file(monkeypatch):</span>
+<span id="cb20-2"><a href="#cb20-2" tabindex="-1"></a>    <span class="co"># Mock an empty file</span></span>
+<span id="cb20-3"><a href="#cb20-3" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
+<span id="cb20-5"><a href="#cb20-5" tabindex="-1"></a></span>
+<span id="cb20-6"><a href="#cb20-6" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>):</span>
+<span id="cb20-7"><a href="#cb20-7" tabindex="-1"></a>        Document(filepath<span class="op">=</span><span class="st">"empty_file.txt"</span>)</span></code></pre>
+</div>
+<div id="callout4" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Because we are monkeypatching the <code>open</code> function, we
+don’t actually need to have a file called <code>empty_file.txt</code> in
+our tests directory. The <code>open</code> function will be replaced
+with our mock function that returns an empty string. We are providing a
+file name here to be consistent with the <code>Document</code> class
+initialization, and we are using the name to act as additional
+information for later developers to clarify the intent of the test.</p>
+</div>
+</div>
+</div>
+<p>Run the tests again:</p>
+<div class="codewrapper sourceCode" id="cb21">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" tabindex="-1"></a><span class="ex">uv</span> run pytest</span></code></pre>
+</div>
+<p>It fails, as we expect. Now, let’s update the <code>Document</code>
+class to raise a <code>ValueError</code> if the file is empty. Open up
+<code>document.py</code> and update the <code>__init__</code> method to
+the following:</p>
+<div class="codewrapper sourceCode" id="cb22">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>, title: <span class="bu">str</span> <span class="op">=</span> <span class="st">"Untitled Document"</span>):</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>    <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>    <span class="va">self</span>.title <span class="op">=</span> title</span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filepath, <span class="st">'r'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>        <span class="va">self</span>._content <span class="op">=</span> <span class="bu">file</span>.read()</span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="va">self</span>._content:</span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> contains no content."</span>)</span></code></pre>
+</div>
+<div id="challenge-1-additional-edge-case" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-1-additional-edge-case" class="callout-inner">
+<h3 class="callout-title">Challenge 1: Additional Edge Case</h3>
+<div class="callout-content">
+<p>Try adding a test for another edge case, this time for a file that is
+not actually a text file, for example, a binary file or an image file.
+Then, update the <code>Document</code> class to make the test pass.</p>
+</div>
+</div>
+</div>
+<div id="accordionHint1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
+  <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
+</button>
+<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
+<div class="accordion-body">
+<p>You can mock a binary file by using the <code>mock_open</code>
+function from the <code>unittest.mock</code> module, and using the
+<code>read_data</code> parameter to provide binary data like
+<code>b'\x00\x01\x02'</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionHint2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint2" aria-expanded="false" aria-controls="collapseHint2">
+  <h4 class="accordion-header" id="headingHint2"> Give me a hint </h4>
+</button>
+<div id="collapseHint2" class="accordion-collapse collapse" data-bs-parent="#accordionHint2" aria-labelledby="headingHint2">
+<div class="accordion-body">
+<p>In the <code>Document</code> class, we need to check if the data read
+from the file is binary data. The <code>read</code> method of a file
+object is clever enough to return binary data as a <code>bytes</code>
+object, so we can check if the data in <code>self._content</code> is an
+instance of type <code>bytes</code>. If it is, we can raise a
+<code>ValueError</code>.</p>
+<div class="codewrapper sourceCode" id="cb23">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>text_data <span class="op">=</span> <span class="st">"This is a test string."</span></span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="cf">if</span> <span class="bu">isinstance</span>(text_data, <span class="bu">bytes</span>):</span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"File is not a valid text file."</span>)</span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>binary_data <span class="op">=</span> <span class="st">b'</span><span class="ch">\x00\x01\x02</span><span class="st">'</span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="cf">if</span> <span class="bu">isinstance</span>(binary_data, <span class="bu">bytes</span>):</span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"File is not a valid text file."</span>)</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<p>You can create a test that simulates opening a binary file by using
+the <code>mock_open</code> function from the <code>unittest.mock</code>
+module. Here’s an example of how you might write such a test:</p>
+<div class="codewrapper sourceCode" id="cb24">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="kw">def</span> test_binary_file(monkeypatch):</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>    <span class="co"># Mock a binary file</span></span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span><span class="st">b'</span><span class="ch">\x00\x01\x02</span><span class="st">'</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
+<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a></span>
+<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>):</span>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a>        Document(filepath<span class="op">=</span><span class="st">"binary_file.bin"</span>, title<span class="op">=</span><span class="st">"Binary File"</span>)</span></code></pre>
+</div>
+<p>And then, in the <code>Document</code> class, you can check if the
+data read from the file is binary data like this:</p>
+<div class="codewrapper sourceCode" id="cb25">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="kw">class</span> Document:</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>, title: <span class="bu">str</span>, author: <span class="bu">str</span> <span class="op">=</span> <span class="st">""</span>, <span class="bu">id</span>: <span class="bu">int</span> <span class="op">=</span> <span class="dv">0</span>):</span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> title</span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> author</span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> <span class="bu">id</span></span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>        <span class="va">self</span>._content <span class="op">=</span> <span class="va">self</span>._read(<span class="va">self</span>.filepath)</span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> <span class="va">self</span>._content:</span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> contains no content."</span>)</span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a></span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(<span class="va">self</span>._content, <span class="bu">bytes</span>):</span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> is not a valid text file."</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a>...</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="keypoints1" class="callout keypoints">
+<div class="callout-square">
+<i class="callout-icon" data-feather="key"></i>
+</div>
+<span class="callout-header">Key Points</span>
+<div class="callout-inner">
+<div class="callout-content">
+<ul>
+<li>We can use <code>pytest</code> to write and run unit tests in
+Python.</li>
+<li>A good test is isolated, repeatable, fast, and clear.</li>
+<li>We can use fixtures to provide data or state to our tests.</li>
+<li>We can use monkey patching to modify the behavior of functions or
+classes during testing.</li>
+<li>Test Driven Development (TDD) is a practice where we write tests
+before writing the code to make the tests pass.</li>
+</ul>
+</div>
+</div>
+</div>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</div>
+</section></section><section id="aio-05-extending-classes"><p>Content from <a href="05-extending-classes.html">05-extending-classes</a></p>
+<hr>
+<p>Last updated on 2025-09-11 |
+
+        <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/05-extending-classes.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 12 minutes</p>
+<div class="text-end">
+          <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
+        </div>
+<div class="overview card">
+<h2 class="card-header">Overview</h2>
+<div class="row g-0">
+<div class="col-md-4">
+<div class="card-body">
+<div class="inner">
+<h3 class="card-title">Questions</h3>
+<ul>
+<li>How do you write a lesson using R Markdown and
+<a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="col-md-8">
+<div class="card-body">
+<div class="inner bordered">
+<h3 class="card-title">Objectives</h3>
+<ul>
+<li>Explain how to use markdown with the new lesson template</li>
+<li>Demonstrate how to include pieces of code, figures, and nested
+challenge blocks</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section><h2 class="section-heading" id="extending-classes-with-inheritance">Extending Classes with Inheritance<a class="anchor" aria-label="anchor" href="#extending-classes-with-inheritance"></a>
+</h2>
+<hr class="half-width">
+<p>So far you may be wondering why classes are useful. After all, all
+we’ve really done in essence is make a tiny module with some functions
+in it that are slightly more complicated than normal functions. One of
+the real powers of classes is the ability to limit code duplicate
+through a concept called inheritance.</p>
+<div class="section level3">
+<h3 id="inheritance">Inheritance<a class="anchor" aria-label="anchor" href="#inheritance"></a>
+</h3>
+<p>Inheritance is a way to create a new class that contains all of the
+same properties and methods as an existing class, but allows us to add
+additional new properties and methods, or to override existing methods.
+This allows us to create a new class that is a specialized version of an
+existing class, without having to rewrite a whole bunch of code.</p>
+<p>Taking a look at our Car class from earlier, we might want to create
+a new class for a specific type of car, like a Convertable Car. A
+Convertible Car is a type of Car, so it should have everything that a
+Car has, but it also has some additional properties and methods, for
+example, it might have a property to indicate whether the roof is up or
+down. We can create a new class called ConvertibleCar that inherits from
+the Car class, and then add the new property and method to it.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="kw">class</span> ConvertibleCar(Car):</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, make: <span class="bu">str</span>, model: <span class="bu">str</span>, year: <span class="bu">int</span>, color: <span class="bu">str</span> <span class="op">=</span> <span class="st">"grey"</span>):</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(make, model, year, color)</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>        <span class="va">self</span>.roof_is_up <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="kw">def</span> lower_roof(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>        <span class="va">self</span>.roof_is_up <span class="op">=</span> <span class="va">False</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    <span class="kw">def</span> raise_roof(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>        <span class="va">self</span>.roof_is_up <span class="op">=</span> <span class="va">True</span></span></code></pre>
+</div>
+<p>You can see that the ConvertibleCar class is defined in a similar way
+to the Car class, but it inherits from the Car class by including it in
+parentheses after the class name. The <code>__init__</code> method of
+the ConvertibleCar class also has a call to
+<code>super().__init__()</code>. The <code>super()</code> function is a
+way to refer specifically to the parent class, in this case, the Car
+class. This allows us to call the <code>__init__</code> method of the
+Car class, which sets up all of the properties that a Car has.</p>
+</div>
+<div class="section level3">
+<h3 id="applying-inheritance-to-our-document-class">Applying Inheritance to Our Document Class<a class="anchor" aria-label="anchor" href="#applying-inheritance-to-our-document-class"></a>
+</h3>
+<p>For our <code>Document</code> class, we have a few different types of
+documents available from the Project Gutenberg website. We are currently
+using plain text files, but there are also HTML files that we can
+download. They will have the same information, but the data within will
+be structured in a slightly different way. We can use inheritance to
+create a pair of new classes: <code>HTMLDocument</code> and
+<code>PlainTextDocument</code>, that both inherit from the
+<code>Document</code> class. This will allow us to keep all of the
+common functionality in the <code>Document</code> class, but to add any
+additional functionality specific to each document type.</p>
+<p>Most of what we’ve written so far is specific to reading and parsing
+data out of the plain text files, so almost all of the code from
+<code>Document</code> can be copied. We’ll leave the functions for
+<code>gutenberg_url</code>, <code>get_line_count</code>, and
+<code>get_word_occurrence</code>.</p>
+<p>In addition, we’ll need an <code>__init__</code> in our
+<code>Document</code> class. At the moment, all it does is save the
+filename in the <code>filename</code> property, but we might expand this
+in the future. We’ll also need a reference to the
+<code>super().__init__()</code> in our <code>PlainTextDocument</code>.
+At the moment, our classes look like this:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="kw">class</span> Document:</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a>    <span class="kw">def</span> gutenberg_url(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.<span class="bu">id</span>:</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>            <span class="cf">return</span> <span class="ss">f"https://www.gutenberg.org/cache/epub/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">/pg</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">.txt"</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>):</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>    <span class="kw">def</span> get_line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>._content.splitlines())</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>    <span class="kw">def</span> get_word_occurrence(<span class="va">self</span>, word: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._content.lower().count(word.lower())</span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.document <span class="im">import</span> Document</span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="kw">class</span> PlainTextDocument(Document):</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a>    TITLE_PATTERN <span class="op">=</span> <span class="vs">r"^Title:\s*(.*?)\s*$"</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a>    AUTHOR_PATTERN <span class="op">=</span> <span class="vs">r"^Author:\s*(.*?)\s*$"</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    ID_PATTERN <span class="op">=</span> <span class="vs">r"^Release date:\s*.*?\[eBook #(\d+)\]"</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>):</span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(filepath<span class="op">=</span>filepath)</span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a>        raw_text <span class="op">=</span> <span class="va">self</span>._read(<span class="va">self</span>.filepath)</span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> raw_text:</span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> contains no content."</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(raw_text, <span class="bu">bytes</span>):</span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> is not a valid text file."</span>)</span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> <span class="va">self</span>._get_metadata(raw_text, <span class="va">self</span>.TITLE_PATTERN)</span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> <span class="va">self</span>._get_metadata(raw_text, <span class="va">self</span>.AUTHOR_PATTERN)</span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a>        extracted_id <span class="op">=</span> <span class="va">self</span>._get_metadata(raw_text, <span class="va">self</span>.ID_PATTERN)</span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> <span class="bu">int</span>(extracted_id) <span class="cf">if</span> extracted_id <span class="cf">else</span> <span class="va">None</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>        <span class="va">self</span>._content <span class="op">=</span> <span class="va">self</span>._get_content(raw_text)</span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>    <span class="kw">def</span> _get_content(<span class="va">self</span>, content: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>        match <span class="op">=</span> re.search(<span class="va">self</span>.CONTENT_PATTERN, content, re.DOTALL)</span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> is not a valid Project Gutenberg Text file."</span>)</span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a>    <span class="kw">def</span> _get_metadata(<span class="va">self</span>, content: <span class="bu">str</span>, pattern: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a>        match <span class="op">=</span> re.search(pattern, content, re.MULTILINE)</span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>    <span class="kw">def</span> _read(<span class="va">self</span>, file_path: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">file</span>.read()</span></code></pre>
+</div>
+<p>We’ll also have another class for reading HTML files. This will be
+similar to the ´´PlainTextDocument´´ class, but it will use the
+´BeautifulSoup´ library to parse the HTML file and extract the content
+and metadata. Rather than type out the entire class now, you can either
+copy and paste the code below into a new file called ´html_document.py´,
+or you can download the file from the <a href="">Workshop Resources
+TODO</a>.</p>
+<div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
+  <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
+</button>
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div class="accordion-body">
+<p>´´´python import re</p>
+<p>from bs4 import BeautifulSoup</p>
+<p>from textanalysis_tool.document import Document</p>
+<p>class HTMLDocument(Document): URL_PATTERN = “^<a href="https://www.gutenberg.org/files/(%5Cd+)/" class="external-link uri">https://www.gutenberg.org/files/(\d+)/</a>.*”</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">SH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode sh" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">def</span> __init__<span class="er">(</span><span class="ex">self,</span> filepath: str<span class="kw">)</span><span class="bu">:</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>    <span class="fu">super()</span><span class="ex">.__init__</span><span class="er">(</span><span class="va">filepath</span><span class="op">=</span>filepath<span class="kw">)</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="ex">raw_soup</span> = self._read<span class="er">(</span><span class="ex">self.filepath</span><span class="kw">)</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="ex">self.title</span> = self._get_metadata<span class="er">(</span><span class="ex">raw_soup,</span> <span class="st">"dc.title"</span><span class="kw">)</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a>    <span class="ex">self.author</span> = self._get_metadata<span class="er">(</span><span class="ex">raw_soup,</span> <span class="st">"dc.creator"</span><span class="kw">)</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a>    <span class="ex">url</span> = self._get_metadata<span class="er">(</span><span class="ex">raw_soup,</span> <span class="st">"dcterms.source"</span><span class="kw">)</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>    <span class="ex">extracted_id</span> = re.search<span class="er">(</span><span class="ex">self.URL_PATTERN,</span> url, re.DOTALL<span class="kw">)</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>    <span class="ex">self.id</span> = int<span class="er">(</span><span class="ex">extracted_id.group</span><span class="er">(</span><span class="ex">1</span><span class="kw">))</span> <span class="cf">if</span> <span class="ex">extracted_id.group</span><span class="er">(</span><span class="ex">1</span><span class="kw">)</span> <span class="cf">else</span> <span class="ex">None</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>    <span class="ex">self._content</span> = self._get_content<span class="er">(</span><span class="ex">raw_soup</span><span class="kw">)</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="ex">def</span> _read<span class="er">(</span><span class="ex">self,</span> filepath<span class="kw">)</span> <span class="ex">-</span><span class="op">&gt;</span> BeautifulSoup:</span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>    <span class="ex">with</span> open<span class="er">(</span><span class="st">"pg2680-images.html"</span><span class="ex">,</span> encoding=<span class="st">"utf-8"</span><span class="kw">)</span> <span class="fu">as</span> file_obj:</span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>        <span class="ex">soup</span> = BeautifulSoup<span class="er">(</span><span class="ex">file_obj</span><span class="kw">)</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>    <span class="cf">return</span> <span class="ex">soup</span></span>
+<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a></span>
+<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="ex">def</span> _get_content<span class="er">(</span><span class="ex">self,</span> soup: BeautifulSoup<span class="kw">)</span> <span class="ex">-</span><span class="op">&gt;</span> str:</span>
+<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>    <span class="co"># Find the first h1 tag (The book title)</span></span>
+<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>    <span class="ex">title_h1</span> = soup.find<span class="er">(</span><span class="st">"h1"</span><span class="kw">)</span></span>
+<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a></span>
+<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>    <span class="co"># Collect all the content after the first h1</span></span>
+<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a>    <span class="ex">content</span> = []</span>
+<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a>    <span class="cf">for</span> element <span class="kw">in</span> title_h1.find_next_siblings<span class="er">(</span><span class="kw">)</span><span class="bu">:</span></span>
+<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>        <span class="ex">text</span> = element.get_text<span class="er">(</span><span class="va">strip</span><span class="op">=</span>True<span class="kw">)</span></span>
+<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a></span>
+<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a>        <span class="co"># Stop early if we hit this text, which indicate the end of the book</span></span>
+<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">"END OF THE PROJECT GUTENBERG EBOOK"</span> in text:</span>
+<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a></span>
+<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a>        <span class="cf">if</span> <span class="ex">text:</span></span>
+<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a>            <span class="ex">content.append</span><span class="er">(</span><span class="ex">text</span><span class="kw">)</span></span>
+<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a></span>
+<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'\n\n'</span><span class="ex">.join</span><span class="er">(</span><span class="ex">content</span><span class="kw">)</span></span>
+<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a></span>
+<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a><span class="ex">def</span> _get_metadata<span class="er">(</span><span class="ex">self,</span> soup: BeautifulSoup, tag_name: str<span class="kw">)</span> <span class="ex">-</span><span class="op">&gt;</span> str:</span>
+<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a>    <span class="cf">return</span> <span class="ex">soup.find</span><span class="er">(</span><span class="st">"meta"</span><span class="ex">,</span> {<span class="st">"name"</span>: tag_name}<span class="kw">)</span><span class="ex">[</span><span class="st">"content"</span><span class="ex">]</span></span></code></pre>
+</div>
+<p>´´´</p>
+</div>
+</div>
+</div>
+</div>
+<p>Now let’s try testing out our classes. We already have the
+<code>pg2680.txt</code> file in our ´scratch´ folder, now let’s download
+the HTML version of the same book from Project Gutenberg. You can
+download it from <a href="https://www.gutenberg.org/cache/epub/55317/pg55317-h.zip" class="external-link">this
+link</a>. (Note that the file is zipped, as it also contains images. We
+won’t be using the images, but you’ll need to unzip the file to get to
+the HTML file.) Once you have the HTML file, place it in the ´scratch´
+folder alongside the ´pg2680.txt´ file.</p>
+<p>You can either copy and paste the code below into a new file called
+<code>test_inheritance.py</code>, or you can download the file from the
+<a href="">Workshop Resources TODO</a>.</p>
+<p>```python import sys sys.path.insert(0, “./src”)</p>
+<p>´´´</p>
+<div id="keypoints1" class="callout keypoints">
+<div class="callout-square">
+<i class="callout-icon" data-feather="key"></i>
+</div>
+<span class="callout-header">Key Points</span>
+<div class="callout-inner">
+<div class="callout-content">
+<ul>
+<li>Use <code>.md</code> files for episodes when you want static
+content</li>
+<li>Use <code>.Rmd</code> files for episodes when you need to generate
+output</li>
+<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
+with your lesson</li>
+<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
+locally</li>
+</ul>
+</div>
+</div>
+</div>
+<!--
+Place links that you need to refer to multiple times across pages here. Delete
+any links that you are not going to use.
+ -->
+</div>
 </section></section>
 </div>
     </main>
@@ -542,8 +2652,8 @@ any links that you are not going to use.
   "url": "https://jonathan-hartman.github.io/python-intermediate-tool/instructor/aio.html",
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/instructor/aio.html",
   "dateCreated": "2025-08-23",
-  "dateModified": "2025-09-09",
-  "datePublished": "2025-09-09"
+  "dateModified": "2025-09-11",
+  "datePublished": "2025-09-11"
 }
 
   </script><script>
