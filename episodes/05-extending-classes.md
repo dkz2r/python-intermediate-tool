@@ -394,12 +394,248 @@ class Document(ABC):
 
 :::
 
+## Unit Testing
+
+One of the first effects of this is that our `Document` class is no longer directly testable, since
+it cannot be instantiated directly. However, we can still test the `PlainTextDocument` and
+`HTMLDocument` classes, which will also indirectly test the `Document` class. You can either copy
+the code below into two new files called `tests/test_plain_text_document.py` and
+`tests/test_html_document.py`, or you can download the files from the [Workshop Resources TODO]().
+(Also make sure to delete the existing `tests/test_document.py` file, since it is no longer
+applicable.)
+
+`tests/test_plain_text_document.py`
+
+::: spoiler
+
+```python
+import pytest
+from unittest.mock import mock_open
+
+from textanalysis_tool.plain_text_document import PlainTextDocument
+
+TEST_DATA = """
+Title: Test Document
+
+Author: Test Author
+
+Release date: January 1, 2001 [eBook #1234]
+                Most recently updated: February 2, 2002
+
+*** START OF THE PROJECT GUTENBERG EBOOK TEST ***
+This is a test document. It contains words.
+It is only a test document.
+*** END OF THE PROJECT GUTENBERG EBOOK TEST ***
+"""
+
+
+@pytest.fixture(autouse=True)
+def mock_file(monkeypatch):
+    mock = mock_open(read_data=TEST_DATA)
+    monkeypatch.setattr("builtins.open", mock)
+    return mock
+
+
+@pytest.fixture
+def doc():
+    return PlainTextDocument(filepath="tests/example_file.txt")
+
+
+def test_create_document(doc):
+    assert doc.title == "Test Document"
+    assert doc.author == "Test Author"
+    assert isinstance(doc.id, int) and doc.id == 1234
+
+
+def test_empty_file(monkeypatch):
+    # Mock an empty file
+    mock = mock_open(read_data="")
+    monkeypatch.setattr("builtins.open", mock)
+
+    with pytest.raises(ValueError):
+        PlainTextDocument(filepath="empty_file.txt")
+
+
+def test_binary_file(monkeypatch):
+    # Mock a binary file
+    mock = mock_open(read_data=b"\x00\x01\x02")
+    monkeypatch.setattr("builtins.open", mock)
+
+    with pytest.raises(ValueError):
+        PlainTextDocument(filepath="binary_file.bin")
+
+
+def test_document_line_count(doc):
+    assert doc.line_count == 2
+
+
+def test_document_word_occurrence(doc):
+    assert doc.get_word_occurrence("test") == 2
+
+```
+
+:::
+
+`tests/test_html_document.py`
+
+::: spoiler
+
+```python
+import pytest
+from unittest.mock import mock_open
+
+from textanalysis_tool.html_document import HTMLDocument
+
+TEST_DATA = """
+<head>
+  <meta name="dc.title" content="Test Document">
+  <meta name="dcterms.source" content="https://www.gutenberg.org/files/1234/1234-h/1234-h.htm">
+  <meta name="dc.creator" content="Test Author">
+</head>
+<body>
+  <h1>Test Document</h1>
+  <p>
+    This is a test document. It contains words.
+    It is only a test document.
+  </p>
+</body>
+"""
+
+
+@pytest.fixture(autouse=True)
+def mock_file(monkeypatch):
+    mock = mock_open(read_data=TEST_DATA)
+    monkeypatch.setattr("builtins.open", mock)
+    return mock
+
+
+@pytest.fixture
+def doc():
+    return HTMLDocument(filepath="tests/example_file.txt")
+
+
+def test_create_document(doc):
+    assert doc.title == "Test Document"
+    assert doc.author == "Test Author"
+    assert isinstance(doc.id, int) and doc.id == 1234
+
+
+def test_empty_file(monkeypatch):
+    # Mock an empty file
+    mock = mock_open(read_data="")
+    monkeypatch.setattr("builtins.open", mock)
+
+    with pytest.raises(ValueError):
+        HTMLDocument(filepath="empty_file.html")
+
+
+def test_document_line_count(doc):
+    assert doc.line_count == 2
+
+
+def test_document_word_occurrence(doc):
+    assert doc.get_word_occurrence("test") == 2
+```
+
+:::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 1: Fixing the test
+
+When we run the tests, we get the following result:
+
+```
+======================================= test session starts ========================================
+platform win32 -- Python 3.11.11, pytest-8.4.2, pluggy-1.6.0
+rootdir: E:\Projects\Python\scratch\textanalysis-tool
+configfile: pyproject.toml
+plugins: anyio-4.9.0
+collected 11 items
+
+tests\test_html_document.py .F..                                                              [ 36%]
+tests\test_plain_text_document.py .....                                                       [ 81%]
+tests\test_say_hello.py ..                                                                    [100%]
+
+============================================= FAILURES =============================================
+_________________________________________ test_empty_file __________________________________________
+
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x000001FBDABE9390>
+
+    def test_empty_file(monkeypatch):
+        # Mock an empty file
+        mock = mock_open(read_data="")
+        monkeypatch.setattr("builtins.open", mock)
+
+        with pytest.raises(ValueError):
+>           HTMLDocument(filepath="empty_file.html")
+
+tests\test_html_document.py:46:
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+src\textanalysis_tool\document.py:14: in __init__
+    self.content = self.get_content(filepath)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+self = <textanalysis_tool.html_document.HTMLDocument object at 0x000001FBDA8FE5D0>, filepath = 'empty_file.html'
+
+    def get_content(self, filepath) -> str:
+        soup = self.read(filepath)
+
+        # Find the first h1 tag (The book title)
+        title_h1 = soup.find("h1")
+
+        # Collect all the content after the first h1
+        content = []
+>       for element in title_h1.find_next_siblings():
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AttributeError: 'NoneType' object has no attribute 'find_next_siblings'
+
+src\textanalysis_tool\html_document.py:31: AttributeError
+===================================== short test summary info ======================================
+FAILED tests/test_html_document.py::test_empty_file - AttributeError: 'NoneType' object has no attribute 'find_next_siblings'
+=================================== 1 failed, 10 passed in 0.28s ===================================
+```
+
+Why is this happening? What do we need to change in the `HTMLDocument` class to fix this?
+
+::: hint
+
+The `open` function is being monkeypatched to return an empty string, which is then passed to
+the `BeautifulSoup` constructor. When `BeautifulSoup` is given an empty string, it creates a
+`BeautifulSoup` object with no content.
+:::
+
+:::::::::::::::: solution
+
+The error is occurring because the `HTMLDocument` class is trying to find the first `h1` tag in
+the HTML content, but since the content is empty, there is no `h1` tag to find. There are then no
+siblings to iterate over, which results in an `AttributeError`.
+
+We can fix this by adding similar `ValueError` checks in the `HTMLDocument` class's `read`
+method to ensure that the file is not empty and is a valid HTML file:
+
+```python
+    def read(self, filepath) -> BeautifulSoup:
+        with open(filepath, encoding="utf-8") as file_obj:
+            soup = BeautifulSoup(file_obj, features="html.parser")
+
+        # Check that the file is parsable as HTML
+        if not soup:
+            raise ValueError("The file could not be parsed as HTML.")
+
+        return soup
+```
+
+```
+
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
+
 ::::::::::::::::::::::::::::::::::::: keypoints
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- Inheritance allows us to create a new class that is a specialized version of an existing class
+- We can override methods and properties in a subclass to provide specialized behavior
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 

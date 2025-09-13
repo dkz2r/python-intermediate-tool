@@ -473,7 +473,7 @@ def test_binary_file(monkeypatch):
     monkeypatch.setattr("builtins.open", mock)
 
     with pytest.raises(ValueError):
-        Document(filepath="binary_file.bin", title="Binary File")
+        Document(filepath="binary_file.bin")
 ```
 
 And then, in the `Document` class, you can check if the data read from the file is binary data like
