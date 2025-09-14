@@ -71,6 +71,8 @@ episodes:
 - 04-unit-testing.md
 - 05-extending-classes.md
 - 06-composition.md
+- 07-static-code-analysis.md
+- 08-building-and-deploying.md
 
 # Information for Learners
 learners: 
