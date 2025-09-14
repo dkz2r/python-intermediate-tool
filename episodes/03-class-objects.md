@@ -36,7 +36,7 @@ are both "methods" of the car. Here's a diagram of our car object:
 
 In python we can define a class object like this:
 
-```
+```python
 class Car:
     def __init__(self, make: str, model: str, year: int, color: str = "grey"):
         self.make = make

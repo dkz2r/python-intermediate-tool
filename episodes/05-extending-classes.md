@@ -156,7 +156,7 @@ from bs4 import BeautifulSoup
 from textanalysis_tool.document import Document
 
 class HTMLDocument(Document):
-    URL_PATTERN = "^https://www.gutenberg.org/files/(\d+)/.*"
+    URL_PATTERN = "^https://www.gutenberg.org/files/([0-9]+)/.*"
 
     @property
     def gutenberg_url(self) -> str | None:
