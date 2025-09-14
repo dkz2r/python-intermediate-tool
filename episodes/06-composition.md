@@ -81,8 +81,10 @@ class CarElectricEngine(Car)
 ```
 
 But what happens if we start adding more kinds of engines? Or if our engines start getting more
-complex, with different properties and methods? We would end up with a lot of subclasses, some of
-which might have similar functionality.
+complex, with different properties and methods? Even worse, what if we want to add a new type of
+car component, like `Wheels`? Do we now need to start creating subclasses for every possible
+combination of car, engine, and wheels? We would end up with a lot of subclasses, some of
+which might have extremely similar (if not identical) functionality.
 
 Instead, we can use a Compositional approach by making a new kind of class called `Engine`, and
 then including an instance of that class as a property of the `Car` class. This way, we can create
@@ -494,6 +496,110 @@ def test_get_metadata():
     assert metadata["id"] == 1234
 
 ```
+
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 2: Adding a New Reader
+
+We have one last filetype we haven't added support for yet: Epub. Create a new reader class for
+epub files called `EpubReader` in a file called `readers/epub_reader.py`. You can use the
+`ebooklib` package to read epub files. You can install it with pip:
+
+```bash
+uv pip install Ebooklib
+```
+
+You can refer to the [package documentation here](https://docs.sourcefabric.org/projects/ebooklib/en/latest/tutorial.html)
+
+::: hint
+
+To get the metadata from an epub file, you can use the `get_metadata` method of the `EpubBook`
+class. Project Gutenberg uses the "Dublin Core" metadata standard, so the namespace is "DC".
+
+Here's an example of how to get the title:
+
+```python
+book.get_metadata(namespace="DC", name="title")[0][0]
+```
+
+The `get_metadata` method returns a list of tuples, where the first element is the value and the
+second element is the attributes, so we need to access the first element of the first tuple to get
+the actual title.
+
+The other metadata fields we need are "creator" (author) and "source" (id).
+
+:::
+
+::: hint
+
+To get the content from an epub file, we can iterate over all of the "items" in the book that are
+a document, then use `BeautifulSoup` to extract the text from the HTML content.
+
+```python
+for item in book.get_items_of_type(ebooklib.ITEM_DOCUMENT):
+    soup = BeautifulSoup(item.get_content(), features="html.parser")
+    text = soup.get_text()
+    # Do something with the text
+```
+
+:::
+
+:::::::::::::::: solution
+
+```python
+import re
+
+from bs4 import BeautifulSoup
+import ebooklib
+
+from textanalysis_tool.readers.base_reader import BaseReader
+
+
+class EPUBReader(BaseReader):
+    SOURCE_URL_PATTERN = "https://www.gutenberg.org/files/([0-9]+)/[0-9]+-h/[0-9]+-h.htm"
+
+    def read(self, filepath: str) -> ebooklib.epub.EpubBook:
+        book = ebooklib.epub.read_epub(filepath)
+        if not book:
+            raise ValueError("The file could not be parsed as EPUB.")
+        return book
+
+    def get_content(self, filepath):
+        book = self.read(filepath)
+        text = ""
+        for section in book.get_items_of_type(ebooklib.ITEM_DOCUMENT):
+            content = section.get_content()
+            soup = BeautifulSoup(content, features="html.parser")
+            text += soup.get_text()
+        return text
+
+    def get_metadata(self, filepath) -> dict:
+        book = self.read(filepath)
+
+        source_url = book.get_metadata(namespace="DC", name="source")[0][0]
+        extracted_id = re.search(self.SOURCE_URL_PATTERN, source_url, re.DOTALL).group(1)
+
+        metadata = {
+            "title": book.get_metadata(namespace="DC", name="title")[0][0],
+            "author": book.get_metadata(namespace="DC", name="creator")[0][0],
+            "extracted_id": int(extracted_id) if extracted_id else None,
+        }
+        return metadata
+```
+
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 1: Writing Tests for the Readers
+
+
+:::::::::::::::: solution
+
 
 :::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::
