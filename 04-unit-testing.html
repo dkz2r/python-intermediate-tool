@@ -118,11 +118,11 @@
   Intermediate Python - Concepts, Tools and Packaging
 </div>
 
-<aside class="col-md-12 lesson-progress"><div style="width: 50%" class="percentage">
-    50%
+<aside class="col-md-12 lesson-progress"><div style="width: 29%" class="percentage">
+    29%
   </div>
   <div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 50%" aria-valuenow="50" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar incubator" role="progressbar" style="width: 29%" aria-valuenow="29" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
     </div>
   </div>
 </aside><div class="container">
@@ -254,7 +254,34 @@
 <div class="accordion accordion-flush" id="accordionFlush6">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading6">
-        <a href="05-extending-classes.html">5. 05-extending-classes</a>
+        <a href="05-extending-classes.html">5. Extending Classes with Inheritance</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush7">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading7">
+        <a href="06-composition.html">6. Inheritance and Composition</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush8">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading8">
+        <a href="07-static-code-analysis.html">7. Static Code Analysis</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush9">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading9">
+        <a href="08-building-and-deploying.html">8. Building and Deploying a Package</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -312,13 +339,13 @@
           Previous: Class Objects
         </a>
         <a class="chapter-link float-end" href="05-extending-classes.html" rel="next">
-          Next: 05-extending-classes...
+          Next: Extending Classes...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Unit Testing</h1>
-        <p>Last updated on 2025-09-11 |
+        <p>Last updated on 2025-09-15 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/04-unit-testing.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -402,7 +429,7 @@ object or function, as well as a few edge cases.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>Some edge cases for the <code>hello</code> function could
 include:</p>
@@ -842,7 +869,7 @@ Then, update the <code>Document</code> class to make the test pass.</p>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
   <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
+<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
 <div class="accordion-body">
 <p>You can mock a binary file by using the <code>mock_open</code>
 function from the <code>unittest.mock</code> module, and using the
@@ -857,7 +884,7 @@ function from the <code>unittest.mock</code> module, and using the
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint2" aria-expanded="false" aria-controls="collapseHint2">
   <h4 class="accordion-header" id="headingHint2"> Give me a hint </h4>
 </button>
-<div id="collapseHint2" class="accordion-collapse collapse" data-bs-parent="#accordionHint2" aria-labelledby="headingHint2">
+<div id="collapseHint2" class="accordion-collapse collapse" aria-labelledby="headingHint2" data-bs-parent="#accordionHint2">
 <div class="accordion-body">
 <p>In the <code>Document</code> class, we need to check if the data read
 from the file is binary data. The <code>read</code> method of a file
@@ -885,7 +912,7 @@ instance of type <code>bytes</code>. If it is, we can raise a
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>You can create a test that simulates opening a binary file by using
 the <code>mock_open</code> function from the <code>unittest.mock</code>
@@ -899,7 +926,7 @@ module. Here’s an example of how you might write such a test:</p>
 <span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
 <span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a></span>
 <span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>):</span>
-<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a>        Document(filepath<span class="op">=</span><span class="st">"binary_file.bin"</span>, title<span class="op">=</span><span class="st">"Binary File"</span>)</span></code></pre>
+<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a>        Document(filepath<span class="op">=</span><span class="st">"binary_file.bin"</span>)</span></code></pre>
 </div>
 <p>And then, in the <code>Document</code> class, you can check if the
 data read from the file is binary data like this:</p>
@@ -960,7 +987,7 @@ any links that you are not going to use.
           Previous: Class Objects
         </a>
         <a class="chapter-link float-end" href="05-extending-classes.html" rel="next">
-          Next: 05-extending-classes...
+          Next: Extending Classes...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -1006,8 +1033,8 @@ any links that you are not going to use.
   "url": "https://jonathan-hartman.github.io/python-intermediate-tool/04-unit-testing.html",
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/04-unit-testing.html",
   "dateCreated": "2025-08-23",
-  "dateModified": "2025-09-11",
-  "datePublished": "2025-09-11"
+  "dateModified": "2025-09-15",
+  "datePublished": "2025-09-15"
 }
 
   </script><script>
