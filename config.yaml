@@ -17,7 +17,7 @@ carpentry: 'incubator'
 # carpentry_description: "Custom Carpentry"
 
 # Overall title for pages.
-title: 'Lesson Title'
+title: 'Intermediate Python - Concepts, Tools and Packaging'
 
 # Date the lesson was created (YYYY-MM-DD, this is empty by default)
 created: '2025-08-23'
@@ -65,7 +65,14 @@ contact: 'team@carpentries.org'
 
 # Order of episodes in your lesson
 episodes: 
-- introduction.Rmd
+- 01-virtual-environments.md
+- 02-creating-a-module.md
+- 03-class-objects.md
+- 04-unit-testing.md
+- 05-extending-classes.md
+- 06-composition.md
+- 07-static-code-analysis.md
+- 08-building-and-deploying.md
 
 # Information for Learners
 learners: 
