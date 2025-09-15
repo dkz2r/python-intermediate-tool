@@ -100,7 +100,7 @@ about our project in a fairly readable format:
 
 ```toml
 [project]
-name = "textanalysis-tool"
+name = "textanalysis-tool-{my-name}"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -109,6 +109,14 @@ dependencies = []
 ```
 
 The `requires-python` field may vary depending on the exact version of python you're working with.
+
+::: important
+
+Make sure to change `{my-name}` in the `name` field to something unique, such as your GitHub
+username. This is important later when we upload our package to TestPyPI, as package names must
+be unique.
+
+:::
 
 ## Creating a Virtual Environment
 
