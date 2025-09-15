@@ -593,23 +593,12 @@ class EPUBReader(BaseReader):
 :::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge
-
-## Challenge 1: Writing Tests for the Readers
-
-
-:::::::::::::::: solution
-
-
-:::::::::::::::::::::::::
-:::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
 - Composition allows us to build complex functionality by combining several smaller, simpler classes
 - Composition promotes separation of concerns, reusability, flexibility, and maintainability
-- By using abstract base classes, we can define interfaces that subclasses must implement, allowing
-  for flexibility in our code design
+- By using abstract base classes, we can define interfaces that subclasses must implement, allowing for flexibility in our code design
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
