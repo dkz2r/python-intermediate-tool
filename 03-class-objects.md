@@ -36,7 +36,7 @@ are both "methods" of the car. Here's a diagram of our car object:
 
 In python we can define a class object like this:
 
-```
+```python
 class Car:
     def __init__(self, make: str, model: str, year: int, color: str = "grey"):
         self.make = make
@@ -127,17 +127,17 @@ class Document:
         self.title = title
         self.author = author
         self.id = id
-        self._content = self._read(self.filepath)
+        self.content = self.read(self.filepath)
 
-    def _read(self, file_path: str) -> None:
-        with open(file_path, 'r', encoding='utf-8') as file:
+    def read(self, filepath: str) -> None:
+        with open(filepath, 'r', encoding='utf-8') as file:
             return file.read()
 
     def get_line_count(self) -> int:
-        return len(self._content.splitlines())
+        return len(self.content.splitlines())
 
     def get_word_occurrence(self, word: str) -> int:
-        return self._content.lower().count(word.lower())
+        return self.content.lower().count(word.lower())
 ```
 
 Our class object `Document` is a "blueprint" for a collection of methods. When we define it, we
@@ -268,8 +268,8 @@ pattern = r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* EN
 :::::::::::::::: solution
 
 The Project Gutenberg text files have a lot of metadata at the start and end of the file, which
-will affect the line count and word occurrence counts. We might want to modify our `_read` method
-to strip out this metadata before storing the content in `self._content`.
+will affect the line count and word occurrence counts. We might want to modify our `self.read`
+method to strip out this metadata before storing the content in `self.content`.
 
 One possible solution would look like this:
 
@@ -283,33 +283,29 @@ class Document:
 
     def __init__(self, filepath: str, title: str, author: str = "", id: int = 0):
         self.filepath = filepath
+        self.content = self.get_content(filepath)
+
         self.title = title
         self.author = author
         self.id = id
-        raw_text = self._read(self.filepath)
 
-        if not raw_text:
-            raise ValueError(f"File {self.filepath} contains no content.")
-
-        self._content = self._get_content(raw_text)
-
-
-    def _get_content(self, content: str) -> str:
-        match = re.search(self.CONTENT_PATTERN, content, re.DOTALL)
+    def get_content(self, filepath: str) -> str:
+        raw_text = self.read(filepath)
+        match = re.search(self.CONTENT_PATTERN, raw_text, re.DOTALL)
         if match:
             return match.group(1).strip()
-        raise ValueError(f"File {self.filepath} is not a valid Project Gutenberg Text file.")
+        raise ValueError(f"File {filepath} is not a valid Project Gutenberg Text file.")
 
-    def _read(self, file_path: str) -> None:
-        with open(file_path, 'r', encoding='utf-8') as file:
+    def read(self, file_path: str) -> None:
+        with open(file_path, "r", encoding="utf-8") as file:
             return file.read()
 
     def get_line_count(self) -> int:
-        return len(self._content.splitlines())
+        return len(self.content.splitlines())
 
 
     def get_word_occurrence(self, word: str) -> int:
-        return self._content.lower().count(word.lower())
+        return self.content.lower().count(word.lower())
 
 ```
 
@@ -359,33 +355,44 @@ class Document:
 
     def __init__(self, filepath: str):
         self.filepath = filepath
-        raw_text = self._read(self.filepath)
+        self.content = self.get_content(filepath)
 
         if not raw_text:
             raise ValueError(f"File {self.filepath} contains no content.")
 
-        self.title = self._get_metadata(raw_text, self.TITLE_PATTERN)
-        self.author = self._get_metadata(raw_text, self.AUTHOR_PATTERN)
-        extracted_id = self._get_metadata(raw_text, self.ID_PATTERN)
-        self.id = int(extracted_id) if extracted_id else None
+        metadata = self.get_metadata(filepath)
+        self.title = metadata.get("title")
+        self.author = metadata.get("author")
+        self.id = metadata.get("id")
 
-        self._content = self._get_content(raw_text)
-
-
-    def _get_content(self, content: str) -> str:
-        match = re.search(self.CONTENT_PATTERN, content, re.DOTALL)
-        if match:
-            return match.group(1).strip()
-        raise ValueError(f"File {self.filepath} is not a valid Project Gutenberg Text file.")
-
-    def _get_metadata(self, content: str, pattern: str) -> str | None:
-        match = re.search(pattern, content, re.MULTILINE)
+    def _extract_metadata_element(self, pattern: str, text: str) -> str | None:
+        match = re.search(pattern, text, re.MULTILINE)
         if match:
             return match.group(1).strip()
         return None
 
-    def _read(self, file_path: str) -> None:
-        with open(file_path, 'r', encoding='utf-8') as file:
+    def get_content(self, filepath: str) -> str:
+        raw_text = self.read(filepath)
+        match = re.search(self.CONTENT_PATTERN, raw_text, re.DOTALL)
+        if match:
+            return match.group(1).strip()
+        raise ValueError(f"File {filepath} is not a valid Project Gutenberg Text file.")
+
+    def get_metadata(self, filepath: str) -> dict:
+        raw_text = self.read(filepath)
+
+        title = self._extract_metadata_element(self.TITLE_PATTERN, raw_text)
+        author = self._extract_metadata_element(self.AUTHOR_PATTERN, raw_text)
+        extracted_id = self._extract_metadata_element(self.ID_PATTERN, raw_text)
+
+        return {
+            "title": title,
+            "author": author,
+            "id": int(extracted_id) if extracted_id else None,
+        }
+
+    def read(self, file_path: str) -> None:
+        with open(file_path, "r", encoding="utf-8") as file:
             return file.read()
 
     def get_line_count(self) -> int:
@@ -421,7 +428,7 @@ We can convert our `get_line_count` method to a property like this:
 
     @property
     def line_count(self) -> int:
-        return len(self._content.splitlines())
+        return len(self.content.splitlines())
 
     ...
 ```
