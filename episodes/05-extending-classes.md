@@ -604,6 +604,7 @@ Why is this happening? What do we need to change in the `HTMLDocument` class to 
 The `open` function is being monkeypatched to return an empty string, which is then passed to
 the `BeautifulSoup` constructor. When `BeautifulSoup` is given an empty string, it creates a
 `BeautifulSoup` object with no content.
+
 :::
 
 :::::::::::::::: solution
@@ -627,9 +628,8 @@ method to ensure that the file is not empty and is a valid HTML file:
         return soup
 ```
 
-```
-
 :::::::::::::::::::::::::
+
 :::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: keypoints
