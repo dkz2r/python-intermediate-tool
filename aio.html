@@ -392,7 +392,7 @@
         
 <section id="aio-01-virtual-environments"><p>Content from <a href="01-virtual-environments.html">Virtual Environments</a></p>
 <hr>
-<p>Last updated on 2025-09-11 |
+<p>Last updated on 2025-09-15 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/01-virtual-environments.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -527,7 +527,7 @@ readable format:</p>
 <h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="kw">[project]</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"textanalysis-tool"</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="dt">name</span> <span class="op">=</span> <span class="st">"textanalysis-tool-{my-name}"</span></span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="dt">version</span> <span class="op">=</span> <span class="st">"0.1.0"</span></span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="dt">description</span> <span class="op">=</span> <span class="st">"Add your description here"</span></span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="dt">readme</span> <span class="op">=</span> <span class="st">"README.md"</span></span>
@@ -536,6 +536,12 @@ readable format:</p>
 </div>
 <p>The <code>requires-python</code> field may vary depending on the
 exact version of python you’re working with.</p>
+<div class="important">
+<p>Make sure to change <code>{my-name}</code> in the <code>name</code>
+field to something unique, such as your GitHub username. This is
+important later when we upload our package to TestPyPI, as package names
+must be unique.</p>
+</div>
 </section><section><h2 class="section-heading" id="creating-a-virtual-environment">Creating a Virtual Environment<a class="anchor" aria-label="anchor" href="#creating-a-virtual-environment"></a>
 </h2>
 <hr class="half-width">
@@ -611,7 +617,7 @@ dist/
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>A commonly used gitignore is the Python.gitignore maintained by
 GitHub. You can find it <a href="https://github.com/github/gitignore/blob/main/Python.gitignore" class="external-link">here</a>.</p>
@@ -4485,8 +4491,7 @@ any links that you are not going to use.
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul>
-<li>How do you write a lesson using R Markdown and
-<a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?</li>
+<li>How do we build and deploy our project as a package?</li>
 </ul>
 </div>
 </div>
@@ -4496,133 +4501,386 @@ any links that you are not going to use.
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
 <ul>
-<li>Explain how to use markdown with the new lesson template</li>
-<li>Demonstrate how to include pieces of code, figures, and nested
-challenge blocks</li>
+<li>Deploy our project locally as a python package</li>
+<li>Set up Github Actions to automatically build and deploy our
+package</li>
 </ul>
 </div>
 </div>
 </div>
 </div>
 </div>
-<section><h2 class="section-heading" id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+<section><h2 class="section-heading" id="building-locally">Building Locally<a class="anchor" aria-label="anchor" href="#building-locally"></a>
 </h2>
 <hr class="half-width">
-<p>This is a lesson created via The Carpentries Workbench. It is written
-in <a href="https://pandoc.org/MANUAL.html" class="external-link">Pandoc-flavored Markdown</a>
-for static files (with extension <code>.md</code>) and <a href="https://rmarkdown.rstudio.com/" class="external-link">R Markdown</a> for dynamic files
-that can render code into output (with extension <code>.Rmd</code>).
-Please refer to the <a href="https://carpentries.github.io/sandpaper-docs/" class="external-link">Introduction to The
-Carpentries Workbench</a> for full documentation.</p>
-<p>What you need to know is that there are three sections required for a
-valid Carpentries lesson template:</p>
-<ol style="list-style-type: decimal">
+<p>Since we have been using <code>uv</code> all along and have our
+<code>pyproject.toml</code> set up, building our package is as simple as
+running:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="ex">uv</span> build</span></code></pre>
+</div>
+<p>You should see some output that looks like this:</p>
+<pre><code>Building source distribution...
+Building wheel from source distribution...
+Successfully built dist\textanalysis_tool-0.1.0.tar.gz
+Successfully built dist\textanalysis_tool-0.1.0-py3-none-any.whl</code></pre>
+<p>And a new directory called <code>dist/</code> should appear in your
+project folder. Inside that directory, you should see two files:</p>
+<ul>
 <li>
-<code>questions</code> are displayed at the beginning of the episode
-to prime the learner for the content.</li>
+<code>textanalysis_tool-0.1.0-py3-none-any.whl</code>: This is the
+wheel file, which is a built package that can be installed.</li>
 <li>
-<code>objectives</code> are the learning objectives for an episode
-displayed with the questions.</li>
-<li>
-<code>keypoints</code> are displayed at the end of the episode to
-reinforce the objectives.</li>
-</ol>
-<div id="challenge-1-can-you-do-it" class="callout challenge">
+<code>textanalysis_tool-0.1.0.tar.gz</code>: This is the source
+distribution, which contains the source code of your package.</li>
+</ul>
+<div class="section level3">
+<h3 id="what-exactly-are-these-files">What Exactly are these files?<a class="anchor" aria-label="anchor" href="#what-exactly-are-these-files"></a>
+</h3>
+<p>A Wheel file is a built package that can be installed using pip. It
+contains all the necessary files for your package to run, including
+compiled code if applicable. Wheels are the preferred format for Python
+packages because they are faster to install and can include pre-compiled
+binaries.</p>
+<div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Why is it called a “wheel”?</p>
+<p>The term “wheel” is used because the original name for PyPi was
+“cheese shop” (a reference to a Monty Python sketch), and a wheel of
+cheese is a common image associated with cheese shops.</p>
+</div>
+</div>
+</div>
+<p>The source distribution is a tarball that contains the source code of
+your package. You can open it with a tool like <code>tar</code> or
+<code>7-Zip</code> to see the contents. It includes all the files needed
+to build and install your package, including the
+<code>pyproject.toml</code> file and any other source files.</p>
+</div>
+</section><section><h2 class="section-heading" id="github-actions">GitHub Actions<a class="anchor" aria-label="anchor" href="#github-actions"></a>
+</h2>
+<hr class="half-width">
+<p>Building the package locally is great for testing, but what we
+actually want is to have our package built and automatically deployed
+from GitHub, so that anyone using our package can always get the latest
+version. GitHub Actions is a tool that allows us to automate tasks in
+our GitHub repository by configuring a workflow using a YAML file.</p>
+<div class="section level3">
+<h3 id="setting-up-the-workflow">Setting Up the Workflow<a class="anchor" aria-label="anchor" href="#setting-up-the-workflow"></a>
+</h3>
+<p>In your project, create a new directory called
+<code>.github/workflows/</code>. Inside that directory, create a new
+file called <code>build.yml</code>. This file will contain the
+configuration for our GitHub Actions workflow.</p>
+<p>Here is the <code>build.yml</code> file we will use:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Build and Deploy Package</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="at">    </span><span class="fu">tags</span><span class="kw">:</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">'[0-9]+.[0-9]+.[0-9]+*'</span><span class="co"> # Deploy when we tag with a semantic version</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="at">  </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span><span class="co"> # Use the most up-to-date Ubuntu runner</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="at">    </span><span class="fu">permissions</span><span class="kw">:</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="at">      </span><span class="fu">contents</span><span class="kw">:</span><span class="at"> write</span><span class="co">  # Required to create releases</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span><span class="co"> # Check out the repository</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">    # Create a Python environment</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Python</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="at">      </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-python@v4</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="at">      </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="at">        </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> </span><span class="st">'3.11'</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">    # Install uv</span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install uv</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="at">      </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> astral-sh/setup-uv@v3</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">    # Build the package</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Build Package</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="at">      </span><span class="fu">run</span><span class="kw">:</span><span class="at"> uv build</span></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="co">    # Upload the built package to the repository as an artifact</span></span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Upload Artifacts</span></span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="at">      </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-artifact@v4</span></span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="at">      </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> textanalysis-tool</span></span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="at">        </span><span class="fu">path</span><span class="kw">:</span><span class="at"> dist/</span></span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="co">    # Create GitHub Release with artifacts</span></span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Create Release</span></span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a><span class="at">      </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> softprops/action-gh-release@v1</span></span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="at">      </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a><span class="at">        </span><span class="fu">files</span><span class="kw">:</span><span class="at"> dist/*</span></span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a><span class="at">        </span><span class="fu">generate_release_notes</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a><span class="at">      </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a><span class="at">        </span><span class="fu">GITHUB_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span>
+<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a></span>
+<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a><span class="co">    # Publish to TestPyPI</span></span>
+<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Publish to TestPyPI</span></span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a><span class="fu">      run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a>        uv publish --publish-url https://test.pypi.org/legacy/ --username __token__ --password ${{ secrets.TEST_PYPI_API_TOKEN }}</span></code></pre>
+</div>
+</div>
+<div class="section level3">
+<h3 id="setting-up-pypi">Setting up PyPI<a class="anchor" aria-label="anchor" href="#setting-up-pypi"></a>
+</h3>
+<p>Because we are not ready to publish our package to the main PyPI
+repository, we will use TestPyPI, which is a separate instance of the
+Python Package Index that allows you to test package publishing and
+installation without affecting the real PyPI.</p>
+<p>For this you will need to have an account on TestPyPI with 2-Factor
+enabled. You can create an account at <a href="https://test.pypi.org/account/register/" class="external-link uri">https://test.pypi.org/account/register/</a>.</p>
+<p>Once your account is set up, go to your account settings and create
+an API token with the name <code>github-actions</code>. Copy the token
+to your clipboard.</p>
+<p>Next, we need to store the token in our GitHub repository as a
+secret. Go to your repository on GitHub, click on “Settings”, then
+“Secrets and variables”, and then “Actions”. Click on “New repository
+secret” and name it <code>TEST_PYPI_API_TOKEN</code>. Paste your token
+into the “Value” field and click “Add secret”.</p>
+</div>
+<div class="section level3">
+<h3 id="triggering-the-workflow">Triggering the Workflow<a class="anchor" aria-label="anchor" href="#triggering-the-workflow"></a>
+</h3>
+<p><code>git add</code>, <code>git commit</code>, and
+<code>git push</code> this file to your repository. You should see a new
+“Actions” tab in your GitHub repository. Click on it, and you should see
+your workflow listed there:</p>
+<figure><img src="./fig/08-building-and-deploying/new_actions.PNG.jpg" alt="GitHub Actions Tab with a Workflow" class="figure mx-auto d-block"><div class="figcaption">GitHub Actions &amp; Workflow</div>
+</figure><p>But nothing has run yet! This is because we have configured our
+workflow to only run when we push a tag that follows a semantic version
+format (0.1.0, 1.0.0, etc.). This is a common practice for deploying
+packages, as it allows us to control when a new version of our package
+is released.</p>
+<p>Let’s create a new tag and push it to our repository. You can do this
+using the following commands:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">git</span> tag 0.1.0</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="fu">git</span> push <span class="at">--tags</span></span></code></pre>
+</div>
+<p>Looking back at the “Actions” tab, you should see that your workflow
+has started running! Our project is pretty small, so it should finish
+quickly. Clicking on the workflow will show you the steps that were
+executed:</p>
+<figure><img src="./fig/08-building-and-deploying/sucessfull_build.jpg" alt="GitHub Actions Successful Build" class="figure mx-auto d-block"><div class="figcaption">GitHub Actions Running</div>
+</figure><p>You can see the “Setup Python”, “Install uv”, “Build Package”, and
+“Upload Artifacts” steps that we defined in our <code>build.yml</code>
+file, as well as some additional steps before and after that GitHub
+automatically adds. If everything went well, you should see a green
+check mark next to each step.</p>
+<p>Clicking on any given job will give some additional details,
+including the console output.</p>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Github Actions is free for public repositories, but does have limits
+on the amount of compute time you can use per month. As of September
+2025, the limit is 2,000 minutes per month. This is generally more than
+enough for most open source projects.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="finding-the-built-package">Finding the Built Package<a class="anchor" aria-label="anchor" href="#finding-the-built-package"></a>
+</h3>
+<p>So our workflow is successful, but where is our package? Our little
+script actually put our project in three places:</p>
+<ul>
+<li>As an artifact in our GitHub repository for this workflow run</li>
+<li>As a release in our GitHub repository</li>
+<li>On TestPyPI as a package</li>
+</ul>
+<p>The Artifact can be found in the “Actions” tab, by clicking on the
+workflow run, and then clicking on the “Artifacts” section on the right
+side of the page. You can download the artifact as a ZIP file, which
+contains the <code>dist/</code> directory with our built package files.
+(This is identical to what we built locally earlier.)</p>
+<p>The Release can be found by clicking on the “Releases” link on the
+right side of your GitHub repository page. You should see a new release
+with the tag <code>0.1.0</code>, and the built package files attached as
+assets.</p>
+<p>Finally, the package can be found on TestPyPI by going to <a href="https://test.pypi.org/project/textanalysis-tool-%7Bmy-name%7D/" class="external-link uri">https://test.pypi.org/project/textanalysis-tool-{my-name}/</a>.</p>
+</div>
+</section><section><h2 class="section-heading" id="installing-our-package-from-testpypi">Installing our package from TestPyPI<a class="anchor" aria-label="anchor" href="#installing-our-package-from-testpypi"></a>
+</h2>
+<hr class="half-width">
+<p>Now that our package is published on TestPyPI, we can install it into
+any Python environment using a package manager. Because we are using
+test.pypi.org, we need to specify the index URL when installing the
+package, which we do not have to do for packages on the main PyPI
+repository.</p>
+<p>Create a new virtual environment in a clean folder with uv:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="ex">uv</span> init</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="ex">uv</span> venv</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="ex">uv</span> activate</span></code></pre>
+</div>
+<p>Then install our package from TestPyPI using pip:</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="ex">uv</span> pip install <span class="at">--index-url</span> https://test.pypi.org/simple/ textanalysis-tool-{my-name}</span></code></pre>
+</div>
+<p>You should see output indicating that pip is downloading and
+installing our package. Once the installation is complete, you can
+verify that the package is installed by running:</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="ex">uv</span> pip show textanalysis-tool-{my-name}</span></code></pre>
+</div>
+</section><section><h2 class="section-heading" id="continuous-integration-continuous-deployment-cicd">Continuous Integration / Continuous Deployment (CI/CD)<a class="anchor" aria-label="anchor" href="#continuous-integration-continuous-deployment-cicd"></a>
+</h2>
+<hr class="half-width">
+<p>One of the advantages of using an automated process like GitHub
+Actions is that we can also easily add additional steps to our workflow.
+In previous episodes, we have added unit tests to our project, as well
+as static code analysis using <code>ruff</code> and <code>mypy</code>.
+We can easily add these steps to our workflow to ensure that our code is
+always tested and checked before it is built and deployed.</p>
+<p>Here’s the updated <code>build.yml</code> file with the additional
+steps:</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">YAML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode yaml" tabindex="0"><code class="sourceCode yaml"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Build and Deploy Package</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a><span class="at">    </span><span class="fu">tags</span><span class="kw">:</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">'[0-9]+.[0-9]+.[0-9]+*'</span><span class="co"> # Deploy when we tag with a semantic version</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a><span class="at">  </span><span class="fu">build</span><span class="kw">:</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span><span class="co"> # Use the most up-to-date Ubuntu runner</span></span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="at">    </span><span class="fu">permissions</span><span class="kw">:</span></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="at">      </span><span class="fu">contents</span><span class="kw">:</span><span class="at"> write</span><span class="co">  # Required to create releases</span></span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v4</span><span class="co"> # Check out the repository</span></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="co">    # Create a Python environment</span></span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set up Python</span></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a><span class="at">      </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-python@v4</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="at">      </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="at">        </span><span class="fu">python-version</span><span class="kw">:</span><span class="at"> </span><span class="st">'3.11'</span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a></span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a><span class="co">    # Install uv</span></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install uv</span></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a><span class="at">      </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> astral-sh/setup-uv@v3</span></span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a><span class="co">    # Install project with dev dependencies</span></span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Install dependencies</span></span>
+<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a><span class="at">      </span><span class="fu">run</span><span class="kw">:</span><span class="at"> uv sync --dev</span></span>
+<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a></span>
+<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a><span class="co">    # Static Code Analysis with ruff</span></span>
+<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run ruff</span></span>
+<span id="cb8-33"><a href="#cb8-33" tabindex="-1"></a><span class="at">      </span><span class="fu">run</span><span class="kw">:</span><span class="at"> uv run ruff check .</span></span>
+<span id="cb8-34"><a href="#cb8-34" tabindex="-1"></a></span>
+<span id="cb8-35"><a href="#cb8-35" tabindex="-1"></a><span class="co">    # Type Checking with mypy</span></span>
+<span id="cb8-36"><a href="#cb8-36" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run mypy</span></span>
+<span id="cb8-37"><a href="#cb8-37" tabindex="-1"></a><span class="at">      </span><span class="fu">run</span><span class="kw">:</span><span class="at"> uv run mypy src</span></span>
+<span id="cb8-38"><a href="#cb8-38" tabindex="-1"></a></span>
+<span id="cb8-39"><a href="#cb8-39" tabindex="-1"></a><span class="co">    # Running Tests with pytest</span></span>
+<span id="cb8-40"><a href="#cb8-40" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Run tests</span></span>
+<span id="cb8-41"><a href="#cb8-41" tabindex="-1"></a><span class="at">      </span><span class="fu">run</span><span class="kw">:</span><span class="at"> uv run pytest tests</span></span>
+<span id="cb8-42"><a href="#cb8-42" tabindex="-1"></a></span>
+<span id="cb8-43"><a href="#cb8-43" tabindex="-1"></a><span class="co">    # Build the package</span></span>
+<span id="cb8-44"><a href="#cb8-44" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Build Package</span></span>
+<span id="cb8-45"><a href="#cb8-45" tabindex="-1"></a><span class="at">      </span><span class="fu">run</span><span class="kw">:</span><span class="at"> uv build</span></span>
+<span id="cb8-46"><a href="#cb8-46" tabindex="-1"></a></span>
+<span id="cb8-47"><a href="#cb8-47" tabindex="-1"></a><span class="co">    # Upload the built package to the repository as an artifact</span></span>
+<span id="cb8-48"><a href="#cb8-48" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Upload Artifacts</span></span>
+<span id="cb8-49"><a href="#cb8-49" tabindex="-1"></a><span class="at">      </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-artifact@v4</span></span>
+<span id="cb8-50"><a href="#cb8-50" tabindex="-1"></a><span class="at">      </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb8-51"><a href="#cb8-51" tabindex="-1"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> textanalysis-tool</span></span>
+<span id="cb8-52"><a href="#cb8-52" tabindex="-1"></a><span class="at">        </span><span class="fu">path</span><span class="kw">:</span><span class="at"> dist/</span></span>
+<span id="cb8-53"><a href="#cb8-53" tabindex="-1"></a></span>
+<span id="cb8-54"><a href="#cb8-54" tabindex="-1"></a><span class="co">    # Create GitHub Release with artifacts</span></span>
+<span id="cb8-55"><a href="#cb8-55" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Create Release</span></span>
+<span id="cb8-56"><a href="#cb8-56" tabindex="-1"></a><span class="at">      </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> softprops/action-gh-release@v1</span></span>
+<span id="cb8-57"><a href="#cb8-57" tabindex="-1"></a><span class="at">      </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb8-58"><a href="#cb8-58" tabindex="-1"></a><span class="at">        </span><span class="fu">files</span><span class="kw">:</span><span class="at"> dist/*</span></span>
+<span id="cb8-59"><a href="#cb8-59" tabindex="-1"></a><span class="at">        </span><span class="fu">generate_release_notes</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb8-60"><a href="#cb8-60" tabindex="-1"></a><span class="at">      </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb8-61"><a href="#cb8-61" tabindex="-1"></a><span class="at">        </span><span class="fu">GITHUB_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span>
+<span id="cb8-62"><a href="#cb8-62" tabindex="-1"></a></span>
+<span id="cb8-63"><a href="#cb8-63" tabindex="-1"></a><span class="co">    # Publish to TestPyPI</span></span>
+<span id="cb8-64"><a href="#cb8-64" tabindex="-1"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Publish to TestPyPI</span></span>
+<span id="cb8-65"><a href="#cb8-65" tabindex="-1"></a><span class="fu">      run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb8-66"><a href="#cb8-66" tabindex="-1"></a>        uv publish --publish-url https://test.pypi.org/legacy/ --username __token__ --password ${{ secrets.TEST_PYPI_API_TOKEN }}</span></code></pre>
+</div>
+<p>Update the version number in your <code>pyproject.toml</code> file to
+<code>0.2.0</code>, and then create a new tag and push it to your
+repository:</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">git</span> tag 0.2.0</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="fu">git</span> push <span class="at">--tags</span></span></code></pre>
+</div>
+<p>Now, unless you already went through in the earlier episodes, you
+will likely see that the <code>ruff</code> , <code>mypy</code>, or
+<code>pytest</code> steps fail. This is great! It means that we have
+caught issues in our code before they made it into a release! Only once
+all the tests pass and the code checks are clean will the package be
+built and deployed.</p>
+<div id="callout3" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Making a new tag for each release is good practice, however there are
+also occasions where you might want to run some of these jobs regularly
+when merging in code, or on pushes to certain branches. This is possible
+- there is an example of this in the <a href="">Workshop
+Addendum</a>.</p>
+</div>
+</div>
+</div>
+<div id="challenge-1" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-1-can-you-do-it" class="callout-inner">
-<h3 class="callout-title">Challenge 1: Can you do it?</h3>
+<div id="challenge-1" class="callout-inner">
+<h3 class="callout-title">Challenge 1:</h3>
 <div class="callout-content">
-<p>What is the output of this command?</p>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">paste</span><span class="op">(</span><span class="st">"This"</span>, <span class="st">"new"</span>, <span class="st">"lesson"</span>, <span class="st">"looks"</span>, <span class="st">"good"</span><span class="op">)</span></span></code></pre>
-</div>
+
 </div>
 </div>
 </div>
 <div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1"> Output </h4>
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
 <div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
-<div class="accordion-body">
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>[1] "This new lesson looks good"</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="challenge-2-how-do-you-nest-solutions-within-challenge-blocks" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<span class="callout-header">Challenge</span>
-<div id="challenge-2-how-do-you-nest-solutions-within-challenge-blocks" class="callout-inner">
-<h3 class="callout-title">Challenge 2: how do you nest solutions within
-challenge blocks?</h3>
-<div class="callout-content">
-
-</div>
-</div>
-</div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
-</button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
-<div class="accordion-body">
-<p>You can add a line with at least three colons and a
-<code>solution</code> tag.</p>
-</div>
-</div>
-</div>
-</div>
-</section><section><h2 class="section-heading" id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a>
-</h2>
-<hr class="half-width">
-<p>You can include figures generated from R Markdown:</p>
-<p><code>{r pyramid, fig.alt = "pie chart illusion of a pyramid", fig.cap = "Sun arise each and every morning"} pie(   c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5),   init.angle = 315,   col = c("deepskyblue", "yellow", "yellow3"),   border = FALSE )</code>
-Or you can use pandoc markdown for static figures with the following
-syntax:</p>
-<p><code>![optional caption that appears below the figure](figure url){alt='alt text for accessibility purposes'}</code></p>
-<figure><img src="https://raw.githubusercontent.com/carpentries/logo/master/Badge_Carpentries.svg" alt="Blue Carpentries hex person logo with no text." class="figure mx-auto d-block"><div class="figcaption">You belong in The Carpentries!</div>
-</figure></section><section><h2 class="section-heading" id="math">Math<a class="anchor" aria-label="anchor" href="#math"></a>
-</h2>
-<hr class="half-width">
-<p>One of our episodes contains <span class="math inline">\(\LaTeX\)</span> equations when describing how to
-create dynamic reports with {knitr}, so we now use mathjax to describe
-this:</p>
-<p><code>$\alpha = \dfrac{1}{(1 - \beta)^2}$</code> becomes: <span class="math inline">\(\alpha = \dfrac{1}{(1 - \beta)^2}\)</span></p>
-<p>Cool, right?</p>
-<div id="challenge-1-writing-tests-for-the-readers" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<span class="callout-header">Challenge</span>
-<div id="challenge-1-writing-tests-for-the-readers" class="callout-inner">
-<h3 class="callout-title">Challenge 1: Writing Tests for the
-Readers</h3>
-<div class="callout-content">
-
-</div>
-</div>
-</div>
-<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
-  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
-</button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 
 </div>
