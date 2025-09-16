@@ -179,7 +179,7 @@ This is a test document. It contains words.
 It is only a test document.
 ```
 
-Next, let's create another test file. Our last one was called `test_my_modue.py`, so let's call this
+Next, let's create another test file. Our last one was called `test_my_module.py`, so let's call this
 `test_document.py`:
 
 ```python
