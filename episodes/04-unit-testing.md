@@ -21,10 +21,10 @@ exercises: 2
 
 ## Unit Testing
 
-We have our two little test files, but you might imagine that it's not particuarly efficient to
+We have our two little test files, but you might imagine that it's not particularly efficient to
 always write individual scripts to test our code. What if we had a lot of functions or classes?
 Or a lot of different ideas to test? What if our objects changed down the line? Our existing
-modules are going to be diffucult to maintain, and, as you may have expected, there is alredy a
+modules are going to be difficult to maintain, and, as you may have expected, there is already a
 solution for this problem.
 
 ### What Makes For a Good Test?
