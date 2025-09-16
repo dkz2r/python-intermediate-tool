@@ -345,10 +345,14 @@ branches. This is possible - there is an example of this in the [Workshop Addend
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- We can build our package locally using `uv build`, which creates a `dist/` directory with the
+  built package files.
+- We can use GitHub Actions to automate the building and deployment of our package.
+- GitHub Actions workflows are defined using YAML files in the `.github/workflows/` directory.
+- We can trigger our workflow to run on specific events, such as pushing a tag that follows
+  semantic versioning.
+- We can add additional steps to our workflow, such as running tests and static code analysis,
+  to ensure code quality before deployment.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 

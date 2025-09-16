@@ -6,14 +6,15 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions
 
-- How do you write a lesson using R Markdown and `{sandpaper}`?
+- What is static code analysis?
+- How can static code analysis tools help improve code quality?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain how to use markdown with the new lesson template
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- Implement `ruff` and `mypy` in a Python project
+- Understand how to read and fix issues reported by `ruff` and `mypy`
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -501,10 +502,11 @@ It will depend on your code!
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- There are many static code analysis tools available for Python, each with its own strengths and
+  weaknesses.
+- Ruff is a fast linter and code formatter that can replace several other tools, including
+  `flake8`, `pylint`, and `isort`.
+- MyPy is a static type checker that can help catch type-related errors in Python code.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 

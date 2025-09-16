@@ -6,14 +6,15 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions
 
-- How do you write a lesson using R Markdown and `{sandpaper}`?
+- How do I create a Python module?
+- How do I import a local module into my code?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain how to use markdown with the new lesson template
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- Create a Python module with multiple files
+- Import functions from a local module into a script
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -319,10 +320,9 @@ The reason we're not doing this here is for clarity, as reccomended in
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- Python modules are simply directories with an `__init__.py` file in them
+- You can add the path to your module directory to `sys.path` to make it available for import
+- You can use dot notation in your imports to specify the module, file, and function you want to use
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
