@@ -467,7 +467,10 @@ for our class object with `pytest`.
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
-- foo
 
-::::::::::::::::::::::::::::::::::::::::::::::::
+- Python classes are defined using the `class` keyword, followed by the class name and a colon.
+- The `__init__` method is a special method that is called when an instance of the class is created.
+- Class methods are defined like normal functions, but they must include `self` as the first
+    parameter.
 
+:::::::::::::::::::::::::::::::::::::::::::::::

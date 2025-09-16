@@ -14,7 +14,7 @@ exercises: 0
 ::::::::::::::::::::::::::::::::::::: objectives
 
 - Create a new virtual environment using `uv`
-- Push our new project to a gitlab repository.
+- Push our new project to a GitHub repository.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
