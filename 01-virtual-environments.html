@@ -388,7 +388,7 @@
 <hr class="half-width"><p>A virtual environment is an isolated workspace where you can install
 python packages and run python code without worrying about affecting the
 tools, executables, and packages installed in either the global python
-enviroment or in other projects.</p>
+environment or in other projects.</p>
 <div id="callout1" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -403,7 +403,7 @@ upgrading, and removing software packages. Each package is usually built
 on top of several other packages, and rely on the methods and objects
 provided. However as projects are upgraded and changed over time, the
 available methods and objects can change. A package manager solves the
-complex “dependncy web” created by the packages you would like to
+complex “dependency web” created by the packages you would like to
 install and finds the version of all required packages that meets your
 needs.</p>
 </div>
@@ -411,13 +411,13 @@ needs.</p>
 </div>
 </section><section><h2 class="section-heading" id="why-would-i-use-a-virtual-environment">Why Would I use a Virtual Environment?<a class="anchor" aria-label="anchor" href="#why-would-i-use-a-virtual-environment"></a></h2>
 <hr class="half-width"><p>If you are only ever working on your own projects, or on scripts for
-a single project, it’s absoultely fine to never worry about virtual
+a single project, it’s absolutely fine to never worry about virtual
 environments. But as soon as you start creating new projects working on
 code written by other people, it becomes incredibly important to know
 that the code that you are running is running on the exact same versions
 of libraries.</p>
-<p>In the past, it was notoriously difficult to manage envrironments
-with python:</p>
+<p>In the past, it was notoriously difficult to manage environments with
+python:</p>
 <p><a href="https://xkcd.com/1987/" class="external-link">XKCD comic</a></p>
 <p>There have been a number of attempts to create a “one size fits all”
 approach to virtual environments and dependency management:</p>
@@ -428,7 +428,7 @@ approach to virtual environments and dependency management:</p>
 <li>pyenv</li>
 <li>poetry</li>
 </ul><p>We’re going to use <a href="https://docs.astral.sh/uv/" class="external-link">uv</a> for
-the purposes of this workwhop. UV is a another tool that promises to
+the purposes of this workshop. UV is a another tool that promises to
 slot in to the needs of environment and dependency management, however
 there are a few key elements that set it apart:</p>
 <ol style="list-style-type: decimal"><li>It is written in Rust, which gives it a significant speed
@@ -501,7 +501,7 @@ in a directory called <code>.venv</code> within our project folder.</p>
 <p>Before we activate our environment, let’s quickly check the location
 of the current python executable you are using is by starting a python
 interpreter with the <code>python</code> keyword, and running the
-following comands:</p>
+following commands:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -560,7 +560,7 @@ dist/
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>A commonly used gitignore is the Python.gitignore maintained by
 GitHub. You can find it <a href="https://github.com/github/gitignore/blob/main/Python.gitignore" class="external-link">here</a>.</p>
@@ -586,7 +586,7 @@ machine.</p>
 </div>
 </div>
 </div>
-<p>First, we’ll initialize a git repository locally, making an intial
+<p>First, we’ll initialize a git repository locally, making an initial
 commit with the files that uv generated:</p>
 <pre><code>git init
 git add .gitignore .python-version README.md main.py pyproject.toml

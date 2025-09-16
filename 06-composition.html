@@ -347,7 +347,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Inheritance and Composition</h1>
-        <p>Last updated on 2025-09-15 |
+        <p>Last updated on 2025-09-16 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/06-composition.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -692,7 +692,7 @@ constructor called <code>reader</code>, which will be an instance of a
 <ul><li>
 <strong>Modularity</strong>: Our code is now made up of smaller,
 more focused classes. The code responsible for reading files in and
-parsing the contents is seperate from the code that represents a
+parsing the contents is separate from the code that represents a
 document and provides analysis.</li>
 <li>
 <strong>Extensibility</strong>: We can easily add support for new
@@ -816,7 +816,7 @@ classes.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p><code>tests/readers/test_text_reader.py</code></p>
 <div class="codewrapper sourceCode" id="cb8">
@@ -921,7 +921,7 @@ classes.</p>
 <div id="challenge-2-adding-a-new-reader" class="callout-inner">
 <h3 class="callout-title">Challenge 2: Adding a New Reader</h3>
 <div class="callout-content">
-<p>We have one last filetype we haven’t added support for yet: Epub.
+<p>We have one last file type we haven’t added support for yet: Epub.
 Create a new reader class for epub files called <code>EpubReader</code>
 in a file called <code>readers/epub_reader.py</code>. You can use the
 <code>ebooklib</code> package to read epub files. You can install it
@@ -941,7 +941,7 @@ documentation here</a></p>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
   <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
+<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
 <div class="accordion-body">
 <p>To get the metadata from an epub file, you can use the
 <code>get_metadata</code> method of the <code>EpubBook</code> class.
@@ -968,7 +968,7 @@ actual title.</p>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint2" aria-expanded="false" aria-controls="collapseHint2">
   <h4 class="accordion-header" id="headingHint2"> Give me a hint </h4>
 </button>
-<div id="collapseHint2" class="accordion-collapse collapse" data-bs-parent="#accordionHint2" aria-labelledby="headingHint2">
+<div id="collapseHint2" class="accordion-collapse collapse" aria-labelledby="headingHint2" data-bs-parent="#accordionHint2">
 <div class="accordion-body">
 <p>To get the content from an epub file, we can iterate over all of the
 “items” in the book that are a document, then use
@@ -991,7 +991,7 @@ content.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1118,7 +1118,7 @@ any links that you are not going to use.
   "url": "https://jonathan-hartman.github.io/python-intermediate-tool/06-composition.html",
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/06-composition.html",
   "dateCreated": "2025-08-23",
-  "dateModified": "2025-09-15",
+  "dateModified": "2025-09-16",
   "datePublished": "2025-09-16"
 }
 

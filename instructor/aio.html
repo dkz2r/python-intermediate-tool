@@ -435,7 +435,7 @@
 <p>A virtual environment is an isolated workspace where you can install
 python packages and run python code without worrying about affecting the
 tools, executables, and packages installed in either the global python
-enviroment or in other projects.</p>
+environment or in other projects.</p>
 <div id="callout1" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -450,7 +450,7 @@ upgrading, and removing software packages. Each package is usually built
 on top of several other packages, and rely on the methods and objects
 provided. However as projects are upgraded and changed over time, the
 available methods and objects can change. A package manager solves the
-complex “dependncy web” created by the packages you would like to
+complex “dependency web” created by the packages you would like to
 install and finds the version of all required packages that meets your
 needs.</p>
 </div>
@@ -460,13 +460,13 @@ needs.</p>
 </h2>
 <hr class="half-width">
 <p>If you are only ever working on your own projects, or on scripts for
-a single project, it’s absoultely fine to never worry about virtual
+a single project, it’s absolutely fine to never worry about virtual
 environments. But as soon as you start creating new projects working on
 code written by other people, it becomes incredibly important to know
 that the code that you are running is running on the exact same versions
 of libraries.</p>
-<p>In the past, it was notoriously difficult to manage envrironments
-with python:</p>
+<p>In the past, it was notoriously difficult to manage environments with
+python:</p>
 <p><a href="https://xkcd.com/1987/" class="external-link">XKCD comic</a></p>
 <p>There have been a number of attempts to create a “one size fits all”
 approach to virtual environments and dependency management:</p>
@@ -479,7 +479,7 @@ approach to virtual environments and dependency management:</p>
 <li>poetry</li>
 </ul>
 <p>We’re going to use <a href="https://docs.astral.sh/uv/" class="external-link">uv</a> for
-the purposes of this workwhop. UV is a another tool that promises to
+the purposes of this workshop. UV is a another tool that promises to
 slot in to the needs of environment and dependency management, however
 there are a few key elements that set it apart:</p>
 <ol style="list-style-type: decimal">
@@ -559,7 +559,7 @@ in a directory called <code>.venv</code> within our project folder.</p>
 <p>Before we activate our environment, let’s quickly check the location
 of the current python executable you are using is by starting a python
 interpreter with the <code>python</code> keyword, and running the
-following comands:</p>
+following commands:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -620,7 +620,7 @@ dist/
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>A commonly used gitignore is the Python.gitignore maintained by
 GitHub. You can find it <a href="https://github.com/github/gitignore/blob/main/Python.gitignore" class="external-link">here</a>.</p>
@@ -646,7 +646,7 @@ machine.</p>
 </div>
 </div>
 </div>
-<p>First, we’ll initialize a git repository locally, making an intial
+<p>First, we’ll initialize a git repository locally, making an initial
 commit with the files that uv generated:</p>
 <pre><code>git init
 git add .gitignore .python-version README.md main.py pyproject.toml
@@ -1090,7 +1090,7 @@ greetings.py? Can’t you just do this:</p>
 <p>Yes, you absolutely can! The dot-notation used in python pathing can
 use <code>..</code> to refer to the parent directory, or even
 <code>...</code> to refer to a grandparent directory.</p>
-<p>The reason we’re not doing this here is for clarity, as reccomended
+<p>The reason we’re not doing this here is for clarity, as recommended
 in <a href="https://www.python.org/dev/peps/pep-0008/#imports" class="external-link">PEP8</a>.</p>
 </div>
 </div>
@@ -1657,7 +1657,7 @@ like this:</p>
 <span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a></span>
 <span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>    ...</span></code></pre>
 </div>
-<p>The links to the project gutenberg files are based on the id, which
+<p>The links to the Project Gutenberg files are based on the id, which
 we extracted from the metadata. Create a new property called
 <code>gutenberg_url</code> that returns the url for the document based
 on the id.</p>
@@ -1728,7 +1728,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-04-unit-testing"><p>Content from <a href="04-unit-testing.html">Unit Testing</a></p>
 <hr>
-<p>Last updated on 2025-09-15 |
+<p>Last updated on 2025-09-16 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/04-unit-testing.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 12 minutes</p>
@@ -1769,11 +1769,11 @@ any links that you are not going to use.
 </h2>
 <hr class="half-width">
 <p>We have our two little test files, but you might imagine that it’s
-not particuarly efficient to always write individual scripts to test our
-code. What if we had a lot of functions or classes? Or a lot of
+not particularly efficient to always write individual scripts to test
+our code. What if we had a lot of functions or classes? Or a lot of
 different ideas to test? What if our objects changed down the line? Our
-existing modules are going to be diffucult to maintain, and, as you may
-have expected, there is alredy a solution for this problem.</p>
+existing modules are going to be difficult to maintain, and, as you may
+have expected, there is already a solution for this problem.</p>
 <div class="section level3">
 <h3 id="what-makes-for-a-good-test">What Makes For a Good Test?<a class="anchor" aria-label="anchor" href="#what-makes-for-a-good-test"></a>
 </h3>
@@ -1814,7 +1814,7 @@ object or function, as well as a few edge cases.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>Some edge cases for the <code>hello</code> function could
 include:</p>
@@ -1907,7 +1907,7 @@ directory and add the following code to it:</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>This is how I always do it, but I assume there’s a better way.</p>
 </div>
@@ -2276,7 +2276,7 @@ Then, update the <code>Document</code> class to make the test pass.</p>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
   <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
+<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
 <div class="accordion-body">
 <p>You can mock a binary file by using the <code>mock_open</code>
 function from the <code>unittest.mock</code> module, and using the
@@ -2291,7 +2291,7 @@ function from the <code>unittest.mock</code> module, and using the
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint2" aria-expanded="false" aria-controls="collapseHint2">
   <h4 class="accordion-header" id="headingHint2"> Give me a hint </h4>
 </button>
-<div id="collapseHint2" class="accordion-collapse collapse" data-bs-parent="#accordionHint2" aria-labelledby="headingHint2">
+<div id="collapseHint2" class="accordion-collapse collapse" aria-labelledby="headingHint2" data-bs-parent="#accordionHint2">
 <div class="accordion-body">
 <p>In the <code>Document</code> class, we need to check if the data read
 from the file is binary data. The <code>read</code> method of a file
@@ -2319,7 +2319,7 @@ instance of type <code>bytes</code>. If it is, we can raise a
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>You can create a test that simulates opening a binary file by using
 the <code>mock_open</code> function from the <code>unittest.mock</code>
@@ -2571,7 +2571,7 @@ TODO</a>.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
 <div class="accordion-body">
 <p>´´´python import re</p>
 <p>from bs4 import BeautifulSoup</p>
@@ -2861,7 +2861,7 @@ is no longer applicable.)</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2939,7 +2939,7 @@ is no longer applicable.)</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
   <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3071,7 +3071,7 @@ FAILED tests/test_html_document.py::test_empty_file - AttributeError: 'NoneType'
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
   <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
+<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
 <div class="accordion-body">
 <p>The <code>open</code> function is being monkeypatched to return an
 empty string, which is then passed to the <code>BeautifulSoup</code>
@@ -3086,7 +3086,7 @@ it creates a <code>BeautifulSoup</code> object with no content.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>The error is occurring because the <code>HTMLDocument</code> class is
 trying to find the first <code>h1</code> tag in the HTML content, but
@@ -3135,7 +3135,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-06-composition"><p>Content from <a href="06-composition.html">Inheritance and Composition</a></p>
 <hr>
-<p>Last updated on 2025-09-15 |
+<p>Last updated on 2025-09-16 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/06-composition.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 12 minutes</p>
@@ -3489,7 +3489,7 @@ constructor called <code>reader</code>, which will be an instance of a
 <li>
 <strong>Modularity</strong>: Our code is now made up of smaller,
 more focused classes. The code responsible for reading files in and
-parsing the contents is seperate from the code that represents a
+parsing the contents is separate from the code that represents a
 document and provides analysis.</li>
 <li>
 <strong>Extensibility</strong>: We can easily add support for new
@@ -3616,7 +3616,7 @@ classes.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p><code>tests/readers/test_text_reader.py</code></p>
 <div class="codewrapper sourceCode" id="cb8">
@@ -3721,7 +3721,7 @@ classes.</p>
 <div id="challenge-2-adding-a-new-reader" class="callout-inner">
 <h3 class="callout-title">Challenge 2: Adding a New Reader</h3>
 <div class="callout-content">
-<p>We have one last filetype we haven’t added support for yet: Epub.
+<p>We have one last file type we haven’t added support for yet: Epub.
 Create a new reader class for epub files called <code>EpubReader</code>
 in a file called <code>readers/epub_reader.py</code>. You can use the
 <code>ebooklib</code> package to read epub files. You can install it
@@ -3741,7 +3741,7 @@ documentation here</a></p>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
   <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
+<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
 <div class="accordion-body">
 <p>To get the metadata from an epub file, you can use the
 <code>get_metadata</code> method of the <code>EpubBook</code> class.
@@ -3768,7 +3768,7 @@ actual title.</p>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint2" aria-expanded="false" aria-controls="collapseHint2">
   <h4 class="accordion-header" id="headingHint2"> Give me a hint </h4>
 </button>
-<div id="collapseHint2" class="accordion-collapse collapse" data-bs-parent="#accordionHint2" aria-labelledby="headingHint2">
+<div id="collapseHint2" class="accordion-collapse collapse" aria-labelledby="headingHint2" data-bs-parent="#accordionHint2">
 <div class="accordion-body">
 <p>To get the content from an epub file, we can iterate over all of the
 “items” in the book that are a document, then use
@@ -3791,7 +3791,7 @@ content.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
