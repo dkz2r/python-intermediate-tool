@@ -347,7 +347,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Static Code Analysis</h1>
-        <p>Last updated on 2025-09-15 |
+        <p>Last updated on 2025-09-16 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/07-static-code-analysis.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -366,8 +366,8 @@
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
-<ul><li>How do you write a lesson using R Markdown and
-<a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?</li>
+<ul><li>What is static code analysis?</li>
+<li>How can static code analysis tools help improve code quality?</li>
 </ul></div>
 </div>
 </div>
@@ -375,9 +375,11 @@
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul><li>Explain how to use markdown with the new lesson template</li>
-<li>Demonstrate how to include pieces of code, figures, and nested
-challenge blocks</li>
+<ul><li>Implement <code>ruff</code> and <code>mypy</code> in a Python
+project</li>
+<li>Understand how to read and fix issues reported by <code>ruff</code>
+and <code>mypy</code>
+</li>
 </ul></div>
 </div>
 </div>
@@ -945,14 +947,13 @@ those as well?</p>
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-<ul><li>Use <code>.md</code> files for episodes when you want static
-content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate
-output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
-with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
-locally</li>
+<ul><li>There are many static code analysis tools available for Python, each
+with its own strengths and weaknesses.</li>
+<li>Ruff is a fast linter and code formatter that can replace several
+other tools, including <code>flake8</code>, <code>pylint</code>, and
+<code>isort</code>.</li>
+<li>MyPy is a static type checker that can help catch type-related
+errors in Python code.</li>
 </ul></div>
 </div>
 </div>
@@ -1019,7 +1020,7 @@ any links that you are not going to use.
   "url": "https://jonathan-hartman.github.io/python-intermediate-tool/07-static-code-analysis.html",
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/07-static-code-analysis.html",
   "dateCreated": "2025-08-23",
-  "dateModified": "2025-09-15",
+  "dateModified": "2025-09-16",
   "datePublished": "2025-09-16"
 }
 

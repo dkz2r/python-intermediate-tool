@@ -407,18 +407,21 @@ including a <code>.gitignore</code> file.</li>
 </ul></section><section id="02-creating-a-module"><h2 class="section-heading"><a href="02-creating-a-module.html">Creating A Module</a></h2>
 <hr class="half-width">
 <ul>
-<li>Use <code>.md</code> files for episodes when you want static
-content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate
-output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
-with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
-locally</li>
+<li>Python modules are simply directories with an
+<code>__init__.py</code> file in them</li>
+<li>You can add the path to your module directory to
+<code>sys.path</code> to make it available for import</li>
+<li>You can use dot notation in your imports to specify the module,
+file, and function you want to use</li>
 </ul></section><section id="03-class-objects"><h2 class="section-heading"><a href="03-class-objects.html">Class Objects</a></h2>
 <hr class="half-width">
 <ul>
-<li>foo</li>
+<li>Python classes are defined using the <code>class</code> keyword,
+followed by the class name and a colon.</li>
+<li>The <code>__init__</code> method is a special method that is called
+when an instance of the class is created.</li>
+<li>Class methods are defined like normal functions, but they must
+include <code>self</code> as the first parameter.</li>
 </ul></section><section id="04-unit-testing"><h2 class="section-heading"><a href="04-unit-testing.html">Unit Testing</a></h2>
 <hr class="half-width">
 <ul>
@@ -450,25 +453,27 @@ design</li>
 </ul></section><section id="07-static-code-analysis"><h2 class="section-heading"><a href="07-static-code-analysis.html">Static Code Analysis</a></h2>
 <hr class="half-width">
 <ul>
-<li>Use <code>.md</code> files for episodes when you want static
-content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate
-output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
-with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
-locally</li>
+<li>There are many static code analysis tools available for Python, each
+with its own strengths and weaknesses.</li>
+<li>Ruff is a fast linter and code formatter that can replace several
+other tools, including <code>flake8</code>, <code>pylint</code>, and
+<code>isort</code>.</li>
+<li>MyPy is a static type checker that can help catch type-related
+errors in Python code.</li>
 </ul></section><section id="08-building-and-deploying"><h2 class="section-heading"><a href="08-building-and-deploying.html">Building and Deploying a Package</a></h2>
 <hr class="half-width">
 <ul>
-<li>Use <code>.md</code> files for episodes when you want static
-content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate
-output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
-with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
-locally</li>
+<li>We can build our package locally using <code>uv build</code>, which
+creates a <code>dist/</code> directory with the built package
+files.</li>
+<li>We can use GitHub Actions to automate the building and deployment of
+our package.</li>
+<li>GitHub Actions workflows are defined using YAML files in the
+<code>.github/workflows/</code> directory.</li>
+<li>We can trigger our workflow to run on specific events, such as
+pushing a tag that follows semantic versioning.</li>
+<li>We can add additional steps to our workflow, such as running tests
+and static code analysis, to ensure code quality before deployment.</li>
 </ul></section>
 </div>
     </main>

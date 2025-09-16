@@ -347,7 +347,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Building and Deploying a Package</h1>
-        <p>Last updated on 2025-09-15 |
+        <p>Last updated on 2025-09-16 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/08-building-and-deploying.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -751,14 +751,17 @@ Addendum</a>.</p>
 <span class="callout-header">Key Points</span>
 <div class="callout-inner">
 <div class="callout-content">
-<ul><li>Use <code>.md</code> files for episodes when you want static
-content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate
-output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
-with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
-locally</li>
+<ul><li>We can build our package locally using <code>uv build</code>, which
+creates a <code>dist/</code> directory with the built package
+files.</li>
+<li>We can use GitHub Actions to automate the building and deployment of
+our package.</li>
+<li>GitHub Actions workflows are defined using YAML files in the
+<code>.github/workflows/</code> directory.</li>
+<li>We can trigger our workflow to run on specific events, such as
+pushing a tag that follows semantic versioning.</li>
+<li>We can add additional steps to our workflow, such as running tests
+and static code analysis, to ensure code quality before deployment.</li>
 </ul></div>
 </div>
 </div>
@@ -824,7 +827,7 @@ any links that you are not going to use.
   "url": "https://jonathan-hartman.github.io/python-intermediate-tool/instructor/08-building-and-deploying.html",
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/instructor/08-building-and-deploying.html",
   "dateCreated": "2025-08-23",
-  "dateModified": "2025-09-15",
+  "dateModified": "2025-09-16",
   "datePublished": "2025-09-16"
 }
 
