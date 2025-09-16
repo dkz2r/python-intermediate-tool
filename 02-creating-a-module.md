@@ -312,7 +312,7 @@ def greet(name):
 Yes, you absolutely can! The dot-notation used in python pathing can use `..` to refer to the
 parent directory, or even `...` to refer to a grandparent directory.
 
-The reason we're not doing this here is for clarity, as reccomended in
+The reason we're not doing this here is for clarity, as recommended in
 [PEP8](https://www.python.org/dev/peps/pep-0008/#imports).
 
 :::

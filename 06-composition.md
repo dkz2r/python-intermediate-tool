@@ -317,7 +317,7 @@ class Document:
 Ok, that's a lot of changes. So what was that all about?
 
 - **Modularity**: Our code is now made up of smaller, more focused classes. The code responsible for
-    reading files in and parsing the contents is seperate from the code that represents a document
+    reading files in and parsing the contents is separate from the code that represents a document
     and provides analysis.
 - **Extensibility**: We can easily add support for new file formats by creating new reader classes
     that inherit from `BaseReader`, without having to modify the `Document` class.
@@ -504,7 +504,7 @@ def test_get_metadata():
 
 ## Challenge 2: Adding a New Reader
 
-We have one last filetype we haven't added support for yet: Epub. Create a new reader class for
+We have one last file type we haven't added support for yet: Epub. Create a new reader class for
 epub files called `EpubReader` in a file called `readers/epub_reader.py`. You can use the
 `ebooklib` package to read epub files. You can install it with pip:
 

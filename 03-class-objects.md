@@ -433,7 +433,7 @@ We can convert our `get_line_count` method to a property like this:
     ...
 ```
 
-The links to the project gutenberg files are based on the id, which we extracted from the metadata.
+The links to the Project Gutenberg files are based on the id, which we extracted from the metadata.
 Create a new property called `gutenberg_url` that returns the url for the document based on the id.
 
 ::: hint

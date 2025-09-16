@@ -22,7 +22,7 @@ exercises: 0
 
 A virtual environment is an isolated workspace where you can install python packages and run python
 code without worrying about affecting the tools, executables, and packages installed in either the
-global python enviroment or in other projects.
+global python environment or in other projects.
 
 ::: callout
 
@@ -31,7 +31,7 @@ What is the difference between a "package manager" and a "virtual environment"?
 A package manager helps automate the process of installing, upgrading, and removing software
 packages. Each package is usually built on top of several other packages, and rely on the methods
 and objects provided. However as projects are upgraded and changed over time, the available
-methods and objects can change. A package manager solves the complex "dependncy web" created by
+methods and objects can change. A package manager solves the complex "dependency web" created by
 the packages you would like to install and finds the version of all required packages that meets
 your needs.
 
@@ -40,11 +40,11 @@ your needs.
 ## Why Would I use a Virtual Environment?
 
 If you are only ever working on your own projects, or on scripts for a single project, it's
-absoultely fine to never worry about virtual environments. But as soon as you start creating
+absolutely fine to never worry about virtual environments. But as soon as you start creating
 new projects working on code written by other people, it becomes incredibly important to know that
 the code that you are running is running on the exact same versions of libraries.
 
-In the past, it was notoriously difficult to manage envrironments with python:
+In the past, it was notoriously difficult to manage environments with python:
 
 [XKCD comic](https://xkcd.com/1987/)
 
@@ -58,7 +58,7 @@ environments and dependency management:
 - pyenv
 - poetry
 
-We're going to use [uv](https://docs.astral.sh/uv/) for the purposes of this workwhop. UV is a
+We're going to use [uv](https://docs.astral.sh/uv/) for the purposes of this workshop. UV is a
 another tool that promises to slot in to the needs of environment and dependency management,
 however there are a few key elements that set it apart:
 
@@ -129,7 +129,7 @@ uv venv
 
 Before we activate our environment, let's quickly check the location of the current python
 executable you are using is by starting a python interpreter with the `python` keyword, and running
-the following comands:
+the following commands:
 
 ```python
 import sys
@@ -212,7 +212,7 @@ machine.
 
 :::
 
-First, we'll initialize a git repository locally, making an intial commit with the files that uv
+First, we'll initialize a git repository locally, making an initial commit with the files that uv
 generated:
 
 ```
