@@ -64,7 +64,7 @@ contact: 'team@carpentries.org'
 # - another-learner.md
 
 # Order of episodes in your lesson
-episodes: 
+episodes:
 - 01-virtual-environments.md
 - 02-creating-a-module.md
 - 03-class-objects.md
@@ -75,13 +75,16 @@ episodes:
 - 08-building-and-deploying.md
 
 # Information for Learners
-learners: 
+learners:
+- reference.md
+- setup.md
+- workshop_resources.md
 
 # Information for Instructors
-instructors: 
+instructors:
 
 # Learner Profiles
-profiles: 
+profiles:
 
 # Customisation ---------------------------------------------
 #
