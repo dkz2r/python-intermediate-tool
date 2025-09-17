@@ -54,7 +54,8 @@ class Car:
 ::: callout
 
 The convention in python is that all classes should be named in CamelCase, with no underscores.
-Class names in reality can be anything you like, but this is the standard in the python community.
+There are no limits enforced by the interpreter but it is good practice to follow the standards of
+the python community.
 
 :::
 
@@ -74,6 +75,19 @@ in order to create the object, and if a default value is provided, it is optiona
 An instance of a car, in this case called "my_car" might look something like this:
 
 ![Car Instance Example](./fig/03-class-objects/car_instance.PNG){alt='Car Instance example'}
+
+::: callout
+
+What exactly is "an instance"?
+
+An instance is how we refer to a specific object that has been created from a class. The class is
+the "blueprint", while the instance is the actual object that is created based on that blueprint.
+
+In our example, `my_car` is an instance of the `Car` class. It has its own specific values for the
+properties defined in the class (make, model, year, color), and it can use the methods defined in
+the class (honk, paint).
+
+:::
 
 Also note that each of the methods within the class object definition starts with a "self"
 argument. This is a reference to the current instance of the class, and is used to access
@@ -146,8 +160,8 @@ title are required, while the author and id are optional.
 
 The `__init__` method is called as soon as the object is created, and we can see that in addition
 to storing the parameters to their `self` counterparts, there is an additional property called
-`self._content`. This property is used to store the entire text content of the document. We obtain
-this by calling the `self._read` method, which reads the content from the specified file.
+`self.content`. This property is used to store the entire text content of the document. We obtain
+this by calling the `self.read` method, which reads the content from the specified file.
 
 ::: callout
 
@@ -155,7 +169,7 @@ this by calling the `self._read` method, which reads the content from the specif
 
 Unlike other programming languages, python doesn't have the concept of "private" or "internal"
 variables and methods. Instead there is a convention which says that any variable or method that is
-intended for internal use should be prefixed with an underscore (e.g. `_content`). This is however
+intended for internal use should be prefixed with an underscore (e.g. `content`). This is however
 just a convention - there is nothing stopping you from accessing these variables and methods from
 outside the class if you really want to.
 
@@ -164,10 +178,10 @@ outside the class if you really want to.
 There are also two methods that we've defined - `get_line_count` and `get_word_occurrence`. Neither
 of these will be called directly on the class itself, but rather on instances of the class that we
 create (as indicated by the use of `self` within the class methods). Note that these methods make
-use of the `self._content` property - this is a variable that is not defined within the method,
+use of the `self.content` property - this is a variable that is not defined within the method,
 so you may expect it to be out of scope. However the `self` keyword refers to the specific instance
 of the class itself, and so it has access to all of its properties and methods, including the
-`self._content` property.
+`self.content` property.
 
 ## Trying out Our Class Object
 
