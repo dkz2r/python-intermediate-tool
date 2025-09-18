@@ -253,7 +253,7 @@ Failed tests: 0
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 4: Identify the mistake
+## Challenge 1: Identify the mistake
 
 The following code is supposed to define a `Bird` class that inherits from the `Animal` class and
 overrides the `whoami` method to provide a specialized message. However, there is a mistake in
