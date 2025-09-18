@@ -265,6 +265,8 @@ The Metadata at the start of the document is always gated by a line that says
 `*** START OF THE PROJECT GUTENBERG EBOOK {the title of the book} ***` and at the end of the
 document with the line `*** END OF THE PROJECT GUTENBERG EBOOK {the title of the book} ***`.
 
+We need some way to extract all of the content between these two markers...
+
 :::
 
 ::: hint
@@ -275,6 +277,10 @@ use the following regex pattern to match the content between the start and end m
 
 ```python
 pattern = r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"
+
+match = re.search(pattern, raw_text, re.DOTALL)
+if match:
+    content = match.group(1).strip()
 ```
 
 :::

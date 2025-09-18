@@ -72,7 +72,7 @@ however there are a few key elements that set it apart:
 
 Before the workshop, you should have had a chance to install and check that your python and uv
 executables were working. If you have not yet had a chance to do this, please refer to the
-[setup]() page for this workshop.
+[setup](./index.html) page for this workshop.
 
 We're going to start with a totally blank project, so let's create a directory called
 "textanalysis-tool". Navigate to this directory in your command line. Let's quickly make sure we
@@ -257,13 +257,39 @@ Github interface showing the initial commit'}
 
 And with that, we're ready to start writing our tool!
 
-::: discussion
+::::::::::::::::::::::::::::::::::::: challenge
 
-## Discussion Topic
+## Challenge 1: Adding a Package Dependency
 
-TBD
+Now that we have our project set up, let's add a project dependency. Later on in the workshop, we'll
+be parsing HTML documents, so let's add the `beautifulsoup4` package to our project.
 
-:::
+Try the following command
+
+```
+uv add beautifulsoup4
+```
+
+Take a look at the `pyproject.toml` and `uv.lock` files. What changed? What is the purpose of each
+file?
+
+What is the difference between the command `uv add beautifulsoup4` and
+`uv pip install beautifulsoup4`?
+
+:::::::::::::::: solution
+
+The `pyproject.toml` file is a human readable file that contains the list of packages that our
+project depends on. The `uv.lock` file is a machine readable file that contains the exact versions
+of all packages that were installed, including any dependencies of the packages we explicitly
+installed.
+
+`uv add` will add the package to the `pyproject.toml` file, and install the package into our virtual
+environment. `uv pip install` will install the package into our virtual environment, but will not
+add it to the `pyproject.toml` file.
+
+:::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
