@@ -34,27 +34,71 @@ existing methods. This allows us to create a new class that is a specialized ver
 class, without having to rewrite a whole bunch of code.
 
 Taking a look at our Car class from earlier, we might want to create a new class for a specific
-type of car, like a Convertable Car. A Convertible Car is a type of Car, so it should have
-everything that a Car has, but it also has some additional properties and methods, for example, it
-might have a property to indicate whether the roof is up or down. We can create a new class called
-ConvertibleCar that inherits from the Car class, and then add the new property and method to it.
+type of engine, like a Gas Engine or an Electric Engine. Both kinds of cars will have the same basic
+properties and methods, but they will also have some additional properties and methods that are
+specific to the type of engine, or properties that are set by default, like our `fuel` property.
+
+But since both types of cars are still cars, they will share a lot of the same properties and
+methods. Rather than repeating all of the code from the Car class in both our new classes, we can
+use inheritance to create our new classes based on the Car class:
+
+
+
+In python, this would look something like this:
 
 ```python
-class ConvertibleCar(Car):
+class Car:
+    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "gasoline"):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.color = color
+        self.fuel = fuel
+
+    def honk(self) -> str:
+        return "beep"
+
+    def paint(self, new_color: str) -> None:
+        self.color = new_color
+
+    def noise(self, speed: int) -> str:
+        if speed <= 10:
+            return "putt putt"
+        else:
+            return "vrooom"
+
+class CarGasEngine(Car):
     def __init__(self, make: str, model: str, year: int, color: str = "grey"):
-        super().__init__(make, model, year, color)
-        self.roof_is_up = True
+        super().__init__(make=make, model=model, year=year, color=color, fuel="gasoline")
 
-    def lower_roof(self) -> None:
-        self.roof_is_up = False
+class CarElectricEngine(Car):
+    def __init__(self, make: str, model: str, year: int, color: str = "grey"):
+        super().__init__(make=make, model=model, year=year, color=color, fuel="electric")
 
-    def raise_roof(self) -> None:
-        self.roof_is_up = True
+    def noise(self, speed: int) -> str:
+        return "hmmmmmm"
 ```
 
-You can see that the ConvertibleCar class is defined in a similar way to the Car class, but it
+![Class diagram showing the Car class as a parent class, with CarGasEngine and CarElectricEngine as child classes that inherit from Car.](./fig/05-extending-classes/class_inheritance.PNG.jpg){alt='Class diagram showing inheritance from Car to CarGasEngine and CarElectricEngine'}
+
+::: callout
+
+Note that the `noise` method in the `CarElectricEngine` class is overridden to provide a different
+implementation than the one in the `Car` class. This is called method overriding, and it allows us
+to define a different behavior for a method in a subclass. When we call the `noise` method on an
+instance of `CarElectricEngine`, it will use the overridden method, rather than the one defined
+in the `Car` class.
+
+However in `CarGasEngine`, we do not override the `noise` method, so it will use the one defined in
+the `Car` class.
+
+More on overriding methods in a moment.
+
+:::
+
+You can see that the CarGasEngine class is defined in a similar way to the Car class, but it
 inherits from the Car class by including it in parentheses after the class name. The `__init__`
-method of the ConvertibleCar class also has a call to `super().__init__()`. The `super()` function
+method of the CarGasEngine class also has a call to `super().__init__()`. The `super()` function
 is a way to refer specifically to the parent class, in this case, the Car class. This allows us to
 call the `__init__` method of the Car class, which sets up all of the properties that a Car has.
 
@@ -123,19 +167,19 @@ class PlainTextDocument(Document):
 
         self._content = self._get_content(raw_text)
 
-    def _get_content(self, content: str) -> str:
+    def get_content(self, content: str) -> str:
         match = re.search(self.CONTENT_PATTERN, content, re.DOTALL)
         if match:
             return match.group(1).strip()
         raise ValueError(f"File {self.filepath} is not a valid Project Gutenberg Text file.")
 
-    def _get_metadata(self, content: str, pattern: str) -> str | None:
+    def get_metadata(self, content: str, pattern: str) -> str | None:
         match = re.search(pattern, content, re.MULTILINE)
         if match:
             return match.group(1).strip()
         return None
 
-    def _read(self, file_path: str) -> None:
+    def read(self, file_path: str) -> None:
         with open(file_path, 'r', encoding='utf-8') as file:
             return file.read()
 ```
@@ -143,8 +187,20 @@ class PlainTextDocument(Document):
 We'll also have another class for reading HTML files. This will be similar to the
 ´PlainTextDocument´ class, but it will use the ´BeautifulSoup´ library to parse the HTML file and
 extract the content and metadata. Rather than type out the entire class now, you can either copy
-and paste the code below into a new file called ´html_document.py´, or you can download the file
-from the [Workshop Resources TODO]().
+and paste the code below into a new file called ´src/textanalysis_tool/html_document.py´, or you
+can download the file from the [Workshop Resources](./workshop_resources.html).
+
+::: prereq
+
+As we do not have BeautifulSoup in our environment yet, you will need to add it using `uv`:
+
+```
+uv add beautifulsoup4
+```
+
+This will install the package to your environment as well as add it to your `pyproject.toml` file.
+
+:::
 
 ::: spoiler
 
@@ -167,25 +223,25 @@ class HTMLDocument(Document):
 
     def __init__(self, filepath: str):
         super().__init__(filepath=filepath)
-        raw_soup = self._read(self.filepath)
+        parsed_file = self._read(self.filepath)
 
-        self.title = self._get_metadata(raw_soup, "dc.title")
-        self.author = self._get_metadata(raw_soup, "dc.creator")
-        url = self._get_metadata(raw_soup, "dcterms.source")
+        self.title = self._get_metadata(parsed_file, "dc.title")
+        self.author = self._get_metadata(parsed_file, "dc.creator")
+        url = self._get_metadata(parsed_file, "dcterms.source")
         extracted_id = re.search(self.URL_PATTERN, url, re.DOTALL)
         self.id = int(extracted_id.group(1)) if extracted_id.group(1) else None
 
-        self._content = self._get_content(raw_soup)
+        self._content = self._get_content(parsed_file)
 
     def read(self, filepath) -> BeautifulSoup:
         with open(filepath, encoding="utf-8") as file_obj:
-            soup = BeautifulSoup(file_obj)
+            parsed_file = BeautifulSoup(file_obj)
 
-        return soup
+        return parsed_file
 
-    def get_content(self, soup: BeautifulSoup) -> str:
+    def get_content(self, parsed_file: BeautifulSoup) -> str:
         # Find the first h1 tag (The book title)
-        title_h1 = soup.find("h1")
+        title_h1 = parsed_file.find("h1")
 
         # Collect all the content after the first h1
         content = []
@@ -201,8 +257,8 @@ class HTMLDocument(Document):
 
         return '\n\n'.join(content)
 
-    def get_metadata(self, soup: BeautifulSoup, tag_name: str) -> str:
-        return soup.find("meta", {"name": tag_name})["content"]
+    def get_metadata(self, parsed_file: BeautifulSoup, tag_name: str) -> str:
+        return parsed_file.find("meta", {"name": tag_name})["content"]
 
 ```
 
@@ -240,7 +296,7 @@ to get to the HTML file.) Once you have the HTML file, place it in the ´scratch
 the ´pg2680.txt´ file.
 
 You can either copy and paste the code below into a new file called `demo_inheritance.py`, or you
-can download the file from the [Workshop Resources TODO]().
+can download the file from the [Workshop Resources](./workshop_resources.html).
 
 ```python
 import sys
@@ -402,7 +458,7 @@ One of the first effects of this is that our `Document` class is no longer direc
 it cannot be instantiated directly. However, we can still test the `PlainTextDocument` and
 `HTMLDocument` classes, which will also indirectly test the `Document` class. You can either copy
 the code below into two new files called `tests/test_plain_text_document.py` and
-`tests/test_html_document.py`, or you can download the files from the [Workshop Resources TODO]().
+`tests/test_html_document.py`, or you can download the files from the [Workshop Resources](./workshop_resources.html).
 (Also make sure to delete the existing `tests/test_document.py` file, since it is no longer
 applicable.)
 
@@ -628,6 +684,184 @@ method to ensure that the file is not empty and is a valid HTML file:
             raise ValueError("The file could not be parsed as HTML.")
 
         return soup
+```
+
+:::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 2: Predict the output
+
+What will happen when we run the following code? Why?
+
+```python
+class Animal:
+    def __init__(self, name: str):
+        print(f"Creating an animal named {name}")
+        self.name = name
+
+    def whoami(self) -> str:
+        return f"I am a {type(self)} named {self.name}"
+
+class Dog(Animal):
+    def __init__(self, name: str):
+        print(f"Creating a dog named {name}")
+        super().__init__(name=name)
+
+class Cat(Animal):
+    def __init__(self, name: str):
+        print(f"Creating a cat named {name}")
+
+
+animals = [Dog(name="Chance"), Cat(name="Sassy"), Dog(name="Shadow")]
+
+for animal in animals:
+    print(animal.whoami())
+
+```
+
+:::::::::::::::: solution
+
+We get some of the output we expect, but we also get an error:
+
+```
+Creating a dog named Chance
+Creating an animal named Chance
+Creating a cat named Sassy
+Creating a dog named Shadow
+Creating an animal named Shadow
+I am a <class '__main__.Dog'> named Chance
+
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+Cell In[4], line 22
+     19 animals = [Dog(name="Chance"), Cat(name="Sassy"), Dog(name="Shadow")]
+     21 for animal in animals:
+---> 22     print(animal.whoami())
+
+Cell In[4], line 7, in Animal.whoami(self)
+      6 def whoami(self) -> str:
+----> 7     return f"I am a {type(self)} named {self.name}"
+
+AttributeError: 'Cat' object has no attribute 'name'
+```
+
+We failed to call the `super().__init__()` method in the `Cat` class, so the `name` property was
+never set. When we then try to access the instance property `name` in the `whoami` method, we get an
+`AttributeError`.
+
+:::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 3: Class Methods and Properties
+
+We've mostly focused on instance properties and methods so far, but classes can also have what are
+called "class properties" and "class methods". These are properties and methods that are associated
+with the class itself, rather than with an instance of the class. They are defined using the
+`@classmethod` decorator.
+
+Without running it, what do you think the following code will do? Will it run without error?
+
+```python
+class Animal:
+    PHYLUM = "Chordata"
+
+    def __init__(self, name: str):
+        self.name = name
+
+    def whoami(self) -> str:
+        return f"I am a {type(self)} named {self.name} in the phylum {self.PHYLUM}"
+
+class Snail(Animal):
+    def __init__(self, name: str):
+        super().__init__(name=name)
+
+animal1 = Snail(name="Gary")
+Animal.PHYLUM = "Mollusca"
+print(animal1.whoami())
+
+animal2 = Snail(name="Slurms MacKenzie")
+print(animal2.whoami())
+
+creature3 = Snail(name="Turbo")
+creature3.CLASS = "Gastropoda"
+print(creature3.whoami(), "and is in class", creature3.CLASS)
+```
+
+::: hint
+
+The `PHYLUM` property is a class property, so it is shared among all instances of the class.
+
+:::
+
+:::::::::::::::: solution
+
+There's two things about this piece of code that are a bit tricky.
+
+1 The `PHYLUM` property is a class property, so it is shared among all instances of the class.
+When we set `Animal.PHYLUM = "Mollusca"`, we are actually modifying the class property for all
+instances going forward, which is why when we print `animal2.whoami()`, it shows that the phylum
+is still "Mollusca", even though we created a new instance of `Snail`.
+
+2 - We never defined a `CLASS` property in the `Animal` or `Snail` class, but we can actually still
+create a new property on an instance of a class at any time. (Generally, this is not a good idea,
+as it can cause confusion when you reference a property that doesn't exist in any class definition,
+but it is technically possible.)
+
+:::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 4: Create a new subclass
+
+The previous challenge is not quite correct, as canonnically "Slurms MacKenzie" is not a snail, but
+a slug. Create a subclass of 'Animal' called "Mollusk" that inherits from "Animal", but only sets
+the class property `PHYLUM` to "Mollusca". Then create two subclasses of "Mollusk": "Snail" and
+"Slug".
+
+You can implement any methods or properties you want in the "Snail" and "Slug" classes, but you
+may also just leave them empty like so:
+
+```python
+class MyClass:
+    pass
+```
+
+::: hint
+
+It is not necessary for the `Snail` and `Slug` classes to have their own `__init__` methods, as they
+will inherit the `__init__` method from the `Animal` class through the `Mollusk` class.
+
+:::
+
+
+:::::::::::::::: solution
+
+```python
+class Animal:
+    PHYLUM = "Chordata"
+
+    def __init__(self, name: str):
+        self.name = name
+
+    def whoami(self) -> str:
+        return f"I am a {type(self)} named {self.name} in the phylum {self.PHYLUM}"
+
+class Mollusk(Animal):
+    PHYLUM = "Mollusca"
+
+class Snail(Mollusk):
+    pass
+
+class Slug(Mollusk):
+    pass
 ```
 
 :::::::::::::::::::::::::

@@ -38,7 +38,7 @@ to differentiate between cars that have different kinds of engines, like gasolin
 With the Inheritance approach, we would have to create a new subclass for each type of engine, like
 this:
 
-![Car Inheritance example](./fig/06-composition/car_inheritance.PNG){alt='Car Inheritance example'}
+![Car Inheritance example](./fig/06-composition/car_inheritance.jpg){alt='Car Inheritance example'}
 
 The code might look something like this:
 
@@ -148,6 +148,13 @@ At first glance this might look even more complicated, but it has several advant
     `Motorcycle` class, without duplicating code.
 - **Flexibility**: We can easily add new types of engines by creating new subclasses of `Engine`,
     without having to modify the `Car` class or create new subclasses of `Car`.
+
+Think about if we added a `Tire` class as well. We could have different types of tires (e.g.,
+Road Tires, Racing Tires, Snow Tires, etc.) and then include an instance of the `Tire` class in the
+`Car` class. This would allow us to mix and match different types of engines and tires without
+having to create a new subclass for every possible combination.
+
+![Complete Car Composition example](./fig/06-composition/full_car_composition.PNG){alt='Complete Car Composition example'}
 
 ## Refactoring our Document Example
 

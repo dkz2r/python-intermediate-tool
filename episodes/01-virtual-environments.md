@@ -204,6 +204,7 @@ it:
 __pycache__/
 dist/
 *.egg-info/
+scratch/
 ```
 
 ::: spoiler

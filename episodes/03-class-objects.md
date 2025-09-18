@@ -38,17 +38,24 @@ In python we can define a class object like this:
 
 ```python
 class Car:
-    def __init__(self, make: str, model: str, year: int, color: str = "grey"):
+    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "gasoline"):
         self.make = make
         self.model = model
         self.year = year
         self.color = color
+        self.fuel = fuel
 
     def honk(self) -> str:
         return "beep"
 
     def paint(self, new_color: str) -> None:
         self.color = new_color
+
+    def noise(self, speed: int) -> str:
+        if speed <= 10:
+            return "putt putt"
+        else:
+            return "vrooom"
 ```
 
 ::: callout
@@ -244,10 +251,55 @@ Passed tests: 3
 Failed tests: 0
 ```
 
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 4: Identify the mistake
+
+The following code is supposed to define a `Bird` class that inherits from the `Animal` class and
+overrides the `whoami` method to provide a specialized message. However, there is a mistake in
+the code that prevents it from working as intended. Can you identify and fix the mistake?
+
+```python
+class Animal:
+    def __init__(self, name: str):
+        print(f"Creating an animal named {name}")
+        self.name = name
+
+class Bird(Animal):
+    def whoami() -> str:
+        return f"I am a bird. My name is irrelevant."
+```
+
+::: hint
+
+When we try to run the code we get the following error:
+
+```
+---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[7], line 14
+     11         return f"I am a bird. My name is irrelevant."
+     13 animal = Bird("boo")
+---> 14 animal.whoami()
+
+TypeError: Bird.whoami() takes 0 positional arguments but 1 was given
+```
+
+:::
+
+:::::::::::::::: solution
+
+We have forgotten to include the `self` parameter in the `whoami` method of the `Bird` class. The
+`self` parameter is required for instance methods in Python, as it refers to the instance of the
+class. Without it, the method cannot access instance properties or methods.
+
+:::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 1: Testing Out Our Class on Real Data
+## Challenge 2: Testing Out Our Class on Real Data
 
 Let's download a real text file from Project Gutenberg and see how our class object handles it.
 You can pick any file you like, or you can use the same one we looked at earlier:
@@ -334,7 +386,7 @@ class Document:
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 2: Extracting the Metadata
+## Challenge 3: Extracting the Metadata
 
 From the previous challenge, we saw that the Project Gutenberg text files have a lot of metadata
 at the start and end of the file. This metadata includes the title, author, release date, and other
@@ -429,7 +481,7 @@ class Document:
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 3: Properties
+## Challenge 4: Properties
 
 In our current implementation, the `title`, `author`, and `id` attributes are publicly accessible
 from outside the class, which means that they can be modified directly. There are instances where
