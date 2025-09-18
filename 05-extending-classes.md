@@ -141,14 +141,15 @@ class PlainTextDocument(Document):
 ```
 
 We'll also have another class for reading HTML files. This will be similar to the
-´´PlainTextDocument´´ class, but it will use the ´BeautifulSoup´ library to parse the HTML file and
+´PlainTextDocument´ class, but it will use the ´BeautifulSoup´ library to parse the HTML file and
 extract the content and metadata. Rather than type out the entire class now, you can either copy
 and paste the code below into a new file called ´html_document.py´, or you can download the file
 from the [Workshop Resources TODO]().
 
 ::: spoiler
 
-´´´python
+```
+
 import re
 
 from bs4 import BeautifulSoup
@@ -156,7 +157,7 @@ from bs4 import BeautifulSoup
 from textanalysis_tool.document import Document
 
 class HTMLDocument(Document):
-    URL_PATTERN = "^https://www.gutenberg.org/files/([0-9]+)/.*"
+    URL_PATTERN = &quot;^https://www.gutenberg.org/files/([0-9]+)/.*&quot;
 
     @property
     def gutenberg_url(self) -> str | None:
@@ -176,13 +177,13 @@ class HTMLDocument(Document):
 
         self._content = self._get_content(raw_soup)
 
-    def _read(self, filepath) -> BeautifulSoup:
+    def read(self, filepath) -> BeautifulSoup:
         with open(filepath, encoding="utf-8") as file_obj:
             soup = BeautifulSoup(file_obj)
 
         return soup
 
-    def _get_content(self, soup: BeautifulSoup) -> str:
+    def get_content(self, soup: BeautifulSoup) -> str:
         # Find the first h1 tag (The book title)
         title_h1 = soup.find("h1")
 
@@ -200,9 +201,10 @@ class HTMLDocument(Document):
 
         return '\n\n'.join(content)
 
-    def _get_metadata(self, soup: BeautifulSoup, tag_name: str) -> str:
+    def get_metadata(self, soup: BeautifulSoup, tag_name: str) -> str:
         return soup.find("meta", {"name": tag_name})["content"]
-´´´
+
+```
 
 :::
 

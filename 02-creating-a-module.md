@@ -207,6 +207,19 @@ else:
     print("Test failed!")
 ```
 
+::: callout
+
+Fos simplicity here, we are using the `from ... import ...` syntax to import only the function we
+need from the module. This way we don't have to include the module name every time we call the
+function.
+
+This is a common practice in python, however the absolute best practice would be to import the
+entire module and then call the function with the module name, as in the first example. This way
+we avoid potential naming conflicts with functions from other modules, as well as providing
+clarity about where the function is coming from when reading the code.
+
+:::
+
 ## The __init__.py File
 
 We can see that in order to import our function, we have to include both the name of the module

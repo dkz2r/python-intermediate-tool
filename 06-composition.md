@@ -114,16 +114,6 @@ class Car:
         raise ValueError("Car must have an engine")
 
 
-    def honk(self) -> str:
-        return "beep"
-
-    def paint(self, new_color: str) -> None:
-        self.color = new_color
-
-    def noise(self) -> str:
-        raise NotImplementedError("Subclasses must implement this method")
-
-
 class Engine:
     def __init__(self, fuel: str):
         self.fuel = fuel

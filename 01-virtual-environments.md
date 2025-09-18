@@ -46,7 +46,7 @@ the code that you are running is running on the exact same versions of libraries
 
 In the past, it was notoriously difficult to manage environments with python:
 
-[XKCD comic](https://xkcd.com/1987/)
+![XKCD - "Python Environment"](./fig/01-virtual-environments/xkcd1987_python_environment.png)
 
 There have been a number of attempts to create a "one size fits all" approach to virtual
 environments and dependency management:
@@ -72,7 +72,7 @@ however there are a few key elements that set it apart:
 
 Before the workshop, you should have had a chance to install and check that your python and uv
 executables were working. If you have not yet had a chance to do this, please refer to the
-[setup]() page for this workshop.
+[setup](./index.html) page for this workshop.
 
 We're going to start with a totally blank project, so let's create a directory called
 "textanalysis-tool". Navigate to this directory in your command line. Let's quickly make sure we
@@ -88,12 +88,14 @@ automatically create a couple files for us:
 ![Files created by "uv init"](./fig/01-virtual-environments/uv_init.PNG){alt='Files created by
 running "uv init"'}
 
-We can see that there are four files created by this command:
+We can see that there are a few files created by this command:
 
 - `.python-version`: This file is used to optionally specify the Python version for the project.
 - `main.py`: This is the main Python script for the project.
 - `pyproject.toml`: This file is used to manage project dependencies and settings.
 - `README.md`: This file contains human written information about the project.
+- `.gitignore`: (Depending on your version of uv) This file specifies files and directories that
+    should be ignored by git.
 
 If we take a look at the `pyproject.toml` file, we can see that it contains some basic information
 about our project in a fairly readable format:
@@ -128,8 +130,14 @@ uv venv
 ```
 
 Before we activate our environment, let's quickly check the location of the current python
-executable you are using is by starting a python interpreter with the `python` keyword, and running
-the following commands:
+executable you are using is by starting a python interpreter and running the following commands:
+
+::: callout
+
+Depending on your operating system, you may need to type `python3` instead of `python` to start
+the interpreter.
+
+:::
 
 ```python
 import sys
@@ -175,6 +183,13 @@ Type "help", "copyright", "credits" or "license" for more information.
 Exit out of the interpreter and deactivate the virtual environment with `deactivate`.
 
 ## Git Commit and Pushing to our Repository
+
+::: callout
+
+Some versions of uv will automatically create a `.gitignore` file when you run `uv init`. If
+you don't see one in your project folder, you can create one manually.
+
+:::
 
 We also want to create another file called `.gitignore`, to control which files are added to our
 git repository. It's generally a good idea to create this file early on, and update it whenever
@@ -229,6 +244,12 @@ git branch -M main
 git push -u origin main
 ```
 
+::: callout
+
+We are using `https` for our remote URL, but you can also use `ssh` if you have that set up.
+
+:::
+
 If all goes well, we'll see our code appear in the new repository:
 
 ![New repository with initial commit](./fig/01-virtual-environments/first-commit.PNG){alt='The
@@ -236,13 +257,39 @@ Github interface showing the initial commit'}
 
 And with that, we're ready to start writing our tool!
 
-::: discussion
+::::::::::::::::::::::::::::::::::::: challenge
 
-## Discussion Topic
+## Challenge 1: Adding a Package Dependency
 
-TBD
+Now that we have our project set up, let's add a project dependency. Later on in the workshop, we'll
+be parsing HTML documents, so let's add the `beautifulsoup4` package to our project.
 
-:::
+Try the following command
+
+```
+uv add beautifulsoup4
+```
+
+Take a look at the `pyproject.toml` and `uv.lock` files. What changed? What is the purpose of each
+file?
+
+What is the difference between the command `uv add beautifulsoup4` and
+`uv pip install beautifulsoup4`?
+
+:::::::::::::::: solution
+
+The `pyproject.toml` file is a human readable file that contains the list of packages that our
+project depends on. The `uv.lock` file is a machine readable file that contains the exact versions
+of all packages that were installed, including any dependencies of the packages we explicitly
+installed.
+
+`uv add` will add the package to the `pyproject.toml` file, and install the package into our virtual
+environment. `uv pip install` will install the package into our virtual environment, but will not
+add it to the `pyproject.toml` file.
+
+:::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
