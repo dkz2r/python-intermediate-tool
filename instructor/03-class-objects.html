@@ -99,7 +99,7 @@
           <button class="nav-link dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             More <i data-feather="chevron-down"></i>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><hr><li><a class="dropdown-item" href="reference.html">Reference</a></li>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><hr><li><a class="dropdown-item" href="reference.html">Reference</a></li><li><a class="dropdown-item" href="workshop_resources.html">Workshop Resources</a></li>
           </ul></li>
       </ul></div>
     <!--
@@ -310,7 +310,7 @@
                       <li>
                         <a href="../instructor/images.html">Extract All Images</a>
                       </li>
-                      <hr><li><a class="dropdown-item" href="reference.html">Reference</a></li>
+                      <hr><li><a class="dropdown-item" href="reference.html">Reference</a></li><li><a class="dropdown-item" href="workshop_resources.html">Workshop Resources</a></li>
                     </ul></div>
                 </div>
               </div>
@@ -346,7 +346,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Class Objects</h1>
-        <p>Last updated on 2025-09-16 |
+        <p>Last updated on 2025-09-18 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/03-class-objects.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -423,8 +423,9 @@ diagram of our car object:</p>
 <div class="callout-inner">
 <div class="callout-content">
 <p>The convention in python is that all classes should be named in
-CamelCase, with no underscores. Class names in reality can be anything
-you like, but this is the standard in the python community.</p>
+CamelCase, with no underscores. There are no limits enforced by the
+interpreter but it is good practice to follow the standards of the
+python community.</p>
 </div>
 </div>
 </div>
@@ -446,14 +447,32 @@ provided, it is optional.</p>
 <p>An instance of a car, in this case called “my_car” might look
 something like this:</p>
 <figure><img src=".././fig/03-class-objects/car_instance.PNG" alt="Car Instance example" class="figure mx-auto d-block"><div class="figcaption">Car Instance Example</div>
-</figure><p>Also note that each of the methods within the class object definition
+</figure><div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>What exactly is “an instance”?</p>
+<p>An instance is how we refer to a specific object that has been
+created from a class. The class is the “blueprint”, while the instance
+is the actual object that is created based on that blueprint.</p>
+<p>In our example, <code>my_car</code> is an instance of the
+<code>Car</code> class. It has its own specific values for the
+properties defined in the class (make, model, year, color), and it can
+use the methods defined in the class (honk, paint).</p>
+</div>
+</div>
+</div>
+<p>Also note that each of the methods within the class object definition
 starts with a “self” argument. This is a reference to the current
 instance of the class, and is used to access variables that belong to
 the class. In our example, we store the make, model, year and color as
 properties of the class. When we call the <code>paint</code> method, we
 use <code>self.color</code> to refer to the current instance’s color
 property.</p>
-<div id="callout2" class="callout">
+<div id="callout3" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -530,9 +549,9 @@ the title are required, while the author and id are optional.</p>
 <p>The <code>__init__</code> method is called as soon as the object is
 created, and we can see that in addition to storing the parameters to
 their <code>self</code> counterparts, there is an additional property
-called <code>self._content</code>. This property is used to store the
+called <code>self.content</code>. This property is used to store the
 entire text content of the document. We obtain this by calling the
-<code>self._read</code> method, which reads the content from the
+<code>self.read</code> method, which reads the content from the
 specified file.</p>
 <div id="principle-of-least-astonishment-or-were-all-adults-here" class="callout">
 <div class="callout-square">
@@ -547,7 +566,7 @@ Adults Here)</h3>
 of “private” or “internal” variables and methods. Instead there is a
 convention which says that any variable or method that is intended for
 internal use should be prefixed with an underscore
-(e.g. <code>_content</code>). This is however just a convention - there
+(e.g. <code>content</code>). This is however just a convention - there
 is nothing stopping you from accessing these variables and methods from
 outside the class if you really want to.</p>
 </div>
@@ -558,11 +577,11 @@ outside the class if you really want to.</p>
 Neither of these will be called directly on the class itself, but rather
 on instances of the class that we create (as indicated by the use of
 <code>self</code> within the class methods). Note that these methods
-make use of the <code>self._content</code> property - this is a variable
+make use of the <code>self.content</code> property - this is a variable
 that is not defined within the method, so you may expect it to be out of
 scope. However the <code>self</code> keyword refers to the specific
 instance of the class itself, and so it has access to all of its
-properties and methods, including the <code>self._content</code>
+properties and methods, including the <code>self.content</code>
 property.</p>
 </section><section><h2 class="section-heading" id="trying-out-our-class-object">Trying out Our Class Object<a class="anchor" aria-label="anchor" href="#trying-out-our-class-object"></a></h2>
 <hr class="half-width"><p>Let’s try out our new class object. Create a file in our “tests”
@@ -652,6 +671,8 @@ that says
 <code>*** START OF THE PROJECT GUTENBERG EBOOK {the title of the book} ***</code>
 and at the end of the document with the line
 <code>*** END OF THE PROJECT GUTENBERG EBOOK {the title of the book} ***</code>.</p>
+<p>We need some way to extract all of the content between these two
+markers…</p>
 </div>
 </div>
 </div>
@@ -671,7 +692,11 @@ and end markers:</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>match <span class="op">=</span> re.search(pattern, raw_text, re.DOTALL)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="cf">if</span> match:</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    content <span class="op">=</span> match.group(<span class="dv">1</span>).strip()</span></code></pre>
 </div>
 </div>
 </div>
@@ -1005,8 +1030,8 @@ any links that you are not going to use.
   "url": "https://jonathan-hartman.github.io/python-intermediate-tool/instructor/03-class-objects.html",
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/instructor/03-class-objects.html",
   "dateCreated": "2025-08-23",
-  "dateModified": "2025-09-16",
-  "datePublished": "2025-09-16"
+  "dateModified": "2025-09-18",
+  "datePublished": "2025-09-18"
 }
 
   </script><script>

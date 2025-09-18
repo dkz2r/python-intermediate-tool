@@ -99,7 +99,7 @@
           <button class="nav-link dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             More <i data-feather="chevron-down"></i>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><hr><li><a class="dropdown-item" href="reference.html">Reference</a></li>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><hr><li><a class="dropdown-item" href="reference.html">Reference</a></li><li><a class="dropdown-item" href="workshop_resources.html">Workshop Resources</a></li>
           </ul></li>
       </ul></div>
     <!--
@@ -301,7 +301,7 @@
                       <li>
                         <a href="../instructor/images.html">Extract All Images</a>
                       </li>
-                      <hr><li><a class="dropdown-item" href="reference.html">Reference</a></li>
+                      <hr><li><a class="dropdown-item" href="reference.html">Reference</a></li><li><a class="dropdown-item" href="workshop_resources.html">Workshop Resources</a></li>
                     </ul></div>
                 </div>
               </div>
@@ -477,17 +477,17 @@ and download the most recent version.</p>
 </button>
 </div>
 </nav><div id="nav-tabContent-1" class="tab-content">
-<div id="nav-tabpanel-1-1" class="tab-pane show active" role="tabpanel" aria-labelledby="nav-tab-1-1">
+<div id="nav-tabpanel-1-1" class="tab-pane show active" aria-labelledby="nav-tab-1-1" role="tabpanel">
 <p>You can check the version of python you have installed by opening up
 a new command line / terminal and typing
 <code>python --version</code>:</p>
 <figure><img src=".././fig/python-version.PNG" alt="Viewing the python version in the command line" class="figure mx-auto d-block"><div class="figcaption">Command line terminal showing the results of
 python –version</div>
 </figure></div>
-<div id="nav-tabpanel-1-2" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-1-2">
+<div id="nav-tabpanel-1-2" class="tab-pane" aria-labelledby="nav-tab-1-2" role="tabpanel">
 <p>TBD</p>
 </div>
-<div id="nav-tabpanel-1-3" class="tab-pane" role="tabpanel" aria-labelledby="nav-tab-1-3">
+<div id="nav-tabpanel-1-3" class="tab-pane" aria-labelledby="nav-tab-1-3" role="tabpanel">
 <p>TBD</p>
 </div>
 </div>
@@ -495,10 +495,76 @@ python –version</div>
 </section><section><h2 class="section-heading" id="software-setup---uv">Software Setup - UV<a class="anchor" aria-label="anchor" href="#software-setup---uv"></a></h2>
 <hr class="half-width"><p>We will also be working with the UV package management tool. You can
 follow the install instructions found <a href="https://docs.astral.sh/uv/getting-started/installation/" class="external-link">on the
-project website</a>. <!--
+project website</a>.</p>
+</section><section><h2 class="section-heading" id="software-setup---git-and-github-optional">Software Setup - git and GitHub (Optional)<a class="anchor" aria-label="anchor" href="#software-setup---git-and-github-optional"></a></h2>
+<hr class="half-width"><div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>We will be demonstrating the use of GitHub during the workshop,
+however if you would prefer not to use the service it is not required to
+have an account in order to participate in the workshop.</p>
+</div>
+</div>
+</div>
+<p>We will be using git and GitHub to manage our code during the
+workshop. If you do not already have a GitHub account, you can create
+one for free at <a href="https://github.com/" class="external-link">github.com</a>.</p>
+<p>Once you have an account, you will need to authorize git on your
+device to push code to your GitHub account. If you are familiar with SSH
+keys, you can use those. If not, you can use a personal access token
+(PAT).</p>
+<div class="section level3">
+<h3 id="creating-a-personal-access-token">Creating a Personal Access Token<a class="anchor" aria-label="anchor" href="#creating-a-personal-access-token"></a></h3>
+<p>Once you are logged into GitHub, click on your profile icon in the
+upper right corner of the screen, and select “Settings” from the
+dropdown menu. On the left side of the screen, select “Developer
+settings”, then “Personal access tokens”, and finally “Fine-grained
+tokens”.</p>
+<p>Select “Generate new token”, then “Generate new token” again on the
+next screen. You will be prompted to give your token a name, description
+and expiration date. Under “Repository access”, select “All
+repositories”. Click the “Add Permissions” button and select “Contents”
+and “Commit Statuses”. Update the dropdown for each to “Read and write”.
+Finally, click the “Generate token” button at the bottom of the
+page.</p>
+<p>Your token is only ever shown once, so be sure to either copy it to
+your clipboard or leave the window open while you complete the next
+step.</p>
+</div>
+<div class="section level3">
+<h3 id="authorizing-git-to-use-your-personal-access-token">Authorizing git to use your Personal Access Token<a class="anchor" aria-label="anchor" href="#authorizing-git-to-use-your-personal-access-token"></a></h3>
+<p>On your device, open a command line / terminal window. You will need
+to configure git to use your PAT when pushing code to GitHub. You can do
+this by running the following commands:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> credential.helper store</span></code></pre>
+</div>
+<p>Then, run the following command, replacing <code>your-username</code>
+with your GitHub username:</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/your-username/your-repo.git</span></code></pre>
+</div>
+<p>You will be prompted for your GitHub username and password. For the
+password, paste in the PAT you created in the previous step. Your
+credentials will be stored on your device, and you should not have to
+enter them again.</p>
+</div>
+</section><section><h2 class="section-heading" id="account-setup---testpypi-optional">Account Setup - TestPyPi (Optional)<a class="anchor" aria-label="anchor" href="#account-setup---testpypi-optional"></a></h2>
+<hr class="half-width"><p>We will be using TestPyPi to publish our package during the workshop.
+You will need to create an account on TestPyPi if you do not already
+have one. You can do that at <a href="https://test.pypi.org/account/register/" class="external-link">test.pypi.org</a>.</p>
+<!--
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
- --></p>
+ -->
 </section></section></main><nav class="bottom-pagination mx-md-4" aria-label="Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link float-end" href="../instructor/01-virtual-environments.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
@@ -548,8 +614,8 @@ any links that you are not going to use.
   "url": "https://jonathan-hartman.github.io/python-intermediate-tool/instructor/index.html",
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/instructor/index.html",
   "dateCreated": "2025-08-23",
-  "dateModified": "2025-09-16",
-  "datePublished": "2025-09-16"
+  "dateModified": "2025-09-18",
+  "datePublished": "2025-09-18"
 }
 
   </script><script>

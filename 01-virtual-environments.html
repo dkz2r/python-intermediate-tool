@@ -99,7 +99,7 @@
           <button class="nav-link dropdown-toggle" id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
             More <i data-feather="chevron-down"></i>
           </button>
-          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><li><a class="dropdown-item" href="reference.html">Reference</a></li>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown"><li><a class="dropdown-item" href="reference.html">Reference</a></li><li><a class="dropdown-item" href="workshop_resources.html">Workshop Resources</a></li>
           </ul></li>
       </ul></div>
     <!--
@@ -312,7 +312,7 @@
                       <li>
                         <a href="profiles.html">Learner Profiles</a>
                       </li>
-                      <li><a href="reference.html">Reference</a></li>
+                      <li><a href="reference.html">Reference</a></li><li><a href="workshop_resources.html">Workshop Resources</a></li>
                     </ul></div>
                 </div>
               </div>
@@ -348,7 +348,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Virtual Environments</h1>
-        <p>Last updated on 2025-09-16 |
+        <p>Last updated on 2025-09-18 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/01-virtual-environments.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -418,8 +418,8 @@ that the code that you are running is running on the exact same versions
 of libraries.</p>
 <p>In the past, it was notoriously difficult to manage environments with
 python:</p>
-<p><a href="https://xkcd.com/1987/" class="external-link">XKCD comic</a></p>
-<p>There have been a number of attempts to create a “one size fits all”
+<figure><img src="./fig/01-virtual-environments/xkcd1987_python_environment.png" alt="XKCD - “Python Environment”" class="figure mx-auto d-block"><div class="figcaption">XKCD - “Python Environment”</div>
+</figure><p>There have been a number of attempts to create a “one size fits all”
 approach to virtual environments and dependency management:</p>
 <ul><li>venv</li>
 <li>virtualenv</li>
@@ -442,8 +442,7 @@ learn new commands.</li>
 </ol></section><section><h2 class="section-heading" id="creating-a-project-with-uv">Creating a project with UV<a class="anchor" aria-label="anchor" href="#creating-a-project-with-uv"></a></h2>
 <hr class="half-width"><p>Before the workshop, you should have had a chance to install and
 check that your python and uv executables were working. If you have not
-yet had a chance to do this, please refer to the <a href="">setup</a>
-page for this workshop.</p>
+yet had a chance to do this, please refer to the <a href="./index.html">setup</a> page for this workshop.</p>
 <p>We’re going to start with a totally blank project, so let’s create a
 directory called “textanalysis-tool”. Navigate to this directory in your
 command line. Let’s quickly make sure we have UV installed and working
@@ -454,7 +453,7 @@ following (the exact version number might be different):</p>
 <code>uv init</code>. This will automatically create a couple files for
 us:</p>
 <figure><img src="./fig/01-virtual-environments/uv_init.PNG" alt='Files created by running "uv init"' class="figure mx-auto d-block"><div class="figcaption">Files created by “uv init”</div>
-</figure><p>We can see that there are four files created by this command:</p>
+</figure><p>We can see that there are a few files created by this command:</p>
 <ul><li>
 <code>.python-version</code>: This file is used to optionally
 specify the Python version for the project.</li>
@@ -467,6 +466,9 @@ dependencies and settings.</li>
 <li>
 <code>README.md</code>: This file contains human written information
 about the project.</li>
+<li>
+<code>.gitignore</code>: (Depending on your version of uv) This file
+specifies files and directories that should be ignored by git.</li>
 </ul><p>If we take a look at the <code>pyproject.toml</code> file, we can see
 that it contains some basic information about our project in a fairly
 readable format:</p>
@@ -500,8 +502,20 @@ in a directory called <code>.venv</code> within our project folder.</p>
 </div>
 <p>Before we activate our environment, let’s quickly check the location
 of the current python executable you are using is by starting a python
-interpreter with the <code>python</code> keyword, and running the
-following commands:</p>
+interpreter and running the following commands:</p>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Depending on your operating system, you may need to type
+<code>python3</code> instead of <code>python</code> to start the
+interpreter.</p>
+</div>
+</div>
+</div>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -541,7 +555,20 @@ Type "help", "copyright", "credits" or "license" for more information.
 <p>Exit out of the interpreter and deactivate the virtual environment
 with <code>deactivate</code>.</p>
 </section><section><h2 class="section-heading" id="git-commit-and-pushing-to-our-repository">Git Commit and Pushing to our Repository<a class="anchor" aria-label="anchor" href="#git-commit-and-pushing-to-our-repository"></a></h2>
-<hr class="half-width"><p>We also want to create another file called <code>.gitignore</code>,
+<hr class="half-width"><div id="callout3" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Some versions of uv will automatically create a
+<code>.gitignore</code> file when you run <code>uv init</code>. If you
+don’t see one in your project folder, you can create one manually.</p>
+</div>
+</div>
+</div>
+<p>We also want to create another file called <code>.gitignore</code>,
 to control which files are added to our git repository. It’s generally a
 good idea to create this file early on, and update it whenever you
 notice files or folders you want to explicitly prevent from being added
@@ -572,7 +599,7 @@ GitHub. You can find it <a href="https://github.com/github/gitignore/blob/main/P
 make an entirely blank repository, with the same name as our project:
 “textanalysis-tool”.</p>
 <figure><img src="./fig/01-virtual-environments/new-repo.PNG" alt="The Github interface for creating a new repository" class="figure mx-auto d-block"><div class="figcaption">Creating a new repository</div>
-</figure><div id="callout2" class="callout">
+</figure><div id="callout4" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -595,19 +622,62 @@ git commit -m "Initial commit"</code></pre>
 <pre><code>git remote add origin https://github.com/{username}/textanalysis-tool.git
 git branch -M main
 git push -u origin main</code></pre>
+<div id="callout5" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>We are using <code>https</code> for our remote URL, but you can also
+use <code>ssh</code> if you have that set up.</p>
+</div>
+</div>
+</div>
 <p>If all goes well, we’ll see our code appear in the new
 repository:</p>
 <figure><img src="./fig/01-virtual-environments/first-commit.PNG" alt="The Github interface showing the initial commit" class="figure mx-auto d-block"><div class="figcaption">New repository with initial commit</div>
 </figure><p>And with that, we’re ready to start writing our tool!</p>
-<div id="discussion-topic" class="callout discussion">
+<div id="challenge-1-adding-a-package-dependency" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<span class="callout-header">Discussion</span>
-<div id="discussion-topic" class="callout-inner">
-<h3 class="callout-title">Discussion Topic</h3>
+<span class="callout-header">Challenge</span>
+<div id="challenge-1-adding-a-package-dependency" class="callout-inner">
+<h3 class="callout-title">Challenge 1: Adding a Package Dependency</h3>
 <div class="callout-content">
-<p>TBD</p>
+<p>Now that we have our project set up, let’s add a project dependency.
+Later on in the workshop, we’ll be parsing HTML documents, so let’s add
+the <code>beautifulsoup4</code> package to our project.</p>
+<p>Try the following command</p>
+<pre><code>uv add beautifulsoup4</code></pre>
+<p>Take a look at the <code>pyproject.toml</code> and
+<code>uv.lock</code> files. What changed? What is the purpose of each
+file?</p>
+<p>What is the difference between the command
+<code>uv add beautifulsoup4</code> and
+<code>uv pip install beautifulsoup4</code>?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<p>The <code>pyproject.toml</code> file is a human readable file that
+contains the list of packages that our project depends on. The
+<code>uv.lock</code> file is a machine readable file that contains the
+exact versions of all packages that were installed, including any
+dependencies of the packages we explicitly installed.</p>
+<p><code>uv add</code> will add the package to the
+<code>pyproject.toml</code> file, and install the package into our
+virtual environment. <code>uv pip install</code> will install the
+package into our virtual environment, but will not add it to the
+<code>pyproject.toml</code> file.</p>
+</div>
 </div>
 </div>
 </div>
@@ -692,8 +762,8 @@ any links that you are not going to use.
   "url": "https://jonathan-hartman.github.io/python-intermediate-tool/01-virtual-environments.html",
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/01-virtual-environments.html",
   "dateCreated": "2025-08-23",
-  "dateModified": "2025-09-16",
-  "datePublished": "2025-09-16"
+  "dateModified": "2025-09-18",
+  "datePublished": "2025-09-18"
 }
 
   </script><script>

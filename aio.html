@@ -123,6 +123,7 @@
           </button>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 <li><a class="dropdown-item" href="reference.html">Reference</a></li>
+<li><a class="dropdown-item" href="workshop_resources.html">Workshop Resources</a></li>
           </ul>
 </li>
       </ul>
@@ -361,6 +362,7 @@
                         <a href="profiles.html">Learner Profiles</a>
                       </li>
                       <li><a href="reference.html">Reference</a></li>
+<li><a href="workshop_resources.html">Workshop Resources</a></li>
                     </ul>
 </div>
                 </div>
@@ -392,7 +394,7 @@
         
 <section id="aio-01-virtual-environments"><p>Content from <a href="01-virtual-environments.html">Virtual Environments</a></p>
 <hr>
-<p>Last updated on 2025-09-16 |
+<p>Last updated on 2025-09-18 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/01-virtual-environments.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -464,8 +466,8 @@ that the code that you are running is running on the exact same versions
 of libraries.</p>
 <p>In the past, it was notoriously difficult to manage environments with
 python:</p>
-<p><a href="https://xkcd.com/1987/" class="external-link">XKCD comic</a></p>
-<p>There have been a number of attempts to create a “one size fits all”
+<figure><img src="./fig/01-virtual-environments/xkcd1987_python_environment.png" alt="XKCD - “Python Environment”" class="figure mx-auto d-block"><div class="figcaption">XKCD - “Python Environment”</div>
+</figure><p>There have been a number of attempts to create a “one size fits all”
 approach to virtual environments and dependency management:</p>
 <ul>
 <li>venv</li>
@@ -493,8 +495,7 @@ learn new commands.</li>
 <hr class="half-width">
 <p>Before the workshop, you should have had a chance to install and
 check that your python and uv executables were working. If you have not
-yet had a chance to do this, please refer to the <a href="">setup</a>
-page for this workshop.</p>
+yet had a chance to do this, please refer to the <a href="./index.html">setup</a> page for this workshop.</p>
 <p>We’re going to start with a totally blank project, so let’s create a
 directory called “textanalysis-tool”. Navigate to this directory in your
 command line. Let’s quickly make sure we have UV installed and working
@@ -505,7 +506,7 @@ following (the exact version number might be different):</p>
 <code>uv init</code>. This will automatically create a couple files for
 us:</p>
 <figure><img src="./fig/01-virtual-environments/uv_init.PNG" alt='Files created by running "uv init"' class="figure mx-auto d-block"><div class="figcaption">Files created by “uv init”</div>
-</figure><p>We can see that there are four files created by this command:</p>
+</figure><p>We can see that there are a few files created by this command:</p>
 <ul>
 <li>
 <code>.python-version</code>: This file is used to optionally
@@ -519,6 +520,9 @@ dependencies and settings.</li>
 <li>
 <code>README.md</code>: This file contains human written information
 about the project.</li>
+<li>
+<code>.gitignore</code>: (Depending on your version of uv) This file
+specifies files and directories that should be ignored by git.</li>
 </ul>
 <p>If we take a look at the <code>pyproject.toml</code> file, we can see
 that it contains some basic information about our project in a fairly
@@ -555,8 +559,20 @@ in a directory called <code>.venv</code> within our project folder.</p>
 </div>
 <p>Before we activate our environment, let’s quickly check the location
 of the current python executable you are using is by starting a python
-interpreter with the <code>python</code> keyword, and running the
-following commands:</p>
+interpreter and running the following commands:</p>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Depending on your operating system, you may need to type
+<code>python3</code> instead of <code>python</code> to start the
+interpreter.</p>
+</div>
+</div>
+</div>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -598,6 +614,19 @@ with <code>deactivate</code>.</p>
 </section><section><h2 class="section-heading" id="git-commit-and-pushing-to-our-repository">Git Commit and Pushing to our Repository<a class="anchor" aria-label="anchor" href="#git-commit-and-pushing-to-our-repository"></a>
 </h2>
 <hr class="half-width">
+<div id="callout3" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Some versions of uv will automatically create a
+<code>.gitignore</code> file when you run <code>uv init</code>. If you
+don’t see one in your project folder, you can create one manually.</p>
+</div>
+</div>
+</div>
 <p>We also want to create another file called <code>.gitignore</code>,
 to control which files are added to our git repository. It’s generally a
 good idea to create this file early on, and update it whenever you
@@ -629,7 +658,7 @@ GitHub. You can find it <a href="https://github.com/github/gitignore/blob/main/P
 make an entirely blank repository, with the same name as our project:
 “textanalysis-tool”.</p>
 <figure><img src="./fig/01-virtual-environments/new-repo.PNG" alt="The Github interface for creating a new repository" class="figure mx-auto d-block"><div class="figcaption">Creating a new repository</div>
-</figure><div id="callout2" class="callout">
+</figure><div id="callout4" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -652,19 +681,62 @@ git commit -m "Initial commit"</code></pre>
 <pre><code>git remote add origin https://github.com/{username}/textanalysis-tool.git
 git branch -M main
 git push -u origin main</code></pre>
+<div id="callout5" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>We are using <code>https</code> for our remote URL, but you can also
+use <code>ssh</code> if you have that set up.</p>
+</div>
+</div>
+</div>
 <p>If all goes well, we’ll see our code appear in the new
 repository:</p>
 <figure><img src="./fig/01-virtual-environments/first-commit.PNG" alt="The Github interface showing the initial commit" class="figure mx-auto d-block"><div class="figcaption">New repository with initial commit</div>
 </figure><p>And with that, we’re ready to start writing our tool!</p>
-<div id="discussion-topic" class="callout discussion">
+<div id="challenge-1-adding-a-package-dependency" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
-<span class="callout-header">Discussion</span>
-<div id="discussion-topic" class="callout-inner">
-<h3 class="callout-title">Discussion Topic</h3>
+<span class="callout-header">Challenge</span>
+<div id="challenge-1-adding-a-package-dependency" class="callout-inner">
+<h3 class="callout-title">Challenge 1: Adding a Package Dependency</h3>
 <div class="callout-content">
-<p>TBD</p>
+<p>Now that we have our project set up, let’s add a project dependency.
+Later on in the workshop, we’ll be parsing HTML documents, so let’s add
+the <code>beautifulsoup4</code> package to our project.</p>
+<p>Try the following command</p>
+<pre><code>uv add beautifulsoup4</code></pre>
+<p>Take a look at the <code>pyproject.toml</code> and
+<code>uv.lock</code> files. What changed? What is the purpose of each
+file?</p>
+<p>What is the difference between the command
+<code>uv add beautifulsoup4</code> and
+<code>uv pip install beautifulsoup4</code>?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<p>The <code>pyproject.toml</code> file is a human readable file that
+contains the list of packages that our project depends on. The
+<code>uv.lock</code> file is a machine readable file that contains the
+exact versions of all packages that were installed, including any
+dependencies of the packages we explicitly installed.</p>
+<p><code>uv add</code> will add the package to the
+<code>pyproject.toml</code> file, and install the package into our
+virtual environment. <code>uv pip install</code> will install the
+package into our virtual environment, but will not add it to the
+<code>pyproject.toml</code> file.</p>
+</div>
 </div>
 </div>
 </div>
@@ -695,7 +767,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-02-creating-a-module"><p>Content from <a href="02-creating-a-module.html">Creating A Module</a></p>
 <hr>
-<p>Last updated on 2025-09-16 |
+<p>Last updated on 2025-09-18 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/02-creating-a-module.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -947,6 +1019,26 @@ the code a little neater:</p>
 <span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="cf">else</span>:</span>
 <span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Test failed!"</span>)</span></code></pre>
 </div>
+<div id="callout5" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Fos simplicity here, we are using the
+<code>from ... import ...</code> syntax to import only the function we
+need from the module. This way we don’t have to include the module name
+every time we call the function.</p>
+<p>This is a common practice in python, however the absolute best
+practice would be to import the entire module and then call the function
+with the module name, as in the first example. This way we avoid
+potential naming conflicts with functions from other modules, as well as
+providing clarity about where the function is coming from when reading
+the code.</p>
+</div>
+</div>
+</div>
 </section><section><h2 class="section-heading" id="the-init-py-file">The <strong>init</strong>.py File<a class="anchor" aria-label="anchor" href="#the-init-py-file"></a>
 </h2>
 <hr class="half-width">
@@ -1003,7 +1095,7 @@ It's nice to meet you!</code></pre>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1050,7 +1142,7 @@ within our <code>greet</code> function?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>In our greetings.py file:</p>
 <div class="codewrapper sourceCode" id="cb16">
@@ -1070,7 +1162,7 @@ within our <code>greet</code> function?</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>Why are you bothering to write out the entire module path in
 greetings.py? Can’t you just do this:</p>
@@ -1116,7 +1208,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-03-class-objects"><p>Content from <a href="03-class-objects.html">Class Objects</a></p>
 <hr>
-<p>Last updated on 2025-09-16 |
+<p>Last updated on 2025-09-18 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/03-class-objects.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -1191,8 +1283,9 @@ diagram of our car object:</p>
 <div class="callout-inner">
 <div class="callout-content">
 <p>The convention in python is that all classes should be named in
-CamelCase, with no underscores. Class names in reality can be anything
-you like, but this is the standard in the python community.</p>
+CamelCase, with no underscores. There are no limits enforced by the
+interpreter but it is good practice to follow the standards of the
+python community.</p>
 </div>
 </div>
 </div>
@@ -1214,14 +1307,32 @@ provided, it is optional.</p>
 <p>An instance of a car, in this case called “my_car” might look
 something like this:</p>
 <figure><img src="./fig/03-class-objects/car_instance.PNG" alt="Car Instance example" class="figure mx-auto d-block"><div class="figcaption">Car Instance Example</div>
-</figure><p>Also note that each of the methods within the class object definition
+</figure><div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>What exactly is “an instance”?</p>
+<p>An instance is how we refer to a specific object that has been
+created from a class. The class is the “blueprint”, while the instance
+is the actual object that is created based on that blueprint.</p>
+<p>In our example, <code>my_car</code> is an instance of the
+<code>Car</code> class. It has its own specific values for the
+properties defined in the class (make, model, year, color), and it can
+use the methods defined in the class (honk, paint).</p>
+</div>
+</div>
+</div>
+<p>Also note that each of the methods within the class object definition
 starts with a “self” argument. This is a reference to the current
 instance of the class, and is used to access variables that belong to
 the class. In our example, we store the make, model, year and color as
 properties of the class. When we call the <code>paint</code> method, we
 use <code>self.color</code> to refer to the current instance’s color
 property.</p>
-<div id="callout2" class="callout">
+<div id="callout3" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -1300,9 +1411,9 @@ the title are required, while the author and id are optional.</p>
 <p>The <code>__init__</code> method is called as soon as the object is
 created, and we can see that in addition to storing the parameters to
 their <code>self</code> counterparts, there is an additional property
-called <code>self._content</code>. This property is used to store the
+called <code>self.content</code>. This property is used to store the
 entire text content of the document. We obtain this by calling the
-<code>self._read</code> method, which reads the content from the
+<code>self.read</code> method, which reads the content from the
 specified file.</p>
 <div id="principle-of-least-astonishment-or-were-all-adults-here" class="callout">
 <div class="callout-square">
@@ -1317,7 +1428,7 @@ Adults Here)</h3>
 of “private” or “internal” variables and methods. Instead there is a
 convention which says that any variable or method that is intended for
 internal use should be prefixed with an underscore
-(e.g. <code>_content</code>). This is however just a convention - there
+(e.g. <code>content</code>). This is however just a convention - there
 is nothing stopping you from accessing these variables and methods from
 outside the class if you really want to.</p>
 </div>
@@ -1328,11 +1439,11 @@ outside the class if you really want to.</p>
 Neither of these will be called directly on the class itself, but rather
 on instances of the class that we create (as indicated by the use of
 <code>self</code> within the class methods). Note that these methods
-make use of the <code>self._content</code> property - this is a variable
+make use of the <code>self.content</code> property - this is a variable
 that is not defined within the method, so you may expect it to be out of
 scope. However the <code>self</code> keyword refers to the specific
 instance of the class itself, and so it has access to all of its
-properties and methods, including the <code>self._content</code>
+properties and methods, including the <code>self.content</code>
 property.</p>
 </section><section><h2 class="section-heading" id="trying-out-our-class-object">Trying out Our Class Object<a class="anchor" aria-label="anchor" href="#trying-out-our-class-object"></a>
 </h2>
@@ -1424,6 +1535,8 @@ that says
 <code>*** START OF THE PROJECT GUTENBERG EBOOK {the title of the book} ***</code>
 and at the end of the document with the line
 <code>*** END OF THE PROJECT GUTENBERG EBOOK {the title of the book} ***</code>.</p>
+<p>We need some way to extract all of the content between these two
+markers…</p>
 </div>
 </div>
 </div>
@@ -1443,7 +1556,11 @@ and end markers:</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>match <span class="op">=</span> re.search(pattern, raw_text, re.DOTALL)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="cf">if</span> match:</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    content <span class="op">=</span> match.group(<span class="dv">1</span>).strip()</span></code></pre>
 </div>
 </div>
 </div>
@@ -2369,7 +2486,7 @@ any links that you are not going to use.
 </div>
 </section></section><section id="aio-05-extending-classes"><p>Content from <a href="05-extending-classes.html">Extending Classes with Inheritance</a></p>
 <hr>
-<p>Last updated on 2025-09-15 |
+<p>Last updated on 2025-09-18 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/05-extending-classes.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2542,7 +2659,7 @@ At the moment, our classes look like this:</p>
 <span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">file</span>.read()</span></code></pre>
 </div>
 <p>We’ll also have another class for reading HTML files. This will be
-similar to the ´´PlainTextDocument´´ class, but it will use the
+similar to the ´PlainTextDocument´ class, but it will use the
 ´BeautifulSoup´ library to parse the HTML file and extract the content
 and metadata. Rather than type out the entire class now, you can either
 copy and paste the code below into a new file called ´html_document.py´,
@@ -2553,61 +2670,63 @@ TODO</a>.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
-<p>´´´python import re</p>
-<p>from bs4 import BeautifulSoup</p>
-<p>from textanalysis_tool.document import Document</p>
-<p>class HTMLDocument(Document): URL_PATTERN = “^<a href="https://www.gutenberg.org/files/" class="external-link uri">https://www.gutenberg.org/files/</a>([0-9]+)/.*”</p>
-<div class="codewrapper sourceCode" id="cb4">
-<h3 class="code-label">SH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode sh" tabindex="0"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="ex">@property</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="ex">def</span> gutenberg_url<span class="er">(</span><span class="ex">self</span><span class="kw">)</span> <span class="ex">-</span><span class="op">&gt;</span> str <span class="kw">|</span> <span class="ex">None:</span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a>    <span class="cf">if</span> <span class="ex">self.id:</span></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a>        <span class="cf">return</span> <span class="ex">f</span><span class="st">"https://www.gutenberg.org/cache/epub/{self.id}/pg{self.id}-h.zip"</span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a>    <span class="cf">return</span> <span class="ex">None</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="ex">def</span> __init__<span class="er">(</span><span class="ex">self,</span> filepath: str<span class="kw">)</span><span class="bu">:</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a>    <span class="fu">super()</span><span class="ex">.__init__</span><span class="er">(</span><span class="va">filepath</span><span class="op">=</span>filepath<span class="kw">)</span></span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a>    <span class="ex">raw_soup</span> = self._read<span class="er">(</span><span class="ex">self.filepath</span><span class="kw">)</span></span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a>    <span class="ex">self.title</span> = self._get_metadata<span class="er">(</span><span class="ex">raw_soup,</span> <span class="st">"dc.title"</span><span class="kw">)</span></span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a>    <span class="ex">self.author</span> = self._get_metadata<span class="er">(</span><span class="ex">raw_soup,</span> <span class="st">"dc.creator"</span><span class="kw">)</span></span>
-<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a>    <span class="ex">url</span> = self._get_metadata<span class="er">(</span><span class="ex">raw_soup,</span> <span class="st">"dcterms.source"</span><span class="kw">)</span></span>
-<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a>    <span class="ex">extracted_id</span> = re.search<span class="er">(</span><span class="ex">self.URL_PATTERN,</span> url, re.DOTALL<span class="kw">)</span></span>
-<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a>    <span class="ex">self.id</span> = int<span class="er">(</span><span class="ex">extracted_id.group</span><span class="er">(</span><span class="ex">1</span><span class="kw">))</span> <span class="cf">if</span> <span class="ex">extracted_id.group</span><span class="er">(</span><span class="ex">1</span><span class="kw">)</span> <span class="cf">else</span> <span class="ex">None</span></span>
-<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a></span>
-<span id="cb4-17"><a href="#cb4-17" tabindex="-1"></a>    <span class="ex">self._content</span> = self._get_content<span class="er">(</span><span class="ex">raw_soup</span><span class="kw">)</span></span>
-<span id="cb4-18"><a href="#cb4-18" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" tabindex="-1"></a><span class="ex">def</span> _read<span class="er">(</span><span class="ex">self,</span> filepath<span class="kw">)</span> <span class="ex">-</span><span class="op">&gt;</span> BeautifulSoup:</span>
-<span id="cb4-20"><a href="#cb4-20" tabindex="-1"></a>    <span class="ex">with</span> open<span class="er">(</span><span class="ex">filepath,</span> encoding=<span class="st">"utf-8"</span><span class="kw">)</span> <span class="fu">as</span> file_obj:</span>
-<span id="cb4-21"><a href="#cb4-21" tabindex="-1"></a>        <span class="ex">soup</span> = BeautifulSoup<span class="er">(</span><span class="ex">file_obj</span><span class="kw">)</span></span>
-<span id="cb4-22"><a href="#cb4-22" tabindex="-1"></a></span>
-<span id="cb4-23"><a href="#cb4-23" tabindex="-1"></a>    <span class="cf">return</span> <span class="ex">soup</span></span>
-<span id="cb4-24"><a href="#cb4-24" tabindex="-1"></a></span>
-<span id="cb4-25"><a href="#cb4-25" tabindex="-1"></a><span class="ex">def</span> _get_content<span class="er">(</span><span class="ex">self,</span> soup: BeautifulSoup<span class="kw">)</span> <span class="ex">-</span><span class="op">&gt;</span> str:</span>
-<span id="cb4-26"><a href="#cb4-26" tabindex="-1"></a>    <span class="co"># Find the first h1 tag (The book title)</span></span>
-<span id="cb4-27"><a href="#cb4-27" tabindex="-1"></a>    <span class="ex">title_h1</span> = soup.find<span class="er">(</span><span class="st">"h1"</span><span class="kw">)</span></span>
-<span id="cb4-28"><a href="#cb4-28" tabindex="-1"></a></span>
-<span id="cb4-29"><a href="#cb4-29" tabindex="-1"></a>    <span class="co"># Collect all the content after the first h1</span></span>
-<span id="cb4-30"><a href="#cb4-30" tabindex="-1"></a>    <span class="ex">content</span> = []</span>
-<span id="cb4-31"><a href="#cb4-31" tabindex="-1"></a>    <span class="cf">for</span> element <span class="kw">in</span> title_h1.find_next_siblings<span class="er">(</span><span class="kw">)</span><span class="bu">:</span></span>
-<span id="cb4-32"><a href="#cb4-32" tabindex="-1"></a>        <span class="ex">text</span> = element.get_text<span class="er">(</span><span class="va">strip</span><span class="op">=</span>True<span class="kw">)</span></span>
-<span id="cb4-33"><a href="#cb4-33" tabindex="-1"></a></span>
-<span id="cb4-34"><a href="#cb4-34" tabindex="-1"></a>        <span class="co"># Stop early if we hit this text, which indicate the end of the book</span></span>
-<span id="cb4-35"><a href="#cb4-35" tabindex="-1"></a>        <span class="cf">if</span> <span class="st">"END OF THE PROJECT GUTENBERG EBOOK"</span> in text:</span>
-<span id="cb4-36"><a href="#cb4-36" tabindex="-1"></a>            <span class="cf">break</span></span>
-<span id="cb4-37"><a href="#cb4-37" tabindex="-1"></a></span>
-<span id="cb4-38"><a href="#cb4-38" tabindex="-1"></a>        <span class="cf">if</span> <span class="ex">text:</span></span>
-<span id="cb4-39"><a href="#cb4-39" tabindex="-1"></a>            <span class="ex">content.append</span><span class="er">(</span><span class="ex">text</span><span class="kw">)</span></span>
-<span id="cb4-40"><a href="#cb4-40" tabindex="-1"></a></span>
-<span id="cb4-41"><a href="#cb4-41" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">'\n\n'</span><span class="ex">.join</span><span class="er">(</span><span class="ex">content</span><span class="kw">)</span></span>
-<span id="cb4-42"><a href="#cb4-42" tabindex="-1"></a></span>
-<span id="cb4-43"><a href="#cb4-43" tabindex="-1"></a><span class="ex">def</span> _get_metadata<span class="er">(</span><span class="ex">self,</span> soup: BeautifulSoup, tag_name: str<span class="kw">)</span> <span class="ex">-</span><span class="op">&gt;</span> str:</span>
-<span id="cb4-44"><a href="#cb4-44" tabindex="-1"></a>    <span class="cf">return</span> <span class="ex">soup.find</span><span class="er">(</span><span class="st">"meta"</span><span class="ex">,</span> {<span class="st">"name"</span>: tag_name}<span class="kw">)</span><span class="ex">[</span><span class="st">"content"</span><span class="ex">]</span></span></code></pre>
-</div>
-<p>´´´</p>
+<pre><code>
+import re
+
+from bs4 import BeautifulSoup
+
+from textanalysis_tool.document import Document
+
+class HTMLDocument(Document):
+    URL_PATTERN = &amp;quot;^https://www.gutenberg.org/files/([0-9]+)/.*&amp;quot;
+
+    @property
+    def gutenberg_url(self) -&gt; str | None:
+        if self.id:
+            return f"https://www.gutenberg.org/cache/epub/{self.id}/pg{self.id}-h.zip"
+        return None
+
+    def __init__(self, filepath: str):
+        super().__init__(filepath=filepath)
+        raw_soup = self._read(self.filepath)
+
+        self.title = self._get_metadata(raw_soup, "dc.title")
+        self.author = self._get_metadata(raw_soup, "dc.creator")
+        url = self._get_metadata(raw_soup, "dcterms.source")
+        extracted_id = re.search(self.URL_PATTERN, url, re.DOTALL)
+        self.id = int(extracted_id.group(1)) if extracted_id.group(1) else None
+
+        self._content = self._get_content(raw_soup)
+
+    def read(self, filepath) -&gt; BeautifulSoup:
+        with open(filepath, encoding="utf-8") as file_obj:
+            soup = BeautifulSoup(file_obj)
+
+        return soup
+
+    def get_content(self, soup: BeautifulSoup) -&gt; str:
+        # Find the first h1 tag (The book title)
+        title_h1 = soup.find("h1")
+
+        # Collect all the content after the first h1
+        content = []
+        for element in title_h1.find_next_siblings():
+            text = element.get_text(strip=True)
+
+            # Stop early if we hit this text, which indicate the end of the book
+            if "END OF THE PROJECT GUTENBERG EBOOK" in text:
+                break
+
+            if text:
+                content.append(text)
+
+        return '\n\n'.join(content)
+
+    def get_metadata(self, soup: BeautifulSoup, tag_name: str) -&gt; str:
+        return soup.find("meta", {"name": tag_name})["content"]
+</code></pre>
 </div>
 </div>
 </div>
@@ -2843,7 +2962,7 @@ is no longer applicable.)</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2921,7 +3040,7 @@ is no longer applicable.)</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
   <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3053,7 +3172,7 @@ FAILED tests/test_html_document.py::test_empty_file - AttributeError: 'NoneType'
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
   <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
+<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
 <div class="accordion-body">
 <p>The <code>open</code> function is being monkeypatched to return an
 empty string, which is then passed to the <code>BeautifulSoup</code>
@@ -3068,7 +3187,7 @@ it creates a <code>BeautifulSoup</code> object with no content.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>The error is occurring because the <code>HTMLDocument</code> class is
 trying to find the first <code>h1</code> tag in the HTML content, but
@@ -3117,7 +3236,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-06-composition"><p>Content from <a href="06-composition.html">Inheritance and Composition</a></p>
 <hr>
-<p>Last updated on 2025-09-16 |
+<p>Last updated on 2025-09-18 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/06-composition.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -3248,39 +3367,29 @@ for each one. Here’s how that would look:</p>
 <span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Car must have an engine"</span>)</span>
 <span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a></span>
 <span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a>    <span class="kw">def</span> honk(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"beep"</span></span>
-<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a></span>
-<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a>    <span class="kw">def</span> paint(<span class="va">self</span>, new_color: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>        <span class="va">self</span>.color <span class="op">=</span> new_color</span>
-<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a></span>
-<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a>    <span class="kw">def</span> noise(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>(<span class="st">"Subclasses must implement this method"</span>)</span>
-<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a></span>
-<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a></span>
-<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a><span class="kw">class</span> Engine:</span>
-<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, fuel: <span class="bu">str</span>):</span>
-<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a>        <span class="va">self</span>.fuel <span class="op">=</span> fuel</span>
-<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a></span>
-<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a>    <span class="kw">def</span> noise(<span class="va">self</span>, speed: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>(<span class="st">"Subclasses must implement this method"</span>)</span>
+<span id="cb2-21"><a href="#cb2-21" tabindex="-1"></a><span class="kw">class</span> Engine:</span>
+<span id="cb2-22"><a href="#cb2-22" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, fuel: <span class="bu">str</span>):</span>
+<span id="cb2-23"><a href="#cb2-23" tabindex="-1"></a>        <span class="va">self</span>.fuel <span class="op">=</span> fuel</span>
+<span id="cb2-24"><a href="#cb2-24" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" tabindex="-1"></a>    <span class="kw">def</span> noise(<span class="va">self</span>, speed: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb2-26"><a href="#cb2-26" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>(<span class="st">"Subclasses must implement this method"</span>)</span>
+<span id="cb2-27"><a href="#cb2-27" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" tabindex="-1"></a><span class="kw">class</span> GasEngine(Engine):</span>
+<span id="cb2-29"><a href="#cb2-29" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
+<span id="cb2-30"><a href="#cb2-30" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(fuel<span class="op">=</span><span class="st">"gasoline"</span>)</span>
+<span id="cb2-31"><a href="#cb2-31" tabindex="-1"></a></span>
+<span id="cb2-32"><a href="#cb2-32" tabindex="-1"></a>    <span class="kw">def</span> noise(<span class="va">self</span>, speed: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb2-33"><a href="#cb2-33" tabindex="-1"></a>        <span class="cf">if</span> speed <span class="op">&lt;=</span> <span class="dv">10</span>:</span>
+<span id="cb2-34"><a href="#cb2-34" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"put put put"</span></span>
+<span id="cb2-35"><a href="#cb2-35" tabindex="-1"></a>        <span class="cf">elif</span> speed <span class="op">&gt;</span> <span class="dv">10</span>:</span>
+<span id="cb2-36"><a href="#cb2-36" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"vrooom"</span></span>
 <span id="cb2-37"><a href="#cb2-37" tabindex="-1"></a></span>
-<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a><span class="kw">class</span> GasEngine(Engine):</span>
+<span id="cb2-38"><a href="#cb2-38" tabindex="-1"></a><span class="kw">class</span> ElectricEngine(Engine):</span>
 <span id="cb2-39"><a href="#cb2-39" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
-<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(fuel<span class="op">=</span><span class="st">"gasoline"</span>)</span>
+<span id="cb2-40"><a href="#cb2-40" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(fuel<span class="op">=</span><span class="st">"electric"</span>)</span>
 <span id="cb2-41"><a href="#cb2-41" tabindex="-1"></a></span>
 <span id="cb2-42"><a href="#cb2-42" tabindex="-1"></a>    <span class="kw">def</span> noise(<span class="va">self</span>, speed: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a>        <span class="cf">if</span> speed <span class="op">&lt;=</span> <span class="dv">10</span>:</span>
-<span id="cb2-44"><a href="#cb2-44" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"put put put"</span></span>
-<span id="cb2-45"><a href="#cb2-45" tabindex="-1"></a>        <span class="cf">elif</span> speed <span class="op">&gt;</span> <span class="dv">10</span>:</span>
-<span id="cb2-46"><a href="#cb2-46" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"vrooom"</span></span>
-<span id="cb2-47"><a href="#cb2-47" tabindex="-1"></a></span>
-<span id="cb2-48"><a href="#cb2-48" tabindex="-1"></a><span class="kw">class</span> ElectricEngine(Engine):</span>
-<span id="cb2-49"><a href="#cb2-49" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>):</span>
-<span id="cb2-50"><a href="#cb2-50" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(fuel<span class="op">=</span><span class="st">"electric"</span>)</span>
-<span id="cb2-51"><a href="#cb2-51" tabindex="-1"></a></span>
-<span id="cb2-52"><a href="#cb2-52" tabindex="-1"></a>    <span class="kw">def</span> noise(<span class="va">self</span>, speed: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb2-53"><a href="#cb2-53" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"hmmmmmm"</span></span></code></pre>
+<span id="cb2-43"><a href="#cb2-43" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"hmmmmmm"</span></span></code></pre>
 </div>
 <p>At first glance this might look even more complicated, but it has
 several advantages:</p>
@@ -3597,7 +3706,7 @@ classes.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p><code>tests/readers/test_text_reader.py</code></p>
 <div class="codewrapper sourceCode" id="cb8">
@@ -3722,7 +3831,7 @@ documentation here</a></p>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
   <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
+<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
 <div class="accordion-body">
 <p>To get the metadata from an epub file, you can use the
 <code>get_metadata</code> method of the <code>EpubBook</code> class.
@@ -3749,7 +3858,7 @@ actual title.</p>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint2" aria-expanded="false" aria-controls="collapseHint2">
   <h4 class="accordion-header" id="headingHint2"> Give me a hint </h4>
 </button>
-<div id="collapseHint2" class="accordion-collapse collapse" data-bs-parent="#accordionHint2" aria-labelledby="headingHint2">
+<div id="collapseHint2" class="accordion-collapse collapse" aria-labelledby="headingHint2" data-bs-parent="#accordionHint2">
 <div class="accordion-body">
 <p>To get the content from an epub file, we can iterate over all of the
 “items” in the book that are a document, then use
@@ -3772,7 +3881,7 @@ content.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -4883,7 +4992,7 @@ Addendum</a>.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 
 </div>
@@ -4965,8 +5074,8 @@ any links that you are not going to use.
   "url": "https://jonathan-hartman.github.io/python-intermediate-tool/aio.html",
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/aio.html",
   "dateCreated": "2025-08-23",
-  "dateModified": "2025-09-16",
-  "datePublished": "2025-09-16"
+  "dateModified": "2025-09-18",
+  "datePublished": "2025-09-18"
 }
 
   </script><script>
