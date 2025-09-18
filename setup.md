@@ -88,6 +88,7 @@ have to enter them again.
 
 ## Account Setup - TestPyPi (Optional)
 
-We will be using TestPyPi to publish our package during the workshop. You will need to create an
-account on TestPyPi if you do not already have one. You can do that at
+We will be using TestPyPi to publish our package during the workshop. If you would like to follow
+along and publish your package to the test instance, you will need to create an account on TestPyPi
+if you do not already have one. You can do that at
 [test.pypi.org](https://test.pypi.org/account/register/).
