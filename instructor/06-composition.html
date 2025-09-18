@@ -402,7 +402,7 @@ episode. As a reminder, our class looked like this:</p>
 between cars that have different kinds of engines, like gasoline, or
 electric? With the Inheritance approach, we would have to create a new
 subclass for each type of engine, like this:</p>
-<figure><img src=".././fig/06-composition/car_inheritance.PNG" alt="Car Inheritance example" class="figure mx-auto d-block"><div class="figcaption">Car Inheritance example</div>
+<figure><img src=".././fig/06-composition/car_inheritance.jpg" alt="Car Inheritance example" class="figure mx-auto d-block"><div class="figcaption">Car Inheritance example</div>
 </figure><p>The code might look something like this:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -519,7 +519,14 @@ reused in other contexts, such as in a <code>Truck</code> or
 by creating new subclasses of <code>Engine</code>, without having to
 modify the <code>Car</code> class or create new subclasses of
 <code>Car</code>.</li>
-</ul></div>
+</ul><p>Think about if we added a <code>Tire</code> class as well. We could
+have different types of tires (e.g., Road Tires, Racing Tires, Snow
+Tires, etc.) and then include an instance of the <code>Tire</code> class
+in the <code>Car</code> class. This would allow us to mix and match
+different types of engines and tires without having to create a new
+subclass for every possible combination.</p>
+<figure><img src=".././fig/06-composition/full_car_composition.PNG" alt="Complete Car Composition example" class="figure mx-auto d-block"><div class="figcaption">Complete Car Composition example</div>
+</figure></div>
 </section><section><h2 class="section-heading" id="refactoring-our-document-example">Refactoring our Document Example<a class="anchor" aria-label="anchor" href="#refactoring-our-document-example"></a></h2>
 <hr class="half-width"><p>Let’s take this concept and apply it to our <code>Document</code>
 example from previous episodes. We can create a new class called

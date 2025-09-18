@@ -643,7 +643,8 @@ maintain our own. Open up the file and add the following lines to
 it:</p>
 <pre><code>__pycache__/
 dist/
-*.egg-info/</code></pre>
+*.egg-info/
+scratch/</code></pre>
 <div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
@@ -1268,17 +1269,24 @@ diagram of our car object:</p>
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="kw">class</span> Car:</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, make: <span class="bu">str</span>, model: <span class="bu">str</span>, year: <span class="bu">int</span>, color: <span class="bu">str</span> <span class="op">=</span> <span class="st">"grey"</span>):</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, make: <span class="bu">str</span>, model: <span class="bu">str</span>, year: <span class="bu">int</span>, color: <span class="bu">str</span> <span class="op">=</span> <span class="st">"grey"</span>, fuel: <span class="bu">str</span> <span class="op">=</span> <span class="st">"gasoline"</span>):</span>
 <span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>        <span class="va">self</span>.make <span class="op">=</span> make</span>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>        <span class="va">self</span>.model <span class="op">=</span> model</span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>        <span class="va">self</span>.year <span class="op">=</span> year</span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>        <span class="va">self</span>.color <span class="op">=</span> color</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a>    <span class="kw">def</span> honk(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"beep"</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>    <span class="kw">def</span> paint(<span class="va">self</span>, new_color: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>        <span class="va">self</span>.color <span class="op">=</span> new_color</span></code></pre>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>        <span class="va">self</span>.fuel <span class="op">=</span> fuel</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    <span class="kw">def</span> honk(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"beep"</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>    <span class="kw">def</span> paint(<span class="va">self</span>, new_color: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>        <span class="va">self</span>.color <span class="op">=</span> new_color</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>    <span class="kw">def</span> noise(<span class="va">self</span>, speed: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>        <span class="cf">if</span> speed <span class="op">&lt;=</span> <span class="dv">10</span>:</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"putt putt"</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"vrooom"</span></span></code></pre>
 </div>
 <div id="callout1" class="callout">
 <div class="callout-square">
@@ -1506,13 +1514,77 @@ It is only a test document.</code></pre>
 <pre><code>Total tests: 3
 Passed tests: 3
 Failed tests: 0</code></pre>
-<div id="challenge-1-testing-out-our-class-on-real-data" class="callout challenge">
+<div id="challenge-4-identify-the-mistake" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-1-testing-out-our-class-on-real-data" class="callout-inner">
-<h3 class="callout-title">Challenge 1: Testing Out Our Class on Real
+<div id="challenge-4-identify-the-mistake" class="callout-inner">
+<h3 class="callout-title">Challenge 4: Identify the mistake</h3>
+<div class="callout-content">
+<p>The following code is supposed to define a <code>Bird</code> class
+that inherits from the <code>Animal</code> class and overrides the
+<code>whoami</code> method to provide a specialized message. However,
+there is a mistake in the code that prevents it from working as
+intended. Can you identify and fix the mistake?</p>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="kw">class</span> Animal:</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name: <span class="bu">str</span>):</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Creating an animal named </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>        <span class="va">self</span>.name <span class="op">=</span> name</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="kw">class</span> Bird(Animal):</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>    <span class="kw">def</span> whoami() <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"I am a bird. My name is irrelevant."</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionHint1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
+  <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
+</button>
+<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
+<div class="accordion-body">
+<p>When we try to run the code we get the following error:</p>
+<pre><code>---------------------------------------------------------------------------
+TypeError                                 Traceback (most recent call last)
+Cell In[7], line 14
+     11         return f"I am a bird. My name is irrelevant."
+     13 animal = Bird("boo")
+---&gt; 14 animal.whoami()
+
+TypeError: Bird.whoami() takes 0 positional arguments but 1 was given</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<p>We have forgotten to include the <code>self</code> parameter in the
+<code>whoami</code> method of the <code>Bird</code> class. The
+<code>self</code> parameter is required for instance methods in Python,
+as it refers to the instance of the class. Without it, the method cannot
+access instance properties or methods.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="challenge-2-testing-out-our-class-on-real-data" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-2-testing-out-our-class-on-real-data" class="callout-inner">
+<h3 class="callout-title">Challenge 2: Testing Out Our Class on Real
 Data</h3>
 <div class="callout-content">
 <p>Let’s download a real text file from Project Gutenberg and see how
@@ -1528,12 +1600,12 @@ this class on our actual data?</p>
 </div>
 </div>
 </div>
-<div id="accordionHint1" class="accordion challenge-accordion accordion-flush">
+<div id="accordionHint2" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
-<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
-  <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
+<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint2" aria-expanded="false" aria-controls="collapseHint2">
+  <h4 class="accordion-header" id="headingHint2"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
+<div id="collapseHint2" class="accordion-collapse collapse" aria-labelledby="headingHint2" data-bs-parent="#accordionHint2">
 <div class="accordion-body">
 <p>The Metadata at the start of the document is always gated by a line
 that says
@@ -1546,103 +1618,6 @@ markers…</p>
 </div>
 </div>
 </div>
-<div id="accordionHint2" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint2" aria-expanded="false" aria-controls="collapseHint2">
-  <h4 class="accordion-header" id="headingHint2"> Give me a hint </h4>
-</button>
-<div id="collapseHint2" class="accordion-collapse collapse" aria-labelledby="headingHint2" data-bs-parent="#accordionHint2">
-<div class="accordion-body">
-<p>There is a python module called <code>re</code> that allows us to
-work with regular expressions. This can be used to match specific
-patterns in text, or for extracting specific parts of a string. You can
-use the following regex pattern to match the content between the start
-and end markers:</p>
-<div class="codewrapper sourceCode" id="cb7">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>match <span class="op">=</span> re.search(pattern, raw_text, re.DOTALL)</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="cf">if</span> match:</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    content <span class="op">=</span> match.group(<span class="dv">1</span>).strip()</span></code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
-</button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
-<div class="accordion-body">
-<p>The Project Gutenberg text files have a lot of metadata at the start
-and end of the file, which will affect the line count and word
-occurrence counts. We might want to modify our <code>self.read</code>
-method to strip out this metadata before storing the content in
-<code>self.content</code>.</p>
-<p>One possible solution would look like this:</p>
-<div class="codewrapper sourceCode" id="cb8">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="im">import</span> re</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="kw">class</span> Document:</span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>, title: <span class="bu">str</span>, author: <span class="bu">str</span> <span class="op">=</span> <span class="st">""</span>, <span class="bu">id</span>: <span class="bu">int</span> <span class="op">=</span> <span class="dv">0</span>):</span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>        <span class="va">self</span>.content <span class="op">=</span> <span class="va">self</span>.get_content(filepath)</span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> title</span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> author</span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> <span class="bu">id</span></span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>    <span class="kw">def</span> get_content(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>        raw_text <span class="op">=</span> <span class="va">self</span>.read(filepath)</span>
-<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>        match <span class="op">=</span> re.search(<span class="va">self</span>.CONTENT_PATTERN, raw_text, re.DOTALL)</span>
-<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
-<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
-<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span>filepath<span class="sc">}</span><span class="ss"> is not a valid Project Gutenberg Text file."</span>)</span>
-<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a></span>
-<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a>    <span class="kw">def</span> read(<span class="va">self</span>, file_path: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">file</span>.read()</span>
-<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a></span>
-<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a>    <span class="kw">def</span> get_line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.content.splitlines())</span>
-<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a></span>
-<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a></span>
-<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a>    <span class="kw">def</span> get_word_occurrence(<span class="va">self</span>, word: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.content.lower().count(word.lower())</span></code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="challenge-2-extracting-the-metadata" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<span class="callout-header">Challenge</span>
-<div id="challenge-2-extracting-the-metadata" class="callout-inner">
-<h3 class="callout-title">Challenge 2: Extracting the Metadata</h3>
-<div class="callout-content">
-<p>From the previous challenge, we saw that the Project Gutenberg text
-files have a lot of metadata at the start and end of the file. This
-metadata includes the title, author, release date, and other information
-about the book which we currently are adding to our file using
-parameters.</p>
-<p>Instead of passing this information in as parameters, can you modify
-the class so that it extracts the title, author and id from the metadata
-in the text file itself?</p>
-</div>
-</div>
-</div>
 <div id="accordionHint3" class="accordion challenge-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint3" aria-expanded="false" aria-controls="collapseHint3">
@@ -1650,17 +1625,19 @@ in the text file itself?</p>
 </button>
 <div id="collapseHint3" class="accordion-collapse collapse" aria-labelledby="headingHint3" data-bs-parent="#accordionHint3">
 <div class="accordion-body">
-<p>As before, we can use the <code>re</code> module to extract this
-information. The title and author are contained in lines that start with
-<code>Title:</code> and <code>Author:</code> respectively. The ID can be
-found in the line that starts with <code>Release Date:</code>. You can
-use the following regex patterns to match these lines:</p>
+<p>There is a python module called <code>re</code> that allows us to
+work with regular expressions. This can be used to match specific
+patterns in text, or for extracting specific parts of a string. You can
+use the following regex pattern to match the content between the start
+and end markers:</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>TITLE_PATTERN <span class="op">=</span> <span class="vs">r"^Title:\s*(.*?)\s*$"</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>AUTHOR_PATTERN <span class="op">=</span> <span class="vs">r"^Author:\s*(.*?)\s*$"</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>ID_PATTERN <span class="op">=</span> <span class="vs">r"^Release date:\s*.*?\[eBook #(\d+)\]"</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>pattern <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>match <span class="op">=</span> re.search(pattern, raw_text, re.DOTALL)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="cf">if</span> match:</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>    content <span class="op">=</span> match.group(<span class="dv">1</span>).strip()</span></code></pre>
 </div>
 </div>
 </div>
@@ -1673,8 +1650,12 @@ use the following regex patterns to match these lines:</p>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<p>There’s any number of ways to do this, but one possible solution
-would look like this:</p>
+<p>The Project Gutenberg text files have a lot of metadata at the start
+and end of the file, which will affect the line count and word
+occurrence counts. We might want to modify our <code>self.read</code>
+method to strip out this metadata before storing the content in
+<code>self.content</code>.</p>
+<p>One possible solution would look like this:</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -1683,101 +1664,54 @@ would look like this:</p>
 <span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="kw">class</span> Document:</span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>    TITLE_PATTERN <span class="op">=</span> <span class="vs">r"^Title:\s*(.*?)\s*$"</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a>    AUTHOR_PATTERN <span class="op">=</span> <span class="vs">r"^Author:\s*(.*?)\s*$"</span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>    ID_PATTERN <span class="op">=</span> <span class="vs">r"^Release date:\s*.*?\[eBook #(\d+)\]"</span></span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>):</span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>        <span class="va">self</span>.content <span class="op">=</span> <span class="va">self</span>.get_content(filepath)</span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a></span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> raw_text:</span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> contains no content."</span>)</span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a></span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>        metadata <span class="op">=</span> <span class="va">self</span>.get_metadata(filepath)</span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> metadata.get(<span class="st">"title"</span>)</span>
-<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> metadata.get(<span class="st">"author"</span>)</span>
-<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> metadata.get(<span class="st">"id"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>, title: <span class="bu">str</span>, author: <span class="bu">str</span> <span class="op">=</span> <span class="st">""</span>, <span class="bu">id</span>: <span class="bu">int</span> <span class="op">=</span> <span class="dv">0</span>):</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a>        <span class="va">self</span>.content <span class="op">=</span> <span class="va">self</span>.get_content(filepath)</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> title</span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> author</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> <span class="bu">id</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>    <span class="kw">def</span> get_content(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>        raw_text <span class="op">=</span> <span class="va">self</span>.read(filepath)</span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>        match <span class="op">=</span> re.search(<span class="va">self</span>.CONTENT_PATTERN, raw_text, re.DOTALL)</span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span>filepath<span class="sc">}</span><span class="ss"> is not a valid Project Gutenberg Text file."</span>)</span>
 <span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a></span>
-<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>    <span class="kw">def</span> _extract_metadata_element(<span class="va">self</span>, pattern: <span class="bu">str</span>, text: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
-<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a>        match <span class="op">=</span> re.search(pattern, text, re.MULTILINE)</span>
-<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
-<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
-<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a></span>
-<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a>    <span class="kw">def</span> get_content(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a>        raw_text <span class="op">=</span> <span class="va">self</span>.read(filepath)</span>
-<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a>        match <span class="op">=</span> re.search(<span class="va">self</span>.CONTENT_PATTERN, raw_text, re.DOTALL)</span>
-<span id="cb10-32"><a href="#cb10-32" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
-<span id="cb10-33"><a href="#cb10-33" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
-<span id="cb10-34"><a href="#cb10-34" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span>filepath<span class="sc">}</span><span class="ss"> is not a valid Project Gutenberg Text file."</span>)</span>
-<span id="cb10-35"><a href="#cb10-35" tabindex="-1"></a></span>
-<span id="cb10-36"><a href="#cb10-36" tabindex="-1"></a>    <span class="kw">def</span> get_metadata(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
-<span id="cb10-37"><a href="#cb10-37" tabindex="-1"></a>        raw_text <span class="op">=</span> <span class="va">self</span>.read(filepath)</span>
-<span id="cb10-38"><a href="#cb10-38" tabindex="-1"></a></span>
-<span id="cb10-39"><a href="#cb10-39" tabindex="-1"></a>        title <span class="op">=</span> <span class="va">self</span>._extract_metadata_element(<span class="va">self</span>.TITLE_PATTERN, raw_text)</span>
-<span id="cb10-40"><a href="#cb10-40" tabindex="-1"></a>        author <span class="op">=</span> <span class="va">self</span>._extract_metadata_element(<span class="va">self</span>.AUTHOR_PATTERN, raw_text)</span>
-<span id="cb10-41"><a href="#cb10-41" tabindex="-1"></a>        extracted_id <span class="op">=</span> <span class="va">self</span>._extract_metadata_element(<span class="va">self</span>.ID_PATTERN, raw_text)</span>
-<span id="cb10-42"><a href="#cb10-42" tabindex="-1"></a></span>
-<span id="cb10-43"><a href="#cb10-43" tabindex="-1"></a>        <span class="cf">return</span> {</span>
-<span id="cb10-44"><a href="#cb10-44" tabindex="-1"></a>            <span class="st">"title"</span>: title,</span>
-<span id="cb10-45"><a href="#cb10-45" tabindex="-1"></a>            <span class="st">"author"</span>: author,</span>
-<span id="cb10-46"><a href="#cb10-46" tabindex="-1"></a>            <span class="st">"id"</span>: <span class="bu">int</span>(extracted_id) <span class="cf">if</span> extracted_id <span class="cf">else</span> <span class="va">None</span>,</span>
-<span id="cb10-47"><a href="#cb10-47" tabindex="-1"></a>        }</span>
-<span id="cb10-48"><a href="#cb10-48" tabindex="-1"></a></span>
-<span id="cb10-49"><a href="#cb10-49" tabindex="-1"></a>    <span class="kw">def</span> read(<span class="va">self</span>, file_path: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb10-50"><a href="#cb10-50" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb10-51"><a href="#cb10-51" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">file</span>.read()</span>
-<span id="cb10-52"><a href="#cb10-52" tabindex="-1"></a></span>
-<span id="cb10-53"><a href="#cb10-53" tabindex="-1"></a>    <span class="kw">def</span> get_line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb10-54"><a href="#cb10-54" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>._content.splitlines())</span>
-<span id="cb10-55"><a href="#cb10-55" tabindex="-1"></a></span>
-<span id="cb10-56"><a href="#cb10-56" tabindex="-1"></a></span>
-<span id="cb10-57"><a href="#cb10-57" tabindex="-1"></a>    <span class="kw">def</span> get_word_occurrence(<span class="va">self</span>, word: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb10-58"><a href="#cb10-58" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._content.lower().count(word.lower())</span></code></pre>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>    <span class="kw">def</span> read(<span class="va">self</span>, file_path: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">file</span>.read()</span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a></span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a>    <span class="kw">def</span> get_line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.content.splitlines())</span>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a></span>
+<span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a></span>
+<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a>    <span class="kw">def</span> get_word_occurrence(<span class="va">self</span>, word: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb10-32"><a href="#cb10-32" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.content.lower().count(word.lower())</span></code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div id="challenge-3-properties" class="callout challenge">
+<div id="challenge-3-extracting-the-metadata" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-3-properties" class="callout-inner">
-<h3 class="callout-title">Challenge 3: Properties</h3>
+<div id="challenge-3-extracting-the-metadata" class="callout-inner">
+<h3 class="callout-title">Challenge 3: Extracting the Metadata</h3>
 <div class="callout-content">
-<p>In our current implementation, the <code>title</code>,
-<code>author</code>, and <code>id</code> attributes are publicly
-accessible from outside the class, which means that they can be modified
-directly. There are instances where it might be preferable for the
-attributes to be read-only, so that they can only be set when the object
-is created, and not modified afterwards, or to allow us to create
-variables that are based or calculated from other variables and should
-not be set directly.</p>
-<p>We can do this with the <code>@property</code> decorator. This is a
-special decorator that allows us to define “getter” and “setter” methods
-for a property. It works much the same as a normal method, but it is
-accessed like an attribute.</p>
-<p>We can convert our <code>get_line_count</code> method to a property
-like this:</p>
-<div class="codewrapper sourceCode" id="cb11">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>    ...</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a></span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    <span class="at">@property</span></span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    <span class="kw">def</span> line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.content.splitlines())</span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a></span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>    ...</span></code></pre>
-</div>
-<p>The links to the Project Gutenberg files are based on the id, which
-we extracted from the metadata. Create a new property called
-<code>gutenberg_url</code> that returns the url for the document based
-on the id.</p>
+<p>From the previous challenge, we saw that the Project Gutenberg text
+files have a lot of metadata at the start and end of the file. This
+metadata includes the title, author, release date, and other information
+about the book which we currently are adding to our file using
+parameters.</p>
+<p>Instead of passing this information in as parameters, can you modify
+the class so that it extracts the title, author and id from the metadata
+in the text file itself?</p>
 </div>
 </div>
 </div>
@@ -1788,8 +1722,18 @@ on the id.</p>
 </button>
 <div id="collapseHint4" class="accordion-collapse collapse" aria-labelledby="headingHint4" data-bs-parent="#accordionHint4">
 <div class="accordion-body">
-<p>The url for a Project Gutenberg text file is of the form:
-<code>https://www.gutenberg.org/cache/epub/&lt;id&gt;/pg&lt;id&gt;.txt</code></p>
+<p>As before, we can use the <code>re</code> module to extract this
+information. The title and author are contained in lines that start with
+<code>Title:</code> and <code>Author:</code> respectively. The ID can be
+found in the line that starts with <code>Release Date:</code>. You can
+use the following regex patterns to match these lines:</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>TITLE_PATTERN <span class="op">=</span> <span class="vs">r"^Title:\s*(.*?)\s*$"</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>AUTHOR_PATTERN <span class="op">=</span> <span class="vs">r"^Author:\s*(.*?)\s*$"</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>ID_PATTERN <span class="op">=</span> <span class="vs">r"^Release date:\s*.*?\[eBook #(\d+)\]"</span></span></code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -1807,11 +1751,139 @@ would look like this:</p>
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a></span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>    <span class="at">@property</span></span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>    <span class="kw">def</span> gutenberg_url(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.<span class="bu">id</span>:</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>            <span class="cf">return</span> <span class="ss">f"https://www.gutenberg.org/cache/epub/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">/pg</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">.txt"</span></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span></code></pre>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="im">import</span> re</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="kw">class</span> Document:</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>    TITLE_PATTERN <span class="op">=</span> <span class="vs">r"^Title:\s*(.*?)\s*$"</span></span>
+<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>    AUTHOR_PATTERN <span class="op">=</span> <span class="vs">r"^Author:\s*(.*?)\s*$"</span></span>
+<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a>    ID_PATTERN <span class="op">=</span> <span class="vs">r"^Release date:\s*.*?\[eBook #(\d+)\]"</span></span>
+<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<span id="cb12-10"><a href="#cb12-10" tabindex="-1"></a></span>
+<span id="cb12-11"><a href="#cb12-11" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>):</span>
+<span id="cb12-12"><a href="#cb12-12" tabindex="-1"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
+<span id="cb12-13"><a href="#cb12-13" tabindex="-1"></a>        <span class="va">self</span>.content <span class="op">=</span> <span class="va">self</span>.get_content(filepath)</span>
+<span id="cb12-14"><a href="#cb12-14" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> raw_text:</span>
+<span id="cb12-16"><a href="#cb12-16" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> contains no content."</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" tabindex="-1"></a>        metadata <span class="op">=</span> <span class="va">self</span>.get_metadata(filepath)</span>
+<span id="cb12-19"><a href="#cb12-19" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> metadata.get(<span class="st">"title"</span>)</span>
+<span id="cb12-20"><a href="#cb12-20" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> metadata.get(<span class="st">"author"</span>)</span>
+<span id="cb12-21"><a href="#cb12-21" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> metadata.get(<span class="st">"id"</span>)</span>
+<span id="cb12-22"><a href="#cb12-22" tabindex="-1"></a></span>
+<span id="cb12-23"><a href="#cb12-23" tabindex="-1"></a>    <span class="kw">def</span> _extract_metadata_element(<span class="va">self</span>, pattern: <span class="bu">str</span>, text: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb12-24"><a href="#cb12-24" tabindex="-1"></a>        match <span class="op">=</span> re.search(pattern, text, re.MULTILINE)</span>
+<span id="cb12-25"><a href="#cb12-25" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
+<span id="cb12-26"><a href="#cb12-26" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
+<span id="cb12-27"><a href="#cb12-27" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb12-28"><a href="#cb12-28" tabindex="-1"></a></span>
+<span id="cb12-29"><a href="#cb12-29" tabindex="-1"></a>    <span class="kw">def</span> get_content(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb12-30"><a href="#cb12-30" tabindex="-1"></a>        raw_text <span class="op">=</span> <span class="va">self</span>.read(filepath)</span>
+<span id="cb12-31"><a href="#cb12-31" tabindex="-1"></a>        match <span class="op">=</span> re.search(<span class="va">self</span>.CONTENT_PATTERN, raw_text, re.DOTALL)</span>
+<span id="cb12-32"><a href="#cb12-32" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
+<span id="cb12-33"><a href="#cb12-33" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
+<span id="cb12-34"><a href="#cb12-34" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span>filepath<span class="sc">}</span><span class="ss"> is not a valid Project Gutenberg Text file."</span>)</span>
+<span id="cb12-35"><a href="#cb12-35" tabindex="-1"></a></span>
+<span id="cb12-36"><a href="#cb12-36" tabindex="-1"></a>    <span class="kw">def</span> get_metadata(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
+<span id="cb12-37"><a href="#cb12-37" tabindex="-1"></a>        raw_text <span class="op">=</span> <span class="va">self</span>.read(filepath)</span>
+<span id="cb12-38"><a href="#cb12-38" tabindex="-1"></a></span>
+<span id="cb12-39"><a href="#cb12-39" tabindex="-1"></a>        title <span class="op">=</span> <span class="va">self</span>._extract_metadata_element(<span class="va">self</span>.TITLE_PATTERN, raw_text)</span>
+<span id="cb12-40"><a href="#cb12-40" tabindex="-1"></a>        author <span class="op">=</span> <span class="va">self</span>._extract_metadata_element(<span class="va">self</span>.AUTHOR_PATTERN, raw_text)</span>
+<span id="cb12-41"><a href="#cb12-41" tabindex="-1"></a>        extracted_id <span class="op">=</span> <span class="va">self</span>._extract_metadata_element(<span class="va">self</span>.ID_PATTERN, raw_text)</span>
+<span id="cb12-42"><a href="#cb12-42" tabindex="-1"></a></span>
+<span id="cb12-43"><a href="#cb12-43" tabindex="-1"></a>        <span class="cf">return</span> {</span>
+<span id="cb12-44"><a href="#cb12-44" tabindex="-1"></a>            <span class="st">"title"</span>: title,</span>
+<span id="cb12-45"><a href="#cb12-45" tabindex="-1"></a>            <span class="st">"author"</span>: author,</span>
+<span id="cb12-46"><a href="#cb12-46" tabindex="-1"></a>            <span class="st">"id"</span>: <span class="bu">int</span>(extracted_id) <span class="cf">if</span> extracted_id <span class="cf">else</span> <span class="va">None</span>,</span>
+<span id="cb12-47"><a href="#cb12-47" tabindex="-1"></a>        }</span>
+<span id="cb12-48"><a href="#cb12-48" tabindex="-1"></a></span>
+<span id="cb12-49"><a href="#cb12-49" tabindex="-1"></a>    <span class="kw">def</span> read(<span class="va">self</span>, file_path: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb12-50"><a href="#cb12-50" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">"r"</span>, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb12-51"><a href="#cb12-51" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">file</span>.read()</span>
+<span id="cb12-52"><a href="#cb12-52" tabindex="-1"></a></span>
+<span id="cb12-53"><a href="#cb12-53" tabindex="-1"></a>    <span class="kw">def</span> get_line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb12-54"><a href="#cb12-54" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>._content.splitlines())</span>
+<span id="cb12-55"><a href="#cb12-55" tabindex="-1"></a></span>
+<span id="cb12-56"><a href="#cb12-56" tabindex="-1"></a></span>
+<span id="cb12-57"><a href="#cb12-57" tabindex="-1"></a>    <span class="kw">def</span> get_word_occurrence(<span class="va">self</span>, word: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb12-58"><a href="#cb12-58" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>._content.lower().count(word.lower())</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="challenge-4-properties" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-4-properties" class="callout-inner">
+<h3 class="callout-title">Challenge 4: Properties</h3>
+<div class="callout-content">
+<p>In our current implementation, the <code>title</code>,
+<code>author</code>, and <code>id</code> attributes are publicly
+accessible from outside the class, which means that they can be modified
+directly. There are instances where it might be preferable for the
+attributes to be read-only, so that they can only be set when the object
+is created, and not modified afterwards, or to allow us to create
+variables that are based or calculated from other variables and should
+not be set directly.</p>
+<p>We can do this with the <code>@property</code> decorator. This is a
+special decorator that allows us to define “getter” and “setter” methods
+for a property. It works much the same as a normal method, but it is
+accessed like an attribute.</p>
+<p>We can convert our <code>get_line_count</code> method to a property
+like this:</p>
+<div class="codewrapper sourceCode" id="cb13">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>    ...</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a></span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>    <span class="kw">def</span> line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.content.splitlines())</span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a></span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>    ...</span></code></pre>
+</div>
+<p>The links to the Project Gutenberg files are based on the id, which
+we extracted from the metadata. Create a new property called
+<code>gutenberg_url</code> that returns the url for the document based
+on the id.</p>
+</div>
+</div>
+</div>
+<div id="accordionHint5" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint5" aria-expanded="false" aria-controls="collapseHint5">
+  <h4 class="accordion-header" id="headingHint5"> Give me a hint </h4>
+</button>
+<div id="collapseHint5" class="accordion-collapse collapse" aria-labelledby="headingHint5" data-bs-parent="#accordionHint5">
+<div class="accordion-body">
+<p>The url for a Project Gutenberg text file is of the form:
+<code>https://www.gutenberg.org/cache/epub/&lt;id&gt;/pg&lt;id&gt;.txt</code></p>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
+  <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
+</button>
+<div id="collapseSolution4" class="accordion-collapse collapse" aria-labelledby="headingSolution4" data-bs-parent="#accordionSolution4">
+<div class="accordion-body">
+<p>There’s any number of ways to do this, but one possible solution
+would look like this:</p>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>    <span class="kw">def</span> gutenberg_url(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.<span class="bu">id</span>:</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>            <span class="cf">return</span> <span class="ss">f"https://www.gutenberg.org/cache/epub/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">/pg</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">.txt"</span></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -1931,7 +2003,7 @@ object or function, as well as a few edge cases.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>Some edge cases for the <code>hello</code> function could
 include:</p>
@@ -2024,7 +2096,7 @@ directory and add the following code to it:</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>This is how I always do it, but I assume there’s a better way.</p>
 </div>
@@ -2393,7 +2465,7 @@ Then, update the <code>Document</code> class to make the test pass.</p>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
   <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
+<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
 <div class="accordion-body">
 <p>You can mock a binary file by using the <code>mock_open</code>
 function from the <code>unittest.mock</code> module, and using the
@@ -2408,7 +2480,7 @@ function from the <code>unittest.mock</code> module, and using the
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint2" aria-expanded="false" aria-controls="collapseHint2">
   <h4 class="accordion-header" id="headingHint2"> Give me a hint </h4>
 </button>
-<div id="collapseHint2" class="accordion-collapse collapse" aria-labelledby="headingHint2" data-bs-parent="#accordionHint2">
+<div id="collapseHint2" class="accordion-collapse collapse" data-bs-parent="#accordionHint2" aria-labelledby="headingHint2">
 <div class="accordion-body">
 <p>In the <code>Document</code> class, we need to check if the data read
 from the file is binary data. The <code>read</code> method of a file
@@ -2436,7 +2508,7 @@ instance of type <code>bytes</code>. If it is, we can raise a
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>You can create a test that simulates opening a binary file by using
 the <code>mock_open</code> function from the <code>unittest.mock</code>
@@ -2558,30 +2630,79 @@ additional new properties and methods, or to override existing methods.
 This allows us to create a new class that is a specialized version of an
 existing class, without having to rewrite a whole bunch of code.</p>
 <p>Taking a look at our Car class from earlier, we might want to create
-a new class for a specific type of car, like a Convertable Car. A
-Convertible Car is a type of Car, so it should have everything that a
-Car has, but it also has some additional properties and methods, for
-example, it might have a property to indicate whether the roof is up or
-down. We can create a new class called ConvertibleCar that inherits from
-the Car class, and then add the new property and method to it.</p>
+a new class for a specific type of engine, like a Gas Engine or an
+Electric Engine. Both kinds of cars will have the same basic properties
+and methods, but they will also have some additional properties and
+methods that are specific to the type of engine, or properties that are
+set by default, like our <code>fuel</code> property.</p>
+<p>But since both types of cars are still cars, they will share a lot of
+the same properties and methods. Rather than repeating all of the code
+from the Car class in both our new classes, we can use inheritance to
+create our new classes based on the Car class:</p>
+<p>In python, this would look something like this:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="kw">class</span> ConvertibleCar(Car):</span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, make: <span class="bu">str</span>, model: <span class="bu">str</span>, year: <span class="bu">int</span>, color: <span class="bu">str</span> <span class="op">=</span> <span class="st">"grey"</span>):</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(make, model, year, color)</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>        <span class="va">self</span>.roof_is_up <span class="op">=</span> <span class="va">True</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>    <span class="kw">def</span> lower_roof(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>        <span class="va">self</span>.roof_is_up <span class="op">=</span> <span class="va">False</span></span>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="kw">class</span> Car:</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, make: <span class="bu">str</span>, model: <span class="bu">str</span>, year: <span class="bu">int</span>, color: <span class="bu">str</span> <span class="op">=</span> <span class="st">"grey"</span>, fuel: <span class="bu">str</span> <span class="op">=</span> <span class="st">"gasoline"</span>):</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a>        <span class="va">self</span>.make <span class="op">=</span> make</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a>        <span class="va">self</span>.model <span class="op">=</span> model</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a>        <span class="va">self</span>.year <span class="op">=</span> year</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a>        <span class="va">self</span>.color <span class="op">=</span> color</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a>        <span class="va">self</span>.fuel <span class="op">=</span> fuel</span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    <span class="kw">def</span> raise_roof(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>        <span class="va">self</span>.roof_is_up <span class="op">=</span> <span class="va">True</span></span></code></pre>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a>    <span class="kw">def</span> honk(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"beep"</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a>    <span class="kw">def</span> paint(<span class="va">self</span>, new_color: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>        <span class="va">self</span>.color <span class="op">=</span> new_color</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>    <span class="kw">def</span> noise(<span class="va">self</span>, speed: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a>        <span class="cf">if</span> speed <span class="op">&lt;=</span> <span class="dv">10</span>:</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"putt putt"</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a>            <span class="cf">return</span> <span class="st">"vrooom"</span></span>
+<span id="cb1-20"><a href="#cb1-20" tabindex="-1"></a></span>
+<span id="cb1-21"><a href="#cb1-21" tabindex="-1"></a><span class="kw">class</span> CarGasEngine(Car):</span>
+<span id="cb1-22"><a href="#cb1-22" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, make: <span class="bu">str</span>, model: <span class="bu">str</span>, year: <span class="bu">int</span>, color: <span class="bu">str</span> <span class="op">=</span> <span class="st">"grey"</span>):</span>
+<span id="cb1-23"><a href="#cb1-23" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(make<span class="op">=</span>make, model<span class="op">=</span>model, year<span class="op">=</span>year, color<span class="op">=</span>color, fuel<span class="op">=</span><span class="st">"gasoline"</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" tabindex="-1"></a><span class="kw">class</span> CarElectricEngine(Car):</span>
+<span id="cb1-26"><a href="#cb1-26" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, make: <span class="bu">str</span>, model: <span class="bu">str</span>, year: <span class="bu">int</span>, color: <span class="bu">str</span> <span class="op">=</span> <span class="st">"grey"</span>):</span>
+<span id="cb1-27"><a href="#cb1-27" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(make<span class="op">=</span>make, model<span class="op">=</span>model, year<span class="op">=</span>year, color<span class="op">=</span>color, fuel<span class="op">=</span><span class="st">"electric"</span>)</span>
+<span id="cb1-28"><a href="#cb1-28" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" tabindex="-1"></a>    <span class="kw">def</span> noise(<span class="va">self</span>, speed: <span class="bu">int</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb1-30"><a href="#cb1-30" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"hmmmmmm"</span></span></code></pre>
 </div>
-<p>You can see that the ConvertibleCar class is defined in a similar way
+<figure><img src=".././fig/05-extending-classes/class_inheritance.PNG.jpg" alt="Class diagram showing inheritance from Car to CarGasEngine and CarElectricEngine" class="figure mx-auto d-block"><div class="figcaption">Class diagram showing the Car class as a parent
+class, with CarGasEngine and CarElectricEngine as child classes that
+inherit from Car.</div>
+</figure><div id="callout1" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<span class="callout-header">Callout</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>Note that the <code>noise</code> method in the
+<code>CarElectricEngine</code> class is overridden to provide a
+different implementation than the one in the <code>Car</code> class.
+This is called method overriding, and it allows us to define a different
+behavior for a method in a subclass. When we call the <code>noise</code>
+method on an instance of <code>CarElectricEngine</code>, it will use the
+overridden method, rather than the one defined in the <code>Car</code>
+class.</p>
+<p>However in <code>CarGasEngine</code>, we do not override the
+<code>noise</code> method, so it will use the one defined in the
+<code>Car</code> class.</p>
+<p>More on overriding methods in a moment.</p>
+</div>
+</div>
+</div>
+<p>You can see that the CarGasEngine class is defined in a similar way
 to the Car class, but it inherits from the Car class by including it in
 parentheses after the class name. The <code>__init__</code> method of
-the ConvertibleCar class also has a call to
+the CarGasEngine class also has a call to
 <code>super().__init__()</code>. The <code>super()</code> function is a
 way to refer specifically to the parent class, in this case, the Car
 class. This allows us to call the <code>__init__</code> method of the
@@ -2660,19 +2781,19 @@ At the moment, our classes look like this:</p>
 <span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a></span>
 <span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a>        <span class="va">self</span>._content <span class="op">=</span> <span class="va">self</span>._get_content(raw_text)</span>
 <span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a></span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>    <span class="kw">def</span> _get_content(<span class="va">self</span>, content: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a>    <span class="kw">def</span> get_content(<span class="va">self</span>, content: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
 <span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a>        match <span class="op">=</span> re.search(<span class="va">self</span>.CONTENT_PATTERN, content, re.DOTALL)</span>
 <span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
 <span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
 <span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> is not a valid Project Gutenberg Text file."</span>)</span>
 <span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a></span>
-<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a>    <span class="kw">def</span> _get_metadata(<span class="va">self</span>, content: <span class="bu">str</span>, pattern: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a>    <span class="kw">def</span> get_metadata(<span class="va">self</span>, content: <span class="bu">str</span>, pattern: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
 <span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a>        match <span class="op">=</span> re.search(pattern, content, re.MULTILINE)</span>
 <span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
 <span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
 <span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
 <span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a></span>
-<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>    <span class="kw">def</span> _read(<span class="va">self</span>, file_path: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a>    <span class="kw">def</span> read(<span class="va">self</span>, file_path: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="va">None</span>:</span>
 <span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(file_path, <span class="st">'r'</span>, encoding<span class="op">=</span><span class="st">'utf-8'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
 <span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a>            <span class="cf">return</span> <span class="bu">file</span>.read()</span></code></pre>
 </div>
@@ -2680,15 +2801,30 @@ At the moment, our classes look like this:</p>
 similar to the ´PlainTextDocument´ class, but it will use the
 ´BeautifulSoup´ library to parse the HTML file and extract the content
 and metadata. Rather than type out the entire class now, you can either
-copy and paste the code below into a new file called ´html_document.py´,
-or you can download the file from the <a href="">Workshop Resources
-TODO</a>.</p>
+copy and paste the code below into a new file called
+´src/textanalysis_tool/html_document.py´, or you can download the file
+from the <a href="./workshop_resources.html">Workshop Resources</a>.</p>
+<div id="prereq1" class="callout prereq">
+<div class="callout-square">
+<i class="callout-icon" data-feather="check"></i>
+</div>
+<span class="callout-header">Prerequisite</span>
+<div class="callout-inner">
+<div class="callout-content">
+<p>As we do not have BeautifulSoup in our environment yet, you will need
+to add it using <code>uv</code>:</p>
+<pre><code>uv add beautifulsoup4</code></pre>
+<p>This will install the package to your environment as well as add it
+to your <code>pyproject.toml</code> file.</p>
+</div>
+</div>
+</div>
 <div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <pre><code>
 import re
@@ -2708,25 +2844,25 @@ class HTMLDocument(Document):
 
     def __init__(self, filepath: str):
         super().__init__(filepath=filepath)
-        raw_soup = self._read(self.filepath)
+        parsed_file = self._read(self.filepath)
 
-        self.title = self._get_metadata(raw_soup, "dc.title")
-        self.author = self._get_metadata(raw_soup, "dc.creator")
-        url = self._get_metadata(raw_soup, "dcterms.source")
+        self.title = self._get_metadata(parsed_file, "dc.title")
+        self.author = self._get_metadata(parsed_file, "dc.creator")
+        url = self._get_metadata(parsed_file, "dcterms.source")
         extracted_id = re.search(self.URL_PATTERN, url, re.DOTALL)
         self.id = int(extracted_id.group(1)) if extracted_id.group(1) else None
 
-        self._content = self._get_content(raw_soup)
+        self._content = self._get_content(parsed_file)
 
     def read(self, filepath) -&gt; BeautifulSoup:
         with open(filepath, encoding="utf-8") as file_obj:
-            soup = BeautifulSoup(file_obj)
+            parsed_file = BeautifulSoup(file_obj)
 
-        return soup
+        return parsed_file
 
-    def get_content(self, soup: BeautifulSoup) -&gt; str:
+    def get_content(self, parsed_file: BeautifulSoup) -&gt; str:
         # Find the first h1 tag (The book title)
-        title_h1 = soup.find("h1")
+        title_h1 = parsed_file.find("h1")
 
         # Collect all the content after the first h1
         content = []
@@ -2742,8 +2878,8 @@ class HTMLDocument(Document):
 
         return '\n\n'.join(content)
 
-    def get_metadata(self, soup: BeautifulSoup, tag_name: str) -&gt; str:
-        return soup.find("meta", {"name": tag_name})["content"]
+    def get_metadata(self, parsed_file: BeautifulSoup, tag_name: str) -&gt; str:
+        return parsed_file.find("meta", {"name": tag_name})["content"]
 </code></pre>
 </div>
 </div>
@@ -2761,7 +2897,7 @@ When we create an instance of <code>HTMLDocument</code>, it will use the
 <code>gutenberg_url</code> property defined in the
 <code>HTMLDocument</code> class, rather than the one defined in the
 <code>Document</code> class.</p>
-<div id="callout1" class="callout">
+<div id="callout2" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -2797,46 +2933,46 @@ the HTML file.) Once you have the HTML file, place it in the ´scratch´
 folder alongside the ´pg2680.txt´ file.</p>
 <p>You can either copy and paste the code below into a new file called
 <code>demo_inheritance.py</code>, or you can download the file from the
-<a href="">Workshop Resources TODO</a>.</p>
-<div class="codewrapper sourceCode" id="cb5">
+<a href="./workshop_resources.html">Workshop Resources</a>.</p>
+<div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="st">"src"</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.document <span class="im">import</span> Document</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.plain_text_document <span class="im">import</span> PlainTextDocument</span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.html_document <span class="im">import</span> HTMLDocument</span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co"># Test the PlainTextDocument class</span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a>plain_text_doc <span class="op">=</span> PlainTextDocument(filepath<span class="op">=</span><span class="st">"scratch/pg2680.txt"</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Plain Text Document Title: </span><span class="sc">{</span>plain_text_doc<span class="sc">.</span>title<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Plain Text Document Author: </span><span class="sc">{</span>plain_text_doc<span class="sc">.</span>author<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Plain Text Document ID: </span><span class="sc">{</span>plain_text_doc<span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Plain Text Document Line Count: </span><span class="sc">{</span>plain_text_doc<span class="sc">.</span>line_count<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Plain Text Document 'the' Occurrences: </span><span class="sc">{</span>plain_text_doc<span class="sc">.</span>get_word_occurrence(<span class="st">'the'</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Plain Text Document Gutenberg URL: </span><span class="sc">{</span>plain_text_doc<span class="sc">.</span>gutenberg_url<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-17"><a href="#cb5-17" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Type of Plain Text Document: </span><span class="sc">{</span><span class="bu">type</span>(plain_text_doc)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-18"><a href="#cb5-18" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Parent Class: </span><span class="sc">{</span><span class="bu">type</span>(plain_text_doc)<span class="sc">.</span>__bases__[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" tabindex="-1"></a></span>
-<span id="cb5-20"><a href="#cb5-20" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">40</span>)</span>
-<span id="cb5-21"><a href="#cb5-21" tabindex="-1"></a></span>
-<span id="cb5-22"><a href="#cb5-22" tabindex="-1"></a><span class="co"># Test the HTMLDocument class</span></span>
-<span id="cb5-23"><a href="#cb5-23" tabindex="-1"></a>html_doc <span class="op">=</span> HTMLDocument(filepath<span class="op">=</span><span class="st">"scratch/pg2680-images.html"</span>)</span>
-<span id="cb5-24"><a href="#cb5-24" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HTML Document Title: </span><span class="sc">{</span>html_doc<span class="sc">.</span>title<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-25"><a href="#cb5-25" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HTML Document Author: </span><span class="sc">{</span>html_doc<span class="sc">.</span>author<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-26"><a href="#cb5-26" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HTML Document ID: </span><span class="sc">{</span>html_doc<span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-27"><a href="#cb5-27" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HTML Document Line Count: </span><span class="sc">{</span>html_doc<span class="sc">.</span>line_count<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-28"><a href="#cb5-28" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HTML Document 'the' Occurrences: </span><span class="sc">{</span>html_doc<span class="sc">.</span>get_word_occurrence(<span class="st">'the'</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-29"><a href="#cb5-29" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HTML Document Gutenberg URL: </span><span class="sc">{</span>html_doc<span class="sc">.</span>gutenberg_url<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-30"><a href="#cb5-30" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Type of HTML Document: </span><span class="sc">{</span><span class="bu">type</span>(html_doc)<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-31"><a href="#cb5-31" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Parent Class: </span><span class="sc">{</span><span class="bu">type</span>(html_doc)<span class="sc">.</span>__bases__[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-32"><a href="#cb5-32" tabindex="-1"></a></span>
-<span id="cb5-33"><a href="#cb5-33" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">40</span>)</span>
-<span id="cb5-34"><a href="#cb5-34" tabindex="-1"></a></span>
-<span id="cb5-35"><a href="#cb5-35" tabindex="-1"></a><span class="co"># We can't use the Document class directly</span></span>
-<span id="cb5-36"><a href="#cb5-36" tabindex="-1"></a>doc <span class="op">=</span> Document(filepath<span class="op">=</span><span class="st">"scratch/pg2680.txt"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="st">"src"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.document <span class="im">import</span> Document</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.plain_text_document <span class="im">import</span> PlainTextDocument</span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.html_document <span class="im">import</span> HTMLDocument</span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co"># Test the PlainTextDocument class</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a>plain_text_doc <span class="op">=</span> PlainTextDocument(filepath<span class="op">=</span><span class="st">"scratch/pg2680.txt"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Plain Text Document Title: </span><span class="sc">{</span>plain_text_doc<span class="sc">.</span>title<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Plain Text Document Author: </span><span class="sc">{</span>plain_text_doc<span class="sc">.</span>author<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Plain Text Document ID: </span><span class="sc">{</span>plain_text_doc<span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Plain Text Document Line Count: </span><span class="sc">{</span>plain_text_doc<span class="sc">.</span>line_count<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Plain Text Document 'the' Occurrences: </span><span class="sc">{</span>plain_text_doc<span class="sc">.</span>get_word_occurrence(<span class="st">'the'</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Plain Text Document Gutenberg URL: </span><span class="sc">{</span>plain_text_doc<span class="sc">.</span>gutenberg_url<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Type of Plain Text Document: </span><span class="sc">{</span><span class="bu">type</span>(plain_text_doc)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Parent Class: </span><span class="sc">{</span><span class="bu">type</span>(plain_text_doc)<span class="sc">.</span>__bases__[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-19"><a href="#cb6-19" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">40</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" tabindex="-1"></a></span>
+<span id="cb6-22"><a href="#cb6-22" tabindex="-1"></a><span class="co"># Test the HTMLDocument class</span></span>
+<span id="cb6-23"><a href="#cb6-23" tabindex="-1"></a>html_doc <span class="op">=</span> HTMLDocument(filepath<span class="op">=</span><span class="st">"scratch/pg2680-images.html"</span>)</span>
+<span id="cb6-24"><a href="#cb6-24" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HTML Document Title: </span><span class="sc">{</span>html_doc<span class="sc">.</span>title<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-25"><a href="#cb6-25" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HTML Document Author: </span><span class="sc">{</span>html_doc<span class="sc">.</span>author<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HTML Document ID: </span><span class="sc">{</span>html_doc<span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-27"><a href="#cb6-27" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HTML Document Line Count: </span><span class="sc">{</span>html_doc<span class="sc">.</span>line_count<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-28"><a href="#cb6-28" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HTML Document 'the' Occurrences: </span><span class="sc">{</span>html_doc<span class="sc">.</span>get_word_occurrence(<span class="st">'the'</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"HTML Document Gutenberg URL: </span><span class="sc">{</span>html_doc<span class="sc">.</span>gutenberg_url<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-30"><a href="#cb6-30" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Type of HTML Document: </span><span class="sc">{</span><span class="bu">type</span>(html_doc)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-31"><a href="#cb6-31" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Parent Class: </span><span class="sc">{</span><span class="bu">type</span>(html_doc)<span class="sc">.</span>__bases__[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-32"><a href="#cb6-32" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"="</span> <span class="op">*</span> <span class="dv">40</span>)</span>
+<span id="cb6-34"><a href="#cb6-34" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" tabindex="-1"></a><span class="co"># We can't use the Document class directly</span></span>
+<span id="cb6-36"><a href="#cb6-36" tabindex="-1"></a>doc <span class="op">=</span> Document(filepath<span class="op">=</span><span class="st">"scratch/pg2680.txt"</span>)</span></code></pre>
 </div>
 <p>You should get some output that looks like this:</p>
 <pre><code>Plain Text Document Title: Meditations
@@ -2870,7 +3006,7 @@ AttributeError: 'Document' object has no attribute 'get_content'</code></pre>
 <code>get_content</code> or <code>get_metadata</code> methods, it cannot
 be used directly. However we don’t get an error until we try to call one
 of those methods.</p>
-<div id="callout2" class="callout">
+<div id="callout3" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
@@ -2885,77 +3021,77 @@ directly. One way to handle this would be to add these methods to the
 instantiate the <code>Document</code> class directly, they will get an
 error indicating that maybe this class is not meant to be used
 directly:</p>
-<div class="codewrapper sourceCode" id="cb7">
+<div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="kw">class</span> Document:</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>    <span class="at">@property</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="kw">def</span> gutenberg_url(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.<span class="bu">id</span>:</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>            <span class="cf">return</span> <span class="ss">f"https://www.gutenberg.org/cache/epub/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">/pg</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">.txt"</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>    <span class="at">@property</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>    <span class="kw">def</span> line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.content.splitlines())</span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a></span>
-<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>):</span>
-<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
-<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>        <span class="va">self</span>.content <span class="op">=</span> <span class="va">self</span>.get_content(filepath)</span>
-<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a></span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>        metadata <span class="op">=</span> <span class="va">self</span>.get_metadata(filepath)</span>
-<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> metadata.get(<span class="st">"title"</span>)</span>
-<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> metadata.get(<span class="st">"author"</span>)</span>
-<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> metadata.get(<span class="st">"id"</span>)</span>
-<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>    <span class="kw">def</span> get_word_occurrence(<span class="va">self</span>, word: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.content.lower().count(word.lower())</span>
-<span id="cb7-23"><a href="#cb7-23" tabindex="-1"></a></span>
-<span id="cb7-24"><a href="#cb7-24" tabindex="-1"></a>    <span class="kw">def</span> get_content(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb7-25"><a href="#cb7-25" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>(<span class="st">"This method should be implemented by subclasses."</span>)</span>
-<span id="cb7-26"><a href="#cb7-26" tabindex="-1"></a></span>
-<span id="cb7-27"><a href="#cb7-27" tabindex="-1"></a>    <span class="kw">def</span> get_metadata(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>]:</span>
-<span id="cb7-28"><a href="#cb7-28" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>(<span class="st">"This method should be implemented by subclasses."</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="kw">class</span> Document:</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>    <span class="kw">def</span> gutenberg_url(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.<span class="bu">id</span>:</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>            <span class="cf">return</span> <span class="ss">f"https://www.gutenberg.org/cache/epub/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">/pg</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">.txt"</span></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>    <span class="kw">def</span> line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.content.splitlines())</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>):</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>        <span class="va">self</span>.content <span class="op">=</span> <span class="va">self</span>.get_content(filepath)</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>        metadata <span class="op">=</span> <span class="va">self</span>.get_metadata(filepath)</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> metadata.get(<span class="st">"title"</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> metadata.get(<span class="st">"author"</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> metadata.get(<span class="st">"id"</span>)</span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a>    <span class="kw">def</span> get_word_occurrence(<span class="va">self</span>, word: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.content.lower().count(word.lower())</span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a>    <span class="kw">def</span> get_content(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>(<span class="st">"This method should be implemented by subclasses."</span>)</span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a></span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a>    <span class="kw">def</span> get_metadata(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>]:</span>
+<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">NotImplementedError</span>(<span class="st">"This method should be implemented by subclasses."</span>)</span></code></pre>
 </div>
 <p>Another way to handle this is to use the <code>abc</code> module from
 the standard library, which provides a way to define abstract base
 classes. This is a more formal way to define a class that is meant to be
 inherited from, but not instantiated directly:</p>
-<div class="codewrapper sourceCode" id="cb8">
+<div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="im">from</span> abc <span class="im">import</span> ABC, abstractmethod</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="kw">class</span> Document(ABC):</span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>    <span class="at">@property</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>    <span class="kw">def</span> gutenberg_url(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.<span class="bu">id</span>:</span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>            <span class="cf">return</span> <span class="ss">f"https://www.gutenberg.org/cache/epub/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">/pg</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">.txt"</span></span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>    <span class="at">@property</span></span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>    <span class="kw">def</span> line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.content.splitlines())</span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>):</span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>        <span class="va">self</span>.content <span class="op">=</span> <span class="va">self</span>.get_content(filepath)</span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a></span>
-<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>        metadata <span class="op">=</span> <span class="va">self</span>.get_metadata(filepath)</span>
-<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> metadata.get(<span class="st">"title"</span>)</span>
-<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> metadata.get(<span class="st">"author"</span>)</span>
-<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> metadata.get(<span class="st">"id"</span>)</span>
-<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a></span>
-<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a>    <span class="kw">def</span> get_word_occurrence(<span class="va">self</span>, word: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.content.lower().count(word.lower())</span>
-<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a>    <span class="at">@abstractmethod</span></span>
-<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a>    <span class="kw">def</span> get_content(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
-<span id="cb8-28"><a href="#cb8-28" tabindex="-1"></a>        <span class="cf">pass</span></span>
-<span id="cb8-29"><a href="#cb8-29" tabindex="-1"></a></span>
-<span id="cb8-30"><a href="#cb8-30" tabindex="-1"></a>    <span class="at">@abstractmethod</span></span>
-<span id="cb8-31"><a href="#cb8-31" tabindex="-1"></a>    <span class="kw">def</span> get_metadata(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>]:</span>
-<span id="cb8-32"><a href="#cb8-32" tabindex="-1"></a>        <span class="cf">pass</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="im">from</span> abc <span class="im">import</span> ABC, abstractmethod</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="kw">class</span> Document(ABC):</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>    <span class="kw">def</span> gutenberg_url(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>:</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>        <span class="cf">if</span> <span class="va">self</span>.<span class="bu">id</span>:</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>            <span class="cf">return</span> <span class="ss">f"https://www.gutenberg.org/cache/epub/</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">/pg</span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">.txt"</span></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">None</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>    <span class="at">@property</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>    <span class="kw">def</span> line_count(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>        <span class="cf">return</span> <span class="bu">len</span>(<span class="va">self</span>.content.splitlines())</span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>):</span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>        <span class="va">self</span>.content <span class="op">=</span> <span class="va">self</span>.get_content(filepath)</span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a></span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>        metadata <span class="op">=</span> <span class="va">self</span>.get_metadata(filepath)</span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> metadata.get(<span class="st">"title"</span>)</span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> metadata.get(<span class="st">"author"</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> metadata.get(<span class="st">"id"</span>)</span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a></span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a>    <span class="kw">def</span> get_word_occurrence(<span class="va">self</span>, word: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.content.lower().count(word.lower())</span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a></span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a>    <span class="at">@abstractmethod</span></span>
+<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a>    <span class="kw">def</span> get_content(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a>        <span class="cf">pass</span></span>
+<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a>    <span class="at">@abstractmethod</span></span>
+<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a>    <span class="kw">def</span> get_metadata(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">dict</span>[<span class="bu">str</span>, <span class="bu">str</span> <span class="op">|</span> <span class="va">None</span>]:</span>
+<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a>        <span class="cf">pass</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -2971,82 +3107,83 @@ and <code>HTMLDocument</code> classes, which will also indirectly test
 the <code>Document</code> class. You can either copy the code below into
 two new files called <code>tests/test_plain_text_document.py</code> and
 <code>tests/test_html_document.py</code>, or you can download the files
-from the <a href="">Workshop Resources TODO</a>. (Also make sure to
-delete the existing <code>tests/test_document.py</code> file, since it
-is no longer applicable.)</p>
+from the <a href="./workshop_resources.html">Workshop Resources</a>.
+(Also make sure to delete the existing
+<code>tests/test_document.py</code> file, since it is no longer
+applicable.)</p>
 <p><code>tests/test_plain_text_document.py</code></p>
 <div id="accordionSpoiler2" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb9">
+<div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="im">import</span> pytest</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="im">from</span> unittest.mock <span class="im">import</span> mock_open</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.plain_text_document <span class="im">import</span> PlainTextDocument</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>TEST_DATA <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a><span class="st">Title: Test Document</span></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="st">Author: Test Author</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a><span class="st">Release date: January 1, 2001 [eBook #1234]</span></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a><span class="st">                Most recently updated: February 2, 2002</span></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a></span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a><span class="st">*** START OF THE PROJECT GUTENBERG EBOOK TEST ***</span></span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a><span class="st">This is a test document. It contains words.</span></span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a><span class="st">It is only a test document.</span></span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a><span class="st">*** END OF THE PROJECT GUTENBERG EBOOK TEST ***</span></span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a></span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="at">@pytest.fixture</span>(autouse<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="kw">def</span> mock_file(monkeypatch):</span>
-<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span>TEST_DATA)</span>
-<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
-<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a>    <span class="cf">return</span> mock</span>
-<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a></span>
-<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a></span>
-<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a><span class="at">@pytest.fixture</span></span>
-<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a><span class="kw">def</span> doc():</span>
-<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a>    <span class="cf">return</span> PlainTextDocument(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
-<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a></span>
-<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a></span>
-<span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a><span class="kw">def</span> test_create_document(doc):</span>
-<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a>    <span class="cf">assert</span> doc.title <span class="op">==</span> <span class="st">"Test Document"</span></span>
-<span id="cb9-35"><a href="#cb9-35" tabindex="-1"></a>    <span class="cf">assert</span> doc.author <span class="op">==</span> <span class="st">"Test Author"</span></span>
-<span id="cb9-36"><a href="#cb9-36" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">isinstance</span>(doc.<span class="bu">id</span>, <span class="bu">int</span>) <span class="kw">and</span> doc.<span class="bu">id</span> <span class="op">==</span> <span class="dv">1234</span></span>
-<span id="cb9-37"><a href="#cb9-37" tabindex="-1"></a></span>
-<span id="cb9-38"><a href="#cb9-38" tabindex="-1"></a></span>
-<span id="cb9-39"><a href="#cb9-39" tabindex="-1"></a><span class="kw">def</span> test_empty_file(monkeypatch):</span>
-<span id="cb9-40"><a href="#cb9-40" tabindex="-1"></a>    <span class="co"># Mock an empty file</span></span>
-<span id="cb9-41"><a href="#cb9-41" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span><span class="st">""</span>)</span>
-<span id="cb9-42"><a href="#cb9-42" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
-<span id="cb9-43"><a href="#cb9-43" tabindex="-1"></a></span>
-<span id="cb9-44"><a href="#cb9-44" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>):</span>
-<span id="cb9-45"><a href="#cb9-45" tabindex="-1"></a>        PlainTextDocument(filepath<span class="op">=</span><span class="st">"empty_file.txt"</span>)</span>
-<span id="cb9-46"><a href="#cb9-46" tabindex="-1"></a></span>
-<span id="cb9-47"><a href="#cb9-47" tabindex="-1"></a></span>
-<span id="cb9-48"><a href="#cb9-48" tabindex="-1"></a><span class="kw">def</span> test_binary_file(monkeypatch):</span>
-<span id="cb9-49"><a href="#cb9-49" tabindex="-1"></a>    <span class="co"># Mock a binary file</span></span>
-<span id="cb9-50"><a href="#cb9-50" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span><span class="st">b"</span><span class="ch">\x00\x01\x02</span><span class="st">"</span>)</span>
-<span id="cb9-51"><a href="#cb9-51" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
-<span id="cb9-52"><a href="#cb9-52" tabindex="-1"></a></span>
-<span id="cb9-53"><a href="#cb9-53" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>):</span>
-<span id="cb9-54"><a href="#cb9-54" tabindex="-1"></a>        PlainTextDocument(filepath<span class="op">=</span><span class="st">"binary_file.bin"</span>)</span>
-<span id="cb9-55"><a href="#cb9-55" tabindex="-1"></a></span>
-<span id="cb9-56"><a href="#cb9-56" tabindex="-1"></a></span>
-<span id="cb9-57"><a href="#cb9-57" tabindex="-1"></a><span class="kw">def</span> test_document_line_count(doc):</span>
-<span id="cb9-58"><a href="#cb9-58" tabindex="-1"></a>    <span class="cf">assert</span> doc.line_count <span class="op">==</span> <span class="dv">2</span></span>
-<span id="cb9-59"><a href="#cb9-59" tabindex="-1"></a></span>
-<span id="cb9-60"><a href="#cb9-60" tabindex="-1"></a></span>
-<span id="cb9-61"><a href="#cb9-61" tabindex="-1"></a><span class="kw">def</span> test_document_word_occurrence(doc):</span>
-<span id="cb9-62"><a href="#cb9-62" tabindex="-1"></a>    <span class="cf">assert</span> doc.get_word_occurrence(<span class="st">"test"</span>) <span class="op">==</span> <span class="dv">2</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="im">from</span> unittest.mock <span class="im">import</span> mock_open</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.plain_text_document <span class="im">import</span> PlainTextDocument</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>TEST_DATA <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="st">Title: Test Document</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="st">Author: Test Author</span></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="st">Release date: January 1, 2001 [eBook #1234]</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="st">                Most recently updated: February 2, 2002</span></span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="st">*** START OF THE PROJECT GUTENBERG EBOOK TEST ***</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="st">This is a test document. It contains words.</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="st">It is only a test document.</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="st">*** END OF THE PROJECT GUTENBERG EBOOK TEST ***</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a></span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a></span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a><span class="at">@pytest.fixture</span>(autouse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a><span class="kw">def</span> mock_file(monkeypatch):</span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span>TEST_DATA)</span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a>    <span class="cf">return</span> mock</span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a></span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a></span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a><span class="at">@pytest.fixture</span></span>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a><span class="kw">def</span> doc():</span>
+<span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a>    <span class="cf">return</span> PlainTextDocument(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
+<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="#cb10-32" tabindex="-1"></a></span>
+<span id="cb10-33"><a href="#cb10-33" tabindex="-1"></a><span class="kw">def</span> test_create_document(doc):</span>
+<span id="cb10-34"><a href="#cb10-34" tabindex="-1"></a>    <span class="cf">assert</span> doc.title <span class="op">==</span> <span class="st">"Test Document"</span></span>
+<span id="cb10-35"><a href="#cb10-35" tabindex="-1"></a>    <span class="cf">assert</span> doc.author <span class="op">==</span> <span class="st">"Test Author"</span></span>
+<span id="cb10-36"><a href="#cb10-36" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">isinstance</span>(doc.<span class="bu">id</span>, <span class="bu">int</span>) <span class="kw">and</span> doc.<span class="bu">id</span> <span class="op">==</span> <span class="dv">1234</span></span>
+<span id="cb10-37"><a href="#cb10-37" tabindex="-1"></a></span>
+<span id="cb10-38"><a href="#cb10-38" tabindex="-1"></a></span>
+<span id="cb10-39"><a href="#cb10-39" tabindex="-1"></a><span class="kw">def</span> test_empty_file(monkeypatch):</span>
+<span id="cb10-40"><a href="#cb10-40" tabindex="-1"></a>    <span class="co"># Mock an empty file</span></span>
+<span id="cb10-41"><a href="#cb10-41" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb10-42"><a href="#cb10-42" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
+<span id="cb10-43"><a href="#cb10-43" tabindex="-1"></a></span>
+<span id="cb10-44"><a href="#cb10-44" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>):</span>
+<span id="cb10-45"><a href="#cb10-45" tabindex="-1"></a>        PlainTextDocument(filepath<span class="op">=</span><span class="st">"empty_file.txt"</span>)</span>
+<span id="cb10-46"><a href="#cb10-46" tabindex="-1"></a></span>
+<span id="cb10-47"><a href="#cb10-47" tabindex="-1"></a></span>
+<span id="cb10-48"><a href="#cb10-48" tabindex="-1"></a><span class="kw">def</span> test_binary_file(monkeypatch):</span>
+<span id="cb10-49"><a href="#cb10-49" tabindex="-1"></a>    <span class="co"># Mock a binary file</span></span>
+<span id="cb10-50"><a href="#cb10-50" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span><span class="st">b"</span><span class="ch">\x00\x01\x02</span><span class="st">"</span>)</span>
+<span id="cb10-51"><a href="#cb10-51" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
+<span id="cb10-52"><a href="#cb10-52" tabindex="-1"></a></span>
+<span id="cb10-53"><a href="#cb10-53" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>):</span>
+<span id="cb10-54"><a href="#cb10-54" tabindex="-1"></a>        PlainTextDocument(filepath<span class="op">=</span><span class="st">"binary_file.bin"</span>)</span>
+<span id="cb10-55"><a href="#cb10-55" tabindex="-1"></a></span>
+<span id="cb10-56"><a href="#cb10-56" tabindex="-1"></a></span>
+<span id="cb10-57"><a href="#cb10-57" tabindex="-1"></a><span class="kw">def</span> test_document_line_count(doc):</span>
+<span id="cb10-58"><a href="#cb10-58" tabindex="-1"></a>    <span class="cf">assert</span> doc.line_count <span class="op">==</span> <span class="dv">2</span></span>
+<span id="cb10-59"><a href="#cb10-59" tabindex="-1"></a></span>
+<span id="cb10-60"><a href="#cb10-60" tabindex="-1"></a></span>
+<span id="cb10-61"><a href="#cb10-61" tabindex="-1"></a><span class="kw">def</span> test_document_word_occurrence(doc):</span>
+<span id="cb10-62"><a href="#cb10-62" tabindex="-1"></a>    <span class="cf">assert</span> doc.get_word_occurrence(<span class="st">"test"</span>) <span class="op">==</span> <span class="dv">2</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -3058,65 +3195,65 @@ is no longer applicable.)</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler3" aria-expanded="false" aria-controls="collapseSpoiler3">
   <h3 class="accordion-header" id="headingSpoiler3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler3" class="accordion-collapse collapse" aria-labelledby="headingSpoiler3" data-bs-parent="#accordionSpoiler3">
+<div id="collapseSpoiler3" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler3" aria-labelledby="headingSpoiler3">
 <div class="accordion-body">
-<div class="codewrapper sourceCode" id="cb10">
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="im">import</span> pytest</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="im">from</span> unittest.mock <span class="im">import</span> mock_open</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.html_document <span class="im">import</span> HTMLDocument</span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>TEST_DATA <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="st">&lt;head&gt;</span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a><span class="st">  &lt;meta name="dc.title" content="Test Document"&gt;</span></span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a><span class="st">  &lt;meta name="dcterms.source" content="https://www.gutenberg.org/files/1234/1234-h/1234-h.htm"&gt;</span></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="st">  &lt;meta name="dc.creator" content="Test Author"&gt;</span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="st">&lt;/head&gt;</span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="st">&lt;body&gt;</span></span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="st">  &lt;h1&gt;Test Document&lt;/h1&gt;</span></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="st">  &lt;p&gt;</span></span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a><span class="st">    This is a test document. It contains words.</span></span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="st">    It is only a test document.</span></span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="st">  &lt;/p&gt;</span></span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="st">&lt;/body&gt;</span></span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a><span class="st">"""</span></span>
-<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a></span>
-<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a></span>
-<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a><span class="at">@pytest.fixture</span>(autouse<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a><span class="kw">def</span> mock_file(monkeypatch):</span>
-<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span>TEST_DATA)</span>
-<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
-<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a>    <span class="cf">return</span> mock</span>
-<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a></span>
-<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a></span>
-<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a><span class="at">@pytest.fixture</span></span>
-<span id="cb10-30"><a href="#cb10-30" tabindex="-1"></a><span class="kw">def</span> doc():</span>
-<span id="cb10-31"><a href="#cb10-31" tabindex="-1"></a>    <span class="cf">return</span> HTMLDocument(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
-<span id="cb10-32"><a href="#cb10-32" tabindex="-1"></a></span>
-<span id="cb10-33"><a href="#cb10-33" tabindex="-1"></a></span>
-<span id="cb10-34"><a href="#cb10-34" tabindex="-1"></a><span class="kw">def</span> test_create_document(doc):</span>
-<span id="cb10-35"><a href="#cb10-35" tabindex="-1"></a>    <span class="cf">assert</span> doc.title <span class="op">==</span> <span class="st">"Test Document"</span></span>
-<span id="cb10-36"><a href="#cb10-36" tabindex="-1"></a>    <span class="cf">assert</span> doc.author <span class="op">==</span> <span class="st">"Test Author"</span></span>
-<span id="cb10-37"><a href="#cb10-37" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">isinstance</span>(doc.<span class="bu">id</span>, <span class="bu">int</span>) <span class="kw">and</span> doc.<span class="bu">id</span> <span class="op">==</span> <span class="dv">1234</span></span>
-<span id="cb10-38"><a href="#cb10-38" tabindex="-1"></a></span>
-<span id="cb10-39"><a href="#cb10-39" tabindex="-1"></a></span>
-<span id="cb10-40"><a href="#cb10-40" tabindex="-1"></a><span class="kw">def</span> test_empty_file(monkeypatch):</span>
-<span id="cb10-41"><a href="#cb10-41" tabindex="-1"></a>    <span class="co"># Mock an empty file</span></span>
-<span id="cb10-42"><a href="#cb10-42" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span><span class="st">""</span>)</span>
-<span id="cb10-43"><a href="#cb10-43" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
-<span id="cb10-44"><a href="#cb10-44" tabindex="-1"></a></span>
-<span id="cb10-45"><a href="#cb10-45" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>):</span>
-<span id="cb10-46"><a href="#cb10-46" tabindex="-1"></a>        HTMLDocument(filepath<span class="op">=</span><span class="st">"empty_file.html"</span>)</span>
-<span id="cb10-47"><a href="#cb10-47" tabindex="-1"></a></span>
-<span id="cb10-48"><a href="#cb10-48" tabindex="-1"></a></span>
-<span id="cb10-49"><a href="#cb10-49" tabindex="-1"></a><span class="kw">def</span> test_document_line_count(doc):</span>
-<span id="cb10-50"><a href="#cb10-50" tabindex="-1"></a>    <span class="cf">assert</span> doc.line_count <span class="op">==</span> <span class="dv">2</span></span>
-<span id="cb10-51"><a href="#cb10-51" tabindex="-1"></a></span>
-<span id="cb10-52"><a href="#cb10-52" tabindex="-1"></a></span>
-<span id="cb10-53"><a href="#cb10-53" tabindex="-1"></a><span class="kw">def</span> test_document_word_occurrence(doc):</span>
-<span id="cb10-54"><a href="#cb10-54" tabindex="-1"></a>    <span class="cf">assert</span> doc.get_word_occurrence(<span class="st">"test"</span>) <span class="op">==</span> <span class="dv">2</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="im">from</span> unittest.mock <span class="im">import</span> mock_open</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.html_document <span class="im">import</span> HTMLDocument</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>TEST_DATA <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a><span class="st">&lt;head&gt;</span></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a><span class="st">  &lt;meta name="dc.title" content="Test Document"&gt;</span></span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="st">  &lt;meta name="dcterms.source" content="https://www.gutenberg.org/files/1234/1234-h/1234-h.htm"&gt;</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="st">  &lt;meta name="dc.creator" content="Test Author"&gt;</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a><span class="st">&lt;/head&gt;</span></span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a><span class="st">&lt;body&gt;</span></span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a><span class="st">  &lt;h1&gt;Test Document&lt;/h1&gt;</span></span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a><span class="st">  &lt;p&gt;</span></span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a><span class="st">    This is a test document. It contains words.</span></span>
+<span id="cb11-16"><a href="#cb11-16" tabindex="-1"></a><span class="st">    It is only a test document.</span></span>
+<span id="cb11-17"><a href="#cb11-17" tabindex="-1"></a><span class="st">  &lt;/p&gt;</span></span>
+<span id="cb11-18"><a href="#cb11-18" tabindex="-1"></a><span class="st">&lt;/body&gt;</span></span>
+<span id="cb11-19"><a href="#cb11-19" tabindex="-1"></a><span class="st">"""</span></span>
+<span id="cb11-20"><a href="#cb11-20" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" tabindex="-1"></a></span>
+<span id="cb11-22"><a href="#cb11-22" tabindex="-1"></a><span class="at">@pytest.fixture</span>(autouse<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" tabindex="-1"></a><span class="kw">def</span> mock_file(monkeypatch):</span>
+<span id="cb11-24"><a href="#cb11-24" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span>TEST_DATA)</span>
+<span id="cb11-25"><a href="#cb11-25" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
+<span id="cb11-26"><a href="#cb11-26" tabindex="-1"></a>    <span class="cf">return</span> mock</span>
+<span id="cb11-27"><a href="#cb11-27" tabindex="-1"></a></span>
+<span id="cb11-28"><a href="#cb11-28" tabindex="-1"></a></span>
+<span id="cb11-29"><a href="#cb11-29" tabindex="-1"></a><span class="at">@pytest.fixture</span></span>
+<span id="cb11-30"><a href="#cb11-30" tabindex="-1"></a><span class="kw">def</span> doc():</span>
+<span id="cb11-31"><a href="#cb11-31" tabindex="-1"></a>    <span class="cf">return</span> HTMLDocument(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
+<span id="cb11-32"><a href="#cb11-32" tabindex="-1"></a></span>
+<span id="cb11-33"><a href="#cb11-33" tabindex="-1"></a></span>
+<span id="cb11-34"><a href="#cb11-34" tabindex="-1"></a><span class="kw">def</span> test_create_document(doc):</span>
+<span id="cb11-35"><a href="#cb11-35" tabindex="-1"></a>    <span class="cf">assert</span> doc.title <span class="op">==</span> <span class="st">"Test Document"</span></span>
+<span id="cb11-36"><a href="#cb11-36" tabindex="-1"></a>    <span class="cf">assert</span> doc.author <span class="op">==</span> <span class="st">"Test Author"</span></span>
+<span id="cb11-37"><a href="#cb11-37" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">isinstance</span>(doc.<span class="bu">id</span>, <span class="bu">int</span>) <span class="kw">and</span> doc.<span class="bu">id</span> <span class="op">==</span> <span class="dv">1234</span></span>
+<span id="cb11-38"><a href="#cb11-38" tabindex="-1"></a></span>
+<span id="cb11-39"><a href="#cb11-39" tabindex="-1"></a></span>
+<span id="cb11-40"><a href="#cb11-40" tabindex="-1"></a><span class="kw">def</span> test_empty_file(monkeypatch):</span>
+<span id="cb11-41"><a href="#cb11-41" tabindex="-1"></a>    <span class="co"># Mock an empty file</span></span>
+<span id="cb11-42"><a href="#cb11-42" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span><span class="st">""</span>)</span>
+<span id="cb11-43"><a href="#cb11-43" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
+<span id="cb11-44"><a href="#cb11-44" tabindex="-1"></a></span>
+<span id="cb11-45"><a href="#cb11-45" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>):</span>
+<span id="cb11-46"><a href="#cb11-46" tabindex="-1"></a>        HTMLDocument(filepath<span class="op">=</span><span class="st">"empty_file.html"</span>)</span>
+<span id="cb11-47"><a href="#cb11-47" tabindex="-1"></a></span>
+<span id="cb11-48"><a href="#cb11-48" tabindex="-1"></a></span>
+<span id="cb11-49"><a href="#cb11-49" tabindex="-1"></a><span class="kw">def</span> test_document_line_count(doc):</span>
+<span id="cb11-50"><a href="#cb11-50" tabindex="-1"></a>    <span class="cf">assert</span> doc.line_count <span class="op">==</span> <span class="dv">2</span></span>
+<span id="cb11-51"><a href="#cb11-51" tabindex="-1"></a></span>
+<span id="cb11-52"><a href="#cb11-52" tabindex="-1"></a></span>
+<span id="cb11-53"><a href="#cb11-53" tabindex="-1"></a><span class="kw">def</span> test_document_word_occurrence(doc):</span>
+<span id="cb11-54"><a href="#cb11-54" tabindex="-1"></a>    <span class="cf">assert</span> doc.get_word_occurrence(<span class="st">"test"</span>) <span class="op">==</span> <span class="dv">2</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -3190,7 +3327,7 @@ FAILED tests/test_html_document.py::test_empty_file - AttributeError: 'NoneType'
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
   <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
+<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
 <div class="accordion-body">
 <p>The <code>open</code> function is being monkeypatched to return an
 empty string, which is then passed to the <code>BeautifulSoup</code>
@@ -3205,7 +3342,7 @@ it creates a <code>BeautifulSoup</code> object with no content.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>The error is occurring because the <code>HTMLDocument</code> class is
 trying to find the first <code>h1</code> tag in the HTML content, but
@@ -3215,18 +3352,247 @@ There are then no siblings to iterate over, which results in an
 <p>We can fix this by adding similar <code>ValueError</code> checks in
 the <code>HTMLDocument</code> class’s <code>read</code> method to ensure
 that the file is not empty and is a valid HTML file:</p>
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>    <span class="kw">def</span> read(<span class="va">self</span>, filepath) <span class="op">-&gt;</span> BeautifulSoup:</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(filepath, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> file_obj:</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>            soup <span class="op">=</span> BeautifulSoup(file_obj, features<span class="op">=</span><span class="st">"html.parser"</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a></span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>        <span class="co"># Check that the file is parsable as HTML</span></span>
-<span id="cb12-6"><a href="#cb12-6" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> soup:</span>
-<span id="cb12-7"><a href="#cb12-7" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"The file could not be parsed as HTML."</span>)</span>
-<span id="cb12-8"><a href="#cb12-8" tabindex="-1"></a></span>
-<span id="cb12-9"><a href="#cb12-9" tabindex="-1"></a>        <span class="cf">return</span> soup</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>    <span class="kw">def</span> read(<span class="va">self</span>, filepath) <span class="op">-&gt;</span> BeautifulSoup:</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>        <span class="cf">with</span> <span class="bu">open</span>(filepath, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> file_obj:</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>            soup <span class="op">=</span> BeautifulSoup(file_obj, features<span class="op">=</span><span class="st">"html.parser"</span>)</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>        <span class="co"># Check that the file is parsable as HTML</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> soup:</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"The file could not be parsed as HTML."</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a>        <span class="cf">return</span> soup</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="challenge-2-predict-the-output" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-2-predict-the-output" class="callout-inner">
+<h3 class="callout-title">Challenge 2: Predict the output</h3>
+<div class="callout-content">
+<p>What will happen when we run the following code? Why?</p>
+<div class="codewrapper sourceCode" id="cb14">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="kw">class</span> Animal:</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name: <span class="bu">str</span>):</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Creating an animal named </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>        <span class="va">self</span>.name <span class="op">=</span> name</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a>    <span class="kw">def</span> whoami(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"I am a </span><span class="sc">{</span><span class="bu">type</span>(<span class="va">self</span>)<span class="sc">}</span><span class="ss"> named </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a></span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a><span class="kw">class</span> Dog(Animal):</span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name: <span class="bu">str</span>):</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Creating a dog named </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(name<span class="op">=</span>name)</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a><span class="kw">class</span> Cat(Animal):</span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name: <span class="bu">str</span>):</span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"Creating a cat named </span><span class="sc">{</span>name<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a></span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a></span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a>animals <span class="op">=</span> [Dog(name<span class="op">=</span><span class="st">"Chance"</span>), Cat(name<span class="op">=</span><span class="st">"Sassy"</span>), Dog(name<span class="op">=</span><span class="st">"Shadow"</span>)]</span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a></span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a><span class="cf">for</span> animal <span class="kw">in</span> animals:</span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a>    <span class="bu">print</span>(animal.whoami())</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<p>We get some of the output we expect, but we also get an error:</p>
+<pre><code>Creating a dog named Chance
+Creating an animal named Chance
+Creating a cat named Sassy
+Creating a dog named Shadow
+Creating an animal named Shadow
+I am a &lt;class '__main__.Dog'&gt; named Chance
+
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+Cell In[4], line 22
+     19 animals = [Dog(name="Chance"), Cat(name="Sassy"), Dog(name="Shadow")]
+     21 for animal in animals:
+---&gt; 22     print(animal.whoami())
+
+Cell In[4], line 7, in Animal.whoami(self)
+      6 def whoami(self) -&gt; str:
+----&gt; 7     return f"I am a {type(self)} named {self.name}"
+
+AttributeError: 'Cat' object has no attribute 'name'</code></pre>
+<p>We failed to call the <code>super().__init__()</code> method in the
+<code>Cat</code> class, so the <code>name</code> property was never set.
+When we then try to access the instance property <code>name</code> in
+the <code>whoami</code> method, we get an
+<code>AttributeError</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="challenge-3-class-methods-and-properties" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-3-class-methods-and-properties" class="callout-inner">
+<h3 class="callout-title">Challenge 3: Class Methods and Properties</h3>
+<div class="callout-content">
+<p>We’ve mostly focused on instance properties and methods so far, but
+classes can also have what are called “class properties” and “class
+methods”. These are properties and methods that are associated with the
+class itself, rather than with an instance of the class. They are
+defined using the <code>@classmethod</code> decorator.</p>
+<p>Without running it, what do you think the following code will do?
+Will it run without error?</p>
+<div class="codewrapper sourceCode" id="cb16">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="kw">class</span> Animal:</span>
+<span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a>    PHYLUM <span class="op">=</span> <span class="st">"Chordata"</span></span>
+<span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name: <span class="bu">str</span>):</span>
+<span id="cb16-5"><a href="#cb16-5" tabindex="-1"></a>        <span class="va">self</span>.name <span class="op">=</span> name</span>
+<span id="cb16-6"><a href="#cb16-6" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" tabindex="-1"></a>    <span class="kw">def</span> whoami(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb16-8"><a href="#cb16-8" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"I am a </span><span class="sc">{</span><span class="bu">type</span>(<span class="va">self</span>)<span class="sc">}</span><span class="ss"> named </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss"> in the phylum </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>PHYLUM<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb16-9"><a href="#cb16-9" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" tabindex="-1"></a><span class="kw">class</span> Snail(Animal):</span>
+<span id="cb16-11"><a href="#cb16-11" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name: <span class="bu">str</span>):</span>
+<span id="cb16-12"><a href="#cb16-12" tabindex="-1"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(name<span class="op">=</span>name)</span>
+<span id="cb16-13"><a href="#cb16-13" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" tabindex="-1"></a>animal1 <span class="op">=</span> Snail(name<span class="op">=</span><span class="st">"Gary"</span>)</span>
+<span id="cb16-15"><a href="#cb16-15" tabindex="-1"></a>Animal.PHYLUM <span class="op">=</span> <span class="st">"Mollusca"</span></span>
+<span id="cb16-16"><a href="#cb16-16" tabindex="-1"></a><span class="bu">print</span>(animal1.whoami())</span>
+<span id="cb16-17"><a href="#cb16-17" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" tabindex="-1"></a>animal2 <span class="op">=</span> Snail(name<span class="op">=</span><span class="st">"Slurms MacKenzie"</span>)</span>
+<span id="cb16-19"><a href="#cb16-19" tabindex="-1"></a><span class="bu">print</span>(animal2.whoami())</span>
+<span id="cb16-20"><a href="#cb16-20" tabindex="-1"></a></span>
+<span id="cb16-21"><a href="#cb16-21" tabindex="-1"></a>creature3 <span class="op">=</span> Snail(name<span class="op">=</span><span class="st">"Turbo"</span>)</span>
+<span id="cb16-22"><a href="#cb16-22" tabindex="-1"></a>creature3.CLASS <span class="op">=</span> <span class="st">"Gastropoda"</span></span>
+<span id="cb16-23"><a href="#cb16-23" tabindex="-1"></a><span class="bu">print</span>(creature3.whoami(), <span class="st">"and is in class"</span>, creature3.CLASS)</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionHint2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint2" aria-expanded="false" aria-controls="collapseHint2">
+  <h4 class="accordion-header" id="headingHint2"> Give me a hint </h4>
+</button>
+<div id="collapseHint2" class="accordion-collapse collapse" data-bs-parent="#accordionHint2" aria-labelledby="headingHint2">
+<div class="accordion-body">
+<p>The <code>PHYLUM</code> property is a class property, so it is shared
+among all instances of the class.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSolution3" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
+  <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
+</button>
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div class="accordion-body">
+<p>There’s two things about this piece of code that are a bit
+tricky.</p>
+<p>1 The <code>PHYLUM</code> property is a class property, so it is
+shared among all instances of the class. When we set
+<code>Animal.PHYLUM = "Mollusca"</code>, we are actually modifying the
+class property for all instances going forward, which is why when we
+print <code>animal2.whoami()</code>, it shows that the phylum is still
+“Mollusca”, even though we created a new instance of
+<code>Snail</code>.</p>
+<p>2 - We never defined a <code>CLASS</code> property in the
+<code>Animal</code> or <code>Snail</code> class, but we can actually
+still create a new property on an instance of a class at any time.
+(Generally, this is not a good idea, as it can cause confusion when you
+reference a property that doesn’t exist in any class definition, but it
+is technically possible.)</p>
+</div>
+</div>
+</div>
+</div>
+<div id="challenge-4-create-a-new-subclass" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-4-create-a-new-subclass" class="callout-inner">
+<h3 class="callout-title">Challenge 4: Create a new subclass</h3>
+<div class="callout-content">
+<p>The previous challenge is not quite correct, as canonnically “Slurms
+MacKenzie” is not a snail, but a slug. Create a subclass of ‘Animal’
+called “Mollusk” that inherits from “Animal”, but only sets the class
+property <code>PHYLUM</code> to “Mollusca”. Then create two subclasses
+of “Mollusk”: “Snail” and “Slug”.</p>
+<p>You can implement any methods or properties you want in the “Snail”
+and “Slug” classes, but you may also just leave them empty like so:</p>
+<div class="codewrapper sourceCode" id="cb17">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="kw">class</span> MyClass:</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionHint3" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint3" aria-expanded="false" aria-controls="collapseHint3">
+  <h4 class="accordion-header" id="headingHint3"> Give me a hint </h4>
+</button>
+<div id="collapseHint3" class="accordion-collapse collapse" data-bs-parent="#accordionHint3" aria-labelledby="headingHint3">
+<div class="accordion-body">
+<p>It is not necessary for the <code>Snail</code> and <code>Slug</code>
+classes to have their own <code>__init__</code> methods, as they will
+inherit the <code>__init__</code> method from the <code>Animal</code>
+class through the <code>Mollusk</code> class.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSolution4" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution4" aria-expanded="false" aria-controls="collapseSolution4">
+  <h4 class="accordion-header" id="headingSolution4"> Show me the solution </h4>
+</button>
+<div id="collapseSolution4" class="accordion-collapse collapse" data-bs-parent="#accordionSolution4" aria-labelledby="headingSolution4">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb18">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="kw">class</span> Animal:</span>
+<span id="cb18-2"><a href="#cb18-2" tabindex="-1"></a>    PHYLUM <span class="op">=</span> <span class="st">"Chordata"</span></span>
+<span id="cb18-3"><a href="#cb18-3" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, name: <span class="bu">str</span>):</span>
+<span id="cb18-5"><a href="#cb18-5" tabindex="-1"></a>        <span class="va">self</span>.name <span class="op">=</span> name</span>
+<span id="cb18-6"><a href="#cb18-6" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" tabindex="-1"></a>    <span class="kw">def</span> whoami(<span class="va">self</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb18-8"><a href="#cb18-8" tabindex="-1"></a>        <span class="cf">return</span> <span class="ss">f"I am a </span><span class="sc">{</span><span class="bu">type</span>(<span class="va">self</span>)<span class="sc">}</span><span class="ss"> named </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>name<span class="sc">}</span><span class="ss"> in the phylum </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>PHYLUM<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb18-9"><a href="#cb18-9" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" tabindex="-1"></a><span class="kw">class</span> Mollusk(Animal):</span>
+<span id="cb18-11"><a href="#cb18-11" tabindex="-1"></a>    PHYLUM <span class="op">=</span> <span class="st">"Mollusca"</span></span>
+<span id="cb18-12"><a href="#cb18-12" tabindex="-1"></a></span>
+<span id="cb18-13"><a href="#cb18-13" tabindex="-1"></a><span class="kw">class</span> Snail(Mollusk):</span>
+<span id="cb18-14"><a href="#cb18-14" tabindex="-1"></a>    <span class="cf">pass</span></span>
+<span id="cb18-15"><a href="#cb18-15" tabindex="-1"></a></span>
+<span id="cb18-16"><a href="#cb18-16" tabindex="-1"></a><span class="kw">class</span> Slug(Mollusk):</span>
+<span id="cb18-17"><a href="#cb18-17" tabindex="-1"></a>    <span class="cf">pass</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -3309,7 +3675,7 @@ episode. As a reminder, our class looked like this:</p>
 between cars that have different kinds of engines, like gasoline, or
 electric? With the Inheritance approach, we would have to create a new
 subclass for each type of engine, like this:</p>
-<figure><img src=".././fig/06-composition/car_inheritance.PNG" alt="Car Inheritance example" class="figure mx-auto d-block"><div class="figcaption">Car Inheritance example</div>
+<figure><img src=".././fig/06-composition/car_inheritance.jpg" alt="Car Inheritance example" class="figure mx-auto d-block"><div class="figcaption">Car Inheritance example</div>
 </figure><p>The code might look something like this:</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3428,6 +3794,14 @@ by creating new subclasses of <code>Engine</code>, without having to
 modify the <code>Car</code> class or create new subclasses of
 <code>Car</code>.</li>
 </ul>
+<p>Think about if we added a <code>Tire</code> class as well. We could
+have different types of tires (e.g., Road Tires, Racing Tires, Snow
+Tires, etc.) and then include an instance of the <code>Tire</code> class
+in the <code>Car</code> class. This would allow us to mix and match
+different types of engines and tires without having to create a new
+subclass for every possible combination.</p>
+<figure><img src=".././fig/06-composition/full_car_composition.PNG" alt="Complete Car Composition example" class="figure mx-auto d-block"><div class="figcaption">Complete Car Composition example</div>
+</figure>
 </div>
 </section><section><h2 class="section-heading" id="refactoring-our-document-example">Refactoring our Document Example<a class="anchor" aria-label="anchor" href="#refactoring-our-document-example"></a>
 </h2>
