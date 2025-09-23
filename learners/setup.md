@@ -2,6 +2,19 @@
 title: Setup
 ---
 
+::: prereq
+
+This workshop content assumes that you have the following prerequisites:
+
+- A laptop or desktop computer running Windows, MacOS, or Linux
+- An installation of Python 3.9 or later
+- An installation of the UV package management tool
+- (Optional) A GitHub account
+- (Optional) A TestPyPi account
+- (Optional) Git Version Control, authenticated to your GitHub account
+
+:::
+
 ## Software Setup - Python
 
 This workshop relies on an installation of python on your device. You will need to have at least
