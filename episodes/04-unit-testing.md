@@ -430,10 +430,130 @@ def __init__(self, filepath: str, title: str = "Untitled Document"):
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 1: Additional Edge Case
+## Challenge 1: Write a simple test
 
-Try adding a test for another edge case, this time for a file that is not actually a text file, for
-example, a binary file or an image file. Then, update the `Document` class to make the test pass.
+Create a file called `text_utilities.py` in the `src/textanalysis_tool` directory. In this file,
+paste the following function:
+
+
+```python
+def create_acronym(phrase: str) -> str:
+    """Create an acronym from a phrase.
+
+    Args:
+        phrase (str): The phrase to create an acronym from.
+
+    Returns:
+        str: The acronym.
+    """
+    if not isinstance(phrase, str):
+        raise TypeError("Phrase must be a string.")
+
+    words = phrase.split()
+    if len(words) == 0:
+        raise ValueError("Phrase must contain at least one word.")
+
+    articles = {"a", "an", "the", "and", "but", "or", "nor", "on", "at", "to", "by", "in"}
+
+    acronym = ""
+    for word in words:
+        if word.lower() not in articles:
+            acronym += word[0].upper()
+
+    return acronym
+```
+
+Create the following test cases for this function:
+
+- A test that checks if the acronym for "As Soon As Possible" is "ASAP" and that the acronym for
+    "For Your Information" is "FYI".
+- A test that checks that the function raises a `TypeError` when the input is not a string.
+- A test that checks that the function raises a `ValueError` when the input is an empty string.
+
+Are there any other edge cases you can think of? Write a test to prove that your edge case is not
+handled by this function as it is currently written.
+
+::: hint
+
+Remember that to use pytest, you need to create a file that starts with `test_` and that the test
+functions need to start with `test_` as well.
+
+:::
+
+::: hint
+
+You can use the `pytest.raises` context manager to check for specific exceptions. For example:
+
+```python
+def test_raises_error():
+    with pytest.raises(FileNotFoundError):
+        read_my_file("non_existent_file.txt")
+```
+
+:::
+
+::: hint
+
+What happens if the phrase contains only articles? For example, "and the or by"?
+
+:::
+
+:::::::::::::::: solution
+
+in the `tests` directory, create a file called `test_text_utilities.py`:
+
+```python
+import pytest
+
+from textanalysis_tool.text_utilities import create_acronym
+
+
+def test_create_acronym():
+    assert create_acronym("As Soon As Possible") == "ASAP"
+    assert create_acronym("For Your Information") == "FYI"
+
+
+def test_create_acronym_invalid_type():
+    with pytest.raises(TypeError):
+        create_acronym(123)
+
+
+def test_create_acronym_empty_string():
+    with pytest.raises(ValueError):
+        create_acronym("")
+
+
+def test_create_acronym_no_valid_words():
+    with pytest.raises(ValueError):
+        create_acronym("and the or")
+
+```
+
+Run the tests with `uv run pytest`.
+
+In the `create_acronym` function, we need to add a check after we finish iterating through the
+words to see if the acronym is empty. If it is, we can raise a `ValueError`:
+
+```python
+    ...
+
+    if not acronym:
+        raise ValueError("Phrase must contain at least one non-article word.")
+
+    return acronym
+```
+
+
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 2: Additional Edge Case
+
+Try adding a test for another edge case for our Document class, this time for a file that is not
+actually a text file, for example, a binary file or an image file. Then, update the `Document`
+class to make the test pass.
 
 ::: hint
 
