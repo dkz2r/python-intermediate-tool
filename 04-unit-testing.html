@@ -345,7 +345,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Unit Testing</h1>
-        <p>Last updated on 2025-09-16 |
+        <p>Last updated on 2025-09-28 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/04-unit-testing.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -429,7 +429,7 @@ object or function, as well as a few edge cases.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>Some edge cases for the <code>hello</code> function could
 include:</p>
@@ -708,14 +708,13 @@ look like this:</p>
 <span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a>    <span class="cf">return</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
 <span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a></span>
 <span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="kw">def</span> test_create_document(doc):</span>
-<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a>    <span class="cf">assert</span> doc.title <span class="op">==</span> <span class="st">"Test Document"</span></span>
-<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a>    <span class="cf">assert</span> doc.filepath <span class="op">==</span> <span class="st">"tests/example_file.txt"</span></span>
-<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a></span>
-<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a><span class="kw">def</span> test_document_word_count(doc):</span>
-<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a>    <span class="cf">assert</span> doc.get_line_count() <span class="op">==</span> <span class="dv">2</span></span>
-<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a></span>
-<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a><span class="kw">def</span> test_document_word_occurrence(doc):</span>
-<span id="cb17-18"><a href="#cb17-18" tabindex="-1"></a>    <span class="cf">assert</span> doc.get_word_occurrence(<span class="st">"test"</span>) <span class="op">==</span> <span class="dv">2</span></span></code></pre>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a>    <span class="cf">assert</span> doc.filepath <span class="op">==</span> <span class="st">"tests/example_file.txt"</span></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a><span class="kw">def</span> test_document_word_count(doc):</span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a>    <span class="cf">assert</span> doc.get_line_count() <span class="op">==</span> <span class="dv">2</span></span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a></span>
+<span id="cb17-16"><a href="#cb17-16" tabindex="-1"></a><span class="kw">def</span> test_document_word_occurrence(doc):</span>
+<span id="cb17-17"><a href="#cb17-17" tabindex="-1"></a>    <span class="cf">assert</span> doc.get_word_occurrence(<span class="st">"test"</span>) <span class="op">==</span> <span class="dv">2</span></span></code></pre>
 </div>
 <div id="callout3" class="callout">
 <div class="callout-square">
@@ -837,30 +836,72 @@ information for later developers to clarify the intent of the test.</p>
 </div>
 <p>It fails, as we expect. Now, let’s update the <code>Document</code>
 class to raise a <code>ValueError</code> if the file is empty. Open up
-<code>document.py</code> and update the <code>__init__</code> method to
-the following:</p>
+<code>document.py</code> and update the <code>get_content</code> method
+to the following:</p>
 <div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>, title: <span class="bu">str</span> <span class="op">=</span> <span class="st">"Untitled Document"</span>):</span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>    <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
-<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>    <span class="va">self</span>.title <span class="op">=</span> title</span>
-<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(filepath, <span class="st">'r'</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>        <span class="va">self</span>._content <span class="op">=</span> <span class="bu">file</span>.read()</span>
-<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="va">self</span>._content:</span>
-<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> contains no content."</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a>...</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>    <span class="kw">def</span> get_content(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a>        raw_text <span class="op">=</span> <span class="va">self</span>.read(filepath)</span>
+<span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> raw_text:</span>
+<span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span>filepath<span class="sc">}</span><span class="ss"> contains no content."</span>)</span>
+<span id="cb22-6"><a href="#cb22-6" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" tabindex="-1"></a>        match <span class="op">=</span> re.search(<span class="va">self</span>.CONTENT_PATTERN, raw_text, re.DOTALL)</span>
+<span id="cb22-8"><a href="#cb22-8" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
+<span id="cb22-9"><a href="#cb22-9" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
+<span id="cb22-10"><a href="#cb22-10" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span>filepath<span class="sc">}</span><span class="ss"> is not a valid Project Gutenberg Text file."</span>)</span>
+<span id="cb22-11"><a href="#cb22-11" tabindex="-1"></a>...</span></code></pre>
 </div>
-<div id="challenge-1-additional-edge-case" class="callout challenge">
+<div id="challenge-1-write-a-simple-test" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-1-additional-edge-case" class="callout-inner">
-<h3 class="callout-title">Challenge 1: Additional Edge Case</h3>
+<div id="challenge-1-write-a-simple-test" class="callout-inner">
+<h3 class="callout-title">Challenge 1: Write a simple test</h3>
 <div class="callout-content">
-<p>Try adding a test for another edge case, this time for a file that is
-not actually a text file, for example, a binary file or an image file.
-Then, update the <code>Document</code> class to make the test pass.</p>
+<p>Create a file called <code>text_utilities.py</code> in the
+<code>src/textanalysis_tool</code> directory. In this file, paste the
+following function:</p>
+<div class="codewrapper sourceCode" id="cb23">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a><span class="kw">def</span> create_acronym(phrase: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a>    <span class="co">"""Create an acronym from a phrase.</span></span>
+<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a><span class="co">    Args:</span></span>
+<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a><span class="co">        phrase (str): The phrase to create an acronym from.</span></span>
+<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a></span>
+<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a><span class="co">    Returns:</span></span>
+<span id="cb23-8"><a href="#cb23-8" tabindex="-1"></a><span class="co">        str: The acronym.</span></span>
+<span id="cb23-9"><a href="#cb23-9" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb23-10"><a href="#cb23-10" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> <span class="bu">isinstance</span>(phrase, <span class="bu">str</span>):</span>
+<span id="cb23-11"><a href="#cb23-11" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">TypeError</span>(<span class="st">"Phrase must be a string."</span>)</span>
+<span id="cb23-12"><a href="#cb23-12" tabindex="-1"></a></span>
+<span id="cb23-13"><a href="#cb23-13" tabindex="-1"></a>    words <span class="op">=</span> phrase.split()</span>
+<span id="cb23-14"><a href="#cb23-14" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(words) <span class="op">==</span> <span class="dv">0</span>:</span>
+<span id="cb23-15"><a href="#cb23-15" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Phrase must contain at least one word."</span>)</span>
+<span id="cb23-16"><a href="#cb23-16" tabindex="-1"></a></span>
+<span id="cb23-17"><a href="#cb23-17" tabindex="-1"></a>    articles <span class="op">=</span> {<span class="st">"a"</span>, <span class="st">"an"</span>, <span class="st">"the"</span>, <span class="st">"and"</span>, <span class="st">"but"</span>, <span class="st">"or"</span>, <span class="st">"nor"</span>, <span class="st">"on"</span>, <span class="st">"at"</span>, <span class="st">"to"</span>, <span class="st">"by"</span>, <span class="st">"in"</span>}</span>
+<span id="cb23-18"><a href="#cb23-18" tabindex="-1"></a></span>
+<span id="cb23-19"><a href="#cb23-19" tabindex="-1"></a>    acronym <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb23-20"><a href="#cb23-20" tabindex="-1"></a>    <span class="cf">for</span> word <span class="kw">in</span> words:</span>
+<span id="cb23-21"><a href="#cb23-21" tabindex="-1"></a>        <span class="cf">if</span> word.lower() <span class="kw">not</span> <span class="kw">in</span> articles:</span>
+<span id="cb23-22"><a href="#cb23-22" tabindex="-1"></a>            acronym <span class="op">+=</span> word[<span class="dv">0</span>].upper()</span>
+<span id="cb23-23"><a href="#cb23-23" tabindex="-1"></a></span>
+<span id="cb23-24"><a href="#cb23-24" tabindex="-1"></a>    <span class="cf">return</span> acronym</span></code></pre>
+</div>
+<p>Create the following test cases for this function:</p>
+<ul><li>A test that checks if the acronym for “As Soon As Possible” is
+“ASAP” and that the acronym for “For Your Information” is “FYI”.</li>
+<li>A test that checks that the function raises a <code>TypeError</code>
+when the input is not a string.</li>
+<li>A test that checks that the function raises a
+<code>ValueError</code> when the input is an empty string.</li>
+</ul><p>Are there any other edge cases you can think of? Write a test to
+prove that your edge case is not handled by this function as it is
+currently written.</p>
 </div>
 </div>
 </div>
@@ -869,12 +910,11 @@ Then, update the <code>Document</code> class to make the test pass.</p>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
   <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
+<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
 <div class="accordion-body">
-<p>You can mock a binary file by using the <code>mock_open</code>
-function from the <code>unittest.mock</code> module, and using the
-<code>read_data</code> parameter to provide binary data like
-<code>b'\x00\x01\x02'</code>.</p>
+<p>Remember that to use pytest, you need to create a file that starts
+with <code>test_</code> and that the test functions need to start with
+<code>test_</code> as well.</p>
 </div>
 </div>
 </div>
@@ -884,25 +924,30 @@ function from the <code>unittest.mock</code> module, and using the
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint2" aria-expanded="false" aria-controls="collapseHint2">
   <h4 class="accordion-header" id="headingHint2"> Give me a hint </h4>
 </button>
-<div id="collapseHint2" class="accordion-collapse collapse" aria-labelledby="headingHint2" data-bs-parent="#accordionHint2">
+<div id="collapseHint2" class="accordion-collapse collapse" data-bs-parent="#accordionHint2" aria-labelledby="headingHint2">
 <div class="accordion-body">
-<p>In the <code>Document</code> class, we need to check if the data read
-from the file is binary data. The <code>read</code> method of a file
-object is clever enough to return binary data as a <code>bytes</code>
-object, so we can check if the data in <code>self._content</code> is an
-instance of type <code>bytes</code>. If it is, we can raise a
-<code>ValueError</code>.</p>
-<div class="codewrapper sourceCode" id="cb23">
+<p>You can use the <code>pytest.raises</code> context manager to check
+for specific exceptions. For example:</p>
+<div class="codewrapper sourceCode" id="cb24">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" tabindex="-1"></a>text_data <span class="op">=</span> <span class="st">"This is a test string."</span></span>
-<span id="cb23-2"><a href="#cb23-2" tabindex="-1"></a><span class="cf">if</span> <span class="bu">isinstance</span>(text_data, <span class="bu">bytes</span>):</span>
-<span id="cb23-3"><a href="#cb23-3" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"File is not a valid text file."</span>)</span>
-<span id="cb23-4"><a href="#cb23-4" tabindex="-1"></a></span>
-<span id="cb23-5"><a href="#cb23-5" tabindex="-1"></a>binary_data <span class="op">=</span> <span class="st">b'</span><span class="ch">\x00\x01\x02</span><span class="st">'</span></span>
-<span id="cb23-6"><a href="#cb23-6" tabindex="-1"></a><span class="cf">if</span> <span class="bu">isinstance</span>(binary_data, <span class="bu">bytes</span>):</span>
-<span id="cb23-7"><a href="#cb23-7" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"File is not a valid text file."</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="kw">def</span> test_raises_error():</span>
+<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">FileNotFoundError</span>):</span>
+<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>        read_my_file(<span class="st">"non_existent_file.txt"</span>)</span></code></pre>
 </div>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionHint3" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint3" aria-expanded="false" aria-controls="collapseHint3">
+  <h4 class="accordion-header" id="headingHint3"> Give me a hint </h4>
+</button>
+<div id="collapseHint3" class="accordion-collapse collapse" data-bs-parent="#accordionHint3" aria-labelledby="headingHint3">
+<div class="accordion-body">
+<p>What happens if the phrase contains only articles? For example, “and
+the or by”?</p>
 </div>
 </div>
 </div>
@@ -912,41 +957,153 @@ instance of type <code>bytes</code>. If it is, we can raise a
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<p>in the <code>tests</code> directory, create a file called
+<code>test_text_utilities.py</code>:</p>
+<div class="codewrapper sourceCode" id="cb25">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a><span class="im">from</span> textanalysis_tool.text_utilities <span class="im">import</span> create_acronym</span>
+<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a><span class="kw">def</span> test_create_acronym():</span>
+<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>    <span class="cf">assert</span> create_acronym(<span class="st">"As Soon As Possible"</span>) <span class="op">==</span> <span class="st">"ASAP"</span></span>
+<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a>    <span class="cf">assert</span> create_acronym(<span class="st">"For Your Information"</span>) <span class="op">==</span> <span class="st">"FYI"</span></span>
+<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a></span>
+<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a><span class="kw">def</span> test_create_acronym_invalid_type():</span>
+<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">TypeError</span>):</span>
+<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a>        create_acronym(<span class="dv">123</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a></span>
+<span id="cb25-15"><a href="#cb25-15" tabindex="-1"></a></span>
+<span id="cb25-16"><a href="#cb25-16" tabindex="-1"></a><span class="kw">def</span> test_create_acronym_empty_string():</span>
+<span id="cb25-17"><a href="#cb25-17" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>):</span>
+<span id="cb25-18"><a href="#cb25-18" tabindex="-1"></a>        create_acronym(<span class="st">""</span>)</span>
+<span id="cb25-19"><a href="#cb25-19" tabindex="-1"></a></span>
+<span id="cb25-20"><a href="#cb25-20" tabindex="-1"></a></span>
+<span id="cb25-21"><a href="#cb25-21" tabindex="-1"></a><span class="kw">def</span> test_create_acronym_no_valid_words():</span>
+<span id="cb25-22"><a href="#cb25-22" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>):</span>
+<span id="cb25-23"><a href="#cb25-23" tabindex="-1"></a>        create_acronym(<span class="st">"and the or"</span>)</span></code></pre>
+</div>
+<p>Run the tests with <code>uv run pytest</code>.</p>
+<p>In the <code>create_acronym</code> function, we need to add a check
+after we finish iterating through the words to see if the acronym is
+empty. If it is, we can raise a <code>ValueError</code>:</p>
+<div class="codewrapper sourceCode" id="cb26">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" tabindex="-1"></a>    ...</span>
+<span id="cb26-2"><a href="#cb26-2" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> acronym:</span>
+<span id="cb26-4"><a href="#cb26-4" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"Phrase must contain at least one non-article word."</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" tabindex="-1"></a>    <span class="cf">return</span> acronym</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="challenge-2-additional-edge-case" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<span class="callout-header">Challenge</span>
+<div id="challenge-2-additional-edge-case" class="callout-inner">
+<h3 class="callout-title">Challenge 2: Additional Edge Case</h3>
+<div class="callout-content">
+<p>Try adding a test for another edge case for our Document class, this
+time for a file that is not actually a text file, for example, a binary
+file or an image file. Then, update the <code>Document</code> class to
+make the test pass.</p>
+</div>
+</div>
+</div>
+<div id="accordionHint4" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint4" aria-expanded="false" aria-controls="collapseHint4">
+  <h4 class="accordion-header" id="headingHint4"> Give me a hint </h4>
+</button>
+<div id="collapseHint4" class="accordion-collapse collapse" data-bs-parent="#accordionHint4" aria-labelledby="headingHint4">
+<div class="accordion-body">
+<p>You can mock a binary file by using the <code>mock_open</code>
+function from the <code>unittest.mock</code> module, and using the
+<code>read_data</code> parameter to provide binary data like
+<code>b'\x00\x01\x02'</code>.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionHint5" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint5" aria-expanded="false" aria-controls="collapseHint5">
+  <h4 class="accordion-header" id="headingHint5"> Give me a hint </h4>
+</button>
+<div id="collapseHint5" class="accordion-collapse collapse" data-bs-parent="#accordionHint5" aria-labelledby="headingHint5">
+<div class="accordion-body">
+<p>In the <code>Document</code> class, we need to check if the data read
+from the file is binary data. The <code>read</code> method of a file
+object is clever enough to return binary data as a <code>bytes</code>
+object, so we can check if the data in <code>self._content</code> is an
+instance of type <code>bytes</code>. If it is, we can raise a
+<code>ValueError</code>.</p>
+<div class="codewrapper sourceCode" id="cb27">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" tabindex="-1"></a>text_data <span class="op">=</span> <span class="st">"This is a test string."</span></span>
+<span id="cb27-2"><a href="#cb27-2" tabindex="-1"></a><span class="cf">if</span> <span class="bu">isinstance</span>(text_data, <span class="bu">bytes</span>):</span>
+<span id="cb27-3"><a href="#cb27-3" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"File is not a valid text file."</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" tabindex="-1"></a>binary_data <span class="op">=</span> <span class="st">b'</span><span class="ch">\x00\x01\x02</span><span class="st">'</span></span>
+<span id="cb27-6"><a href="#cb27-6" tabindex="-1"></a><span class="cf">if</span> <span class="bu">isinstance</span>(binary_data, <span class="bu">bytes</span>):</span>
+<span id="cb27-7"><a href="#cb27-7" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="st">"File is not a valid text file."</span>)</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>You can create a test that simulates opening a binary file by using
 the <code>mock_open</code> function from the <code>unittest.mock</code>
 module. Here’s an example of how you might write such a test:</p>
-<div class="codewrapper sourceCode" id="cb24">
+<div class="codewrapper sourceCode" id="cb28">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" tabindex="-1"></a><span class="kw">def</span> test_binary_file(monkeypatch):</span>
-<span id="cb24-2"><a href="#cb24-2" tabindex="-1"></a>    <span class="co"># Mock a binary file</span></span>
-<span id="cb24-3"><a href="#cb24-3" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span><span class="st">b'</span><span class="ch">\x00\x01\x02</span><span class="st">'</span>)</span>
-<span id="cb24-4"><a href="#cb24-4" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
-<span id="cb24-5"><a href="#cb24-5" tabindex="-1"></a></span>
-<span id="cb24-6"><a href="#cb24-6" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>):</span>
-<span id="cb24-7"><a href="#cb24-7" tabindex="-1"></a>        Document(filepath<span class="op">=</span><span class="st">"binary_file.bin"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" tabindex="-1"></a><span class="kw">def</span> test_binary_file(monkeypatch):</span>
+<span id="cb28-2"><a href="#cb28-2" tabindex="-1"></a>    <span class="co"># Mock a binary file</span></span>
+<span id="cb28-3"><a href="#cb28-3" tabindex="-1"></a>    mock <span class="op">=</span> mock_open(read_data<span class="op">=</span><span class="st">b'</span><span class="ch">\x00\x01\x02</span><span class="st">'</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" tabindex="-1"></a>    monkeypatch.<span class="bu">setattr</span>(<span class="st">"builtins.open"</span>, mock)</span>
+<span id="cb28-5"><a href="#cb28-5" tabindex="-1"></a></span>
+<span id="cb28-6"><a href="#cb28-6" tabindex="-1"></a>    <span class="cf">with</span> pytest.raises(<span class="pp">ValueError</span>):</span>
+<span id="cb28-7"><a href="#cb28-7" tabindex="-1"></a>        Document(filepath<span class="op">=</span><span class="st">"binary_file.bin"</span>)</span></code></pre>
 </div>
 <p>And then, in the <code>Document</code> class, you can check if the
 data read from the file is binary data like this:</p>
-<div class="codewrapper sourceCode" id="cb25">
+<div class="codewrapper sourceCode" id="cb29">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" tabindex="-1"></a><span class="kw">class</span> Document:</span>
-<span id="cb25-2"><a href="#cb25-2" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>, title: <span class="bu">str</span>, author: <span class="bu">str</span> <span class="op">=</span> <span class="st">""</span>, <span class="bu">id</span>: <span class="bu">int</span> <span class="op">=</span> <span class="dv">0</span>):</span>
-<span id="cb25-3"><a href="#cb25-3" tabindex="-1"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
-<span id="cb25-4"><a href="#cb25-4" tabindex="-1"></a>        <span class="va">self</span>.title <span class="op">=</span> title</span>
-<span id="cb25-5"><a href="#cb25-5" tabindex="-1"></a>        <span class="va">self</span>.author <span class="op">=</span> author</span>
-<span id="cb25-6"><a href="#cb25-6" tabindex="-1"></a>        <span class="va">self</span>.<span class="bu">id</span> <span class="op">=</span> <span class="bu">id</span></span>
-<span id="cb25-7"><a href="#cb25-7" tabindex="-1"></a>        <span class="va">self</span>._content <span class="op">=</span> <span class="va">self</span>._read(<span class="va">self</span>.filepath)</span>
-<span id="cb25-8"><a href="#cb25-8" tabindex="-1"></a></span>
-<span id="cb25-9"><a href="#cb25-9" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> <span class="va">self</span>._content:</span>
-<span id="cb25-10"><a href="#cb25-10" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> contains no content."</span>)</span>
-<span id="cb25-11"><a href="#cb25-11" tabindex="-1"></a></span>
-<span id="cb25-12"><a href="#cb25-12" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(<span class="va">self</span>._content, <span class="bu">bytes</span>):</span>
-<span id="cb25-13"><a href="#cb25-13" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> is not a valid text file."</span>)</span>
-<span id="cb25-14"><a href="#cb25-14" tabindex="-1"></a>...</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" tabindex="-1"></a>...</span>
+<span id="cb29-2"><a href="#cb29-2" tabindex="-1"></a>    <span class="kw">def</span> get_content(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
+<span id="cb29-3"><a href="#cb29-3" tabindex="-1"></a>        raw_text <span class="op">=</span> <span class="va">self</span>.read(filepath)</span>
+<span id="cb29-4"><a href="#cb29-4" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> raw_text:</span>
+<span id="cb29-5"><a href="#cb29-5" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span>filepath<span class="sc">}</span><span class="ss"> contains no content."</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" tabindex="-1"></a></span>
+<span id="cb29-7"><a href="#cb29-7" tabindex="-1"></a>        <span class="cf">if</span> <span class="bu">isinstance</span>(raw_text, <span class="bu">bytes</span>):</span>
+<span id="cb29-8"><a href="#cb29-8" tabindex="-1"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span><span class="va">self</span><span class="sc">.</span>filepath<span class="sc">}</span><span class="ss"> is not a valid text file."</span>)</span>
+<span id="cb29-9"><a href="#cb29-9" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="#cb29-10" tabindex="-1"></a>        match <span class="op">=</span> re.search(<span class="va">self</span>.CONTENT_PATTERN, raw_text, re.DOTALL)</span>
+<span id="cb29-11"><a href="#cb29-11" tabindex="-1"></a>        <span class="cf">if</span> match:</span>
+<span id="cb29-12"><a href="#cb29-12" tabindex="-1"></a>            <span class="cf">return</span> match.group(<span class="dv">1</span>).strip()</span>
+<span id="cb29-13"><a href="#cb29-13" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"File </span><span class="sc">{</span>filepath<span class="sc">}</span><span class="ss"> is not a valid Project Gutenberg Text file."</span>)</span>
+<span id="cb29-14"><a href="#cb29-14" tabindex="-1"></a>...</span></code></pre>
 </div>
 </div>
 </div>
@@ -1033,8 +1190,8 @@ any links that you are not going to use.
   "url": "https://jonathan-hartman.github.io/python-intermediate-tool/04-unit-testing.html",
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/04-unit-testing.html",
   "dateCreated": "2025-08-23",
-  "dateModified": "2025-09-16",
-  "datePublished": "2025-09-23"
+  "dateModified": "2025-09-28",
+  "datePublished": "2025-09-28"
 }
 
   </script><script>
