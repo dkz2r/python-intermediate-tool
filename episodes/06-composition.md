@@ -183,7 +183,7 @@ the logic for reading and extracting content from a Project Gutenberg text file 
 ```python
 import re
 
-from readers.base_reader import BaseReader
+from .base_reader import BaseReader
 
 
 class TextReader(BaseReader):
@@ -505,7 +505,7 @@ epub files called `EpubReader` in a file called `readers/epub_reader.py`. You ca
 `ebooklib` package to read epub files. You can install it with pip:
 
 ```bash
-uv pip install Ebooklib
+uv add Ebooklib
 ```
 
 You can refer to the [package documentation here](https://docs.sourcefabric.org/projects/ebooklib/en/latest/tutorial.html)

@@ -200,7 +200,7 @@ This is a test document. It contains words.
 It is only a test document.
 ```
 
-Next, let's create another test file. Our last one was called `test_my_module.py`, so let's call this
+Next, let's create another test file. Our last one was called `test_say_hello.py`, so let's call this
 `test_document.py`:
 
 ```python
@@ -456,7 +456,7 @@ class Document:
 
     CONTENT_PATTERN = r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"
 
-    def __init__(self, filepath: str, title: str, author: str = "", id: int = 0):
+    def __init__(self, filepath: str, title: str = "", author: str = "", id: int = 0):
         self.filepath = filepath
         self.content = self.get_content(filepath)
 
@@ -483,6 +483,37 @@ class Document:
         return self.content.lower().count(word.lower())
 
 ```
+
+Note that our test file now fails, because the CONTENT_PATTERN doesn't match anything in our
+`example_file.txt`. We could modify our test file to use a real Project Gutenberg text file:
+
+```
+*** START OF THE PROJECT GUTENBERG EBOOK TEST ***
+
+This is a test document. It contains words.
+It is only a test document.
+
+*** END OF THE PROJECT GUTENBERG EBOOK TEST ***
+```
+
+Or we could modify our class to allow for a different content pattern to be specified when creating
+the object:
+
+```python
+...
+
+# Check that we can create a Document object
+Document.CONTENT_PATTERN = r"(.*)"
+doc = Document(filepath="tests/example_file.txt", title="Test Document")
+if doc.title == "Test Document" and doc.filepath == "tests/example_file.txt":
+    passed_tests += 1
+else:
+    failed_tests += 1
+
+...
+```
+
+
 
 :::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::

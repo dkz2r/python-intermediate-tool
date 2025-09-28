@@ -313,7 +313,6 @@ def doc():
     return Document(filepath="tests/example_file.txt")
 
 def test_create_document(doc):
-    assert doc.title == "Test Document"
     assert doc.filepath == "tests/example_file.txt"
 
 def test_document_word_count(doc):
@@ -416,16 +415,20 @@ uv run pytest
 ```
 
 It fails, as we expect. Now, let's update the `Document` class to raise a `ValueError` if the file
-is empty. Open up `document.py` and update the `__init__` method to the following:
+is empty. Open up `document.py` and update the `get_content` method to the following:
 
 ```python
-def __init__(self, filepath: str, title: str = "Untitled Document"):
-    self.filepath = filepath
-    self.title = title
-    with open(filepath, 'r') as file:
-        self._content = file.read()
-    if not self._content:
-        raise ValueError(f"File {self.filepath} contains no content.")
+...
+    def get_content(self, filepath: str) -> str:
+        raw_text = self.read(filepath)
+        if not raw_text:
+            raise ValueError(f"File {filepath} contains no content.")
+
+        match = re.search(self.CONTENT_PATTERN, raw_text, re.DOTALL)
+        if match:
+            return match.group(1).strip()
+        raise ValueError(f"File {filepath} is not a valid Project Gutenberg Text file.")
+...
 ```
 
 ::::::::::::::::::::::::::::::::::::: challenge
@@ -600,26 +603,24 @@ And then, in the `Document` class, you can check if the data read from the file 
 this:
 
 ```python
-class Document:
-    def __init__(self, filepath: str, title: str, author: str = "", id: int = 0):
-        self.filepath = filepath
-        self.title = title
-        self.author = author
-        self.id = id
-        self._content = self._read(self.filepath)
+...
+    def get_content(self, filepath: str) -> str:
+        raw_text = self.read(filepath)
+        if not raw_text:
+            raise ValueError(f"File {filepath} contains no content.")
 
-        if not self._content:
-            raise ValueError(f"File {self.filepath} contains no content.")
-
-        if isinstance(self._content, bytes):
+        if isinstance(raw_text, bytes):
             raise ValueError(f"File {self.filepath} is not a valid text file.")
+
+        match = re.search(self.CONTENT_PATTERN, raw_text, re.DOTALL)
+        if match:
+            return match.group(1).strip()
+        raise ValueError(f"File {filepath} is not a valid Project Gutenberg Text file.")
 ...
 ```
 
 :::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::
-
-
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints
