@@ -297,9 +297,112 @@ class. Without it, the method cannot access instance properties or methods.
 
 :::::::::::::::::::::::::::::::::::::::::::::::
 
+
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 2: Testing Out Our Class on Real Data
+## Challenge 2: The __str__ Method
+
+In our examples so far, we define an `__init__` method for our class objects. This is a special
+kind of method called a "dunder" (double underlined) method. There are a number of other dunder
+methods that we can define, that will interact with various built-in functions and operators.
+
+Try to define a `__str__` method for the following class object that will create the following
+output when run:
+
+```python
+class Animal:
+    def __init__(self, name: str):
+        print(f"Creating an animal named {name}")
+        self.name = name
+
+    # Your __str__ method here
+
+animal = Animal("Moose")
+print(str(animal))
+```
+
+output:
+```
+Creating an animal named Moose
+I am an animal named Moose.
+```
+
+
+:::::::::::::::: solution
+
+```python
+class Animal:
+    def __init__(self, name: str):
+        print(f"Creating an animal named {name}")
+        self.name = name
+
+    def __str__(self) -> str:
+        return f"I am an animal named {self.name}."
+
+```
+
+:::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 3: Static Methods
+
+In addition to instance methods, which operate on an instance of a class (and so have `self` as the
+first parameter), we can also define static methods. These are methods that don't operate on an
+instance of the class, and so don't have `self` as the first parameter. Instead, they are defined
+using the `@staticmethod` decorator.
+
+Create a static method called `is_animal` that takes a single parameter, `obj`, and returns
+`True` if `obj` is an instance of the `Animal` class, and `False` otherwise.
+
+```python
+class Animal:
+    def __init__(self, name: str):
+        print(f"Creating an animal named {name}")
+        self.name = name
+
+    # Your static method here
+```
+
+::: hint
+
+A decorator is a special kind of function that modifies the behavior of another function. They are
+defined using the `@` symbol, followed by the name of the decorator function. In this case, we
+use the `@staticmethod` decorator to indicate that the following method is a static method, so this
+line must be placed directly above the method definition.
+
+:::
+
+::: hint
+
+You can use the python built-in function `isinstance` to check if an object is an instance of a
+class. (https://docs.python.org/3/library/functions.html#isinstance)
+
+:::
+
+:::::::::::::::: solution
+
+```python
+class Animal:
+    def __init__(self, name: str):
+        print(f"Creating an animal named {name}")
+        self.name = name
+
+    @staticmethod
+    def is_animal(obj: object) -> bool:
+        return isinstance(obj, Animal)
+```
+
+:::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 4: Testing Out Our Class on Real Data
 
 Let's download a real text file from Project Gutenberg and see how our class object handles it.
 You can pick any file you like, or you can use the same one we looked at earlier:
@@ -384,154 +487,6 @@ class Document:
 :::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge
-
-## Challenge 3: Extracting the Metadata
-
-From the previous challenge, we saw that the Project Gutenberg text files have a lot of metadata
-at the start and end of the file. This metadata includes the title, author, release date, and other
-information about the book which we currently are adding to our file using parameters.
-
-Instead of passing this information in as parameters, can you modify the class so that it extracts
-the title, author and id from the metadata in the text file itself?
-
-::: hint
-
-As before, we can use the `re` module to extract this information. The title and author are
-contained in lines that start with `Title:` and `Author:` respectively. The ID can be found in the
-line that starts with `Release Date:`. You can use the following regex patterns to match these
-lines:
-
-```python
-TITLE_PATTERN = r"^Title:\s*(.*?)\s*$"
-AUTHOR_PATTERN = r"^Author:\s*(.*?)\s*$"
-ID_PATTERN = r"^Release date:\s*.*?\[eBook #(\d+)\]"
-```
-
-:::
-
-:::::::::::::::: solution
-
-There's any number of ways to do this, but one possible solution would look like this:
-
-```python
-
-import re
-
-class Document:
-
-    TITLE_PATTERN = r"^Title:\s*(.*?)\s*$"
-    AUTHOR_PATTERN = r"^Author:\s*(.*?)\s*$"
-    ID_PATTERN = r"^Release date:\s*.*?\[eBook #(\d+)\]"
-    CONTENT_PATTERN = r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"
-
-    def __init__(self, filepath: str):
-        self.filepath = filepath
-        self.content = self.get_content(filepath)
-
-        if not raw_text:
-            raise ValueError(f"File {self.filepath} contains no content.")
-
-        metadata = self.get_metadata(filepath)
-        self.title = metadata.get("title")
-        self.author = metadata.get("author")
-        self.id = metadata.get("id")
-
-    def _extract_metadata_element(self, pattern: str, text: str) -> str | None:
-        match = re.search(pattern, text, re.MULTILINE)
-        if match:
-            return match.group(1).strip()
-        return None
-
-    def get_content(self, filepath: str) -> str:
-        raw_text = self.read(filepath)
-        match = re.search(self.CONTENT_PATTERN, raw_text, re.DOTALL)
-        if match:
-            return match.group(1).strip()
-        raise ValueError(f"File {filepath} is not a valid Project Gutenberg Text file.")
-
-    def get_metadata(self, filepath: str) -> dict:
-        raw_text = self.read(filepath)
-
-        title = self._extract_metadata_element(self.TITLE_PATTERN, raw_text)
-        author = self._extract_metadata_element(self.AUTHOR_PATTERN, raw_text)
-        extracted_id = self._extract_metadata_element(self.ID_PATTERN, raw_text)
-
-        return {
-            "title": title,
-            "author": author,
-            "id": int(extracted_id) if extracted_id else None,
-        }
-
-    def read(self, file_path: str) -> None:
-        with open(file_path, "r", encoding="utf-8") as file:
-            return file.read()
-
-    def get_line_count(self) -> int:
-        return len(self._content.splitlines())
-
-
-    def get_word_occurrence(self, word: str) -> int:
-        return self._content.lower().count(word.lower())
-
-```
-
-:::::::::::::::::::::::::
-:::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::: challenge
-
-## Challenge 4: Properties
-
-In our current implementation, the `title`, `author`, and `id` attributes are publicly accessible
-from outside the class, which means that they can be modified directly. There are instances where
-it might be preferable for the attributes to be read-only, so that they can only be set when the
-object is created, and not modified afterwards, or to allow us to create variables that are based
-or calculated from other variables and should not be set directly.
-
-We can do this with the `@property` decorator. This is a special decorator that allows us to define
-"getter" and "setter" methods for a property. It works much the same as a normal method, but it is
-accessed like an attribute.
-
-We can convert our `get_line_count` method to a property like this:
-
-```python
-    ...
-
-    @property
-    def line_count(self) -> int:
-        return len(self.content.splitlines())
-
-    ...
-```
-
-The links to the Project Gutenberg files are based on the id, which we extracted from the metadata.
-Create a new property called `gutenberg_url` that returns the url for the document based on the id.
-
-::: hint
-
-The url for a Project Gutenberg text file is of the form:
-`https://www.gutenberg.org/cache/epub/<id>/pg<id>.txt`
-
-:::
-
-:::::::::::::::: solution
-
-There's any number of ways to do this, but one possible solution would look like this:
-
-```python
-
-    @property
-    def gutenberg_url(self) -> str | None:
-        if self.id:
-            return f"https://www.gutenberg.org/cache/epub/{self.id}/pg{self.id}.txt"
-        return None
-
-```
-
-:::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::::::::::
 
 Neat! We've successfully created and used a class object in our module. But certainly there's a
 better way to test this, right? In the next episode, we'll look at how to write proper unit tests
