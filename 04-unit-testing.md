@@ -313,7 +313,6 @@ def doc():
     return Document(filepath="tests/example_file.txt")
 
 def test_create_document(doc):
-    assert doc.title == "Test Document"
     assert doc.filepath == "tests/example_file.txt"
 
 def test_document_word_count(doc):
@@ -416,24 +415,148 @@ uv run pytest
 ```
 
 It fails, as we expect. Now, let's update the `Document` class to raise a `ValueError` if the file
-is empty. Open up `document.py` and update the `__init__` method to the following:
+is empty. Open up `document.py` and update the `get_content` method to the following:
 
 ```python
-def __init__(self, filepath: str, title: str = "Untitled Document"):
-    self.filepath = filepath
-    self.title = title
-    with open(filepath, 'r') as file:
-        self._content = file.read()
-    if not self._content:
-        raise ValueError(f"File {self.filepath} contains no content.")
+...
+    def get_content(self, filepath: str) -> str:
+        raw_text = self.read(filepath)
+        if not raw_text:
+            raise ValueError(f"File {filepath} contains no content.")
+
+        match = re.search(self.CONTENT_PATTERN, raw_text, re.DOTALL)
+        if match:
+            return match.group(1).strip()
+        raise ValueError(f"File {filepath} is not a valid Project Gutenberg Text file.")
+...
 ```
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 1: Additional Edge Case
+## Challenge 1: Write a simple test
 
-Try adding a test for another edge case, this time for a file that is not actually a text file, for
-example, a binary file or an image file. Then, update the `Document` class to make the test pass.
+Create a file called `text_utilities.py` in the `src/textanalysis_tool` directory. In this file,
+paste the following function:
+
+
+```python
+def create_acronym(phrase: str) -> str:
+    """Create an acronym from a phrase.
+
+    Args:
+        phrase (str): The phrase to create an acronym from.
+
+    Returns:
+        str: The acronym.
+    """
+    if not isinstance(phrase, str):
+        raise TypeError("Phrase must be a string.")
+
+    words = phrase.split()
+    if len(words) == 0:
+        raise ValueError("Phrase must contain at least one word.")
+
+    articles = {"a", "an", "the", "and", "but", "or", "nor", "on", "at", "to", "by", "in"}
+
+    acronym = ""
+    for word in words:
+        if word.lower() not in articles:
+            acronym += word[0].upper()
+
+    return acronym
+```
+
+Create the following test cases for this function:
+
+- A test that checks if the acronym for "As Soon As Possible" is "ASAP" and that the acronym for
+    "For Your Information" is "FYI".
+- A test that checks that the function raises a `TypeError` when the input is not a string.
+- A test that checks that the function raises a `ValueError` when the input is an empty string.
+
+Are there any other edge cases you can think of? Write a test to prove that your edge case is not
+handled by this function as it is currently written.
+
+::: hint
+
+Remember that to use pytest, you need to create a file that starts with `test_` and that the test
+functions need to start with `test_` as well.
+
+:::
+
+::: hint
+
+You can use the `pytest.raises` context manager to check for specific exceptions. For example:
+
+```python
+def test_raises_error():
+    with pytest.raises(FileNotFoundError):
+        read_my_file("non_existent_file.txt")
+```
+
+:::
+
+::: hint
+
+What happens if the phrase contains only articles? For example, "and the or by"?
+
+:::
+
+:::::::::::::::: solution
+
+in the `tests` directory, create a file called `test_text_utilities.py`:
+
+```python
+import pytest
+
+from textanalysis_tool.text_utilities import create_acronym
+
+
+def test_create_acronym():
+    assert create_acronym("As Soon As Possible") == "ASAP"
+    assert create_acronym("For Your Information") == "FYI"
+
+
+def test_create_acronym_invalid_type():
+    with pytest.raises(TypeError):
+        create_acronym(123)
+
+
+def test_create_acronym_empty_string():
+    with pytest.raises(ValueError):
+        create_acronym("")
+
+
+def test_create_acronym_no_valid_words():
+    with pytest.raises(ValueError):
+        create_acronym("and the or")
+
+```
+
+Run the tests with `uv run pytest`.
+
+In the `create_acronym` function, we need to add a check after we finish iterating through the
+words to see if the acronym is empty. If it is, we can raise a `ValueError`:
+
+```python
+    ...
+
+    if not acronym:
+        raise ValueError("Phrase must contain at least one non-article word.")
+
+    return acronym
+```
+
+
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 2: Additional Edge Case
+
+Try adding a test for another edge case for our Document class, this time for a file that is not
+actually a text file, for example, a binary file or an image file. Then, update the `Document`
+class to make the test pass.
 
 ::: hint
 
@@ -480,26 +603,24 @@ And then, in the `Document` class, you can check if the data read from the file 
 this:
 
 ```python
-class Document:
-    def __init__(self, filepath: str, title: str, author: str = "", id: int = 0):
-        self.filepath = filepath
-        self.title = title
-        self.author = author
-        self.id = id
-        self._content = self._read(self.filepath)
+...
+    def get_content(self, filepath: str) -> str:
+        raw_text = self.read(filepath)
+        if not raw_text:
+            raise ValueError(f"File {filepath} contains no content.")
 
-        if not self._content:
-            raise ValueError(f"File {self.filepath} contains no content.")
-
-        if isinstance(self._content, bytes):
+        if isinstance(raw_text, bytes):
             raise ValueError(f"File {self.filepath} is not a valid text file.")
+
+        match = re.search(self.CONTENT_PATTERN, raw_text, re.DOTALL)
+        if match:
+            return match.group(1).strip()
+        raise ValueError(f"File {filepath} is not a valid Project Gutenberg Text file.")
 ...
 ```
 
 :::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::
-
-
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints

@@ -173,7 +173,7 @@ directories, but just in case, this avoids some potential issues.
 ## Dot Notation in Imports
 
 You probably noticed that our function call mimics the file and directory structure of the project.
-We have the project directory (`textanalysis_tool`), then the filename (`my_module`), and finally
+We have the project directory (`textanalysis_tool`), then the filename (`say_hello`), and finally
 the function name (`hello`). Python treats all of these similarly when trying to locate a function
 or module. We can also modify our import to make the code a little neater:
 
@@ -197,7 +197,7 @@ or even better:
 import sys
 sys.path.insert(0, "./src")
 
-from textanalysis_tool.my_module import hello
+from textanalysis_tool.say_hello import hello
 
 result = hello("My Name")
 
@@ -229,11 +229,11 @@ functions in each file. This is where we can simplify things a little by adding 
 to our `__init__.py` file:
 
 ```python
-from .my_module import hello
+from .say_hello import hello
 ```
 
 We can run our testing script just the same way as before and it will still work, but we can also
-now leave out the `.my_module` part:
+now leave out the `.say_hello` part:
 
 ```python
 from textanalysis_tool import hello
