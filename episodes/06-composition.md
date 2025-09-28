@@ -33,12 +33,10 @@ this:
 
 ![Car Class object example](./fig/03-class-objects/car_class.PNG){alt='Car Class object example'}
 
-But what if we wanted to add more functionality to our `Car` class? For example, what if we wanted
-to differentiate between cars that have different kinds of engines, like gasoline, or electric?
-With the Inheritance approach, we would have to create a new subclass for each type of engine, like
-this:
+But what if we wanted to add more functionality to our `Car` class? We talked about in the previous
+episode how we could use Inheritance to create specialized versions of the `Car` class, like this:
 
-![Car Inheritance example](./fig/06-composition/car_inheritance.jpg){alt='Car Inheritance example'}
+![Car Inheritance example](./fig/05-extending-classes/class_inheritance.jpg){alt='Car Inheritance example'}
 
 The code might look something like this:
 
@@ -91,7 +89,7 @@ then including an instance of that class as a property of the `Car` class. This 
 different kinds of engines as separate classes, and then use them in our `Car` class without
 having to create a new subclass for each one. Here's how that would look:
 
-![Car Composition example](./fig/06-composition/car_composition.PNG){alt='Car Composition example'}
+![Car Composition example](./fig/06-composition/car_composition.png){alt='Car Composition example'}
 
 ```python
 class Car:
@@ -154,7 +152,7 @@ Road Tires, Racing Tires, Snow Tires, etc.) and then include an instance of the 
 `Car` class. This would allow us to mix and match different types of engines and tires without
 having to create a new subclass for every possible combination.
 
-![Complete Car Composition example](./fig/06-composition/full_car_composition.PNG){alt='Complete Car Composition example'}
+![Complete Car Composition example](./fig/06-composition/full_car_composition.png){alt='Complete Car Composition example'}
 
 ## Refactoring our Document Example
 
@@ -236,21 +234,22 @@ from .base_reader import BaseReader
 
 
 class HTMLReader(BaseReader):
+    URL_PATTERN = "^https://www.gutenberg.org/files/([0-9]+)/.*"
 
     def read(self, filepath) -> BeautifulSoup:
         with open(filepath, encoding="utf-8") as file_obj:
-            soup = BeautifulSoup(file_obj, features="html.parser")
+            parsed_file = BeautifulSoup(file_obj, features="html.parser")
 
-        if not soup:
+        if not parsed_file:
             raise ValueError("The file could not be parsed as HTML.")
 
-        return soup
+        return parsed_file
 
     def get_content(self, filepath) -> str:
-        soup = self.read(filepath)
+        parsed_file = self.read(filepath)
 
         # Find the first h1 tag (The book title)
-        title_h1 = soup.find("h1")
+        title_h1 = parsed_file.find("h1")
 
         # Collect all the content after the first h1
         content = []
@@ -267,11 +266,11 @@ class HTMLReader(BaseReader):
         return "\n\n".join(content)
 
     def get_metadata(self, filename) -> str:
-        soup = self.read(filename)
+        parsed_file = self.read(filename)
 
-        title = soup.find("meta", {"name": "dc.title"})["content"]
-        author = soup.find("meta", {"name": "dc.creator"})["content"]
-        url = soup.find("meta", {"name": "dcterms.source"})["content"]
+        title = parsed_file.find("meta", {"name": "dc.title"})["content"]
+        author = parsed_file.find("meta", {"name": "dc.creator"})["content"]
+        url = parsed_file.find("meta", {"name": "dcterms.source"})["content"]
         extracted_id = re.search(self.URL_PATTERN, url, re.DOTALL)
         id = int(extracted_id.group(1)) if extracted_id.group(1) else None
 

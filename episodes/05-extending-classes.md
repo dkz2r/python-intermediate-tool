@@ -599,9 +599,186 @@ def test_document_word_occurrence(doc):
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 1: Fixing the test
+## Challenge 1: Predict the output
 
-When we run the tests, we get the following result:
+What will happen when we run the following code? Why?
+
+```python
+class Animal:
+    def __init__(self, name: str):
+        print(f"Creating an animal named {name}")
+        self.name = name
+
+    def whoami(self) -> str:
+        return f"I am a {type(self)} named {self.name}"
+
+class Dog(Animal):
+    def __init__(self, name: str):
+        print(f"Creating a dog named {name}")
+        super().__init__(name=name)
+
+class Cat(Animal):
+    def __init__(self, name: str):
+        print(f"Creating a cat named {name}")
+
+
+animals = [Dog(name="Chance"), Cat(name="Sassy"), Dog(name="Shadow")]
+
+for animal in animals:
+    print(animal.whoami())
+
+```
+
+:::::::::::::::: solution
+
+We get some of the output we expect, but we also get an error:
+
+```
+Creating a dog named Chance
+Creating an animal named Chance
+Creating a cat named Sassy
+Creating a dog named Shadow
+Creating an animal named Shadow
+I am a <class '__main__.Dog'> named Chance
+
+---------------------------------------------------------------------------
+AttributeError                            Traceback (most recent call last)
+Cell In[4], line 22
+     19 animals = [Dog(name="Chance"), Cat(name="Sassy"), Dog(name="Shadow")]
+     21 for animal in animals:
+---> 22     print(animal.whoami())
+
+Cell In[4], line 7, in Animal.whoami(self)
+      6 def whoami(self) -> str:
+----> 7     return f"I am a {type(self)} named {self.name}"
+
+AttributeError: 'Cat' object has no attribute 'name'
+```
+
+We failed to call the `super().__init__()` method in the `Cat` class, so the `name` property was
+never set. When we then try to access the instance property `name` in the `whoami` method, we get an
+`AttributeError`.
+
+:::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 2: Class Methods and Properties
+
+We've mostly focused on instance properties and methods so far, but classes can also have what are
+called "class properties" and "class methods". These are properties and methods that are associated
+with the class itself, rather than with an instance of the class.
+
+Without running it, what do you think the following code will do? Will it run without error?
+
+```python
+class Animal:
+    PHYLUM = "Chordata"
+
+    def __init__(self, name: str):
+        self.name = name
+
+    def whoami(self) -> str:
+        return f"I am a {type(self)} named {self.name} in the phylum {self.PHYLUM}"
+
+class Snail(Animal):
+    def __init__(self, name: str):
+        super().__init__(name=name)
+
+animal1 = Snail(name="Gary")
+Animal.PHYLUM = "Mollusca"
+print(animal1.whoami())
+
+animal2 = Snail(name="Slurms MacKenzie")
+print(animal2.whoami())
+
+creature3 = Snail(name="Turbo")
+creature3.CLASS = "Gastropoda"
+print(creature3.whoami(), "and is in class", creature3.CLASS)
+```
+
+::: hint
+
+The `PHYLUM` property is a class property, so it is shared among all instances of the class.
+
+:::
+
+:::::::::::::::: solution
+
+There's two things about this piece of code that are a bit tricky.
+
+1 The `PHYLUM` property is a class property, so it is shared among all instances of the class.
+When we set `Animal.PHYLUM = "Mollusca"`, we are actually modifying the class property for all
+instances going forward, which is why when we print `animal2.whoami()`, it shows that the phylum
+is still "Mollusca", even though we created a new instance of `Snail`.
+
+2 - We never defined a `CLASS` property in the `Animal` or `Snail` class, but we can actually still
+create a new property on an instance of a class at any time. (Generally, this is not a good idea,
+as it can cause confusion when you reference a property that doesn't exist in any class definition,
+but it is technically possible.)
+
+:::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 3: Create a new subclass
+
+The previous challenge is not quite correct, as canonnically "Slurms MacKenzie" is not a snail, but
+a slug. Create a subclass of 'Animal' called "Mollusk" that inherits from "Animal", but only sets
+the class property `PHYLUM` to "Mollusca". Then create two subclasses of "Mollusk": "Snail" and
+"Slug".
+
+You can implement any methods or properties you want in the "Snail" and "Slug" classes, but you
+may also just leave them empty like so:
+
+```python
+class MyClass:
+    pass
+```
+
+::: hint
+
+It is not necessary for the `Snail` and `Slug` classes to have their own `__init__` methods, as they
+will inherit the `__init__` method from the `Animal` class through the `Mollusk` class.
+
+:::
+
+
+:::::::::::::::: solution
+
+```python
+class Animal:
+    PHYLUM = "Chordata"
+
+    def __init__(self, name: str):
+        self.name = name
+
+    def whoami(self) -> str:
+        return f"I am a {type(self)} named {self.name} in the phylum {self.PHYLUM}"
+
+class Mollusk(Animal):
+    PHYLUM = "Mollusca"
+
+class Snail(Mollusk):
+    pass
+
+class Slug(Mollusk):
+    pass
+```
+
+:::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 4: Fixing the test
+
+When we run the tests we have now, we get the following result:
 
 ```
 ======================================= test session starts ========================================
@@ -684,184 +861,6 @@ method to ensure that the file is not empty and is a valid HTML file:
             raise ValueError("The file could not be parsed as HTML.")
 
         return soup
-```
-
-:::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::: challenge
-
-## Challenge 2: Predict the output
-
-What will happen when we run the following code? Why?
-
-```python
-class Animal:
-    def __init__(self, name: str):
-        print(f"Creating an animal named {name}")
-        self.name = name
-
-    def whoami(self) -> str:
-        return f"I am a {type(self)} named {self.name}"
-
-class Dog(Animal):
-    def __init__(self, name: str):
-        print(f"Creating a dog named {name}")
-        super().__init__(name=name)
-
-class Cat(Animal):
-    def __init__(self, name: str):
-        print(f"Creating a cat named {name}")
-
-
-animals = [Dog(name="Chance"), Cat(name="Sassy"), Dog(name="Shadow")]
-
-for animal in animals:
-    print(animal.whoami())
-
-```
-
-:::::::::::::::: solution
-
-We get some of the output we expect, but we also get an error:
-
-```
-Creating a dog named Chance
-Creating an animal named Chance
-Creating a cat named Sassy
-Creating a dog named Shadow
-Creating an animal named Shadow
-I am a <class '__main__.Dog'> named Chance
-
----------------------------------------------------------------------------
-AttributeError                            Traceback (most recent call last)
-Cell In[4], line 22
-     19 animals = [Dog(name="Chance"), Cat(name="Sassy"), Dog(name="Shadow")]
-     21 for animal in animals:
----> 22     print(animal.whoami())
-
-Cell In[4], line 7, in Animal.whoami(self)
-      6 def whoami(self) -> str:
-----> 7     return f"I am a {type(self)} named {self.name}"
-
-AttributeError: 'Cat' object has no attribute 'name'
-```
-
-We failed to call the `super().__init__()` method in the `Cat` class, so the `name` property was
-never set. When we then try to access the instance property `name` in the `whoami` method, we get an
-`AttributeError`.
-
-:::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::: challenge
-
-## Challenge 3: Class Methods and Properties
-
-We've mostly focused on instance properties and methods so far, but classes can also have what are
-called "class properties" and "class methods". These are properties and methods that are associated
-with the class itself, rather than with an instance of the class. They are defined using the
-`@classmethod` decorator.
-
-Without running it, what do you think the following code will do? Will it run without error?
-
-```python
-class Animal:
-    PHYLUM = "Chordata"
-
-    def __init__(self, name: str):
-        self.name = name
-
-    def whoami(self) -> str:
-        return f"I am a {type(self)} named {self.name} in the phylum {self.PHYLUM}"
-
-class Snail(Animal):
-    def __init__(self, name: str):
-        super().__init__(name=name)
-
-animal1 = Snail(name="Gary")
-Animal.PHYLUM = "Mollusca"
-print(animal1.whoami())
-
-animal2 = Snail(name="Slurms MacKenzie")
-print(animal2.whoami())
-
-creature3 = Snail(name="Turbo")
-creature3.CLASS = "Gastropoda"
-print(creature3.whoami(), "and is in class", creature3.CLASS)
-```
-
-::: hint
-
-The `PHYLUM` property is a class property, so it is shared among all instances of the class.
-
-:::
-
-:::::::::::::::: solution
-
-There's two things about this piece of code that are a bit tricky.
-
-1 The `PHYLUM` property is a class property, so it is shared among all instances of the class.
-When we set `Animal.PHYLUM = "Mollusca"`, we are actually modifying the class property for all
-instances going forward, which is why when we print `animal2.whoami()`, it shows that the phylum
-is still "Mollusca", even though we created a new instance of `Snail`.
-
-2 - We never defined a `CLASS` property in the `Animal` or `Snail` class, but we can actually still
-create a new property on an instance of a class at any time. (Generally, this is not a good idea,
-as it can cause confusion when you reference a property that doesn't exist in any class definition,
-but it is technically possible.)
-
-:::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::: challenge
-
-## Challenge 4: Create a new subclass
-
-The previous challenge is not quite correct, as canonnically "Slurms MacKenzie" is not a snail, but
-a slug. Create a subclass of 'Animal' called "Mollusk" that inherits from "Animal", but only sets
-the class property `PHYLUM` to "Mollusca". Then create two subclasses of "Mollusk": "Snail" and
-"Slug".
-
-You can implement any methods or properties you want in the "Snail" and "Slug" classes, but you
-may also just leave them empty like so:
-
-```python
-class MyClass:
-    pass
-```
-
-::: hint
-
-It is not necessary for the `Snail` and `Slug` classes to have their own `__init__` methods, as they
-will inherit the `__init__` method from the `Animal` class through the `Mollusk` class.
-
-:::
-
-
-:::::::::::::::: solution
-
-```python
-class Animal:
-    PHYLUM = "Chordata"
-
-    def __init__(self, name: str):
-        self.name = name
-
-    def whoami(self) -> str:
-        return f"I am a {type(self)} named {self.name} in the phylum {self.PHYLUM}"
-
-class Mollusk(Animal):
-    PHYLUM = "Mollusca"
-
-class Snail(Mollusk):
-    pass
-
-class Slug(Mollusk):
-    pass
 ```
 
 :::::::::::::::::::::::::
