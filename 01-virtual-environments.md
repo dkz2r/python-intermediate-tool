@@ -112,7 +112,7 @@ dependencies = []
 
 The `requires-python` field may vary depending on the exact version of python you're working with.
 
-::: important
+::: caution
 
 Make sure to change `{my-name}` in the `name` field to something unique, such as your GitHub
 username. This is important later when we upload our package to TestPyPI, as package names must
