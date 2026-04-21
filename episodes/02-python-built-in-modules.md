@@ -64,6 +64,22 @@ In this example, if we want to find the most common order, we can even use a pre
 count.most_common(1)[0][0] # first item from the most common (item, count) pair
 ```
 
+#### Handling items more efficiently
+
+By using deque, we can perform some of the operations that a list data structure does more efficiently.
+In this example, we can display the most recently added elements to the list without having to write separate logic for it.
+
+```python
+from collections import deque
+
+delivery_updates = deque(maxlen=3)
+
+delivery_updates.append("Order received")
+delivery_updates.append("Package prepared")
+delivery_updates.append("Package shipped")
+delivery_updates.append("Package out for delivery")
+```
+
 ## logging
 
 When writing code in Python, we sometimes want to track what our programs are doing.
