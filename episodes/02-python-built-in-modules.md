@@ -518,6 +518,69 @@ Cannot process type: float
 
 
 
+#### Preserving function information
+`wraps` is used inside decorators to keep information about the original function, like its name and docstring.
+
+```python
+def my_decorator(func):
+    def wrapper():
+        print("Before the function runs")
+        func()
+
+    return wrapper
+
+
+@my_decorator
+def say_hello():
+    """This function says hello."""
+    print("Hello!")
+
+
+print(say_hello.__name__)
+print(say_hello.__doc__)
+```
+
+Output:
+```text
+wrapper
+None
+```
+If we don't use "wraps", the decorated function might look like the "wrapper" function instead of the original function.
+
+
+```python
+from functools import wraps
+
+# example using wraps
+
+def my_decorator(func):
+    @wraps(func)
+    def wrapper():
+        print("Before the function runs")
+        func()
+
+    return wrapper
+
+
+@my_decorator
+def say_hello():
+    """This function says hello."""
+    print("Hello!")
+
+
+print(say_hello.__name__)
+print(say_hello.__doc__)
+```
+Output:
+```text
+say_hello
+This function says hello.
+```
+
+In this case, @wraps(func) copies the metadata from say_hello to the wrapper function.
+
+Even though the decorated function runs through the wrapper, Python still keeps the name and docstring of the original function.
+
 ## multiprocessing
 
 
