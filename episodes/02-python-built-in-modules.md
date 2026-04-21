@@ -80,6 +80,38 @@ delivery_updates.append("Package shipped")
 delivery_updates.append("Package out for delivery")
 ```
 
+### Avoiding missing keys
+What is the output of this line of code?
+```python
+snacks = {}
+snacks["sweet"].append("chocolate")
+```
+:::::::::::::::: solution
+This code raises a `KeyError`.
+```python
+KeyError: 'sweet'
+```
+Using normal dictionaries, we have to check if the key exist before adding a value to the dict.
+::::::::::::::::
+
+Good news: we could avoid that using defaultdict.
+```python
+snacks = defaultdict(list)
+snacks["sweet"].append("chocolate")
+```
+Since we want to store multiple snacks under each category, we pass `list` to `defaultdict`.
+
+In the background, this is what happens:
+
+```python
+snacks["sweet"] = []
+snacks["sweet"].append("chocolate")
+```
+So every key starts with an empty list.
+
+Now we can switch to the itertools.
+
+
 ## logging
 
 When writing code in Python, we sometimes want to track what our programs are doing.
