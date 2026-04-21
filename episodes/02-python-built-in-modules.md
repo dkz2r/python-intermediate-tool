@@ -321,6 +321,36 @@ The `functools` module has built-in tools for these kinds of situations, so we d
 
 It helps us clean up, speed up, and make our code easier to reuse.
 
+### How can functools make working with functions easier?
+
+#### Speeding up repeated calls
+Sometimes executing a function can take a long time. If we call this function multiple times in our code, waiting for it to run from scratch each time results in a significant loss of time.
+
+For situations like this, the `cache` decorator in the `functools` module stores the result of the function call in memory. If the function is called again with the same input, Python returns the cached result instead of recalculating it.
+
+```python
+from functools import cache
+
+@cache
+def calculate_price(product):
+    print("Calculating price...")
+    return product * 2
+
+print(calculate_price(10))
+print(calculate_price(10))
+print(calculate_price(10))
+```
+
+Output:
+```text
+Calculating price...
+20
+20
+20
+```
+As you can see here, the text "Calculating price..." is printed only once, meaning the function actually runs only once, and the result is retrieved from the cache for all subsequent calls.
+
+
 ## multiprocessing
 
 
