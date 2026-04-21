@@ -164,6 +164,25 @@ Output:
 [('1', '2', '3'), ('1', '3', '2'), ('2', '1', '3'), ('2', '3', '1'), ('3', '1', '2'), ('3', '2', '1')]
 ```
 
+#### Combining multiple iterables
+If we want to loop over multiple iterables as if they were one iterable, we can use `chain` from `itertools`.
+
+```python
+from itertools import chain
+
+starters = ["soup", "salad"]
+mains = ["pasta", "steak"]
+
+full_menu = chain(starters, mains)
+
+print(list(full_menu))
+```
+
+Output:
+```python
+['soup', 'salad', 'pasta', 'steak']
+```
+
 :::
 
 ## logging
