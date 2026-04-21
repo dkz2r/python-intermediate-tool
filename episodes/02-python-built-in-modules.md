@@ -122,6 +122,29 @@ An iterator is an object that gives us the next item each time we ask for it.
 ::: callout
 Many tools in the `itertools` package do not return a list object directly; instead, they return an iterator object. The reason for this is to optimize memory usage by generating values only when needed.
 :::
+
+### How can itertools make working with iterables easier?
+
+#### Choosing groups
+Using combinations, we can return all possible selections without repetition.
+Many tools in `itertools` do not return a full list immediately. Instead, they return an iterator object.
+
+
+```python
+from itertools import combinations
+
+toppings = ["cheese", "mushroom", "pepperoni"]
+
+topping_pairs = combinations(toppings, 2)
+
+print(list(combinations(toppings, 2)))
+```
+
+Output:
+```python
+[('cheese', 'mushroom'), ('cheese', 'pepperoni'), ('mushroom', 'pepperoni')]
+```
+In order to print the combinations, we converted them into a list.
 :::
 
 ## logging
