@@ -18,6 +18,12 @@ exercises: 2
 
 ## collections / itertools
 
+The `collections` and `itertools` modules have useful tools for working with data more efficiently:
+`collections` helps us store and organize data, while `itertools` helps us iterate over and combine data.
+
+The collections module allows us to use alternative data structures to Python's built-in containers; like dict, list, set, and tuple.
+
+
 ## logging
 
 When writing code in Python, we sometimes want to track what our programs are doing.
