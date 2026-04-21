@@ -70,6 +70,35 @@ We can see in this example, that the importance levels can vary, as different si
 
 With logging, we can categorize these outputs into levels such as info, warning, and error, and later, if necessary, simply display warnings and errors while hiding normal transaction information.
 
+### Why do logging?
+Our goal in using logging is to leave traces of the program's behavior and the errors it encounters, so that we can resolve issues more easily using these traces.
+
+
+### What to log?
+
+Everything does not have to be logged. That is why we need to log only those events that matter.
+
+Deciding what really matters might be challenging since we need to foresee which piece of information is critical during troubleshooting.
+
+The following list of events is an example of what we need to log:
+
+- errors which block the functionality of the program
+- warnings about dangerous conditions
+- successful execution of the program
+- critical choices of the program
+- external interactions, like API calls and DB queries
+
+We can set the log levels that we want to show as following:
+```python
+logging.basicConfig(
+    level=logging.INFO
+)
+```
+Here, we capture all of the logging messages from info level and above.
+
+::: warning
+We must never log confidential data such as API keys, passwords, tokens, user personal information, etc.
+:::
 
 
 
