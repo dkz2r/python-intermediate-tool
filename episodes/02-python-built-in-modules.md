@@ -111,6 +111,18 @@ So every key starts with an empty list.
 
 Now we can switch to the itertools.
 
+### What is an iterable?
+In order to be able to use itertools, we need to understand what an iterable is.
+An iterable is a Python object such as a list, tuple, string or a dictionary that we can loop through.
+
+
+### What is an iterator?
+An iterator is an object that gives us the next item each time we ask for it.
+
+::: callout
+Many tools in the `itertools` package do not return a list object directly; instead, they return an iterator object. The reason for this is to optimize memory usage by generating values only when needed.
+:::
+:::
 
 ## logging
 
