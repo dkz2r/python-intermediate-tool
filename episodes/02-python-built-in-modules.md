@@ -351,6 +351,97 @@ Calculating price...
 As you can see here, the text "Calculating price..." is printed only once, meaning the function actually runs only once, and the result is retrieved from the cache for all subsequent calls.
 
 
+#### What can be problematic about caching?
+We can store an unlimited amount of data using a cache.
+If we don’t want to fill memory with unnecessary data, we can solve this problem with `lru_cache`.
+
+The `lru_cache` decorator works similarly to a `cache` but allows us to set a limit on the amount of data stored.
+
+::: callout
+LRU means **Least Recently Used**.
+When the cache is full, Python removes the result that has not been used for the longest time.
+:::
+
+```python
+from functools import lru_cache
+import time
+
+@lru_cache(maxsize=3)
+def get_weather(city):
+    time.sleep(1)  # simulates an API call
+    return f"Sunny in {city}"
+```
+
+Here, the cache can store only 3 results.
+
+```python
+get_weather("Berlin")
+get_weather("Tokyo")
+get_weather("Paris")
+
+print(get_weather.cache_info())
+```
+
+Output:
+
+```text
+CacheInfo(hits=0, misses=3, maxsize=3, currsize=3)
+```
+
+At this point, the cache is full:
+
+```text
+Berlin, Tokyo, Paris
+```
+
+If we call a cached city again, it becomes a cache hit:
+
+```python
+get_weather("Berlin")
+
+print(get_weather.cache_info())
+```
+
+Output:
+```text
+CacheInfo(hits=1, misses=3, maxsize=3, currsize=3)
+```
+
+Now `"Berlin"` was used recently.
+If we add a new city, one old result must be removed:
+
+```python
+get_weather("Sydney")
+print(get_weather.cache_info())
+```
+
+Output:
+
+```text
+CacheInfo(hits=1, misses=4, maxsize=3, currsize=3)
+```
+
+The cache still contains only 3 results, because `maxsize=3`.
+Since `"Tokyo"` was the least recently used city, it is removed to make space for `"Sydney"`.
+
+```text
+Paris, Berlin, Sydney
+```
+
+If we call `"Tokyo"` again, it has to be calculated again:
+```python
+get_weather("Tokyo")
+
+print(get_weather.cache_info())
+```
+
+Output:
+```text
+CacheInfo(hits=1, misses=5, maxsize=3, currsize=3)
+```
+`Tokyo` was no longer in the cache, so this call is a cache miss.
+
+
 ## multiprocessing
 
 
