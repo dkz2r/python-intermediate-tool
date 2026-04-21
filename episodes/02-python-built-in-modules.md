@@ -442,6 +442,82 @@ CacheInfo(hits=1, misses=5, maxsize=3, currsize=3)
 `Tokyo` was no longer in the cache, so this call is a cache miss.
 
 
+#### Handling different input types
+Using another decorator in functools, we can define different actions based on the input type a function recieves.
+This decorator is called `singledispatch`.
+
+For example, we can define a default function for an input type for which no specific version has been defined:
+
+```python
+from functools import singledispatch
+
+@singledispatch
+def search(data):
+    print(f"Cannot process type: {type(data).__name__}")
+```
+
+Then we can write some special cases for strings, integers and lists:
+```python
+@search.register(str)
+def _(data):
+    print(f"Searching for: {data}")
+```
+
+```python
+@search.register(int)
+def _(data):
+    print(f"Showing top {data} results.")
+```
+
+```python
+@search.register(list)
+def _(data):
+    print(f"Searching in categories: {data}")
+```
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 1: Can you find what these function calls return?
+```python
+search("machine learning")
+```
+
+```python
+search(5)
+```
+
+```python
+search(["books", "articles", "videos"])
+```
+
+```python
+search(3.14)
+```
+:::::::::::::::::::::::: solution
+
+## Output
+
+```text
+Searching for: 'machine learning'
+```
+
+```text
+Showing top 5 results.
+```
+
+```text
+Searching in categories: ['books', 'articles', 'videos']
+```
+
+```text
+Cannot process type: float
+```
+
+:::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+
+
 ## multiprocessing
 
 
