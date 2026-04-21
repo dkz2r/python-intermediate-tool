@@ -23,6 +23,46 @@ The `collections` and `itertools` modules have useful tools for working with dat
 
 The collections module allows us to use alternative data structures to Python's built-in containers; like dict, list, set, and tuple.
 
+# When are collections useful? (might delete later)
+
+Using collections module can solve some common data-handling problems in a simpler and cleaner way.
+If our code becomes too long, repetitive or less readable, we could consider using collections.
+
+### How can collections make working with data easier?
+
+#### Counting repeated values
+
+```python
+orders = ["pizza", "burger", "pizza", "sushi", "burger", "pizza"]
+
+counts = {}
+
+for order in orders:
+    if order not in orders:
+        counts[order] = 0
+    counts[order] += 1
+
+print(counts)
+```
+
+
+```python
+from collections import Counter
+
+orders = ["pizza", "burger", "pizza", "sushi", "burger", "pizza"]
+
+counts = Counter(orders)
+
+print(counts)
+```
+
+Here, thanks to the collections library, we don't have to write the counting logic ourselves, instead we use the predefined Counter class that handles the counting for us.
+
+In this example, if we want to find the most common order, we can even use a predefined function in the Counter class.
+
+```python
+count.most_common(1)[0][0] # first item from the most common (item, count) pair
+```
 
 ## logging
 
