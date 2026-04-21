@@ -311,8 +311,15 @@ We do it by setting a `format` parameter in `basicConfig()`, using placeholder f
 
 
 ## functools
+Functools is a library that contains a collection of higher-order tools that simplify working with functions and callable objects.
 
+### Why do we need functools?
+In Python, functions do more than just run code.
+Sometimes, we want to change how functions work, reuse them, or add to them.
 
+The `functools` module has built-in tools for these kinds of situations, so we don't have to write the same helper code over and over.
+
+It helps us clean up, speed up, and make our code easier to reuse.
 
 ## multiprocessing
 
