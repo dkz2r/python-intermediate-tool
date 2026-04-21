@@ -145,6 +145,25 @@ Output:
 [('cheese', 'mushroom'), ('cheese', 'pepperoni'), ('mushroom', 'pepperoni')]
 ```
 In order to print the combinations, we converted them into a list.
+
+
+#### Creating ordered arrangements
+Using permutations, we can return all possible orders.
+```python
+from itertools import permutations
+
+digits = ["1", "2", "3"]
+
+possible_digits = permutations(digits)
+
+print(list(possible_digits))
+```
+
+Output:
+```python
+[('1', '2', '3'), ('1', '3', '2'), ('2', '1', '3'), ('2', '3', '1'), ('3', '1', '2'), ('3', '2', '1')]
+```
+
 :::
 
 ## logging
