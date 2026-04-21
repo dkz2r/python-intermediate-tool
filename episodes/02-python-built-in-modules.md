@@ -183,6 +183,23 @@ Output:
 ['soup', 'salad', 'pasta', 'steak']
 ```
 
+#### Repeating values
+If we want to repeat the same values again and again, we can use `cycle` from `itertools`.
+
+For example, we can rotate the  daily meeting host between the team members:
+
+```python
+from itertools import cycle
+
+employees = ["Alice", "Bob", "Charlie"]
+duties = cycle(employees)
+
+for day in ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]:
+    print(f"{day}: {next(duties)}")
+
+```
+::: warning
+We should only use `cycle()` with a stopping condition, like a fixed list of days or a `range()`, because it creates an infinite iterator.
 :::
 
 ## logging
