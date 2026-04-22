@@ -583,6 +583,84 @@ Even though the decorated function runs through the wrapper, Python still keeps 
 
 ## multiprocessing
 
+Normally we run our programs one after another in Python.
+```python
+program1()
+program2()
+```
+So the program2 waits for program1 to finish in order to execute.
+But in some cases, it might take very long for program1 to run:
+
+```python
+pull_data()
+calculate_some_operations()
+```
+In this example, we could choose to use multiprocessing instead of waiting for pull_data function to finish executing.
+
+### When exactly to use multiprocessing?
+Multiprocessing is useful for CPU-bound programs.
+
+::: callout
+CPU-bound programs are those whose performance is limited by the CPU’s speed.
+:::
+
+
+#### Which processes are CPU-bound?
+When we want to process large amounts of data or images, the program’s performance will depend largely on the CPU.
+It is also useful for mathematical/scientific calculations, as these can take some time to execute as well.
+
+:::: warning
+
+Multiprocessing is not suitable for every job and creating a new process is costly!
+
+::::
+
+
+The multiprocessing class in Python includes several modules.
+One of these is the `queue` module, which enables communication between processes.
+Normally, the memory spaces of two processes are separate; therefore, they cannot access each other’s variables, etc.
+
+```python
+def process1():
+    x = 1
+
+def process2():
+    y = 2
+```
+
+process1 cannot see y, and vice versa.
+
+So we use the `multiprocessing.Queue` module to communicate safely.
+process1() can pass its data using `multiprocessing.Queue()`:
+
+A process can put data into queue using put(), and another process can get it using get().
+
+```python
+def process1(queue):
+    x = 1
+    queue.put(x)
+
+def process2(queue):
+    value_process2 = queue.get()
+    print("Recieved: ", value)
+    y = 2
+```
+
+Let's say we have a restaurant and we take orders using this take_order(queue) function
+
+```python
+def take_orders(queue):
+    # waiter puts orders into the queue one by one
+    orders = ["Pizza", "Burger", "Pasta", "Sushi", "Salad"]
+
+    for order in orders:
+        print(f"Order received: {order}")
+
+        queue.put(order)
+
+    queue.put(None)  # signal: no more orders coming
+```
+
 
 
 
