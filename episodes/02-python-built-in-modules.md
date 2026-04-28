@@ -704,6 +704,45 @@ Output:
 ```
 The timestamps show that all orders are received first. The preparation doesn't start until after that.
 
+Now we can try to call the functions with the help of the `Process` module.
+
+With the help of `Process`, we can start our program as a separate process instead of waiting for the main program  to finish.
+
+```python
+if __name__ == "__main__":
+    queue = Queue()
+    start_time = time.time()
+
+    waiter = Process(target=take_orders, args=(queue, start_time))
+    kitchen = Process(target=prepare_orders, args=(queue, start_time))
+
+    waiter.start()
+    kitchen.start()
+
+    # we make the main program wait for these processes to finish
+    waiter.join()
+    kitchen.join()
+```
+
+Output:
+```text
+0.01s - Order received: Pizza
+0.02s - Preparing: Pizza
+1.01s - Order received: Burger
+2.01s - Order received: Pasta
+2.02s - Preparing: Burger
+4.03s - Preparing: Pasta
+```
+
+Here, take_orders and prepare_orders run in separate processes.
+
+We can see from the timestamps that the kitchen does not wait until all orders are received.
+While the waiter continues taking orders, the kitchen already starts preparing them.
+
+This shows the main idea of multiprocessing: independent tasks can make progress during the same time period.
+
+As you can see, we created the processes manually here, using `Process`.
+But that's not always necessary. Instead, we can create a group of worker processes that automatically share the work, like hiring several cooks to prepare multiple orders instead of assigning each order manually.
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
