@@ -588,14 +588,14 @@ Normally we run our programs one after another in Python.
 program1()
 program2()
 ```
-So the program2 waits for program1 to finish in order to execute.
+So program2 waits for program1 to finish in order to execute.
 But in some cases, it might take very long for program1 to run:
 
 ```python
 pull_data()
 calculate_some_operations()
 ```
-In this example, we could choose to use multiprocessing instead of waiting for pull_data function to finish executing.
+In this example, we could choose to use multiprocessing instead of waiting for the pull_data function to finish executing.
 
 ### When exactly to use multiprocessing?
 Multiprocessing is useful for CPU-bound programs.
@@ -616,8 +616,8 @@ Multiprocessing is not suitable for every job and creating a new process is cost
 ::::
 
 
-The multiprocessing class in Python includes several modules.
-One of these is the `queue` module, which enables communication between processes.
+The multiprocessing module in Python includes several modules.
+One of these is the `Queue` module, which enables communication between processes.
 Normally, the memory spaces of two processes are separate; therefore, they cannot access each other’s variables, etc.
 
 ```python
@@ -633,7 +633,7 @@ process1 cannot see y, and vice versa.
 So we use the `multiprocessing.Queue` module to communicate safely.
 process1() can pass its data using `multiprocessing.Queue()`:
 
-A process can put data into queue using put(), and another process can get it using get().
+A process can put data into a queue using put(), and another process can get it using get().
 
 ```python
 def process1(queue):
@@ -646,7 +646,7 @@ def process2(queue):
     y = 2
 ```
 
-Let's say we have a restaurant and we take orders using this take_order(queue) function
+Let's say we have a restaurant and we take orders using this take_order function.
 
 ```python
 def take_orders(queue):
