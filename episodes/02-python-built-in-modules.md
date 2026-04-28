@@ -744,6 +744,36 @@ This shows the main idea of multiprocessing: independent tasks can make progress
 As you can see, we created the processes manually here, using `Process`.
 But that's not always necessary. Instead, we can create a group of worker processes that automatically share the work, like hiring several cooks to prepare multiple orders instead of assigning each order manually.
 
+To do that, we could use `Pool` from `multiprocessing`.
+
+```python
+from multiprocessing import Pool
+
+
+if __name__ == "__main__":
+    start_time = time.time()
+
+    orders = ["Pizza", "Burger", "Pasta", "Sushi", "Salad"]
+    with Pool(processes=3) as pool:
+        pool.map(
+            prepare_order,
+            [(order, start_time) for order in orders]
+        )
+```
+Output:
+```text
+0.05s - Preparing: Pizza
+0.05s - Preparing: Burger
+0.05s - Preparing: Pasta
+2.06s - Preparing: Sushi
+2.06s - Preparing: Salad
+```
+You can see that the first 3 orders are being prepared at the same time, because `Pool(processes=3)` creates 3 worker processes.
+After first 3 orders start, the remaining orders wait in  line until one of the workers becomes available.
+Since it takes 2 seconds to prepare an order, we can see that after 2 seconds the 4th and 5th orders start being prepared.
+
+The important thing here is that we did not create each process manually. After creating the pool, it distributes the jobs between the worker processes automatically.
+
 ::::::::::::::::::::::::::::::::::::: challenge
 
 ## Challenge 1: Can you do it?
