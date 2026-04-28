@@ -649,20 +649,22 @@ def process2(queue):
 Let's say we have a restaurant and we take orders using this take_order function.
 
 ```python
-def take_orders(queue):
+import time
+from multiprocessing import Queue
+
+def take_orders(queue, start_time):
     # waiter puts orders into the queue one by one
     orders = ["Pizza", "Burger", "Pasta", "Sushi", "Salad"]
 
     for order in orders:
-        print(f"Order received: {order}")
+        print(f"{time.time() - start_time:.2f}s - Order received: {order}")
 
         queue.put(order)
+        time.sleep(1) # assume the order is taken in 1 second
 
     queue.put(None)  # signal: no more orders coming
 ```
-
-
-
+We put a time check to see when the order is received.
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
