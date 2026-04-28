@@ -681,6 +681,30 @@ def prepare_orders(queue, start_time):
 
 In these two functions we used `Queue` because we needed to exchange the orders safely between the function that takes them and prepares them.
 
+Let's call these two functions in `main()` to see when they run.
+```python
+if __name__ == "__main__":
+    queue = Queue()
+
+    start_time = time.time()
+
+    take_orders(queue, start_time)
+    prepare_orders(queue, start_time)
+```
+
+Output:
+
+```text
+    0.00s - Order received: Pizza
+    1.00s - Order received: Burger
+    2.00s - Order received: Pasta
+    3.00s - Preparing: Pizza
+    5.00s - Preparing: Burger
+    7.00s - Preparing: Pasta
+```
+The timestamps show that all orders are received first. The preparation doesn't start until after that.
+
+
 ::::::::::::::::::::::::::::::::::::: challenge
 
 ## Challenge 1: Can you do it?
