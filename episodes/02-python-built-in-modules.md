@@ -666,6 +666,21 @@ def take_orders(queue, start_time):
 ```
 We put a time check to see when the order is received.
 
+And we also need to prepare the orders that we took from our guests.
+
+```python
+def prepare_orders(queue, start_time):
+    while True:
+        order = queue.get()
+        if order is None:
+            break
+
+        print(f"{time.time() - start_time:.2f}s - Preparing: {order}")
+        time.sleep(2) # we assume it's being prepared in 2 seconds
+```
+
+In these two functions we used `Queue` because we needed to exchange the orders safely between the function that takes them and prepares them.
+
 ::::::::::::::::::::::::::::::::::::: challenge
 
 ## Challenge 1: Can you do it?
