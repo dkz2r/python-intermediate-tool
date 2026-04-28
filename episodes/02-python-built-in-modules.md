@@ -642,7 +642,7 @@ def process1(queue):
 
 def process2(queue):
     value_process2 = queue.get()
-    print("Recieved: ", value)
+    print("Received: ", value_process2)
     y = 2
 ```
 
