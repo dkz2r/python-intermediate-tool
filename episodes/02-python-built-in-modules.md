@@ -80,21 +80,28 @@ delivery_updates.append("Package shipped")
 delivery_updates.append("Package out for delivery")
 ```
 
-### Avoiding missing keys
-What is the output of this line of code?
+::::::::::::::::::::::::::::::::::::: challenge
+The following example returns a "KeyError".
+```python
+KeyError: 'sweet'
+```
 ```python
 snacks = {}
 snacks["sweet"].append("chocolate")
 ```
-:::::::::::::::: solution
-This code raises a `KeyError`.
-```python
-KeyError: 'sweet'
-```
+Why do you think it happened?
+:::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::solution
 Using normal dictionaries, we have to check if the key exist before adding a value to the dict.
 ::::::::::::::::
 
-Good news: we could avoid that using defaultdict.
+:::::::::::::::::::::::::::::::::::::challenge
+How can we use defaultdict in this instance?
+:::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::solution
+
 ```python
 snacks = defaultdict(list)
 snacks["sweet"].append("chocolate")
@@ -108,6 +115,7 @@ snacks["sweet"] = []
 snacks["sweet"].append("chocolate")
 ```
 So every key starts with an empty list.
+::::::::::::::::
 
 Now we can switch to the itertools.
 
