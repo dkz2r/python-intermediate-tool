@@ -745,10 +745,16 @@ As you can see, we created the processes manually here, using `Process`.
 But that's not always necessary. Instead, we can create a group of worker processes that automatically share the work, like hiring several cooks to prepare multiple orders instead of assigning each order manually.
 
 To do that, we could use `Pool` from `multiprocessing`.
+We also need to make a small change to our `prepare_orders` function.
 
 ```python
 from multiprocessing import Pool
 
+def prepare_orders(args):
+    order, start_time = args  # we unpack tuple, since pool.map sends single argument
+
+    print(f"{time.time() - start_time:.2f}s - Preparing: {order}")
+    time.sleep(2)
 
 if __name__ == "__main__":
     start_time = time.time()
