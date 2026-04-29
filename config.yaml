@@ -67,6 +67,7 @@ contact: 'team@carpentries.org'
 episodes:
 - 01-virtual-environments.md
 - 02-creating-a-module.md
+- 02-python-built-in-modules.md
 - 03-class-objects.md
 - 04-unit-testing.md
 - 05-extending-classes.md
