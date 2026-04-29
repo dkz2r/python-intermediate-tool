@@ -136,6 +136,33 @@ Output:
 :::
 
 
+::: callout
+```python
+# coffee_machine.py
+logger = logging.getLogger(__name__)
+
+def make_coffee(coffee_type):
+    logger.info("Preparing %s", coffee_type)
+
+
+# main.py
+import logging
+from coffee_machine import make_coffee
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(name)s - %(levelname)s - %(message)s"
+)
+
+make_coffee("latte")
+```
+
+Output:
+coffee_machine - INFO - Preparing latte
+
+The %(name)s field shows the logger's name. In the coffee_machine.py file, we create the logger with logging.getLogger(__name__). Since __name__ contains the module name, the logger is named coffee_machine, and this is why we see coffee_machine in the log output.
+:::
+
 ## functools
 
 
