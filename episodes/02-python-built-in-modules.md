@@ -100,6 +100,7 @@ Here, we capture all of the logging messages from info level and above.
 We must never log confidential data such as API keys, passwords, tokens, user personal information, etc.
 :::
 
+::: callout
 ### Custom logging format
 
 Imagine you're running a payment script overnight and something goes wrong.
@@ -117,13 +118,22 @@ INFO:root:Transfer failed
 The second version tells us exactly when it happened and what went wrong without opening the code.
 
 ```python
+import logging
+
 logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)-6s - %(message)s",
-    datefmt="%H:%M:%S"
+    level=logging.INFO, format="%(asctime)s - %(levelname)-6s - %(message)s", datefmt="%H:%M:%S"
 )
+
+logging.info("Application started...")
 ```
 We do it by setting a `format` parameter in `basicConfig()`, using placeholder fields like `%(asctime)s` for the timestamp and `%(levelname)s` for the severity level.
+
+Output:
+
+```text
+14:32:24 - INFO   - Application started...
+```
+:::
 
 
 ## functools
