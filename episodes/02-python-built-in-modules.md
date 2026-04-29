@@ -755,16 +755,18 @@ def prepare_orders(args):
 
     print(f"{time.time() - start_time:.2f}s - Preparing: {order}")
     time.sleep(2)
+    return f"{order} ready"  # pool.map collects return values
 
 if __name__ == "__main__":
     start_time = time.time()
 
     orders = ["Pizza", "Burger", "Pasta", "Sushi", "Salad"]
     with Pool(processes=3) as pool:
-        pool.map(
-            prepare_order,
-            [(order, start_time) for order in orders]
-        )
+        order_status = pool.map(
+            prepare_orders, [(order, start_time)
+            for order in orders])
+
+        print(order_status)
 ```
 Output:
 ```text
