@@ -652,7 +652,7 @@ scratch/</code></pre>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Show details </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>A commonly used gitignore is the Python.gitignore maintained by
 GitHub. You can find it <a href="https://github.com/github/gitignore/blob/main/Python.gitignore" class="external-link">here</a>.</p>
@@ -730,7 +730,7 @@ file?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>The <code>pyproject.toml</code> file is a human readable file that
 contains the list of packages that our project depends on. The
@@ -922,7 +922,7 @@ directory of the project, your command will look something like
 </h3>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a>D:\Documents\Projects\textanalysis<span class="op">-</span>tool<span class="op">&gt;</span>uv run tests<span class="op">/</span>test_say_hello.py</span>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a>Traceback (most recent call last):</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a>  File <span class="st">"D:\Documents\Projects</span><span class="ch">\t</span><span class="st">extanalysis-tool</span><span class="ch">\t</span><span class="st">ests</span><span class="ch">\t</span><span class="st">est_say_hello.py"</span>, line <span class="dv">1</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a>  File <span class="st">"D:</span><span class="er">\</span><span class="st">Documents</span><span class="er">\</span><span class="st">Projects</span><span class="ch">\t</span><span class="st">extanalysis-tool</span><span class="ch">\t</span><span class="st">ests</span><span class="ch">\t</span><span class="st">est_say_hello.py"</span>, line <span class="dv">1</span>, <span class="kw">in</span> <span class="op">&lt;</span>module<span class="op">&gt;</span></span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a>    <span class="im">from</span> textanalysis_tool.say_hello <span class="im">import</span> hello</span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a><span class="pp">ModuleNotFoundError</span>: No module named <span class="st">'textanalysis_tool'</span></span></code></pre>
 </div>
@@ -1776,7 +1776,7 @@ and end markers:</p>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a>pattern <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a>pattern <span class="op">=</span> <span class="vs">r"</span><span class="ch">\*\*\*</span><span class="vs"> START OF THE PROJECT GUTENBERG EBOOK </span><span class="dv">.</span><span class="op">*?</span><span class="vs"> </span><span class="ch">\*\*\*</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="ch">\*\*\*</span><span class="vs"> END OF THE PROJECT GUTENBERG EBOOK </span><span class="dv">.</span><span class="op">*?</span><span class="vs"> </span><span class="ch">\*\*\*</span><span class="vs">"</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a></span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a>match <span class="op">=</span> re.search(pattern, raw_text, re.DOTALL)</span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a><span class="cf">if</span> match:</span>
@@ -1807,7 +1807,7 @@ method to strip out this metadata before storing the content in
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a></span>
 <span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a><span class="kw">class</span> Document:</span>
 <span id="cb15-5"><a href="#cb15-5" tabindex="-1" aria-label="code-block-15-5"></a></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="ch">\*\*\*</span><span class="vs"> START OF THE PROJECT GUTENBERG EBOOK </span><span class="dv">.</span><span class="op">*?</span><span class="vs"> </span><span class="ch">\*\*\*</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="ch">\*\*\*</span><span class="vs"> END OF THE PROJECT GUTENBERG EBOOK </span><span class="dv">.</span><span class="op">*?</span><span class="vs"> </span><span class="ch">\*\*\*</span><span class="vs">"</span></span>
 <span id="cb15-7"><a href="#cb15-7" tabindex="-1" aria-label="code-block-15-7"></a></span>
 <span id="cb15-8"><a href="#cb15-8" tabindex="-1" aria-label="code-block-15-8"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>, title: <span class="bu">str</span> <span class="op">=</span> <span class="st">""</span>, author: <span class="bu">str</span> <span class="op">=</span> <span class="st">""</span>, <span class="bu">id</span>: <span class="bu">int</span> <span class="op">=</span> <span class="dv">0</span>):</span>
 <span id="cb15-9"><a href="#cb15-9" tabindex="-1" aria-label="code-block-15-9"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
@@ -1852,7 +1852,7 @@ to be specified when creating the object:</p>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a>...</span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1" aria-label="code-block-17-2"></a></span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1" aria-label="code-block-17-3"></a><span class="co"># Check that we can create a Document object</span></span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1" aria-label="code-block-17-4"></a>Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"(.*)"</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1" aria-label="code-block-17-4"></a>Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="kw">(</span><span class="dv">.</span><span class="op">*</span><span class="kw">)</span><span class="vs">"</span></span>
 <span id="cb17-5"><a href="#cb17-5" tabindex="-1" aria-label="code-block-17-5"></a>doc <span class="op">=</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>, title<span class="op">=</span><span class="st">"Test Document"</span>)</span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1" aria-label="code-block-17-6"></a><span class="cf">if</span> doc.title <span class="op">==</span> <span class="st">"Test Document"</span> <span class="kw">and</span> doc.filepath <span class="op">==</span> <span class="st">"tests/example_file.txt"</span>:</span>
 <span id="cb17-7"><a href="#cb17-7" tabindex="-1" aria-label="code-block-17-7"></a>    passed_tests <span class="op">+=</span> <span class="dv">1</span></span>
@@ -2119,19 +2119,19 @@ the following:</p>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="im">from</span> textanalysis_tool.document <span class="im">import</span> Document</span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a></span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="kw">def</span> test_create_document():</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"(.*)"</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="kw">(</span><span class="dv">.</span><span class="op">*</span><span class="kw">)</span><span class="vs">"</span></span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>    doc <span class="op">=</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a>    <span class="cf">assert</span> doc.filepath <span class="op">==</span> <span class="st">"tests/example_file.txt"</span></span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a></span>
 <span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a></span>
 <span id="cb7-9"><a href="#cb7-9" tabindex="-1" aria-label="code-block-7-9"></a><span class="kw">def</span> test_document_word_count():</span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1" aria-label="code-block-7-10"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"(.*)"</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1" aria-label="code-block-7-10"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="kw">(</span><span class="dv">.</span><span class="op">*</span><span class="kw">)</span><span class="vs">"</span></span>
 <span id="cb7-11"><a href="#cb7-11" tabindex="-1" aria-label="code-block-7-11"></a>    doc <span class="op">=</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
 <span id="cb7-12"><a href="#cb7-12" tabindex="-1" aria-label="code-block-7-12"></a>    <span class="cf">assert</span> doc.get_line_count() <span class="op">==</span> <span class="dv">2</span></span>
 <span id="cb7-13"><a href="#cb7-13" tabindex="-1" aria-label="code-block-7-13"></a></span>
 <span id="cb7-14"><a href="#cb7-14" tabindex="-1" aria-label="code-block-7-14"></a></span>
 <span id="cb7-15"><a href="#cb7-15" tabindex="-1" aria-label="code-block-7-15"></a><span class="kw">def</span> test_document_word_occurrence():</span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1" aria-label="code-block-7-16"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"(.*)"</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1" aria-label="code-block-7-16"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="kw">(</span><span class="dv">.</span><span class="op">*</span><span class="kw">)</span><span class="vs">"</span></span>
 <span id="cb7-17"><a href="#cb7-17" tabindex="-1" aria-label="code-block-7-17"></a>    doc <span class="op">=</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
 <span id="cb7-18"><a href="#cb7-18" tabindex="-1" aria-label="code-block-7-18"></a>    <span class="cf">assert</span> doc.get_word_occurrence(<span class="st">"test"</span>) <span class="op">==</span> <span class="dv">2</span></span></code></pre>
 </div>
@@ -2274,7 +2274,7 @@ look like this:</p>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1" aria-label="code-block-17-4"></a></span>
 <span id="cb17-5"><a href="#cb17-5" tabindex="-1" aria-label="code-block-17-5"></a><span class="at">@pytest.fixture</span></span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1" aria-label="code-block-17-6"></a><span class="kw">def</span> doc():</span>
-<span id="cb17-7"><a href="#cb17-7" tabindex="-1" aria-label="code-block-17-7"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"(.*)"</span></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1" aria-label="code-block-17-7"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="kw">(</span><span class="dv">.</span><span class="op">*</span><span class="kw">)</span><span class="vs">"</span></span>
 <span id="cb17-8"><a href="#cb17-8" tabindex="-1" aria-label="code-block-17-8"></a>    <span class="cf">return</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
 <span id="cb17-9"><a href="#cb17-9" tabindex="-1" aria-label="code-block-17-9"></a></span>
 <span id="cb17-10"><a href="#cb17-10" tabindex="-1" aria-label="code-block-17-10"></a><span class="kw">def</span> test_create_document(doc):</span>
@@ -2895,10 +2895,10 @@ At the moment, our classes look like this:</p>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a></span>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a></span>
 <span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a><span class="kw">class</span> PlainTextDocument(Document):</span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a>    TITLE_PATTERN <span class="op">=</span> <span class="vs">r"^Title:\s*(.*?)\s*$"</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>    AUTHOR_PATTERN <span class="op">=</span> <span class="vs">r"^Author:\s*(.*?)\s*$"</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a>    ID_PATTERN <span class="op">=</span> <span class="vs">r"^Release date:\s*.*?\[eBook #(\d+)\]"</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1" aria-label="code-block-3-10"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a>    TITLE_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="dv">^</span><span class="vs">Title:</span><span class="dv">\s</span><span class="op">*</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="dv">\s</span><span class="op">*</span><span class="dv">$</span><span class="vs">"</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>    AUTHOR_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="dv">^</span><span class="vs">Author:</span><span class="dv">\s</span><span class="op">*</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="dv">\s</span><span class="op">*</span><span class="dv">$</span><span class="vs">"</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a>    ID_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="dv">^</span><span class="vs">Release date:</span><span class="dv">\s</span><span class="op">*</span><span class="dv">.</span><span class="op">*?</span><span class="ch">\[</span><span class="vs">eBook #</span><span class="kw">(</span><span class="dv">\d</span><span class="op">+</span><span class="kw">)</span><span class="ch">\]</span><span class="vs">"</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1" aria-label="code-block-3-10"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="ch">\*\*\*</span><span class="vs"> START OF THE PROJECT GUTENBERG EBOOK </span><span class="dv">.</span><span class="op">*?</span><span class="vs"> </span><span class="ch">\*\*\*</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="ch">\*\*\*</span><span class="vs"> END OF THE PROJECT GUTENBERG EBOOK </span><span class="dv">.</span><span class="op">*?</span><span class="vs"> </span><span class="ch">\*\*\*</span><span class="vs">"</span></span>
 <span id="cb3-11"><a href="#cb3-11" tabindex="-1" aria-label="code-block-3-11"></a></span>
 <span id="cb3-12"><a href="#cb3-12" tabindex="-1" aria-label="code-block-3-12"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>):</span>
 <span id="cb3-13"><a href="#cb3-13" tabindex="-1" aria-label="code-block-3-13"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(filepath<span class="op">=</span>filepath)</span>
@@ -3874,10 +3874,10 @@ here:</p>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1" aria-label="code-block-4-4"></a></span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1" aria-label="code-block-4-5"></a></span>
 <span id="cb4-6"><a href="#cb4-6" tabindex="-1" aria-label="code-block-4-6"></a><span class="kw">class</span> TextReader(BaseReader):</span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1" aria-label="code-block-4-7"></a>    TITLE_PATTERN <span class="op">=</span> <span class="vs">r"^Title:\s*(.*?)\s*$"</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1" aria-label="code-block-4-8"></a>    AUTHOR_PATTERN <span class="op">=</span> <span class="vs">r"^Author:\s*(.*?)\s*$"</span></span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1" aria-label="code-block-4-9"></a>    ID_PATTERN <span class="op">=</span> <span class="vs">r"^Release date:\s*.*?\[eBook #(\d+)\]"</span></span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1" aria-label="code-block-4-10"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1" aria-label="code-block-4-7"></a>    TITLE_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="dv">^</span><span class="vs">Title:</span><span class="dv">\s</span><span class="op">*</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="dv">\s</span><span class="op">*</span><span class="dv">$</span><span class="vs">"</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1" aria-label="code-block-4-8"></a>    AUTHOR_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="dv">^</span><span class="vs">Author:</span><span class="dv">\s</span><span class="op">*</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="dv">\s</span><span class="op">*</span><span class="dv">$</span><span class="vs">"</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1" aria-label="code-block-4-9"></a>    ID_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="dv">^</span><span class="vs">Release date:</span><span class="dv">\s</span><span class="op">*</span><span class="dv">.</span><span class="op">*?</span><span class="ch">\[</span><span class="vs">eBook #</span><span class="kw">(</span><span class="dv">\d</span><span class="op">+</span><span class="kw">)</span><span class="ch">\]</span><span class="vs">"</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1" aria-label="code-block-4-10"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="ch">\*\*\*</span><span class="vs"> START OF THE PROJECT GUTENBERG EBOOK </span><span class="dv">.</span><span class="op">*?</span><span class="vs"> </span><span class="ch">\*\*\*</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="ch">\*\*\*</span><span class="vs"> END OF THE PROJECT GUTENBERG EBOOK </span><span class="dv">.</span><span class="op">*?</span><span class="vs"> </span><span class="ch">\*\*\*</span><span class="vs">"</span></span>
 <span id="cb4-11"><a href="#cb4-11" tabindex="-1" aria-label="code-block-4-11"></a></span>
 <span id="cb4-12"><a href="#cb4-12" tabindex="-1" aria-label="code-block-4-12"></a>    <span class="kw">def</span> read(<span class="va">self</span>, filepath: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">str</span>:</span>
 <span id="cb4-13"><a href="#cb4-13" tabindex="-1" aria-label="code-block-4-13"></a>        <span class="cf">with</span> <span class="bu">open</span>(filepath, encoding<span class="op">=</span><span class="st">"utf-8"</span>) <span class="im">as</span> file_obj:</span>
@@ -4132,7 +4132,7 @@ classes.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p><code>tests/readers/test_text_reader.py</code></p>
 <div class="codewrapper sourceCode" id="cb8">
@@ -4257,7 +4257,7 @@ documentation here</a></p>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
   <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
 </button>
-<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
+<div id="collapseHint1" class="accordion-collapse collapse" data-bs-parent="#accordionHint1" aria-labelledby="headingHint1">
 <div class="accordion-body">
 <p>To get the metadata from an epub file, you can use the
 <code>get_metadata</code> method of the <code>EpubBook</code> class.
@@ -4284,7 +4284,7 @@ actual title.</p>
 <button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint2" aria-expanded="false" aria-controls="collapseHint2">
   <h4 class="accordion-header" id="headingHint2"> Give me a hint </h4>
 </button>
-<div id="collapseHint2" class="accordion-collapse collapse" aria-labelledby="headingHint2" data-bs-parent="#accordionHint2">
+<div id="collapseHint2" class="accordion-collapse collapse" data-bs-parent="#accordionHint2" aria-labelledby="headingHint2">
 <div class="accordion-body">
 <p>To get the content from an epub file, we can iterate over all of the
 “items” in the book that are a document, then use
@@ -4307,7 +4307,7 @@ content.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -5504,8 +5504,8 @@ any links that you are not going to use.
   "url": "https://jonathan-hartman.github.io/python-intermediate-tool/instructor/aio.html",
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/instructor/aio.html",
   "dateCreated": "2025-08-23",
-  "dateModified": "2026-04-28",
-  "datePublished": "2026-04-28"
+  "dateModified": "2026-05-05",
+  "datePublished": "2026-05-05"
 }
 
   </script><script>

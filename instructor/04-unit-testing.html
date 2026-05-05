@@ -561,19 +561,19 @@ the following:</p>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="im">from</span> textanalysis_tool.document <span class="im">import</span> Document</span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a></span>
 <span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a><span class="kw">def</span> test_create_document():</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"(.*)"</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="kw">(</span><span class="dv">.</span><span class="op">*</span><span class="kw">)</span><span class="vs">"</span></span>
 <span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>    doc <span class="op">=</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
 <span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a>    <span class="cf">assert</span> doc.filepath <span class="op">==</span> <span class="st">"tests/example_file.txt"</span></span>
 <span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a></span>
 <span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a></span>
 <span id="cb7-9"><a href="#cb7-9" tabindex="-1" aria-label="code-block-7-9"></a><span class="kw">def</span> test_document_word_count():</span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1" aria-label="code-block-7-10"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"(.*)"</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1" aria-label="code-block-7-10"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="kw">(</span><span class="dv">.</span><span class="op">*</span><span class="kw">)</span><span class="vs">"</span></span>
 <span id="cb7-11"><a href="#cb7-11" tabindex="-1" aria-label="code-block-7-11"></a>    doc <span class="op">=</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
 <span id="cb7-12"><a href="#cb7-12" tabindex="-1" aria-label="code-block-7-12"></a>    <span class="cf">assert</span> doc.get_line_count() <span class="op">==</span> <span class="dv">2</span></span>
 <span id="cb7-13"><a href="#cb7-13" tabindex="-1" aria-label="code-block-7-13"></a></span>
 <span id="cb7-14"><a href="#cb7-14" tabindex="-1" aria-label="code-block-7-14"></a></span>
 <span id="cb7-15"><a href="#cb7-15" tabindex="-1" aria-label="code-block-7-15"></a><span class="kw">def</span> test_document_word_occurrence():</span>
-<span id="cb7-16"><a href="#cb7-16" tabindex="-1" aria-label="code-block-7-16"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"(.*)"</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1" aria-label="code-block-7-16"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="kw">(</span><span class="dv">.</span><span class="op">*</span><span class="kw">)</span><span class="vs">"</span></span>
 <span id="cb7-17"><a href="#cb7-17" tabindex="-1" aria-label="code-block-7-17"></a>    doc <span class="op">=</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
 <span id="cb7-18"><a href="#cb7-18" tabindex="-1" aria-label="code-block-7-18"></a>    <span class="cf">assert</span> doc.get_word_occurrence(<span class="st">"test"</span>) <span class="op">==</span> <span class="dv">2</span></span></code></pre>
 </div>
@@ -714,7 +714,7 @@ look like this:</p>
 <span id="cb17-4"><a href="#cb17-4" tabindex="-1" aria-label="code-block-17-4"></a></span>
 <span id="cb17-5"><a href="#cb17-5" tabindex="-1" aria-label="code-block-17-5"></a><span class="at">@pytest.fixture</span></span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1" aria-label="code-block-17-6"></a><span class="kw">def</span> doc():</span>
-<span id="cb17-7"><a href="#cb17-7" tabindex="-1" aria-label="code-block-17-7"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"(.*)"</span></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1" aria-label="code-block-17-7"></a>    Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="kw">(</span><span class="dv">.</span><span class="op">*</span><span class="kw">)</span><span class="vs">"</span></span>
 <span id="cb17-8"><a href="#cb17-8" tabindex="-1" aria-label="code-block-17-8"></a>    <span class="cf">return</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>)</span>
 <span id="cb17-9"><a href="#cb17-9" tabindex="-1" aria-label="code-block-17-9"></a></span>
 <span id="cb17-10"><a href="#cb17-10" tabindex="-1" aria-label="code-block-17-10"></a><span class="kw">def</span> test_create_document(doc):</span>
@@ -1203,7 +1203,7 @@ any links that you are not going to use.
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/instructor/04-unit-testing.html",
   "dateCreated": "2025-08-23",
   "dateModified": "2025-09-28",
-  "datePublished": "2026-04-28"
+  "datePublished": "2026-05-05"
 }
 
   </script><script>

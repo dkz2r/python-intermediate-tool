@@ -525,10 +525,10 @@ At the moment, our classes look like this:</p>
 <span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a></span>
 <span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a></span>
 <span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a><span class="kw">class</span> PlainTextDocument(Document):</span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a>    TITLE_PATTERN <span class="op">=</span> <span class="vs">r"^Title:\s*(.*?)\s*$"</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>    AUTHOR_PATTERN <span class="op">=</span> <span class="vs">r"^Author:\s*(.*?)\s*$"</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a>    ID_PATTERN <span class="op">=</span> <span class="vs">r"^Release date:\s*.*?\[eBook #(\d+)\]"</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1" aria-label="code-block-3-10"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a>    TITLE_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="dv">^</span><span class="vs">Title:</span><span class="dv">\s</span><span class="op">*</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="dv">\s</span><span class="op">*</span><span class="dv">$</span><span class="vs">"</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>    AUTHOR_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="dv">^</span><span class="vs">Author:</span><span class="dv">\s</span><span class="op">*</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="dv">\s</span><span class="op">*</span><span class="dv">$</span><span class="vs">"</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a>    ID_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="dv">^</span><span class="vs">Release date:</span><span class="dv">\s</span><span class="op">*</span><span class="dv">.</span><span class="op">*?</span><span class="ch">\[</span><span class="vs">eBook #</span><span class="kw">(</span><span class="dv">\d</span><span class="op">+</span><span class="kw">)</span><span class="ch">\]</span><span class="vs">"</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1" aria-label="code-block-3-10"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="ch">\*\*\*</span><span class="vs"> START OF THE PROJECT GUTENBERG EBOOK </span><span class="dv">.</span><span class="op">*?</span><span class="vs"> </span><span class="ch">\*\*\*</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="ch">\*\*\*</span><span class="vs"> END OF THE PROJECT GUTENBERG EBOOK </span><span class="dv">.</span><span class="op">*?</span><span class="vs"> </span><span class="ch">\*\*\*</span><span class="vs">"</span></span>
 <span id="cb3-11"><a href="#cb3-11" tabindex="-1" aria-label="code-block-3-11"></a></span>
 <span id="cb3-12"><a href="#cb3-12" tabindex="-1" aria-label="code-block-3-12"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>):</span>
 <span id="cb3-13"><a href="#cb3-13" tabindex="-1" aria-label="code-block-3-13"></a>        <span class="bu">super</span>().<span class="fu">__init__</span>(filepath<span class="op">=</span>filepath)</span>
@@ -1338,7 +1338,7 @@ any links that you are not going to use.
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/instructor/05-extending-classes.html",
   "dateCreated": "2025-08-23",
   "dateModified": "2025-09-28",
-  "datePublished": "2026-04-28"
+  "datePublished": "2026-05-05"
 }
 
   </script><script>

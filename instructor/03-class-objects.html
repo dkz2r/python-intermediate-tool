@@ -901,7 +901,7 @@ and end markers:</p>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a>pattern <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a>pattern <span class="op">=</span> <span class="vs">r"</span><span class="ch">\*\*\*</span><span class="vs"> START OF THE PROJECT GUTENBERG EBOOK </span><span class="dv">.</span><span class="op">*?</span><span class="vs"> </span><span class="ch">\*\*\*</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="ch">\*\*\*</span><span class="vs"> END OF THE PROJECT GUTENBERG EBOOK </span><span class="dv">.</span><span class="op">*?</span><span class="vs"> </span><span class="ch">\*\*\*</span><span class="vs">"</span></span>
 <span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a></span>
 <span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a>match <span class="op">=</span> re.search(pattern, raw_text, re.DOTALL)</span>
 <span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a><span class="cf">if</span> match:</span>
@@ -932,7 +932,7 @@ method to strip out this metadata before storing the content in
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a></span>
 <span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a><span class="kw">class</span> Document:</span>
 <span id="cb15-5"><a href="#cb15-5" tabindex="-1" aria-label="code-block-15-5"></a></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a>    CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="ch">\*\*\*</span><span class="vs"> START OF THE PROJECT GUTENBERG EBOOK </span><span class="dv">.</span><span class="op">*?</span><span class="vs"> </span><span class="ch">\*\*\*</span><span class="kw">(</span><span class="dv">.</span><span class="op">*?</span><span class="kw">)</span><span class="ch">\*\*\*</span><span class="vs"> END OF THE PROJECT GUTENBERG EBOOK </span><span class="dv">.</span><span class="op">*?</span><span class="vs"> </span><span class="ch">\*\*\*</span><span class="vs">"</span></span>
 <span id="cb15-7"><a href="#cb15-7" tabindex="-1" aria-label="code-block-15-7"></a></span>
 <span id="cb15-8"><a href="#cb15-8" tabindex="-1" aria-label="code-block-15-8"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, filepath: <span class="bu">str</span>, title: <span class="bu">str</span> <span class="op">=</span> <span class="st">""</span>, author: <span class="bu">str</span> <span class="op">=</span> <span class="st">""</span>, <span class="bu">id</span>: <span class="bu">int</span> <span class="op">=</span> <span class="dv">0</span>):</span>
 <span id="cb15-9"><a href="#cb15-9" tabindex="-1" aria-label="code-block-15-9"></a>        <span class="va">self</span>.filepath <span class="op">=</span> filepath</span>
@@ -977,7 +977,7 @@ to be specified when creating the object:</p>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" tabindex="-1" aria-label="code-block-17-1"></a>...</span>
 <span id="cb17-2"><a href="#cb17-2" tabindex="-1" aria-label="code-block-17-2"></a></span>
 <span id="cb17-3"><a href="#cb17-3" tabindex="-1" aria-label="code-block-17-3"></a><span class="co"># Check that we can create a Document object</span></span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1" aria-label="code-block-17-4"></a>Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"(.*)"</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1" aria-label="code-block-17-4"></a>Document.CONTENT_PATTERN <span class="op">=</span> <span class="vs">r"</span><span class="kw">(</span><span class="dv">.</span><span class="op">*</span><span class="kw">)</span><span class="vs">"</span></span>
 <span id="cb17-5"><a href="#cb17-5" tabindex="-1" aria-label="code-block-17-5"></a>doc <span class="op">=</span> Document(filepath<span class="op">=</span><span class="st">"tests/example_file.txt"</span>, title<span class="op">=</span><span class="st">"Test Document"</span>)</span>
 <span id="cb17-6"><a href="#cb17-6" tabindex="-1" aria-label="code-block-17-6"></a><span class="cf">if</span> doc.title <span class="op">==</span> <span class="st">"Test Document"</span> <span class="kw">and</span> doc.filepath <span class="op">==</span> <span class="st">"tests/example_file.txt"</span>:</span>
 <span id="cb17-7"><a href="#cb17-7" tabindex="-1" aria-label="code-block-17-7"></a>    passed_tests <span class="op">+=</span> <span class="dv">1</span></span>
@@ -1075,7 +1075,7 @@ any links that you are not going to use.
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/instructor/03-class-objects.html",
   "dateCreated": "2025-08-23",
   "dateModified": "2025-09-28",
-  "datePublished": "2026-04-28"
+  "datePublished": "2026-05-05"
 }
 
   </script><script>
