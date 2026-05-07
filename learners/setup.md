@@ -61,10 +61,18 @@ We will be using git and GitHub to manage our code during the workshop. If you d
 a GitHub account, you can create one for free at [github.com](https://github.com/).
 
 Once you have an account, you will need to authorize git on your device to push code to your GitHub
-account. If you are familiar with SSH keys, you can use those. If not, you can use a personal
-access token (PAT).
+account. There are two ways to do this: using an SSH Keypair or a Personal Access Token (PAT).
+You can find directions for both methods below, but you only need to set up one of them.
 
-### Creating a Personal Access Token
+::: tab
+
+### SSH Public/Private Keypair
+
+There is a great walkthrough on creating and using an SSH Keypair with GitHub you can find as a
+part of the [Software Carpentries Git Novice](https://swcarpentry.github.io/git-novice/07-github.html#ssh-background-and-setup)
+workshop.
+
+### Personal Access Token (PAT)
 
 Once you are logged into GitHub, click on your profile icon in the upper right corner of the
 screen, and select "Settings" from the dropdown menu. On the left side of the screen, select
@@ -78,8 +86,6 @@ button at the bottom of the page.
 
 Your token is only ever shown once, so be sure to either copy it to your clipboard or leave the
 window open while you complete the next step.
-
-### Authorizing git to use your Personal Access Token
 
 On your device, open a command line / terminal window. You will need to configure git to use your
 PAT when pushing code to GitHub. You can do this by running the following commands:
@@ -97,6 +103,8 @@ git clone https://github.com/your-username/your-repo.git
 You will be prompted for your GitHub username and password. For the password, paste in the PAT you
 created in the previous step. Your credentials will be stored on your device, and you should not
 have to enter them again.
+
+:::
 
 
 ## Account Setup - TestPyPi (Optional)
