@@ -46,7 +46,7 @@ the code that you are running is running on the exact same versions of libraries
 
 In the past, it was notoriously difficult to manage environments with python:
 
-![XKCD - "Python Environment"](./fig/01-virtual-environments/xkcd1987_python_environment.png)
+![XKCD - "Python Environment"](./fig/01-virtual-environments/xkcd1987_python_environment.png){alt='XKCD comic about python environments showing a tangled web of a user python setup'}
 
 There have been a number of attempts to create a "one size fits all" approach to virtual
 environments and dependency management:
@@ -210,7 +210,7 @@ scratch/
 ::: spoiler
 
 A commonly used gitignore is the Python.gitignore maintained by GitHub. You can find it
-[here](https://github.com/github/gitignore/blob/main/Python.gitignore).
+here: [Python.gitignore from GitHub](https://github.com/github/gitignore/blob/main/Python.gitignore).
 
 :::
 

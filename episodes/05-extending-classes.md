@@ -79,7 +79,7 @@ class CarElectricEngine(Car):
         return "hmmmmmm"
 ```
 
-![Class diagram showing the Car class as a parent class, with CarGasEngine and CarElectricEngine as child classes that inherit from Car.](./fig/05-extending-classes/class_inheritance.PNG.jpg){alt='Class diagram showing inheritance from Car to CarGasEngine and CarElectricEngine'}
+![Class diagram showing the Car class as a parent class, with CarGasEngine and CarElectricEngine as child classes that inherit from Car.](./fig/05-extending-classes/class_inheritance.jpg){alt='Class diagram showing inheritance from Car to CarGasEngine and CarElectricEngine'}
 
 ::: callout
 
