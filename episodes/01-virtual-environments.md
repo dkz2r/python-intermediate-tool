@@ -179,6 +179,8 @@ output of the `uv venv` command, you should see the correct command.
 source .venv/bin/activate
 ```
 
+:::
+
 If this command works properly, you should see that before your prompt is now some text in
 parenthesis:
 
@@ -342,7 +344,9 @@ Try the following command:
 uv add pytest --group dev
 ```
 
-Take a look at the `pyproject.toml` and `uv.lock` files. What changed?
+Take a look at the `pyproject.toml` and `uv.lock` files. What changed? What is different about this
+package compared to the `requests` package we installed in the previous challenge? Why might this
+be useful?
 
 
 :::::::::::::::: solution

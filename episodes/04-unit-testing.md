@@ -151,7 +151,7 @@ You should see output similar to the following:
 ```
 ============================= test session starts ==============================
 platform win32 -- Python 3.13.7, pytest-8.4.2, pluggy-1.6.0
-rootdir: D:\Documents\Projects\textanalysis-tool
+rootdir: E:\Documents\Projects\textanalysis-tool
 configfile: pyproject.toml
 collected 1 item
 
@@ -204,7 +204,7 @@ You should see output similar to the following:
 ```
 ============================= test session starts ==============================
 platform win32 -- Python 3.13.7, pytest-8.4.2, pluggy-1.6.0
-rootdir: D:\Documents\Projects\textanalysis-tool
+rootdir: E:\Documents\Projects\textanalysis-tool
 configfile: pyproject.toml
 collected 4 items
 

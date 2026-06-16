@@ -23,13 +23,13 @@ exercises: 2
 In order to keep our project organized, we'll start by creating some directories to put our code in.
 So that we can keep the "source" code of our project separate from other aspects, we'll start by
 creating a directory called "src". In this directory, we'll create a second directory with the name
-of our module, in this case "textanalysis-tool". We can also delete the "main.py" file that was
+of our module, in this case "vehicle-module". We can also delete the "main.py" file that was
 generated automatically by uv. Your project folder should now look like this:
 
 ```
-textanalysis-tool/
+vehicle-module/
 ├── src/
-│   └── textanalysis_tool/
+│   └── vehicle_module/
 ├── .gitignore
 ├── .python-version
 ├── pyproject.toml
@@ -39,12 +39,12 @@ textanalysis-tool/
 ::: callout
 
 Note that the interior folder has an underscore instead of a hyphen. We will import the module using
-the name of the interior folder, `textanalysis_tool`. This is important as hyphens are not a valid
+the name of the interior folder, `vehicle_module`. This is important as hyphens are not a valid
 character in Python module names.
 
 :::
 
-Next, we'll create a file called `__init__.py` in the `src/textanalysis_tool` directory. This file
+Next, we'll create a file called `__init__.py` in the `src/vehicle_module` directory. This file
 will make Python treat the directory as a package. Next to the `__init__.py` file, we can create
 other Python files that will contain the code for our module.
 
@@ -56,23 +56,23 @@ additional code to initialize the package or set up any necessary imports, as we
 
 :::
 
-Let's create a code file now, called `say_hello.py` and put a simple function in it:
+Let's create a code file now, called `noises.py` and put a simple function in it:
 
 ```python
 
-def hello(name: str = "User"):
-    return f"Hello, {name}!"
+def honk_horn(times: int = 1):
+    return "Honk! " * times
 
 ```
 
 Our project folder should now look like this:
 
 ```
-textanalysis-tool/
+vehicle-module/
 ├── src/
-│   └── textanalysis_tool/
+│   └── vehicle_module/
 │       ├── __init__.py
-│       └── say_hello.py
+│       └── noises.py
 ├── .gitignore
 ├── .python-version
 ├── pyproject.toml
@@ -84,16 +84,16 @@ textanalysis-tool/
 It's all well and good to write some code in here, but how can we actually use it? Let's create a
 python script to test our module.
 
-Let's create a directory called "tests", and start a new file called `test_say_hello.py` in it.
+Let's create a directory called "tests", and start a new file called `test_noises.py` in it.
 
 Add the following code to it:
 
 ```python
-import textanalysis_tool
+import vehicle_module
 
-result = textanalysis_tool.say_hello.hello("My Name")
+result = vehicle_module.noises.honk_horn(2)
 
-if result == "Hello, My Name!":
+if result == "Honk! Honk! ":
     print("Test passed!")
 else:
     print("Test failed!")
@@ -109,16 +109,16 @@ we'll see how useful this is.
 :::
 
 Let's run the script from our command line. If you're in the root directory of the project, your
-command will look something like `uv run tests/test_say_hello.py`.
+command will look something like `uv run tests/test_noises.py`.
 
 Aaaand... It doesn't work!
 
 ```python
-D:\Documents\Projects\textanalysis-tool>uv run tests/test_say_hello.py
+E:\Documents\Projects\vehicle-module>uv run tests/test_noises.py
 Traceback (most recent call last):
-  File "D:\Documents\Projects\textanalysis-tool\tests\test_say_hello.py", line 1, in <module>
-    from textanalysis_tool.say_hello import hello
-ModuleNotFoundError: No module named 'textanalysis_tool'
+  File "E:\Documents\Projects\vehicle-module\tests\test_noises.py", line 1, in <module>
+    from vehicle_module.noises import honk_horn
+ModuleNotFoundError: No module named 'vehicle_module'
 ```
 
 The reason for this is that we never actually told python where it can find our code!
@@ -146,7 +146,7 @@ the path:
 import sys
 sys.path.insert(0, "./src")
 
-from textanalysis_tool.say_hello import hello
+from vehicle_module.noises import honk_horn
 
 result = hello("My Name")
 
@@ -173,17 +173,15 @@ directories, but just in case, this avoids some potential issues.
 ## Dot Notation in Imports
 
 You probably noticed that our function call mimics the file and directory structure of the project.
-We have the project directory (`textanalysis_tool`), then the filename (`say_hello`), and finally
-the function name (`hello`). Python treats all of these similarly when trying to locate a function
-or module. We can also modify our import to make the code a little neater:
+We have the project directory (`vehicle_module`), then the filename (`noises`), and finally the function name (`honk_horn`). Python treats all of these similarly when trying to locate a function or module. We can also modify our import to make the code a little neater:
 
 ```python
 import sys
 sys.path.insert(0, "./src")
 
-from textanalysis_tool import say_hello
+from vehicle_module import noises
 
-result = say_hello.hello("My Name")
+result = noises.honk_horn(2)
 
 if result == "Hello, My Name!":
     print("Test passed!")
@@ -197,11 +195,11 @@ or even better:
 import sys
 sys.path.insert(0, "./src")
 
-from textanalysis_tool.say_hello import hello
+from vehicle_module.noises import honk_horn
 
-result = hello("My Name")
+result = honk_horn(2)
 
-if result == "Hello, My Name!":
+if result == "Honk! Honk! ":
     print("Test passed!")
 else:
     print("Test failed!")
@@ -229,16 +227,16 @@ functions in each file. This is where we can simplify things a little by adding 
 to our `__init__.py` file:
 
 ```python
-from .say_hello import hello
+from .noises import honk_horn
 ```
 
 We can run our testing script just the same way as before and it will still work, but we can also
-now leave out the `.say_hello` part:
+now leave out the `.noises` part:
 
 ```python
-from textanalysis_tool import hello
+from vehicle_module import honk_horn
 
-result = hello("My Name")
+result = honk_horn(2)
 
 if result == "Hello, My Name!":
     print("Test passed!")
@@ -255,7 +253,7 @@ repository.
 
 ## Challenge 1: Add a Sub Module
 
-Create a directory under `src/textanalysis_tool` called `greetings` and add a file called
+Create a directory under `src/vehicle_module` called `greetings` and add a file called
 `greet.py` with a function called greet that prints out the following:
 
 ```
@@ -268,21 +266,21 @@ How do you call this function from your testing script?
 :::::::::::::::: solution
 
 ```python
-from textanalysis_tool.say_hello.greetings import greet
+from vehicle_module.engine.sounds import play_engine_sound
 
-greet("My Name")
+play_engine_sound(3000)
 ```
 
 You could also include this line in our existing `__init__.py` file:
 
 ```python
-from textanalysis_tool.say_hello.greetings import greet
+from vehicle_module.engine.sounds import play_engine_sound
 ```
 
 or add another `__init__.py` and include the following line:
 
 ```python
-from textanalysis_tool.say_hello.greetings import greet
+from vehicle_module.engine.sounds import play_engine_sound
 ```
 
 :::::::::::::::::::::::::
@@ -301,10 +299,10 @@ Building on the last challenge, the first line of our greeting is identical to t
 In our greetings.py file:
 
 ```python
-from textanalysis_tool import hello
+from vehicle_module import honk_horn
 
-def greet(name):
-    return hello(name) + "\nIt's nice to meet you!"
+def play_engine_sound(rpm):
+    return honk_horn(1) + f"\nVroom! Engine at {rpm} RPM"
 ```
 
 :::::::::::::::::::::::::
@@ -315,11 +313,11 @@ def greet(name):
 Why are you bothering to write out the entire module path in greetings.py? Can't you just do this:
 
 ```python
-from ..my_module import hello
+from ..my_module import honk_horn
 
-def greet(name):
-    hello(name)
-    print("It's nice to meet you!")
+def play_engine_sound(rpm):
+    honk_horn(1)
+    print(f"Vroom! Engine at {rpm} RPM")
 ```
 
 Yes, you absolutely can! The dot-notation used in python pathing can use `..` to refer to the
