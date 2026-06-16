@@ -82,6 +82,17 @@ have UV installed and working by typing `uv --version`. You should see something
 ![Checking that UV is installed](./fig/01-virtual-environments/uv_version.PNG){alt='Checking that
 uv is installed by running "uv --version"'}
 
+::: callout
+
+If you are using an older version of `uv`, it should still work for the purposes of this workshop,
+but some of the outputs might look different. Updating `uv` to the latest version will depend on
+how you installed it.
+
+- If you installed `uv` with `pip`, you can update it with `python -m pip install --upgrade uv`.
+- If you installed `uv` from binaries, you can use `uv self update`.
+
+:::
+
 We can start off with a new project with UV by running the command `uv init`. This will
 automatically create a couple files for us:
 
@@ -102,7 +113,7 @@ about our project in a fairly readable format:
 
 ```toml
 [project]
-name = "textanalysis-tool-{my-name}"
+name = "vehicle-module-{my-name}"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -144,11 +155,25 @@ import sys
 sys.executable
 ```
 
+You should see something like this:
+![](./fig/01-virtual-environments/python_executable_before_venv.PNG){alt='The output of the "sys.executable" command showing the location of the python executable before activating the virtual environment'}
+
 You can type `exit` to leave the python interpreter
 
-You should see the path to the location of the python executable on your machine. Now let's activate
-our environment. The exact command will depend on your operating system, but if you look above the
-python code to the output of the `uv venv` command, you should see the correct command.
+The value printed after `sys.executable` will be the path to the python executable that is started
+when you run the python interpreter from your terminal. Now let's activate our environment. The
+exact command will depend on your operating system, but if you look above the python code to the
+output of the `uv venv` command, you should see the correct command.
+
+::: tab
+
+### Windows
+
+```bash
+.venv/bin/activate
+```
+
+### Linux
 
 ```bash
 source .venv/bin/activate
@@ -158,7 +183,7 @@ If this command works properly, you should see that before your prompt is now so
 parenthesis:
 
 ```
-(textanalysis-tool) D:\Documents\Projects\textanalysis-tool>
+(vehicle-module) E:\Documents\Projects\vehicle-module>
 ```
 
 Let's start up the python interpreter again and check the location of our executable:
@@ -172,12 +197,12 @@ What you should now see is that the executable is located in the .venv/Scripts d
 project:
 
 ```
-(textanalysis-tool) D:\Documents\Projects\textanalysis-tool>python
-Python 3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)] on win32
+(vehicle-module) E:\Documents\Projects\vehicle-module>python
+Python 3.13.5 (main, Jun 12 2025, 12:42:35) [MSC v.1943 64 bit (AMD64)] on win32
 Type "help", "copyright", "credits" or "license" for more information.
 >>> import sys
 >>> sys.executable
-'D:\\Documents\\Projects\\textanalysis-tool\\.venv\\Scripts\\python.exe'
+'E:\\Documents\\Projects\\vehicle-module\\.venv\\Scripts\\python.exe'
 ```
 
 Exit out of the interpreter and deactivate the virtual environment with `deactivate`.
@@ -215,7 +240,7 @@ here: [Python.gitignore from GitHub](https://github.com/github/gitignore/blob/ma
 :::
 
 Next, let's set up a repository on GitHub to store our code. We'll make an entirely blank
-repository, with the same name as our project: "textanalysis-tool".
+repository, with the same name as our project: "vehicle-module".
 
 ![Creating a new repository](./fig/01-virtual-environments/new-repo.PNG){alt='The Github interface
 for creating a new repository'}
@@ -228,11 +253,16 @@ machine.
 
 :::
 
-First, we'll initialize a git repository locally, making an initial commit with the files that uv
-generated:
+::: prereq
+
+If you are using an older version of `uv`, the .git folder may not be created as part of the
+`uv init` command. If this is the case, you can create a git repository with the command `git init`.
+
+:::
+
+First, we'll make an initial commit with the files that uv generated:
 
 ```
-git init
 git add .gitignore .python-version README.md main.py pyproject.toml
 git commit -m "Initial commit"
 ```
@@ -240,7 +270,7 @@ git commit -m "Initial commit"
 Then we'll follow the directions for creating a new repository:
 
 ```
-git remote add origin https://github.com/{username}/textanalysis-tool.git
+git remote add origin https://github.com/{username}/vehicle-module.git
 git branch -M main
 git push -u origin main
 ```
@@ -262,20 +292,20 @@ And with that, we're ready to start writing our tool!
 
 ## Challenge 1: Adding a Package Dependency
 
-Now that we have our project set up, let's add a project dependency. Later on in the workshop, we'll
-be parsing HTML documents, so let's add the `beautifulsoup4` package to our project.
+Now that we have our project set up, let's add a project dependency. Let's say we needed to pull
+down data from a web API. We could use the built-in `urllib` module, but it can be a bit clunky to
+work with. A popular alternative is the `requests` package, which provides a much nicer interface
+for making HTTP requests. Let's add `requests` to our project with UV.
 
 Try the following command
 
 ```
-uv add beautifulsoup4
+uv add requests
 ```
 
 Take a look at the `pyproject.toml` and `uv.lock` files. What changed? What is the purpose of each
 file?
 
-What is the difference between the command `uv add beautifulsoup4` and
-`uv pip install beautifulsoup4`?
 
 :::::::::::::::: solution
 
@@ -284,13 +314,56 @@ project depends on. The `uv.lock` file is a machine readable file that contains 
 of all packages that were installed, including any dependencies of the packages we explicitly
 installed.
 
-`uv add` will add the package to the `pyproject.toml` file, and install the package into our virtual
-environment. `uv pip install` will install the package into our virtual environment, but will not
-add it to the `pyproject.toml` file.
+```toml
+[project]
+name = "vehicle-module"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "requests>=2.34.2",
+]
+```
 
 :::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 2: Adding a Package Dependency to a Group
+
+Later on in this workshop, we will be writing some tests for our code using the `pytest` package.
+
+Try the following command:
+
+```
+uv add pytest --group dev
+```
+
+Take a look at the `pyproject.toml` and `uv.lock` files. What changed?
+
+
+:::::::::::::::: solution
+
+Including the `--group dev` flag when we added `pytest` caused it to be added to a new section in
+the `pyproject.toml` file:
+
+```toml
+[dependency-groups]
+dev = [
+    "pytest>=9.1.0",
+]
+```
+
+This is useful if we have packages that are only needed by someone who is developing the project,
+but not a user of the project.
+
+:::::::::::::::::::::::::
+
+:::::::::::::::::::::::::::::::::::::::::::::::
+
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
