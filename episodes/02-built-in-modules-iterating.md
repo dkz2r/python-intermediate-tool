@@ -26,14 +26,20 @@ The `collections` and `itertools` modules have useful tools for working with dat
 
 The collections module allows us to use alternative data structures to Python's built-in containers; like dict, list, set, and tuple.
 
-# When are collections useful? (might delete later)
-
 Using collections module can solve some common data-handling problems in a simpler and cleaner way.
-If our code becomes too long, repetitive or less readable, we could consider using collections.
+Things like:
 
-### How can collections make working with data easier?
+- How can I quickly count elements in a container?
+- How can I easily add elements to a queue, that then removes them as they are not used?
+- How can I quickly come up with all permutations of a list of objects?
 
-#### Counting repeated values
+## How can collections make working with data easier?
+
+### Counting repeated values
+
+Let's start with a common problem: How many times do specific elements appear in a given list? We 
+could write our own code to do this, using a dictionary to store the elements as we see them and
+incrementing the key each time we see them:
 
 ```python
 orders = ["pizza", "burger", "pizza", "sushi", "burger", "pizza"]
@@ -52,6 +58,9 @@ Output:
 {'pizza': 3, 'burger': 2, 'sushi': 1}
 ```
 
+But we're lazy! This is a common enough piece of code to write that someone else has already 
+written an implementation and added it to the built-in python module `collections`:
+
 ```python
 from collections import Counter
 
@@ -66,13 +75,39 @@ Output:
 Counter({'pizza': 3, 'burger': 2, 'sushi': 1})
 ```
 
-Here, thanks to the collections library, we don't have to write the counting logic ourselves, instead we use the predefined Counter class that handles the counting for us.
+Here, thanks to the collections library, we don't have to write the counting logic ourselves, 
+instead we use the predefined Counter class that handles the counting for us.
+ 
+But notice that the result we get is not a `dict`, but a `Counter` object. This object can do many 
+of the same things as a dict, but has some additional methods that save us from writing mode code 
+again!
 
-In this example, if we want to find the most common order, we can even use a predefined function in the Counter class.
+For example, let's take our dictionary result from above. If we want to find the value that appear 
+most frequently in the dictionary, we can start with something like this:
 
 ```python
-top_order = count.most_commons(1)[0][0] # first item from the most common (item, count) pair
-print(top_order)
+counts = {'pizza': 3, 'burger': 2, 'sushi': 1}
+
+most_common = (None, 0)
+for key, count in counts.items():
+    if count > most_common[1]:
+        most_common = key, count
+
+print("Most Common value:", most_common)
+```
+
+Output:
+```
+Most Common value: ("pizza", 3)
+```
+
+So that works for our example, but what if there's a tie? For instance, what if we added a key to
+`counts` called "chips" that also appeared 3 times? We could start adding to our code, but the 
+`Counter` object comes pre-built with a method to do exactly that:
+
+```python
+most_common = count.most_commons(1) # first item from the most common (item, count) pair
+print("Most Common value:", top_order)
 ```
 
 Output:
