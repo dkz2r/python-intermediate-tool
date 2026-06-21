@@ -30,6 +30,7 @@ generated automatically by uv. Your project folder should now look like this:
 vehicle-module/
 ├── src/
 │   └── vehicle_module/
+├── .venv
 ├── .gitignore
 ├── .python-version
 ├── pyproject.toml
@@ -54,11 +55,11 @@ The `__init__.py` file is a special filename in python that indicated that the d
 treated as a package. Often these files are simply blank, however we can also include some
 additional code to initialize the package or set up any necessary imports, as we will see later.
 
-Note that this not only applies to the top-level directory of the package, but also to any 
-subdirectories that we want to include as part of the package! Basically, anything that we want to 
+Note that this not only applies to the top-level directory of the package, but also to any
+subdirectories that we want to include as part of the package! Basically, anything that we want to
 be able to easily import into our code should have an `__init__.py` file in its directory.
 
-If you have a directory without an `__init__.py` file, you can still import code from it, but you 
+If you have a directory without an `__init__.py` file, you can still import code from it, but you
 will need to use the full path to the file in your import statement.
 
 :::
@@ -66,10 +67,8 @@ will need to use the full path to the file in your import statement.
 Let's create a code file now, called `horn_noises.py` and put a simple function in it:
 
 ```python
-
 def honk_horn(times = 1):
     return "Honk! " * times
-
 ```
 
 Our project folder should now look like this:
@@ -85,6 +84,16 @@ vehicle-module/
 ├── pyproject.toml
 └── README.md
 ```
+
+We want to be able to use this function in our code, so let's make it accessible by adding a line
+to our `__init__.py` file:
+
+```python
+from . import horn_noises
+```
+
+This tells python that when we import the `vehicle_module` package, it should also import the
+`horn_noises` module that we have in the same directory.
 
 ## Previewing Our Module
 
@@ -115,7 +124,7 @@ vehicle-module/
 │       ├── __init__.py
 │       └── horn_noises.py
 ├── tests/
-│   └── test_horn_noises.py
+│   └── vehicle_module_tests.py
 ├── .gitignore
 ├── .python-version
 ├── pyproject.toml
@@ -132,14 +141,14 @@ we'll see how useful this is.
 :::
 
 Let's run the script from our command line. If you're in the root directory of the project, your
-command will look something like `uv run tests/test_horn_noises.py`.
+command will look something like `uv run tests/vehicle_module_tests.py`.
 
 Aaaand... It doesn't work!
 
 ```python
-E:\Documents\Projects\vehicle-module>uv run tests/test_horn_noises.py
+E:\Documents\Projects\vehicle-module>uv run tests/vehicle_module_tests.py
 Traceback (most recent call last):
-  File "E:\Documents\Projects\vehicle-module\tests\test_horn_noises.py", line 1, in <module>
+  File "E:\Documents\Projects\vehicle-module\tests\vehicle_module_tests.py", line 1, in <module>
     from vehicle_module.horn_noises import honk_horn
 ModuleNotFoundError: No module named 'vehicle_module'
 ```
@@ -150,12 +159,18 @@ The reason for this is that we never actually told python where it can find our 
 
 When you run a command like `import pandas`, what python actually does is search the a series of
 directories in order looking for a module file called `pandas.py`. We can see what directories will
-be checked by printing the `sys.path` variable.
+be checked by printing the `sys.path` variable. Start up a python shell in the terminal and run
+the following code:
 
 ```python
 import sys
-print(sys.path)
+sys.path
 ```
+
+Exactly what you see will depend on your specific machine, but what you should see is a list of
+directories that python will check when you try to import a module. This includes the current
+working directory (''), as well as any directories that are included in the `PYTHONPATH` environment
+variable.
 
 We are only interested in checking our current code, not in installing it as a package. However
 because we have the `__init__.py` file in our package directory, if we add the exact or relative
@@ -169,9 +184,9 @@ the path:
 import sys
 sys.path.insert(0, "./src")
 
-from vehicle_module.horn_noises import honk_horn
+import vehicle_module
 
-result = honk_horn(2)
+result = vehicle_module.horn_noises.honk_horn(2)
 
 if result == "Honk! Honk! ":
     print("Test passed!")
@@ -196,8 +211,8 @@ directories, but just in case, this avoids some potential issues.
 ## Dot Notation in Imports
 
 You probably noticed that our function call mimics the file and directory structure of the project.
-We have the project directory (`vehicle_module`), then the filename (`horn_noises`), and finally the 
-function name (`honk_horn`). Python treats all of these similarly when trying to locate a function 
+We have the project directory (`vehicle_module`), then the filename (`horn_noises`), and finally the
+function name (`honk_horn`). Python treats all of these similarly when trying to locate a function
 or module. We can also modify our import to make the code a little neater:
 
 ```python
@@ -243,36 +258,18 @@ clarity about where the function is coming from when reading the code.
 
 :::
 
-## The __init__.py File
+::: spoiler
 
-We can see that in order to import our function, we have to include both the name of the module
-and the name of the file before specifying the name of the function. Sometimes this can get
-tedious, especially if there is a directory in our project with lots of files and different
-functions in each file. This is where we can simplify things a little by adding a tiny bit of code
-to our `__init__.py` file:
+If the shorter import syntax is so bad, why would I want to type it all out? Can't I just use the
+shorter syntax? And maybe add a comment to clarify where the function is coming from?
 
-```python
-from .horn_noises import honk_horn
-```
+Yes, you absolutely can! The dot-notation used in python pathing can use `..` to refer to the
+parent directory, or even `...` to refer to a grandparent directory.
 
-We can run our testing script just the same way as before and it will still work, but we can also
-now leave out the `.horn_noises` part:
+The reason we're not doing this here is for clarity, as recommended in
+[PEP8](https://www.python.org/dev/peps/pep-0008/#imports).
 
-```python
-from vehicle_module import honk_horn
-
-result = honk_horn(2)
-
-if result == "Honk! Honk! ":
-    print("Test passed!")
-else:
-    print("Test failed!")
-```
-
-## Git Add / Commit
-
-Before we forget, now that we have some simple code up and running, let's add it to our git
-repository.
+:::
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
@@ -307,7 +304,15 @@ Don't forget to add a `__init__.py` file to the `efficiency` directory as well!
 
 ::: hint
 
-Just like we used the dot notation to specify the file and function we wanted earlier, we can also 
+Add a line to the `__init__.py` file in the `vehicle_module` directory to import the `efficiency`
+submodule, as well as a line to the `__init__.py` file in the `efficiency` directory to import the
+`fuel` module.
+
+:::
+
+::: hint
+
+Just like we used the dot notation to specify the file and function we wanted earlier, we can also
 use it to specify the directory.
 
 :::
@@ -324,12 +329,6 @@ else:
     print("Test failed!")
 ```
 
-You could also include this line in our existing `__init__.py` file:
-
-```python
-from vehicle_module.efficiency.fuel import calculate_liters_per_100km
-```
-
 :::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -338,7 +337,7 @@ from vehicle_module.efficiency.fuel import calculate_liters_per_100km
 ## Challenge 2: Inter-Module imports
 
 We have some tests with some simple functions, but what happens when we have functions in two files
-that need to call each other? Start a new file in the `vehicle_module` directory called 
+that need to call each other? Start a new file in the `vehicle_module` directory called
 `engine_noise.py` and add the following code to it:
 
 ```python
@@ -354,10 +353,57 @@ new file?
 In our .py file:
 
 ```python
-from vehicle_module.horn_nois import honk_horn
+from vehicle_module.horn_noise import honk_horn
 
 def play_engine_sound(rpm):
     return honk_horn(1) + f"\nVroom! Engine at {rpm} RPM"
+```
+
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge 3: Check that our engine noise function is working
+
+We never added a test to check that our `play_engine_sound` function is working properly. Add a
+test for this function in our testing script.
+
+::: hint
+
+Make sure that you've added the file to the `__init__.py` file in the `vehicle_module` directory
+so that it can be imported!
+
+:::
+
+:::::::::::::::: solution
+
+Our test script should now look something like this:
+
+```python
+import sys
+
+sys.path.insert(0, "./src")
+
+import vehicle_module
+
+result = vehicle_module.horn_noises.honk_horn(2)
+if result == "Honk! Honk! ":
+    print("Test passed!")
+else:
+    print("Test failed!")
+
+result = vehicle_module.engine_noise.play_engine_sound(3000)
+if result == "Honk! \nVroom! Engine at 3000 RPM":
+    print("Test passed!")
+else:
+    print("Test failed!")
+
+result = vehicle_module.efficiency.fuel.calculate_liters_per_100km(km=50, liters=2.5)
+if result == 5.0:
+    print("Test passed!")
+else:
+    print("Test failed!")
 ```
 
 :::::::::::::::::::::::::
@@ -374,32 +420,11 @@ vehicle-module/
 │       ├── horn_noises.py
 │       ├── engine_noise.py
 │       └── efficiency/
-│           ├── __init__.py
 │           └── fuel.py
 ├── tests/
-│   ├── test_horn_noises.py
-│   └── test_engine_noise.py
+│   └── vehicle_module_tests.py
 ...
 ```
-
-::: spoiler
-
-Why are you bothering to write out the entire module path in greetings.py? Can't you just do this:
-
-```python
-from vehicle_module import honk_horn
-
-def play_engine_sound(rpm):
-    return honk_horn(1) + f"\nVroom! Engine at {rpm} RPM"
-```
-
-Yes, you absolutely can! The dot-notation used in python pathing can use `..` to refer to the
-parent directory, or even `...` to refer to a grandparent directory.
-
-The reason we're not doing this here is for clarity, as recommended in
-[PEP8](https://www.python.org/dev/peps/pep-0008/#imports).
-
-:::
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints
