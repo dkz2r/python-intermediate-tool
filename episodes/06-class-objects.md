@@ -25,37 +25,41 @@ You can think of a class object as a kind of "blueprint" for an object. It defin
 the object can have, and what methods it can perform. Once a class is defined, you can create any
 number of objects based on that class, each of which is referred to as an "instance" of that class.
 
-As an example, let's imagine a Car. A Car has many properties and can do many things, but for our
-purposes, let's limit them slightly. Our Car will have a make, model, year, and color, and it will
-be able to honk, and be painted.
+As an example, let's imagine a Bank Account. A Bank Account has many properties and can do many
+things, but for our purposes, let's limit them slightly. Our Bank Account will have an account
+holder and balance, and it will be able to deposit, withdraw, and check the balance.
 
-The make, model, year, and color are all "properties" of the car. Honking a horn and being painted
-are both "methods" of the car. Here's a diagram of our car object:
+The account holder and balance are all "properties" of the bank account. Depositing, withdrawing,
+and checking the balance are all "methods" of the bank account. Here's a diagram of our bank
+account object:
 
-![Car Class object example](./fig/03-class-objects/car_class.PNG){alt='Car Class object example'}
+![Bank Account Class object example](./fig/03-class-objects/bank_account_class.PNG){alt='Bank Account Class object example'}
 
 In python we can define a class object like this:
 
 ```python
-class Car:
-    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "gasoline"):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.color = color
-        self.fuel = fuel
+class BankAccount:
+    def __init__(self, account_holder: str, balance: float = 0.0):
+        self.account_holder = account_holder
+        self.balance = balance
 
-    def honk(self) -> str:
-        return "beep"
-
-    def paint(self, new_color: str) -> None:
-        self.color = new_color
-
-    def noise(self, speed: int) -> str:
-        if speed <= 10:
-            return "putt putt"
+    def deposit(self, amount: float) -> None:
+        if amount > 0:
+            self.balance += amount
         else:
-            return "vrooom"
+            raise ValueError("Deposit amount must be positive")
+
+    def withdraw(self, amount: float) -> None:
+        if amount > 0:
+            if self.balance >= amount:
+                self.balance -= amount
+            else:
+                raise ValueError("Insufficient funds")
+        else:
+            raise ValueError("Withdrawal amount must be positive")
+
+    def get_balance(self) -> float:
+        return self.balance
 ```
 
 ::: callout
