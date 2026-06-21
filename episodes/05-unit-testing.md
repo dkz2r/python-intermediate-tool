@@ -21,7 +21,7 @@ exercises: 2
 
 ## Unit Testing
 
-We have our two little test files, but you might imagine that it's not particularly efficient to
+We have our little test file, but you might imagine that it's not particularly efficient to
 always write individual scripts to test our code. What if we had a lot of functions or classes?
 Or a lot of different ideas to test? What if our objects changed down the line? Our existing
 modules are going to be difficult to maintain, and, as you may have expected, there is already a
@@ -49,26 +49,26 @@ as a few edge cases.
 
 ::: discussion
 
-What are some edge cases that you can think of for the `hello` function we wrote earlier?
+What are some edge cases that you can think of for the `honk_horn` function we wrote earlier?
 
-What about the `Document` class?
+What about the `calculate_liters_per_100km` function?
 
 :::
 
 ::: spoiler
 
-Some edge cases for the `hello` function could include:
+Some edge cases for the `honk_horn` function could include:
 
-- Passing in an empty string
-- Passing in a very long string
-- Passing in something that is not a string (e.g. a number or a list)
+- The user provides a negative number for `times`
+- The user provides a non-integer value for `times`
+- The user provides a very large number for `times`
 
-Some edge cases for the `Document` class could include:
+Some edge cases for the `calculate_liters_per_100km` function could include:
 
-- Passing in a file path that does not exist
-- Passing in a file that is not a text file
-- Passing in a file that is empty
-- Passing in a word that does not exist in the document when testing `get_word_occurrence`
+- Passing in a distance of zero
+- Passing in a negative distance
+- Passing in a negative amount of liters
+- Passing in non-numeric values for either parameter
 
 :::
 
@@ -94,7 +94,7 @@ called "dependency groups" (your version number may be different):
 ```toml
 [dependency-groups]
 dev = [
-    "pytest>=8.4.2",
+    "pytest>=9.1.1",
 ]
 ```
 
@@ -107,15 +107,26 @@ any test files that follow a certain naming convention. By default, pytest will 
 that start with `test_` or end with `_test.py`. Inside these files, pytest will look for functions
 that start with `test_`.
 
-Now, our files already have the correct names, so we just need to change the contents. Let's start
-with `test_say_hello.py`. Open it up and replace the contents with the following:
+Our test file doesn't start with `test_`. There is a way to change the naming convention that
+pytest uses, but for now, let's just rename our test file to `test_vehicle_module.py`.
+
+Next, let's create a test for our `honk_horn` function based on the one we wrote before. Add a
+function at the top of the file like this
 
 ```python
-from textanalysis_tool.say_hello import hello
+import sys
 
-def test_hello():
-    assert hello("My Name") == "Hello, My Name!"
+sys.path.insert(0, "./src")
+
+import vehicle_module
+
+def test_honk_horn():
+    assert vehicle_module.honk_horn(2) == "Honk! Honk! "
 ```
+
+`pytest` uses the `assert` statement to check if the output of a function is what we expect. If the
+assertion is True, then the test passes. If the assertion is False, then the test fails. Tests can
+have multiple assertions, and all of them need to be True for the test to pass.
 
 In our previous test file, we had to add the path to our module each time. Now that we are using
 `pytest`, we can use a special file called `conftest.py` to add this path automatically. Create a
@@ -125,6 +136,15 @@ file called `conftest.py` in the `tests` directory and add the following code to
 import sys
 
 sys.path.insert(0, "./src")
+```
+
+Then we can remove the `sys.path.insert` line from our test file, and just have the import statement:
+
+```python
+import vehicle_module
+
+def test_honk_horn():
+    assert vehicle_module.honk_horn(2) == "Honk! Honk! "
 ```
 
 ::: instructor
@@ -141,7 +161,7 @@ uv run pytest
 
 ::: callout
 
-Note that we are using `uv run` to run pytest, this ensures that pytest is run in the correct
+Note that we are using `uv run` to run `pytest`, this ensures that `pytest` is run in the correct
 environment with all the dependencies we have installed.
 
 :::
@@ -150,48 +170,39 @@ You should see output similar to the following:
 
 ```
 ============================= test session starts ==============================
-platform win32 -- Python 3.13.7, pytest-8.4.2, pluggy-1.6.0
-rootdir: E:\Documents\Projects\textanalysis-tool
+platform win32 -- Python 3.13.5, pytest-9.1.1, pluggy-1.6.0
+rootdir: E:\Documents\Projects\vehicle-module
 configfile: pyproject.toml
 collected 1 item
 
-tests\test_say_hello.py .                                          [100%]
-============================== 1 passed in 0.12s ===============================
+tests\test_vehicle_module.py .                                            [100%]
+
+============================== 1 passed in 0.03s ===============================
 ```
 
-Why didn't it run the other test file? Because even though the file is named correctly, it
-doesn't contain any functions that start with `test_`. Let's fix that now.
+Why didn't it run the other test code? Because the need to be in functions that start with `test_`.
+This is part of the test discovery process that pytest uses. If we want to test other functions, we
+can add more functions.
 
-Open up `test_document.py` and replace the contents with the following:
+Let's convert the rest of our tests to `pytest` tests. The updated test file should look like this:
 
 ```python
-from textanalysis_tool.document import Document
-
-def test_create_document():
-    Document.CONTENT_PATTERN = r"(.*)"
-    doc = Document(filepath="tests/example_file.txt")
-    assert doc.filepath == "tests/example_file.txt"
+import vehicle_module
 
 
-def test_document_word_count():
-    Document.CONTENT_PATTERN = r"(.*)"
-    doc = Document(filepath="tests/example_file.txt")
-    assert doc.get_line_count() == 2
+def test_honk_horn():
+    assert vehicle_module.horn_noises.honk_horn(2) == "Honk! Honk! "
 
 
-def test_document_word_occurrence():
-    Document.CONTENT_PATTERN = r"(.*)"
-    doc = Document(filepath="tests/example_file.txt")
-    assert doc.get_word_occurrence("test") == 2
+def test_play_engine_sound():
+    assert (
+        vehicle_module.engine_noise.play_engine_sound(3000) == "Honk! \nVroom! Engine at 3000 RPM"
+    )
+
+
+def test_calculate_liters_per_100km():
+    assert vehicle_module.efficiency.fuel.calculate_liters_per_100km(km=50, liters=2.5) == 5.0
 ```
-
-::: callout
-
-Our example file doesn't exactly look like a Project Gutenberg text file, so we need to change the
-`CONTENT_PATTERN` to match everything. This is a class level variable, so we can change it on the
-class itself, rather than on the instance.
-
-:::
 
 Let's run our tests again:
 
@@ -204,13 +215,12 @@ You should see output similar to the following:
 ```
 ============================= test session starts ==============================
 platform win32 -- Python 3.13.7, pytest-8.4.2, pluggy-1.6.0
-rootdir: E:\Documents\Projects\textanalysis-tool
+rootdir: E:\Documents\Projects\vehicle-module
 configfile: pyproject.toml
 collected 4 items
 
-tests\test_document.py ...                                      [ 75%]
-tests\test_say_hello.py .                                       [100%]
-============================== 4 passed in 0.15s ===============================
+tests\test_vehicle_module.py ...                                [100%]
+============================== 3 passed in 0.15s ===============================
 ```
 
 You can see that all of the tests have passed. There is a small green pip for each test that was
@@ -219,17 +229,11 @@ of the if statements, and just use the `assert` statement to check if the output
 
 ### Testing Edge Cases / Exceptions
 
-Let's add an edge case to our tests. Open up `test_say_hello.py` and add a test case for an empty
-string:
+Let's add an edge case to our tests. After our `test_honk_horn` function, add the following test:
 
 ```python
-from textanalysis_tool.say_hello import hello
-
-def test_hello():
-    assert hello("My Name") == "Hello, My Name!"
-
-def test_hello_empty_string():
-    assert hello("") == "Hello, !"
+def test_honk_horn_zero():
+    assert vehicle_module.horn_noises.honk_horn(0) == ""
 ```
 
 Run the tests again:
@@ -239,23 +243,18 @@ uv run pytest
 ```
 
 We get passing tests, which is what we expect. But we are the ones in charge of the function, what
-if we say that if the user doesn't provide a name, we want to raise an exception? Let's change the
-test to say that if the user provides an empty string, we want to raise a `ValueError`:
+if we say that if the user provides a value of 0 or less, we want the function to raise a
+`ValueError`? We can write a test that checks not only for the output of the function, but also for
+which exception it raises. Update the `test_honk_horn_zero` function to the following:
 
 ```python
 import pytest
 
-from textanalysis_tool.say_hello import hello
+# Existing code
 
-
-def test_hello():
-    assert hello("My Name") == "Hello, My Name!"
-
-
-def test_hello_empty_string():
+def test_honk_horn_zero():
     with pytest.raises(ValueError):
-        hello("")
-
+        vehicle_module.horn_noises.honk_horn(0)
 ```
 
 Run the tests again:
@@ -264,14 +263,30 @@ Run the tests again:
 uv run pytest
 ```
 
-This time, we get a failing test, because the `hello` function DID NOT raise a `ValueError`. Let's
-change the `hello` function to raise a `ValueError` if the name is an empty string:
+```
+================================= FAILURES =====================================
+_____________________________ test_honk_horn_zero ______________________________
+
+    def test_honk_horn_zero():
+>       with pytest.raises(ValueError):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^
+E       Failed: DID NOT RAISE ValueError
+
+tests\test_vehicle_module.py:11: Failed
+============================= short test summary info ==========================
+FAILED tests/test_vehicle_module.py::test_honk_horn_zero - Failed: DID NOT RAISE ValueError
+========================== 1 failed, 3 passed in 0.13s =========================
+```
+
+This time, we get a failing test, because the `honk_horn` function DID NOT raise a `ValueError`.
+Let's change the function in `src/vehicle_module/horn_noises.py` to the following:
 
 ```python
-def hello(name: str = "User"):
-    if name == "":
-        raise ValueError("Name cannot be empty")
-    return f"Hello, {name}!"
+def honk_horn(times=1):
+    if times < 1:
+        raise ValueError("Times must be at least 1")
+    return "Honk! " * times
+
 ```
 
 Running the tests again, we can see that all the tests pass.
