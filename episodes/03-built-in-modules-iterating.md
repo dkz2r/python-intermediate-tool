@@ -32,18 +32,6 @@ Things like:
 - How can I easily add elements to a queue, that then removes them as they are not used?
 - How can I quickly come up with all permutations of a list of objects?
 
-::: callout
-
-What is an iterable?
-
-An iterable is a Python object such as a list, tuple, string or a dictionary that we can loop
-through.
-
-More specifically, an iterable is any Python object that implements the `__iter__()` method, which
-returns an iterator. An iterator is an object that implements the `__next__()` method, which
-returns the next item in the sequence when called.
-
-```
 
 ## How can collections make working with data easier?
 

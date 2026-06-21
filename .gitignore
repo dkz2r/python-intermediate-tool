@@ -53,3 +53,4 @@ po/*~
 renv/sandbox # OPTIONAL
 
 .vscode/
+.cspell/
