@@ -100,7 +100,7 @@ This tells python that when we import the `vehicle_module` package, it should al
 It's all well and good to write some code in here, but how can we actually use it? Let's create a
 python script to test our module.
 
-Let's create a directory called "tests", and start a new file called `test_horn_noises.py` in it.
+Let's create a directory called "tests", and start a new file called `vehicle_module_tests.py` in it.
 
 Add the following code to it:
 
@@ -345,15 +345,15 @@ def play_engine_sound(rpm):
     return honk_horn(1) + f"\nVroom! Engine at {rpm} RPM"
 ```
 
-We're using the `honk_horn` function from the `noises.py` file, but how do we import it into this
-new file?
+We're using the `honk_horn` function from the `horn_noises.py` file, but how do we import it into 
+this new file?
 
 :::::::::::::::: solution
 
 In our .py file:
 
 ```python
-from vehicle_module.horn_noise import honk_horn
+from vehicle_module.horn_noises import honk_horn
 
 def play_engine_sound(rpm):
     return honk_horn(1) + f"\nVroom! Engine at {rpm} RPM"

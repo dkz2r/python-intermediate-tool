@@ -39,8 +39,9 @@ In python we can define a class object like this:
 
 ```python
 class BankAccount:
-    def __init__(self, account_holder: str, balance: float = 0.0):
+    def __init__(self, account_holder: str, account_number: int, balance: float = 0.0):
         self.account_holder = account_holder
+        self.account_number = account_number
         self.balance = balance
 
     def deposit(self, amount: float) -> None:
@@ -70,6 +71,20 @@ the python community.
 
 :::
 
+::: callout
+
+The `get_balance` method is an example of a "getter" method, which simple exposes a property of the 
+class. In this case, it allows us to access the `balance` property of the class without directly
+accessing the variable itself. This is a common pattern in object-oriented programming, and it can
+be useful for a number of reasons, such as allowing us to add additional logic when accessing the
+property (e.g. checking if the balance is negative before returning it), or allowing us to change
+the internal representation of the property without affecting the external interface of the class.
+
+Python has a special decorator called `@property` that allows us to define getter methods in a more
+elegant way - we'll get to decorators in a later episode. 
+
+:::
+
 
 Some of this might look familiar if you think about how we define functions in Python. There's a
 `def` keyword, followed by the function name and parentheses. Inside the parentheses, we can define
@@ -77,15 +92,16 @@ parameters, and these parameters can contain default values. We can also include
 both parameters and return values. However all of this is indented one level, underneath the
 `class` keyword, which is followed by our class name.
 
-Note that this is just our blueprint - it doesn't refer to any specific car, just the general idea
-of a car. Also note the `__init__` method. This is a special method which is called whenever you
-"instantiate" a new object. The parameters for this function are supplied when we first create an
-object and function similarly to a method, in that if no default value is provided, it is required
-in order to create the object, and if a default value is provided, it is optional.
+Note that this is just our blueprint - it doesn't refer to any specific bank account, just the 
+general idea of a bank account. Also note the `__init__` method. This is a special method which is 
+called whenever you "instantiate" a new object. The parameters for this function are supplied when 
+we first create an object and function similarly to a method, in that if no default value is 
+provided, it is required in order to create the object, and if a default value is provided, it is 
+optional.
 
-An instance of a car, in this case called "my_car" might look something like this:
+An instance of a bank account, in this case called "my_account" might look something like this:
 
-![Car Instance Example](./fig/03-class-objects/car_instance.PNG){alt='Car Instance example'}
+![Bank Account Instance Example](./fig/03-class-objects/bank_account_instance.PNG){alt='Bank Account Instance example'}
 
 ::: callout
 
@@ -94,85 +110,105 @@ What exactly is "an instance"?
 An instance is how we refer to a specific object that has been created from a class. The class is
 the "blueprint", while the instance is the actual object that is created based on that blueprint.
 
-In our example, `my_car` is an instance of the `Car` class. It has its own specific values for the
-properties defined in the class (make, model, year, color), and it can use the methods defined in
-the class (honk, paint).
+In our example, `my_account` is an instance of the `BankAccount` class. It has its own specific 
+values for the properties defined in the class (balance, account_holder), and it can use the 
+methods defined in the class (deposit, withdraw, get_balance).
 
 :::
 
 Also note that each of the methods within the class object definition starts with a "self"
 argument. This is a reference to the current instance of the class, and is used to access
-variables that belong to the class. In our example, we store the make, model, year and color as
-properties of the class. When we call the `paint` method, we use `self.color` to refer to the
-current instance's color property.
+variables that belong to the class. In our example, we store the balance and account_holder as
+properties of the class. When we call the `get_balance` method, we use `self.balance` to refer to 
+the current instance's balance property.
 
-::: callout
+We can create a new instance of our `BankAccount` class like this:
 
-The `__init__` method is called a "dunder" (double underlined) method in python. There are a number
-of other dunder methods that we can define, that will interact with various built-in functions and
-operators. For example, we can define a `__str__` method, that will allow us to specify how our
-object should be represented as a string when we call `str()` on it. Likewise, we can define
-`__eq__`, which would tell python how to behave when we compare two objects for equality.
+```python
+my_account = BankAccount(account_holder="Jimmy", account_number=12345, balance=100.0)
+```
 
-:::
+This sets the `account_holder` property to "Jimmy", the `account_number` property to 12345, and the 
+`balance` property to 100.0, but *only for this specific instance* of the `BankAccount` class. If we 
+create another instance, it will have it's own `account_holder`, `account_number`, and `balance` 
+properties, which can be different from the first instance. We can check the properties of our 
+instance like this:
+
+```python
+print(my_account.account_holder)  # Output: Jimmy
+print(my_account.account_number)  # Output: 12345
+print(my_account.balance)         # Output: 100.0
+```
+
+We can create another instance of the `BankAccount` class:
+
+```python
+another_account = BankAccount(account_holder="Mike", account_number=67890, balance=2000.0)
+print(another_account.account_holder)  # Output: Mike
+print(another_account.account_number)  # Output: 67890
+print(another_account.balance)         # Output: 2000.0
+```
+
+Modifying the properties of one instance does not affect the properties of another instance:
+
+```python
+my_account.balance += 50.0
+print(my_account.balance)         # Output: 150.0
+print(another_account.balance)  # Output: 2000.0
+```
 
 ## A Class object for Our project
 
-Let's create a class object for our text analysis project. We're going to be downloading some books
-from [Project Gutenberg](https://www.gutenberg.org/). To make things easy to begin with, we'll
-limit ourselves to just the .txt files.
-
-Since we're going to create some useful objects and methods for working with documents, let's
-define a `Document` class.
+Let's create a class object for our vehicle module. Since we're going to create some useful objects
+and methods for working with vehicles, let's define a `Car` class.
 
 ::: discussion
 
-Take a look a an example txt document from Project Gutenberg:
-[Meditations, by Marcus Aurelius](https://www.gutenberg.org/cache/epub/2680/pg2680.txt)
+What properties and methods might we want to include in our Car class?
 
-What properties and methods might we want to include in our Document class?
+- Make / Model / Year
+- Color
+- Fuel
+- Honk it's horn
+- paint it a color
+- make engine noises
 
 :::
 
-It looks like there's a standard metadata section in these documents, with a Title, Author, Release
-Date, Language, and Credits. Those will probably be useful metadata. Looking at the url for this
-file, it also looks like there's an ID on Project Gutenberg.
-
-For methods, we'll need to be able to read the document from a file. And for some simple methods,
-let's count the number of lines in a document, and another method to get the number of times a
-particular word appears.
-
-Lets start writing our class object in a new file: `src/textanalysis_tool/document.py`:
+Lets start writing our class object in a new file: `src/vehicle_module/car.py`:
 
 ```python
+class Car:
+    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "gasoline"):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.color = color
+        self.fuel = fuel
+        self.speed = 0
 
-class Document:
-    def __init__(self, filepath: str, title: str, author: str = "", id: int = 0):
-        self.filepath = filepath
-        self.title = title
-        self.author = author
-        self.id = id
-        self.content = self.read(self.filepath)
+    def honk_horn(self) -> str:
+        return "Honk! Honk!"
+    
+    def paint(self, new_color: str) -> None:
+        self.color = new_color
 
-    def read(self, filepath: str) -> None:
-        with open(filepath, 'r', encoding='utf-8') as file:
-            return file.read()
-
-    def get_line_count(self) -> int:
-        return len(self.content.splitlines())
-
-    def get_word_occurrence(self, word: str) -> int:
-        return self.content.lower().count(word.lower())
+    def make_engine_noise(self) -> str:
+        if self.speed <= 10:
+            return "putt putt"
+        else:
+            return "vroom!"
 ```
 
-Our class object `Document` is a "blueprint" for a collection of methods. When we define it, we
-have to provide the class with a filepath, a title, an author, and an id. Only the filepath and the
-title are required, while the author and id are optional.
+Our class object `Car` is a "blueprint" for a collection of methods. When we define it, we need to
+provide the required parameters for the `__init__` method, which are `make`, `model`, and `year`. 
+We can optionally provide `color` and `fuel`, which will default to "grey" and "gasoline" if we
+don't provide them. 
 
 The `__init__` method is called as soon as the object is created, and we can see that in addition
 to storing the parameters to their `self` counterparts, there is an additional property called
-`self.content`. This property is used to store the entire text content of the document. We obtain
-this by calling the `self.read` method, which reads the content from the specified file.
+`self.speed`. This property is used to store the current speed of the car. It is referenced in the 
+`make_engine_noise` method, which returns a different string depending on the value of `self.speed`.
 
 ::: callout
 
@@ -186,52 +222,46 @@ outside the class if you really want to.
 
 :::
 
-There are also two methods that we've defined - `get_line_count` and `get_word_occurrence`. Neither
-of these will be called directly on the class itself, but rather on instances of the class that we
-create (as indicated by the use of `self` within the class methods). Note that these methods make
-use of the `self.content` property - this is a variable that is not defined within the method,
-so you may expect it to be out of scope. However the `self` keyword refers to the specific instance
-of the class itself, and so it has access to all of its properties and methods, including the
-`self.content` property.
+There are also three methods that we've defined - `honk_horn`, `paint`, and `make_engine_noise`. 
+None of these will be called directly on the class itself, but rather on instances of the class 
+that we create (as indicated by the use of `self` within the class methods). Note that the 
+`paint` and `make_engine_noise` methods reference the `self.color` and `self.speed` properties.
+The `self` keyword refers to the specific *instance* of the class itself, and so it has access to 
+all of its properties and methods, including the `self.color` and `self.speed` properties.
 
 ## Trying out Our Class Object
 
-Let's try out our new class object. Create a file in our "tests" directory called
-`example_file.txt` and add some text to it:
-
-```
-This is a test document. It contains words.
-It is only a test document.
+Let's try out our new class object.
 ```
 
-Next, let's create another test file. Our last one was called `test_say_hello.py`, so let's call this
-`test_document.py`:
+Next, let's create another test file. Our last one was called `vehicle_module_test.py`, so let's call this
+`car_class_test.py`:
 
 ```python
 import sys
 
 sys.path.insert(0, "./src")
 
-from textanalysis_tool.document import Document
+from vehicle_module.car import Car
 
 total_tests = 3
 passed_tests = 0
 failed_tests = 0
 
-# Check that we can create a Document object
-doc = Document(filepath="tests/example_file.txt", title="Test Document")
-if doc.title == "Test Document" and doc.filepath == "tests/example_file.txt":
+# Check that we can create a Car object
+car = Car(make="Toyota", model="Corolla", year=2020)
+if car.make == "Toyota" and car.model == "Corolla" and car.year == 2020:
     passed_tests += 1
 else:
     failed_tests += 1
 
 # Test the methods
-if doc.get_line_count() == 2:
+if car.honk_horn() == "Honk! Honk!":
     passed_tests += 1
 else:
     failed_tests += 1
 
-if doc.get_word_occurrence("test") == 2:
+if car.make_engine_noise() == "putt putt":
     passed_tests += 1
 else:
     failed_tests += 1
@@ -244,7 +274,7 @@ print(f"Failed tests: {failed_tests}")
 Now we'll run this file using our uv environment:
 
 ```bash
-uv run tests/test_document.py
+uv run tests/car_class_test.py
 ```
 
 You should see the output:
@@ -257,275 +287,280 @@ Failed tests: 0
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 1: Identify the mistake
+## Challenge: What does this code do?
 
-The following code is supposed to define a `Bird` class that inherits from the `Animal` class and
-overrides the `whoami` method to provide a specialized message. However, there is a mistake in
-the code that prevents it from working as intended. Can you identify and fix the mistake?
+Take a look at the following code. Without running it yourself, what is the output of the final 
+line? 
 
 ```python
-class Animal:
-    def __init__(self, name: str):
-        print(f"Creating an animal named {name}")
+class Cat:   
+    def __init__(self, name: str, age: int):
         self.name = name
+        self.age = age
+        self.is_sleeping = False
 
-class Bird(Animal):
-    def whoami() -> str:
-        return f"I am a bird. My name is irrelevant."
+    def meow(self) -> str:
+        if self.is_sleeping:
+            return "Zzz..."
+        else:
+            return "Meow!"
+
+    def sleep(self) -> None:
+        self.is_sleeping = True
+
+    def hear(self, sound: str) -> str:
+        if sound == "food tin":
+            self.is_sleeping = False
+        else:
+            self.is_sleeping = self.is_sleeping
+
+my_cat = Cat(name="Squire Julian Gingivere", age=14)
+my_cat.sleep()
+my_cat.hear("psst psst psst!")
+my_cat.sleep()
+print(my_cat.meow())
+my_cat.hear("food tin")
+my_cat.hear("dinner time!")
+print(my_cat.meow())
 ```
-
-::: hint
-
-When we try to run the code we get the following error:
-
-```
----------------------------------------------------------------------------
-TypeError                                 Traceback (most recent call last)
-Cell In[7], line 14
-     11         return f"I am a bird. My name is irrelevant."
-     13 animal = Bird("boo")
----> 14 animal.whoami()
-
-TypeError: Bird.whoami() takes 0 positional arguments but 1 was given
-```
-
-:::
 
 :::::::::::::::: solution
 
-We have forgotten to include the `self` parameter in the `whoami` method of the `Bird` class. The
-`self` parameter is required for instance methods in Python, as it refers to the instance of the
-class. Without it, the method cannot access instance properties or methods.
-
-:::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::::::::::
-
-
-::::::::::::::::::::::::::::::::::::: challenge
-
-## Challenge 2: The __str__ Method
-
-In our examples so far, we define an `__init__` method for our class objects. This is a special
-kind of method called a "dunder" (double underlined) method. There are a number of other dunder
-methods that we can define, that will interact with various built-in functions and operators.
-
-Try to define a `__str__` method for the following class object that will create the following
-output when run:
+The output of the final line will be "Meow!". In order to know the output, we need to follow the 
+state of the instance variable `is_sleeping` throughout the code:
 
 ```python
-class Animal:
-    def __init__(self, name: str):
-        print(f"Creating an animal named {name}")
-        self.name = name
-
-    # Your __str__ method here
-
-animal = Animal("Moose")
-print(str(animal))
-```
-
-output:
-```
-Creating an animal named Moose
-I am an animal named Moose.
-```
-
-
-:::::::::::::::: solution
-
-```python
-class Animal:
-    def __init__(self, name: str):
-        print(f"Creating an animal named {name}")
-        self.name = name
-
-    def __str__(self) -> str:
-        return f"I am an animal named {self.name}."
-
+my_cat = Cat(name="Squire Julian Gingivere", age=14)  # is_sleeping = False
+my_cat.sleep()                                        # is_sleeping = True
+my_cat.hear("psst psst psst!")                        # is_sleeping = True (no change)
+my_cat.sleep()                                        # is_sleeping = True (no change)
+print(my_cat.meow())                                  # Output: "Zzz..." (because is_sleeping == True - no effect on is_sleeping)
+my_cat.hear("food tin")                               # is_sleeping = False (because sound == "food tin")
+my_cat.hear("dinner time!")                           # is_sleeping = False (no change)
+print(my_cat.meow())                                  # Output: "Meow!" (because is_sleeping == False)
 ```
 
 :::::::::::::::::::::::::
-
-:::::::::::::::::::::::::::::::::::::::::::::::
-
-
-::::::::::::::::::::::::::::::::::::: challenge
-
-## Challenge 3: Static Methods
-
-In addition to instance methods, which operate on an instance of a class (and so have `self` as the
-first parameter), we can also define static methods. These are methods that don't operate on an
-instance of the class, and so don't have `self` as the first parameter. Instead, they are defined
-using the `@staticmethod` decorator.
-
-Create a static method called `is_animal` that takes a single parameter, `obj`, and returns
-`True` if `obj` is an instance of the `Animal` class, and `False` otherwise.
-
-```python
-class Animal:
-    def __init__(self, name: str):
-        print(f"Creating an animal named {name}")
-        self.name = name
-
-    # Your static method here
-```
-
-::: hint
-
-A decorator is a special kind of function that modifies the behavior of another function. They are
-defined using the `@` symbol, followed by the name of the decorator function. In this case, we
-use the `@staticmethod` decorator to indicate that the following method is a static method, so this
-line must be placed directly above the method definition.
-
-:::
-
-::: hint
-
-You can use the python built-in function `isinstance` to check if an object is an instance of a
-class. (https://docs.python.org/3/library/functions.html#isinstance)
-
-:::
-
-:::::::::::::::: solution
-
-```python
-class Animal:
-    def __init__(self, name: str):
-        print(f"Creating an animal named {name}")
-        self.name = name
-
-    @staticmethod
-    def is_animal(obj: object) -> bool:
-        return isinstance(obj, Animal)
-```
-
-:::::::::::::::::::::::::
-
 :::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 4: Testing Out Our Class on Real Data
+## Challenge: Make a Class
 
-Let's download a real text file from Project Gutenberg and see how our class object handles it.
-You can pick any file you like, or you can use the same one we looked at earlier:
-[Meditations, by Marcus Aurelius](https://www.gutenberg.org/cache/epub/2680/pg2680.txt).
+Try your hand at creating your own class called "Dog". Try to write it such that the following code
+will run with the following output:
 
-Modify your `test_document.py` file to create a new Document object using the real text file,
-and then test out the `get_line_count` and `get_word_occurrence` methods on it. What do you get?
-What issues might there be when we start using this class on our actual data?
+```python
+my_dog = Dog(name="Wally", breed="Mixed", age=12)
+print(my_dog.name)
+print(my_dog.make_sound())
+print(my_dog.fetch())
+```
 
-How can we improve our class to handle these issues?
+Output:
+```
+Wally
+Aroooo!
+Yeah you can get the ball yourself.
+```
+
+:::::::::::::::: solution
+
+```python
+class Dog:
+    def __init__(self, name: str, breed: str, age: int):
+        self.name = name
+        self.breed = breed
+        self.age = age
+
+    def make_sound(self) -> str:
+        return "Aroooo!"
+
+    def fetch(self) -> str:
+        return "Yeah you can get the ball yourself."
+```
+
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge: Update the Dog Class
+
+Edit the `Dog` class so that the `fetch` method accepts a parameter called `item` and returns a 
+string that says "Yeah you can get the {item} yourself." where `{item}` is replaced with the value 
+of the `item` parameter.
+
+Example usage:
+
+```python
+my_dog = Dog(name="Wally", breed="Mixed", age=12)
+print(my_dog.fetch("ball"))
+print(my_dog.fetch("toy"))
+```
+
+Output:
+```
+Yeah you can get the ball yourself.
+Yeah you can get the toy yourself.
+```
+
+Bonus: Add a parameter to the __init__ method called `favorite_toy` that defaults to "tennis ball". 
+Then, update the `fetch` method so that if the `item` parameter matches the `favorite_toy` property,
+it returns "That's my favorite toy! I'll get it for you!" instead.
+
+:::::::::::::::: solution
+
+```python
+class Dog:
+    def __init__(self, name: str, breed: str, age: int):
+        self.name = name
+        self.breed = breed
+        self.age = age
+
+    def make_sound(self) -> str:
+        return "Aroooo!"
+
+    def fetch(self, item: str) -> str:
+        return f"Yeah you can get the {item} yourself."
+```
+
+And for the bonus:
+
+```python
+class Dog:
+    def __init__(self, name: str, breed: str, age: int, favorite_toy: str = "tennis ball"):
+        self.name = name
+        self.breed = breed
+        self.age = age
+        self.favorite_toy = favorite_toy
+
+    def make_sound(self) -> str:
+        return "Aroooo!"
+
+    def fetch(self, item: str) -> str:
+        if item == self.favorite_toy:
+            return "That's my favorite toy! I'll get it for you!"
+        else:
+            return f"Yeah you can get the {item} yourself."
+```
+
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge: Update the Dog Class Again
+
+Update the constructor of the `Dog` class so that it has default values for the `breed` and `age` 
+parameters. The default value for `breed` should be "Mixed", and the default value for `age` should 
+be 0.
+
+Running the following code should work without error and produce the following output:
+
+```python
+my_dog = Dog(name="Molly", breed="Black Labrador")
+print(my_dog.name)
+print(my_dog.breed)
+print(my_dog.age)
+
+my_other_dog = Dog(name="Buddy", age=5)
+print(my_other_dog.name)
+print(my_other_dog.breed)
+print(my_other_dog.age)
+
+my_neighbors_dog = Dog(name="Garth")
+print(my_neighbors_dog.name)
+print(my_neighbors_dog.breed)
+print(my_neighbors_dog.age)
+```
+
+Output:
+```
+Molly
+Black Labrador
+0
+Buddy
+Mixed
+5
+Garth
+Mixed
+0
+```
+
+:::::::::::::::: solution
+
+```python
+class Dog:
+    def __init__(self, name: str, breed: str = "Mixed", age: int = 0):
+        self.name = name
+        self.breed = breed
+        self.age = age
+
+    def make_sound(self) -> str:
+        return "Aroooo!"
+
+    def fetch(self, item: str) -> str:
+        return f"Yeah you can get the {item} yourself."
+```
+
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge: Validate the Dog Class
+
+Add a check to ensure that:
+
+- The `name` parameter is a string and is not an empty string.
+- The `breed` parameter is a string and is not an empty string.
+- The `age` parameter is an integer and is greater than or equal to 0.
+
+If any of these checks fail, raise a `ValueError` with an appropriate error message.
+
+You can include these checks either in the `__init__` method or in a separate validation method 
+that is called from the `__init__` method.
 
 ::: hint
 
-The Metadata at the start of the document is always gated by a line that says
-`*** START OF THE PROJECT GUTENBERG EBOOK {the title of the book} ***` and at the end of the
-document with the line `*** END OF THE PROJECT GUTENBERG EBOOK {the title of the book} ***`.
-
-We need some way to extract all of the content between these two markers...
+You can use `isinstance()` to check the type of a variable.
 
 :::
 
 ::: hint
 
-There is a python module called `re` that allows us to work with regular expressions. This can be
-used to match specific patterns in text, or for extracting specific parts of a string. You can
-use the following regex pattern to match the content between the start and end markers:
-
-```python
-pattern = r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"
-
-match = re.search(pattern, raw_text, re.DOTALL)
-if match:
-    content = match.group(1).strip()
-```
+You can use `raise ValueError("Your error message here")` to raise a ValueError with a custom error
+message.
 
 :::
 
 :::::::::::::::: solution
 
-The Project Gutenberg text files have a lot of metadata at the start and end of the file, which
-will affect the line count and word occurrence counts. We might want to modify our `self.read`
-method to strip out this metadata before storing the content in `self.content`.
-
-One possible solution would look like this:
-
 ```python
+class Dog:
+    def __init__(self, name: str, breed: str = "Mixed", age: int = 0):
+        if not isinstance(name, str) or not name:
+            raise ValueError("Name must be a non-empty string")
+        if not isinstance(breed, str) or not breed:
+            raise ValueError("Breed must be a non-empty string")
+        if not isinstance(age, int) or age < 0:
+            raise ValueError("Age must be an integer greater than or equal to 0")
 
-import re
+        self.name = name
+        self.breed = breed
+        self.age = age
 
-class Document:
+    def make_sound(self) -> str:
+        return "Aroooo!"
 
-    CONTENT_PATTERN = r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"
-
-    def __init__(self, filepath: str, title: str = "", author: str = "", id: int = 0):
-        self.filepath = filepath
-        self.content = self.get_content(filepath)
-
-        self.title = title
-        self.author = author
-        self.id = id
-
-    def get_content(self, filepath: str) -> str:
-        raw_text = self.read(filepath)
-        match = re.search(self.CONTENT_PATTERN, raw_text, re.DOTALL)
-        if match:
-            return match.group(1).strip()
-        raise ValueError(f"File {filepath} is not a valid Project Gutenberg Text file.")
-
-    def read(self, file_path: str) -> None:
-        with open(file_path, "r", encoding="utf-8") as file:
-            return file.read()
-
-    def get_line_count(self) -> int:
-        return len(self.content.splitlines())
-
-
-    def get_word_occurrence(self, word: str) -> int:
-        return self.content.lower().count(word.lower())
-
+    def fetch(self, item: str) -> str:
+        return f"Yeah you can get the {item} yourself."
 ```
-
-Note that our test file now fails, because the CONTENT_PATTERN doesn't match anything in our
-`example_file.txt`. We could modify our test file to use a real Project Gutenberg text file:
-
-```
-*** START OF THE PROJECT GUTENBERG EBOOK TEST ***
-
-This is a test document. It contains words.
-It is only a test document.
-
-*** END OF THE PROJECT GUTENBERG EBOOK TEST ***
-```
-
-Or we could modify our class to allow for a different content pattern to be specified when creating
-the object:
-
-```python
-...
-
-# Check that we can create a Document object
-Document.CONTENT_PATTERN = r"(.*)"
-doc = Document(filepath="tests/example_file.txt", title="Test Document")
-if doc.title == "Test Document" and doc.filepath == "tests/example_file.txt":
-    passed_tests += 1
-else:
-    failed_tests += 1
-
-...
-```
-
-
 
 :::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::
 
-
-Neat! We've successfully created and used a class object in our module. But certainly there's a
-better way to test this, right? In the next episode, we'll look at how to write proper unit tests
-for our class object with `pytest`.
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
