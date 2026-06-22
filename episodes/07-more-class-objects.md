@@ -167,6 +167,147 @@ print(another_account.balance)         # Output: 2000.0
 We can still manually set the account number if we want to, but if we don't, it will automatically 
 be assigned for us.
 
+### Decorators in Classes
+
+Python has a number of built-in decorators that we can use to modify the behavior of our class 
+methods. There are a couple of decorators that are specific to classes, such as `@staticmethod` and
+`@property`, which allow us to more easily define our classes.
+
+::: hint
+
+A decorator is a special kind of function that modifies the behavior of another function. They are
+defined using the `@` symbol, followed by the name of the decorator function. In this case, we
+use the `@staticmethod` decorator to indicate that the following method is a static method, so this
+line must be placed directly above the method definition.
+
+:::
+
+In our `BankAccount` class, we currently have a method called `get_balance()` that returns the 
+current balance of the account. The user can call this method like `my_account.get_balance()`, but 
+it would be more natural to access the balance as a property, like `my_account.balance`. We can use
+the `@property` decorator to make this possible:
+
+```python
+class BankAccount:
+    def __init__(self, account_holder: str, balance: float = 0.0):
+        # ... rest of the constructor ...
+        self._balance = balance
+
+    # ... rest of the class definition ...
+
+    @property
+    def balance(self) -> float:
+        return self._balance
+```
+
+Now, we can access the balance as a property, without having to call a method:
+
+```python
+my_account = BankAccount(account_holder="Jimmy", balance=100.0)
+print(my_account.balance)  # Output: 100.0
+```
+
+Similarly, we can explicitly define class or static methods using the `@classmethod` and 
+`@staticmethod` decorators, which can be useful for defining functionality that is related to the 
+class, but doesn't operate on any specific instance of the class. For example, suppose we wanted to
+add a method to check if a deposit is valid - it should be a positive integer, and it shouldn't 
+exceed a certain limit. We can define this as a static method, since it doesn't operate on any 
+specific instance of the class:
+
+```python
+class BankAccount:
+    # ... rest of the class definition ...
+
+    @staticmethod
+    def is_valid_deposit(amount: float) -> bool:
+        return amount > 0 and amount <= 10000
+```
+
+We can call this method directly on the class, without needing to create an instance of the class:
+
+```python
+print(BankAccount.is_valid_deposit(500))   # Output: True
+print(BankAccount.is_valid_deposit(-100))  # Output: False
+print(BankAccount.is_valid_deposit(15000)) # Output: False
+```
+
+As well as calling it within the instance methods of the class:
+
+```python
+class BankAccount:
+    # ... rest of the class definition ...
+
+    def deposit(self, amount: float) -> None:
+        if BankAccount.is_valid_deposit(amount):
+            self._balance += amount
+        else:
+            raise ValueError("Invalid deposit amount")
+```
+
+This let's us keep our code organized and modular - if the rules for defining a valid deposit 
+change, we only need to update the `is_valid_deposit` method, and all of the code that relies on it
+will automatically use the updated logic.
+
+## Updating our Car Class
+
+Let's go back to our `Car` class and make some updates. 
+
+### Create a custom `__str__` method
+
+```python
+class Car:
+    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "gasoline"):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.color = color
+        self.fuel = fuel
+        self.speed = 0
+
+    def honk_horn(self) -> str:
+        return "Honk! Honk!"
+
+    def paint(self, new_color: str) -> None:
+        self.color = new_color
+
+    def make_engine_noise(self) -> str:
+        if self.speed <= 10:
+            return "putt putt"
+        else:
+            return "vroom!"
+
+    def __str__(self) -> str:
+        return f"A {self.color} {self.year} {self.make} {self.model} that runs on {self.fuel}."
+```
+
+### Add a property to get the car's age
+
+```python
+from datetime import datetime
+
+class Car:
+    # ... rest of the class definition ...
+
+    @property
+    def age(self) -> int:
+        current_year = datetime.now().year
+        return current_year - self.year
+```
+
+### Add a static property and a class method to keep track of how many cars have been created
+
+```python
+class Car:
+    car_count = 0
+
+    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "gasoline"):
+        # ... rest of the constructor ...
+        Car.car_count += 1
+
+    @classmethod
+    def get_car_count(cls) -> int:
+        return cls.car_count
+```
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
@@ -266,72 +407,77 @@ class Animal:
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 3: Static Methods
+## Challenge 3: Class Methods
 
 In addition to instance methods, which operate on an instance of a class (and so have `self` as the
-first parameter), we can also define static methods. These are methods that don't operate on an
-instance of the class, and so don't have `self` as the first parameter. Instead, they are defined
-using the `@staticmethod` decorator.
+first parameter), we can also define class methods. These are methods that operate on the class itself,
+and so have `cls` as the first parameter. Instead of the `@staticmethod` decorator, they are defined
+using the `@classmethod` decorator.
 
-Create a static method called `is_animal` that takes a single parameter, `obj`, and returns
-`True` if `obj` is an instance of the `Animal` class, and `False` otherwise.
+Start with the following code. We want to be able to easily keep track of how many animals of each 
+species we have created since our code started running. To do this, we will need three things:
+
+- 1. A class property that is a dictionary that keeps track of how many animals of each species
+    have been created.
+- 2. A way to update this dictionary every time a new instance of the `Animal` class is created.
+- 3. A class method that allows us to easily get the count of how many animals of a specific
+    species have been created. 
 
 ```python
 class Animal:
-    def __init__(self, name: str):
+    def __init__(self, name: str, species: str):
         print(f"Creating an animal named {name}")
         self.name = name
+        self.species = species
 
-    # Your static method here
+    # Your class method here
 ```
 
-::: hint
+When we run the following code, we should see the output:
 
-A decorator is a special kind of function that modifies the behavior of another function. They are
-defined using the `@` symbol, followed by the name of the decorator function. In this case, we
-use the `@staticmethod` decorator to indicate that the following method is a static method, so this
-line must be placed directly above the method definition.
+```python
+animal1 = Animal(name="Moose", species="Alces alces")
+animal2 = Animal(name="Mouse", species="Mus musculus")
+animal3 = Animal(name="Moose", species="Alces alces")
+animal4 = Animal(name="Squirrel", species="Sciurus carolinensis")
+animal5 = Animal(name="Horseshoe Crab", species="Limulus polyphemus")
 
-:::
-
-::: hint
-
-You can use the python built-in function `isinstance` to check if an object is an instance of a
-class. (https://docs.python.org/3/library/functions.html#isinstance)
-
-:::
+print(Animal.get_animal_count("Alces alces"))  # Output: 2
+print(Animal.get_animal_count("Mus musculus"))  # Output: 1
+```
 
 :::::::::::::::: solution
 
 ```python
-class Animal:
-    def __init__(self, name: str):
-        print(f"Creating an animal named {name}")
-        self.name = name
+from collections import defaultdict
 
-    @staticmethod
-    def is_animal(obj: object) -> bool:
-        return isinstance(obj, Animal)
+class Animal:
+    animal_counts = defaultdict(int)
+    
+    def __init__(self, name: str, species: str):
+        self.name = name
+        self.species = species
+        Animal.animal_counts[species] += 1
+
+    @classmethod
+    def get_animal_count(cls, species: str) -> int:
+        return cls.animal_counts.get(species, 0)
+
 ```
+
 
 :::::::::::::::::::::::::
 
 :::::::::::::::::::::::::::::::::::::::::::::::
 
-::::::::::::::::::::::::::::::::::::: challenge
-
-## Challenge 1:
-
-
-:::::::::::::::: solution
-
-
-:::::::::::::::::::::::::
-:::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
--
+- Dunder methods are special methods that start and end with double underscores.
+- Static properties and methods are defined on the class itself, rather than on instances of the class.
+- We can use the `@property` decorator to define properties that can be accessed like attributes.
+- We can use the `@classmethod` decorator to define methods that operate on the class itself, rather than on instances of the class.
+- We can use the `@staticmethod` decorator to define methods that don't operate on either the class or instances of the class, but are still related to the class in some way.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 

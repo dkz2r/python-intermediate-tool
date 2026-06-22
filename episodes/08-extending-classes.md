@@ -34,590 +34,286 @@ existing methods. This allows us to create a new class that is a specialized ver
 class, without having to rewrite a whole bunch of code.
 
 Taking a look at our Car class from earlier, we might want to create a new class for a specific
-type of engine, like a Gas Engine or an Electric Engine. Both kinds of cars will have the same basic
-properties and methods, but they will also have some additional properties and methods that are
-specific to the type of engine, or properties that are set by default, like our `fuel` property.
+type of bank account, like a Savings account or a Checking account. Both kinds of accounts will have
+the same basic properties and methods, but they will also have some additional properties and 
+methods that are specific to the type of account, or properties that are set by default, like 
+our `interest_rate` property.
 
-But since both types of cars are still cars, they will share a lot of the same properties and
-methods. Rather than repeating all of the code from the Car class in both our new classes, we can
-use inheritance to create our new classes based on the Car class:
-
-
+But since both types of accounts are still accounts, they will share a lot of the same properties 
+and methods. Rather than repeating all of the code from the Account class in both our new classes, 
+we can use inheritance to create our new classes based on the Account class:
 
 In python, this would look something like this:
 
 ```python
-class Car:
-    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "gasoline"):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.color = color
-        self.fuel = fuel
+class BankAccount:
+    # Static property to keep track of the next available account number
+    next_account_number = 10000
+    
+    def __init__(self, account_holder: str, balance: float = 0.0):
+        self.account_holder = account_holder
+        BankAccount.next_account_number += 1
+        self.account_number = BankAccount.next_account_number
+        self._balance = balance
+    
+    # ... the rest of the BankAccount class ...
 
-    def honk(self) -> str:
-        return "beep"
+class SavingsAccount(BankAccount):
+    def __init__(self, account_holder: str, balance: float = 0.0, interest_rate: float = 0.01):
+        super().__init__(account_holder=account_holder, balance=balance)
+        self.interest_rate = interest_rate
+    
+    def apply_interest(self):
+        self._balance += self._balance * self.interest_rate
 
-    def paint(self, new_color: str) -> None:
-        self.color = new_color
-
-    def noise(self, speed: int) -> str:
-        if speed <= 10:
-            return "putt putt"
-        else:
-            return "vrooom"
-
-class CarGasEngine(Car):
-    def __init__(self, make: str, model: str, year: int, color: str = "grey"):
-        super().__init__(make=make, model=model, year=year, color=color, fuel="gasoline")
-
-class CarElectricEngine(Car):
-    def __init__(self, make: str, model: str, year: int, color: str = "grey"):
-        super().__init__(make=make, model=model, year=year, color=color, fuel="electric")
-
-    def noise(self, speed: int) -> str:
-        return "hmmmmmm"
+class CheckingAccount(BankAccount):
+    def __init__(self, account_holder: str, balance: float = 0.0, overdraft_limit: float = 500.0):
+        super().__init__(account_holder=account_holder, balance=balance)
+        self.overdraft_limit = overdraft_limit
+    
+    def withdraw(self, amount: float):
+        if self._balance - amount < -self.overdraft_limit:
+            raise ValueError("Withdrawal would exceed overdraft limit.")
+        self._balance -= amount
 ```
 
-![Class diagram showing the Car class as a parent class, with CarGasEngine and CarElectricEngine as child classes that inherit from Car.](./fig/05-extending-classes/class_inheritance.jpg){alt='Class diagram showing inheritance from Car to CarGasEngine and CarElectricEngine'}
+![Class diagram showing the BankAccount class as a parent class, with SavingsAccount and CheckingAccount as child classes that inherit from BankAccount.](./fig/05-extending-classes/class_inheritance.jpg){alt='Class diagram showing inheritance from BankAccount to SavingsAccount and CheckingAccount'}
 
 ::: callout
 
-Note that the `noise` method in the `CarElectricEngine` class is overridden to provide a different
-implementation than the one in the `Car` class. This is called method overriding, and it allows us
-to define a different behavior for a method in a subclass. When we call the `noise` method on an
-instance of `CarElectricEngine`, it will use the overridden method, rather than the one defined
-in the `Car` class.
+Note that the `withdraw` method in the `CheckingAccount` class is overridden to provide a different
+implementation than the one in the `BankAccount` class. This is called method overriding, and it 
+allows us to define a different behavior for a method in a subclass. When we call the `withdraw` 
+method on an instance of `CheckingAccount`, it will use the overridden method, rather than the one 
+defined in the `BankAccount` class.
 
-However in `CarGasEngine`, we do not override the `noise` method, so it will use the one defined in
-the `Car` class.
+However in `SavingsAccount`, we do not override the `withdraw` method, so it will use the one 
+defined in the `BankAccount` class.
 
 More on overriding methods in a moment.
 
 :::
 
-You can see that the CarGasEngine class is defined in a similar way to the Car class, but it
-inherits from the Car class by including it in parentheses after the class name. The `__init__`
-method of the CarGasEngine class also has a call to `super().__init__()`. The `super()` function
-is a way to refer specifically to the parent class, in this case, the Car class. This allows us to
-call the `__init__` method of the Car class, which sets up all of the properties that a Car has.
+You can see that the SavingsAccount class is defined in a similar way to the BankAccount class, but 
+it inherits from the BankAccount class by including it in parentheses after the class name. The 
+`__init__` method of the CheckingAccount class also has a call to `super().__init__()`. The 
+`super()` function is a way to refer specifically to the parent class, in this case, the BankAccount 
+class. This allows us to call the `__init__` method of the BankAccount class, which sets up all of 
+the properties that a BankAccount has.
 
-### Applying Inheritance to Our Document Class
+### Applying Inheritance to Our Car Class
 
-For our `Document` class, we have a few different types of documents available from the
-Project Gutenberg website. We are currently using plain text files, but there are also HTML files
-that we can download. They will have the same information, but the data within will be structured
-in a slightly different way. We can use inheritance to create a pair of new classes: `HTMLDocument`
-and `PlainTextDocument`, that both inherit from the `Document` class. This will allow us to keep
-all of the common functionality in the `Document` class, but to add any additional functionality
-specific to each document type.
-
-Most of what we've written so far is specific to reading and parsing data out of the plain text
-files, so almost all of the code from `Document` can be copied. We'll leave the functions for
-`gutenberg_url`, `get_line_count`, and `get_word_occurrence`.
-
-In addition, we'll need an `__init__` in our `Document` class. At the moment, all it does is save
-the filename in the `filename` property, but we might expand this in the future. We'll also need a
-reference to the `super().__init__()` in our `PlainTextDocument`. At the moment, our classes look
-like this:
+For our `Car` class, let's create different sub classes depending on the kind of engine the car has.
+We can have a `GasolineCar` class and an `ElectricCar` class that both inherit from the `Car` class. 
+Both these classes will share a lot of the same properties and methods, but might have some 
+additional properties and methods that are specific to the type of car. Let's add the following code
+to our `src/vehicle_module/car.py` file:
 
 ```python
-class Document:
-    @property
-    def gutenberg_url(self) -> str | None:
-        if self.id:
-            return f"https://www.gutenberg.org/cache/epub/{self.id}/pg{self.id}.txt"
-        return None
+class Car:
+    car_count = 0
 
-    def __init__(self, filepath: str):
-        self.filepath = filepath
+    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "gasoline"):
+        # ... the rest of the Car class ...
 
-    def get_line_count(self) -> int:
-        return len(self._content.splitlines())
+class GasolineCar(Car):
+    pass # For now, a GasolineCar is just a Car, so we don't need to add any additional properties or methods
 
-    def get_word_occurrence(self, word: str) -> int:
-        return self._content.lower().count(word.lower())
+class ElectricCar(Car):
+    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "electricity"):
+        super().__init__(make=make, model=model, year=year, color=color, fuel=fuel)
+
+    def make_engine_noise(self) -> str:
+        return "hmmmmmm"
 ```
+
+::: callout
+
+Couldn't you do something like this?
 
 ```python
-import re
-
-from textanalysis_tool.document import Document
-
-
-class PlainTextDocument(Document):
-    TITLE_PATTERN = r"^Title:\s*(.*?)\s*$"
-    AUTHOR_PATTERN = r"^Author:\s*(.*?)\s*$"
-    ID_PATTERN = r"^Release date:\s*.*?\[eBook #(\d+)\]"
-    CONTENT_PATTERN = r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"
-
-    def __init__(self, filepath: str):
-        super().__init__(filepath=filepath)
-
-    def _extract_metadata_element(self, pattern: str, text: str) -> str | None:
-        match = re.search(pattern, text, re.MULTILINE)
-        return match.group(1).strip() if match else None
-
-    def get_content(self, filepath: str) -> str:
-        raw_text = self.read(filepath)
-
-        match = re.search(self.CONTENT_PATTERN, raw_text, re.DOTALL)
-        if match:
-            return match.group(1).strip()
-        raise ValueError(f"File {filepath} is not a valid Project Gutenberg Text file.")
-
-    def get_metadata(self, filepath: str) -> dict:
-        raw_text = self.read(filepath)
-
-        title = self._extract_metadata_element(self.TITLE_PATTERN, raw_text)
-        author = self._extract_metadata_element(self.AUTHOR_PATTERN, raw_text)
-        extracted_id = self._extract_metadata_element(self.ID_PATTERN, raw_text)
-
-        return {
-            "title": title,
-            "author": author,
-            "id": int(extracted_id) if extracted_id else None,
-        }
-
-    def read(self, file_path: str) -> None:
-        with open(file_path, "r", encoding="utf-8") as file:
-            raw_text = file.read()
-
-        if not raw_text:
-            raise ValueError(f"File {self.filepath} contains no content.")
-
-        if isinstance(raw_text, bytes):
-            raise ValueError(f"File {self.filepath} is not a valid text file.")
-
-        return raw_text
-
+class ElectricCar(Car):
+    def __init__(self, make: str, model: str, year: int, color: str = "grey"):
+        super().__init__(make=make, model=model, year=year, color=color, fuel="electricity")
 ```
 
-We'll also have another class for reading HTML files. This will be similar to the
-´PlainTextDocument´ class, but it will use the ´BeautifulSoup´ library to parse the HTML file and
-extract the content and metadata. Rather than type out the entire class now, you can either copy
-and paste the code below into a new file called ´src/textanalysis_tool/html_document.py´, or you
-can download the file from the [Workshop Resources](./workshop_resources.html).
+Yes, you could - however this would change the signature of the `__init__` method in the
+`ElectricCar` class, which means that you would not be able to create an instance of `ElectricCar`
+using the same parameters as you would for a `GasolineCar`. Anyone trying to use the `ElectricCar`
+class would have to know that it specifically has a slightly different `__init__` method than the 
+other cars. 
 
-::: prereq
-
-As we do not have BeautifulSoup in our environment yet, you will need to add it using `uv`:
-
-```
-uv add beautifulsoup4
-```
-
-This will install the package to your environment as well as add it to your `pyproject.toml` file.
-
-:::
-
-::: spoiler
-
-```
-
-import re
-
-from bs4 import BeautifulSoup
-
-from textanalysis_tool.document import Document
-
-
-class HTMLDocument(Document):
-    URL_PATTERN = "^https://www.gutenberg.org/files/([0-9]+)/.*"
-
-    @property
-    def gutenberg_url(self) -> str | None:
-        if self.id:
-            return f"https://www.gutenberg.org/cache/epub/{self.id}/pg{self.id}-h.zip"
-        return None
-
-    def __init__(self, filepath: str):
-        super().__init__(filepath=filepath)
-
-        extracted_id = re.search(self.URL_PATTERN, self.metadata.get("url", ""), re.DOTALL)
-        self.id = int(extracted_id.group(1)) if extracted_id.group(1) else None
-
-    def read(self, filepath) -> BeautifulSoup:
-        with open(filepath, encoding="utf-8") as file_obj:
-            parsed_file = BeautifulSoup(file_obj, "html.parser")
-
-        # Check that the file is parsable as HTML
-        if not parsed_file or not parsed_file.find("h1"):
-            raise ValueError("The file could not be parsed as HTML.")
-
-        return parsed_file
-
-    def get_content(self, filepath: str) -> str:
-        parsed_file = self.read(filepath)
-
-        # Find the first h1 tag (The book title)
-        title_h1 = parsed_file.find("h1")
-
-        # Collect all the content after the first h1
-        content = []
-        for element in title_h1.find_next_siblings():
-            text = element.get_text(strip=True)
-
-            # Stop early if we hit this text, which indicate the end of the book
-            if "END OF THE PROJECT GUTENBERG EBOOK" in text:
-                break
-
-            if text:
-                content.append(text)
-
-        return "\n\n".join(content)
-
-    def get_metadata(self, filename) -> str:
-        parsed_file = self.read(filename)
-
-        title = parsed_file.find("meta", {"name": "dc.title"})["content"]
-        author = parsed_file.find("meta", {"name": "dc.creator"})["content"]
-        url = parsed_file.find("meta", {"name": "dcterms.source"})["content"]
-        extracted_id = re.search(self.URL_PATTERN, url, re.DOTALL)
-        id = int(extracted_id.group(1)) if extracted_id.group(1) else None
-
-        return {"title": title, "author": author, "id": id, "url": url}
-
-
-```
+This is not necessarily a bad thing, but it can lead to confusion if you have a lot of different 
+subclasses that all have different `__init__` methods. By keeping the same signature for the 
+`__init__` method, we can ensure that all of our car classes can be instantiated in the same way, 
+which makes it easier to use them interchangeably.
 
 :::
 
 ### Overriding Methods
 
-Notice that in the `HTMLDocument` class, we have overridden the `gutenberg_url` property to return
-the URL for the HTML version of the book. This is an example of how we can override methods and
+Notice that in the `ElectricCar` class, we have overridden the `make_engine_noise` method to provide
+a different implementation. This is an example of how we can override methods and
 properties in a subclass to provide specialized behavior. When we create an instance of
-`HTMLDocument`, it will use the `gutenberg_url` property defined in the `HTMLDocument` class,
-rather than the one defined in the `Document` class.
+`ElectricCar`, it will use the `make_engine_noise` method defined in the `ElectricCar` class,
+rather than the one defined in the `Car` class.
 
 ::: callout
 
 When overriding methods, it's important to ensure that the new method has the same signature as
 the method being overridden. This means that the new method should have the same name, number of
-parameters, and return type as the method being overridden.
-
-Additionally, the `__init__` is technically also an overridden method, since it is defined in the
-parent class. However, since we are calling the parent class's `__init__` method using `super()`, we
-are not completely replacing the behavior of the parent class's `__init__` method, but rather
-extending it. We can do the exact same thing with other methods if we want to add some
-functionality to an existing method, rather than completely replacing it.
+parameters, and return type as the method being overridden. 
 
 :::
 
 ### Testing our Inherited Classes
 
-Now let's try out our classes. We already have the `pg2680.txt` file in our ´scratch´ folder, now
-let's download the HTML version of the same book from Project Gutenberg. You can download it from
-[this link](https://www.gutenberg.org/cache/epub/55317/pg55317-h.zip). (Note that the file is
-zipped, as it also contains images. We won't be using the images, but you'll need to unzip the file
-to get to the HTML file.) Once you have the HTML file, place it in the ´scratch´ folder alongside
-the ´pg2680.txt´ file.
-
-You can either copy and paste the code below into a new file called `demo_inheritance.py`, or you
-can download the file from the [Workshop Resources](./workshop_resources.html).
+Now let's try out our classes in our little test file. Let's update our `tests/car_class_tests.py`
+file to test our new `GasolineCar` and `ElectricCar` classes:
 
 ```python
 import sys
 
-sys.path.insert(0, "src")
+sys.path.insert(0, "./src")
 
-from textanalysis_tool.document import Document
-from textanalysis_tool.plain_text_document import PlainTextDocument
-from textanalysis_tool.html_document import HTMLDocument
+from vehicle_module.car import Car, ElectricCar, GasolineCar
 
-# Test the PlainTextDocument class
-plain_text_doc = PlainTextDocument(filepath="scratch/pg2680.txt")
-print(f"Plain Text Document Title: {plain_text_doc.title}")
-print(f"Plain Text Document Author: {plain_text_doc.author}")
-print(f"Plain Text Document ID: {plain_text_doc.id}")
-print(f"Plain Text Document Line Count: {plain_text_doc.line_count}")
-print(f"Plain Text Document 'the' Occurrences: {plain_text_doc.get_word_occurrence('the')}")
-print(f"Plain Text Document Gutenberg URL: {plain_text_doc.gutenberg_url}")
-print(f"Type of Plain Text Document: {type(plain_text_doc)}")
-print(f"Parent Class: {type(plain_text_doc).__bases__[0]}")
+total_tests = 6
+passed_tests = 0
+failed_tests = 0
 
-print("=" * 40)
+# ... existing tests for Car class ...
 
-# Test the HTMLDocument class
-html_doc = HTMLDocument(filepath="scratch/pg2680-images.html")
-print(f"HTML Document Title: {html_doc.title}")
-print(f"HTML Document Author: {html_doc.author}")
-print(f"HTML Document ID: {html_doc.id}")
-print(f"HTML Document Line Count: {html_doc.line_count}")
-print(f"HTML Document 'the' Occurrences: {html_doc.get_word_occurrence('the')}")
-print(f"HTML Document Gutenberg URL: {html_doc.gutenberg_url}")
-print(f"Type of HTML Document: {type(html_doc)}")
-print(f"Parent Class: {type(html_doc).__bases__[0]}")
+# Test creating a GasolineCar
+gas_car = GasolineCar(make="Toyota", model="Camry", year=1996, color="Maroon")
+if gas_car.fuel == "gasoline":
+    passed_tests += 1
+else:
+    failed_tests += 1
 
-print("=" * 40)
+# Test creating an ElectricCar
+electric_car = ElectricCar(make="Skoda", model="Elroq", year=2024, color="White")
+if electric_car.fuel == "electricity":
+    passed_tests += 1
+else:
+    failed_tests += 1
 
-# We can't use the Document class directly
-doc = Document(filepath="scratch/pg2680.txt")
+# Test the make_engine_noise method of ElectricCar
+if electric_car.make_engine_noise() == "hmmmmmm":
+    passed_tests += 1
+else:
+    failed_tests += 1
+
 ```
 
 You should get some output that looks like this:
 
 ```
-Plain Text Document Title: Meditations
-Plain Text Document Author: Emperor of Rome Marcus Aurelius
-Plain Text Document ID: 2680
-Plain Text Document Line Count: 6845
-Plain Text Document 'the' Occurrences: 5736
-Plain Text Document Gutenberg URL: https://www.gutenberg.org/cache/epub/2680/pg2680.txt
-Type of Plain Text Document: <class 'textanalysis_tool.plain_text_document.PlainTextDocument'>
-Parent Class: <class 'textanalysis_tool.document.Document'>
-========================================
-HTML Document Title: Meditations
-HTML Document Author: Marcus Aurelius, Emperor of Rome, 121-180
-HTML Document ID: 2680
-HTML Document Line Count: 5635
-HTML Document 'the' Occurrences: 6161
-HTML Document Gutenberg URL: https://www.gutenberg.org/cache/epub/2680/pg2680-h.zip
-Type of HTML Document: <class 'textanalysis_tool.html_document.HTMLDocument'>
-========================================
-Parent Class: <class 'textanalysis_tool.document.Document'>
-Traceback (most recent call last):
-  File "E:\Projects\Python\scratch\textanalysis-tool\scratch\demo_inheritance.py", line 34, in <module>
-    doc = Document(filepath="scratch/pg2680.txt")
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "E:\Projects\Python\scratch\textanalysis-tool\src\textanalysis_tool\document.py", line 14, in __init__
-    self.content = self.get_content(filepath)
-                   ^^^^^^^^^^^^^^^^
-AttributeError: 'Document' object has no attribute 'get_content'
+Total tests: 6
+Passed tests: 6
+Failed tests: 0
 ```
 
-Note that the end of the script results in an error - since the `Document` class is no longer
-contains the `get_content` or `get_metadata` methods, it cannot be used directly. However we don't
-get an error until we try to call one of those methods.
+### Abstract Base Classes
 
-::: callout
+If we're thinking about this from the context of a game, there's actually maybe a level of less
+specificity that is below even the `Car` class, which is just a general `Vehicle` class. Cars are
+going to have a lot of the things we defined so far, but some of the elements are maybe more 
+general to all vehicles. We could create a `Vehicle` class that has all of the properties and
+methods that are common to all vehicles, and then have the `Car` class inherit from the `Vehicle`
+class. This way, we can have a more general class that defines the basic properties and methods.
 
-This is a use case for something called an abstract base class, which is a class that is designed
-to be inherited from, but never instantiated directly. One way to handle this would be to add these
-methods to the `Document` class, but have them raise a `NotImplementedError`. This way, if someone
-tries to instantiate the `Document` class directly, they will get an error indicating that maybe
-this class is not meant to be used directly:
+This is a great use case for something called an "abstract base class". An abstract base class is a
+class that is meant to be inherited from, but is not meant to be instantiated on its own. It can
+define abstract methods, which are methods that are declared but not implemented in the abstract 
+base class. Subclasses that inherit from the abstract base class are then required to implement the
+abstract methods, or else the construction of the subclass will fail.
 
-```python
-class Document:
-    @property
-    def gutenberg_url(self) -> str | None:
-        if self.id:
-            return f"https://www.gutenberg.org/cache/epub/{self.id}/pg{self.id}.txt"
-        return None
-
-    @property
-    def line_count(self) -> int:
-        return len(self.content.splitlines())
-
-    def __init__(self, filepath: str):
-        self.filepath = filepath
-        self.content = self.get_content(filepath)
-
-        metadata = self.get_metadata(filepath)
-        self.title = metadata.get("title")
-        self.author = metadata.get("author")
-        self.id = metadata.get("id")
-
-    def get_word_occurrence(self, word: str) -> int:
-        return self.content.lower().count(word.lower())
-
-    def get_content(self, filepath: str) -> str:
-        raise NotImplementedError("This method should be implemented by subclasses.")
-
-    def get_metadata(self, filepath: str) -> dict[str, str | None]:
-        raise NotImplementedError("This method should be implemented by subclasses.")
-```
-
-Another way to handle this is to use the `abc` module from the standard library, which provides
-a way to define abstract base classes. This is a more formal way to define a class that is meant
-to be inherited from, but not instantiated directly:
+Abstract base classes are implemented in Python using the `abc` module. Let's create a new file 
+called `src/vehicle_module/vehicle.py` and add the following code to it:
 
 ```python
 from abc import ABC, abstractmethod
 
 
-class Document(ABC):
-    @property
-    def gutenberg_url(self) -> str | None:
-        if self.id:
-            return f"https://www.gutenberg.org/cache/epub/{self.id}/pg{self.id}.txt"
-        return None
-
-    @property
-    def line_count(self) -> int:
-        return len(self.content.splitlines())
-
-    def __init__(self, filepath: str):
-        self.filepath = filepath
-        self.content = self.get_content(filepath)
-
-        self.metadata = self.get_metadata(filepath)
-        self.title = self.metadata.get("title")
-        self.author = self.metadata.get("author")
-        self.id = self.metadata.get("id")
-
-    def get_word_occurrence(self, word: str) -> int:
-        return self.content.lower().count(word.lower())
+class Vehicle(ABC):
+    car_count = 0
+    
+    def __init__(self):
+        self.speed = 0
+        Vehicle.car_count += 1
 
     @abstractmethod
-    def get_content(self, filepath: str) -> str:
+    def make_engine_noise(self) -> str:
         pass
 
-    @abstractmethod
-    def get_metadata(self, filepath: str) -> dict[str, str | None]:
-        pass
-
-
-:::
-
-## Unit Testing
-
-One of the first effects of this is that our `Document` class is no longer directly testable, since
-it cannot be instantiated directly. However, we can still test the `PlainTextDocument` and
-`HTMLDocument` classes, which will also indirectly test the `Document` class. You can either copy
-the code below into two new files called `tests/test_plain_text_document.py` and
-`tests/test_html_document.py`, or you can download the files from the [Workshop Resources](./workshop_resources.html).
-(Also make sure to delete the existing `tests/test_document.py` file, since it is no longer
-applicable.)
-
-`tests/test_plain_text_document.py`
-
-::: spoiler
-
-```python
-import pytest
-from unittest.mock import mock_open
-
-from textanalysis_tool.plain_text_document import PlainTextDocument
-
-TEST_DATA = """
-Title: Test Document
-
-Author: Test Author
-
-Release date: January 1, 2001 [eBook #1234]
-                Most recently updated: February 2, 2002
-
-*** START OF THE PROJECT GUTENBERG EBOOK TEST ***
-This is a test document. It contains words.
-It is only a test document.
-*** END OF THE PROJECT GUTENBERG EBOOK TEST ***
-"""
-
-
-@pytest.fixture(autouse=True)
-def mock_file(monkeypatch):
-    mock = mock_open(read_data=TEST_DATA)
-    monkeypatch.setattr("builtins.open", mock)
-    return mock
-
-
-@pytest.fixture
-def doc():
-    return PlainTextDocument(filepath="tests/example_file.txt")
-
-
-def test_create_document(doc):
-    assert doc.title == "Test Document"
-    assert doc.author == "Test Author"
-    assert isinstance(doc.id, int) and doc.id == 1234
-
-
-def test_empty_file(monkeypatch):
-    # Mock an empty file
-    mock = mock_open(read_data="")
-    monkeypatch.setattr("builtins.open", mock)
-
-    with pytest.raises(ValueError):
-        PlainTextDocument(filepath="empty_file.txt")
-
-
-def test_binary_file(monkeypatch):
-    # Mock a binary file
-    mock = mock_open(read_data=b"\x00\x01\x02")
-    monkeypatch.setattr("builtins.open", mock)
-
-    with pytest.raises(ValueError):
-        PlainTextDocument(filepath="binary_file.bin")
-
-
-def test_document_line_count(doc):
-    assert doc.line_count == 2
-
-
-def test_document_word_occurrence(doc):
-    assert doc.get_word_occurrence("test") == 2
-
-
+    @classmethod
+    def get_car_count(cls) -> int:
+        return cls.car_count
 ```
 
-:::
+You can see that we've transferred some of the properties and methods from the `Car` class to the 
+`Vehicle` class, since they feel like they are more general to all vehicles, rather than just cars.
+We have also defined an abstract method called `make_engine_noise` with the `@abstractmethod` 
+decorator, which means that any class that inherits from `Vehicle` will be required to implement 
+the `make_engine_noise` method. 
 
-`tests/test_html_document.py`
-
-::: spoiler
+Next, let's update our `Car` class to inherit from the `Vehicle` class:
 
 ```python
-import pytest
-from unittest.mock import mock_open
+from datetime import datetime
 
-from textanalysis_tool.html_document import HTMLDocument
+from .vehicle import Vehicle
 
-TEST_DATA = """
-<head>
-  <meta name="dc.title" content="Test Document">
-  <meta name="dcterms.source" content="https://www.gutenberg.org/files/1234/1234-h/1234-h.htm">
-  <meta name="dc.creator" content="Test Author">
-</head>
-<body>
-  <h1>Test Document</h1>
-  <p>
-    This is a test document. It contains words.
-    It is only a test document.
-  </p>
-</body>
-"""
+class Car(Vehicle):
+    # car_count = 0 # We can remove this line since the car_count property is now defined in the Vehicle class
 
+    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "gasoline"):
+        super().__init__() # Add a call to "super().__init__()" to call the __init__ method of the Vehicle class
+        self.make = make 
+        self.model = model
+        self.year = year
+        self.color = color
+        self.fuel = fuel
+        # self.speed = 0 # we can remove this line since the speed property is now defined in the Vehicle class
 
-@pytest.fixture(autouse=True)
-def mock_file(monkeypatch):
-    mock = mock_open(read_data=TEST_DATA)
-    monkeypatch.setattr("builtins.open", mock)
-    return mock
+    def honk_horn(self) -> str:
+        return "Honk! Honk!"
+    
+    def paint(self, new_color: str) -> None:
+        self.color = new_color
 
+    def make_engine_noise(self) -> str:
+        if self.speed <= 10:
+            return "putt putt"
+        else:
+            return "vroom!"
 
-@pytest.fixture
-def doc():
-    return HTMLDocument(filepath="tests/example_file.txt")
+    def __str__(self) -> str:
+        return f"A {self.color} {self.year} {self.make} {self.model} that runs on {self.fuel}."
 
+    @property
+    def age(self) -> int:
+        current_year = datetime.now().year
+        return current_year - self.year
 
-def test_create_document(doc):
-    assert doc.title == "Test Document"
-    assert doc.author == "Test Author"
-    assert isinstance(doc.id, int) and doc.id == 1234
-
-
-def test_empty_file(monkeypatch):
-    # Mock an empty file
-    mock = mock_open(read_data="")
-    monkeypatch.setattr("builtins.open", mock)
-
-    with pytest.raises(ValueError):
-        HTMLDocument(filepath="empty_file.html")
-
-
-def test_document_line_count(doc):
-    assert doc.line_count == 2
-
-
-def test_document_word_occurrence(doc):
-    assert doc.get_word_occurrence("test") == 2
-
+    # This entire method is now inherited from the Vehicle class, so we can remove it from the Car class
+    # @classmethod
+    # def get_car_count(cls) -> int:
+    #     return cls.car_count
 ```
 
-:::
+Let's run our tests again to make sure everything is still working:
+
+```
+$ uv run tests/car_class_test.py
+Total tests: 6
+Passed tests: 6
+Failed tests: 0
+```
+
+Looks good! We've got a firm base to build on now!
+
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
