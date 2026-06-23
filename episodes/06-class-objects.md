@@ -39,18 +39,18 @@ In python we can define a class object like this:
 
 ```python
 class BankAccount:
-    def __init__(self, account_holder: str, account_number: int, balance: float = 0.0):
+    def __init__(self, account_holder, account_number, balance = 0.0):
         self.account_holder = account_holder
         self.account_number = account_number
         self.balance = balance
 
-    def deposit(self, amount: float) -> None:
+    def deposit(self, amount):
         if amount > 0:
             self.balance += amount
         else:
             raise ValueError("Deposit amount must be positive")
 
-    def withdraw(self, amount: float) -> None:
+    def withdraw(self, amount):
         if amount > 0:
             if self.balance >= amount:
                 self.balance -= amount
@@ -59,7 +59,7 @@ class BankAccount:
         else:
             raise ValueError("Withdrawal amount must be positive")
 
-    def get_balance(self) -> float:
+    def get_balance(self):
         return self.balance
 ```
 
@@ -73,7 +73,7 @@ the python community.
 
 ::: callout
 
-The `get_balance` method is an example of a "getter" method, which simple exposes a property of the 
+The `get_balance` method is an example of a "getter" method, which simple exposes a property of the
 class. In this case, it allows us to access the `balance` property of the class without directly
 accessing the variable itself. This is a common pattern in object-oriented programming, and it can
 be useful for a number of reasons, such as allowing us to add additional logic when accessing the
@@ -81,7 +81,7 @@ property (e.g. checking if the balance is negative before returning it), or allo
 the internal representation of the property without affecting the external interface of the class.
 
 Python has a special decorator called `@property` that allows us to define getter methods in a more
-elegant way - we'll get to decorators in a later episode. 
+elegant way - we'll get to decorators in a later episode.
 
 :::
 
@@ -92,11 +92,11 @@ parameters, and these parameters can contain default values. We can also include
 both parameters and return values. However all of this is indented one level, underneath the
 `class` keyword, which is followed by our class name.
 
-Note that this is just our blueprint - it doesn't refer to any specific bank account, just the 
-general idea of a bank account. Also note the `__init__` method. This is a special method which is 
-called whenever you "instantiate" a new object. The parameters for this function are supplied when 
-we first create an object and function similarly to a method, in that if no default value is 
-provided, it is required in order to create the object, and if a default value is provided, it is 
+Note that this is just our blueprint - it doesn't refer to any specific bank account, just the
+general idea of a bank account. Also note the `__init__` method. This is a special method which is
+called whenever you "instantiate" a new object. The parameters for this function are supplied when
+we first create an object and function similarly to a method, in that if no default value is
+provided, it is required in order to create the object, and if a default value is provided, it is
 optional.
 
 An instance of a bank account, in this case called "my_account" might look something like this:
@@ -110,8 +110,8 @@ What exactly is "an instance"?
 An instance is how we refer to a specific object that has been created from a class. The class is
 the "blueprint", while the instance is the actual object that is created based on that blueprint.
 
-In our example, `my_account` is an instance of the `BankAccount` class. It has its own specific 
-values for the properties defined in the class (balance, account_holder), and it can use the 
+In our example, `my_account` is an instance of the `BankAccount` class. It has its own specific
+values for the properties defined in the class (balance, account_holder), and it can use the
 methods defined in the class (deposit, withdraw, get_balance).
 
 :::
@@ -119,7 +119,7 @@ methods defined in the class (deposit, withdraw, get_balance).
 Also note that each of the methods within the class object definition starts with a "self"
 argument. This is a reference to the current instance of the class, and is used to access
 variables that belong to the class. In our example, we store the balance and account_holder as
-properties of the class. When we call the `get_balance` method, we use `self.balance` to refer to 
+properties of the class. When we call the `get_balance` method, we use `self.balance` to refer to
 the current instance's balance property.
 
 We can create a new instance of our `BankAccount` class like this:
@@ -128,10 +128,10 @@ We can create a new instance of our `BankAccount` class like this:
 my_account = BankAccount(account_holder="Jimmy", account_number=12345, balance=100.0)
 ```
 
-This sets the `account_holder` property to "Jimmy", the `account_number` property to 12345, and the 
-`balance` property to 100.0, but *only for this specific instance* of the `BankAccount` class. If we 
-create another instance, it will have it's own `account_holder`, `account_number`, and `balance` 
-properties, which can be different from the first instance. We can check the properties of our 
+This sets the `account_holder` property to "Jimmy", the `account_number` property to 12345, and the
+`balance` property to 100.0, but *only for this specific instance* of the `BankAccount` class. If we
+create another instance, it will have its own `account_holder`, `account_number`, and `balance`
+properties, which can be different from the first instance. We can check the properties of our
 instance like this:
 
 ```python
@@ -169,9 +169,9 @@ What properties and methods might we want to include in our Car class?
 - Make / Model / Year
 - Color
 - Fuel
-- Honk it's horn
-- paint it a color
-- make engine noises
+- Honk its horn
+- Paint it a color
+- Make engine noises
 
 :::
 
@@ -179,7 +179,7 @@ Lets start writing our class object in a new file: `src/vehicle_module/car.py`:
 
 ```python
 class Car:
-    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "gasoline"):
+    def __init__(self, make, model, year, color = "grey", fuel = "gasoline"):
         self.make = make
         self.model = model
         self.year = year
@@ -187,13 +187,13 @@ class Car:
         self.fuel = fuel
         self.speed = 0
 
-    def honk_horn(self) -> str:
+    def honk_horn(self):
         return "Honk! Honk!"
-    
-    def paint(self, new_color: str) -> None:
+
+    def paint(self, new_color):
         self.color = new_color
 
-    def make_engine_noise(self) -> str:
+    def make_engine_noise(self):
         if self.speed <= 10:
             return "putt putt"
         else:
@@ -201,13 +201,13 @@ class Car:
 ```
 
 Our class object `Car` is a "blueprint" for a collection of methods. When we define it, we need to
-provide the required parameters for the `__init__` method, which are `make`, `model`, and `year`. 
+provide the required parameters for the `__init__` method, which are `make`, `model`, and `year`.
 We can optionally provide `color` and `fuel`, which will default to "grey" and "gasoline" if we
-don't provide them. 
+don't provide them.
 
 The `__init__` method is called as soon as the object is created, and we can see that in addition
 to storing the parameters to their `self` counterparts, there is an additional property called
-`self.speed`. This property is used to store the current speed of the car. It is referenced in the 
+`self.speed`. This property is used to store the current speed of the car. It is referenced in the
 `make_engine_noise` method, which returns a different string depending on the value of `self.speed`.
 
 ::: callout
@@ -222,11 +222,11 @@ outside the class if you really want to.
 
 :::
 
-There are also three methods that we've defined - `honk_horn`, `paint`, and `make_engine_noise`. 
-None of these will be called directly on the class itself, but rather on instances of the class 
-that we create (as indicated by the use of `self` within the class methods). Note that the 
+There are also three methods that we've defined - `honk_horn`, `paint`, and `make_engine_noise`.
+None of these will be called directly on the class itself, but rather on instances of the class
+that we create (as indicated by the use of `self` within the class methods). Note that the
 `paint` and `make_engine_noise` methods reference the `self.color` and `self.speed` properties.
-The `self` keyword refers to the specific *instance* of the class itself, and so it has access to 
+The `self` keyword refers to the specific *instance* of the class itself, and so it has access to
 all of its properties and methods, including the `self.color` and `self.speed` properties.
 
 ## Trying out Our Class Object
@@ -289,26 +289,26 @@ Failed tests: 0
 
 ## Challenge: What does this code do?
 
-Take a look at the following code. Without running it yourself, what is the output of the final 
-line? 
+Take a look at the following code. Without running it yourself, what is the output of the final
+line?
 
 ```python
-class Cat:   
-    def __init__(self, name: str, age: int):
+class Cat:
+    def __init__(self, name, age):
         self.name = name
         self.age = age
         self.is_sleeping = False
 
-    def meow(self) -> str:
+    def meow(self):
         if self.is_sleeping:
             return "Zzz..."
         else:
             return "Meow!"
 
-    def sleep(self) -> None:
+    def sleep(self):
         self.is_sleeping = True
 
-    def hear(self, sound: str) -> str:
+    def hear(self, sound):
         if sound == "food tin":
             self.is_sleeping = False
         else:
@@ -326,7 +326,7 @@ print(my_cat.meow())
 
 :::::::::::::::: solution
 
-The output of the final line will be "Meow!". In order to know the output, we need to follow the 
+The output of the final line will be "Meow!". In order to know the output, we need to follow the
 state of the instance variable `is_sleeping` throughout the code:
 
 ```python
@@ -368,15 +368,15 @@ Yeah you can get the ball yourself.
 
 ```python
 class Dog:
-    def __init__(self, name: str, breed: str, age: int):
+    def __init__(self, name, breed, age):
         self.name = name
         self.breed = breed
         self.age = age
 
-    def make_sound(self) -> str:
+    def make_sound(self):
         return "Aroooo!"
 
-    def fetch(self) -> str:
+    def fetch(self):
         return "Yeah you can get the ball yourself."
 ```
 
@@ -387,8 +387,8 @@ class Dog:
 
 ## Challenge: Update the Dog Class
 
-Edit the `Dog` class so that the `fetch` method accepts a parameter called `item` and returns a 
-string that says "Yeah you can get the {item} yourself." where `{item}` is replaced with the value 
+Edit the `Dog` class so that the `fetch` method accepts a parameter called `item` and returns a
+string that says "Yeah you can get the {item} yourself." where `{item}` is replaced with the value
 of the `item` parameter.
 
 Example usage:
@@ -405,7 +405,7 @@ Yeah you can get the ball yourself.
 Yeah you can get the toy yourself.
 ```
 
-Bonus: Add a parameter to the __init__ method called `favorite_toy` that defaults to "tennis ball". 
+Bonus: Add a parameter to the __init__ method called `favorite_toy` that defaults to "tennis ball".
 Then, update the `fetch` method so that if the `item` parameter matches the `favorite_toy` property,
 it returns "That's my favorite toy! I'll get it for you!" instead.
 
@@ -413,15 +413,15 @@ it returns "That's my favorite toy! I'll get it for you!" instead.
 
 ```python
 class Dog:
-    def __init__(self, name: str, breed: str, age: int):
+    def __init__(self, name, breed, age):
         self.name = name
         self.breed = breed
         self.age = age
 
-    def make_sound(self) -> str:
+    def make_sound(self):
         return "Aroooo!"
 
-    def fetch(self, item: str) -> str:
+    def fetch(self, item):
         return f"Yeah you can get the {item} yourself."
 ```
 
@@ -429,16 +429,16 @@ And for the bonus:
 
 ```python
 class Dog:
-    def __init__(self, name: str, breed: str, age: int, favorite_toy: str = "tennis ball"):
+    def __init__(self, name, breed = "Mixed", age = 0, favorite_toy = "tennis ball"):
         self.name = name
         self.breed = breed
         self.age = age
         self.favorite_toy = favorite_toy
 
-    def make_sound(self) -> str:
+    def make_sound(self):
         return "Aroooo!"
 
-    def fetch(self, item: str) -> str:
+    def fetch(self, item):
         if item == self.favorite_toy:
             return "That's my favorite toy! I'll get it for you!"
         else:
@@ -452,8 +452,8 @@ class Dog:
 
 ## Challenge: Update the Dog Class Again
 
-Update the constructor of the `Dog` class so that it has default values for the `breed` and `age` 
-parameters. The default value for `breed` should be "Mixed", and the default value for `age` should 
+Update the constructor of the `Dog` class so that it has default values for the `breed` and `age`
+parameters. The default value for `breed` should be "Mixed", and the default value for `age` should
 be 0.
 
 Running the following code should work without error and produce the following output:
@@ -492,17 +492,21 @@ Mixed
 
 ```python
 class Dog:
-    def __init__(self, name: str, breed: str = "Mixed", age: int = 0):
+    def __init__(self, name, breed = "Mixed", age = 0):
         self.name = name
         self.breed = breed
         self.age = age
 
-    def make_sound(self) -> str:
+    def make_sound(self):
         return "Aroooo!"
 
-    def fetch(self, item: str) -> str:
+    def fetch(self, item):
         return f"Yeah you can get the {item} yourself."
 ```
+
+As with writing python functions, we can provide default values for parameters for our class in the
+`__init__` method. This allows us to create instances of the class without having to provide values
+ for every parameter every time, which can be useful in many situations.
 
 :::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::
@@ -519,7 +523,7 @@ Add a check to ensure that:
 
 If any of these checks fail, raise a `ValueError` with an appropriate error message.
 
-You can include these checks either in the `__init__` method or in a separate validation method 
+You can include these checks either in the `__init__` method or in a separate validation method
 that is called from the `__init__` method.
 
 ::: hint
@@ -539,7 +543,7 @@ message.
 
 ```python
 class Dog:
-    def __init__(self, name: str, breed: str = "Mixed", age: int = 0):
+    def __init__(self, name, breed = "Mixed", age = 0):
         if not isinstance(name, str) or not name:
             raise ValueError("Name must be a non-empty string")
         if not isinstance(breed, str) or not breed:
@@ -551,10 +555,10 @@ class Dog:
         self.breed = breed
         self.age = age
 
-    def make_sound(self) -> str:
+    def make_sound(self):
         return "Aroooo!"
 
-    def fetch(self, item: str) -> str:
+    def fetch(self, item):
         return f"Yeah you can get the {item} yourself."
 ```
 

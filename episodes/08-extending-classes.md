@@ -35,12 +35,12 @@ class, without having to rewrite a whole bunch of code.
 
 Taking a look at our Car class from earlier, we might want to create a new class for a specific
 type of bank account, like a Savings account or a Checking account. Both kinds of accounts will have
-the same basic properties and methods, but they will also have some additional properties and 
-methods that are specific to the type of account, or properties that are set by default, like 
+the same basic properties and methods, but they will also have some additional properties and
+methods that are specific to the type of account, or properties that are set by default, like
 our `interest_rate` property.
 
-But since both types of accounts are still accounts, they will share a lot of the same properties 
-and methods. Rather than repeating all of the code from the Account class in both our new classes, 
+But since both types of accounts are still accounts, they will share a lot of the same properties
+and methods. Rather than repeating all of the code from the Account class in both our new classes,
 we can use inheritance to create our new classes based on the Account class:
 
 In python, this would look something like this:
@@ -49,29 +49,29 @@ In python, this would look something like this:
 class BankAccount:
     # Static property to keep track of the next available account number
     next_account_number = 10000
-    
-    def __init__(self, account_holder: str, balance: float = 0.0):
+
+    def __init__(self, account_holder, balance = 0.0):
         self.account_holder = account_holder
         BankAccount.next_account_number += 1
         self.account_number = BankAccount.next_account_number
         self._balance = balance
-    
+
     # ... the rest of the BankAccount class ...
 
 class SavingsAccount(BankAccount):
-    def __init__(self, account_holder: str, balance: float = 0.0, interest_rate: float = 0.01):
+    def __init__(self, account_holder, balance = 0.0, interest_rate = 0.01):
         super().__init__(account_holder=account_holder, balance=balance)
         self.interest_rate = interest_rate
-    
+
     def apply_interest(self):
         self._balance += self._balance * self.interest_rate
 
 class CheckingAccount(BankAccount):
-    def __init__(self, account_holder: str, balance: float = 0.0, overdraft_limit: float = 500.0):
+    def __init__(self, account_holder, balance = 0.0, overdraft_limit = 500.0):
         super().__init__(account_holder=account_holder, balance=balance)
         self.overdraft_limit = overdraft_limit
-    
-    def withdraw(self, amount: float):
+
+    def withdraw(self, amount):
         if self._balance - amount < -self.overdraft_limit:
             raise ValueError("Withdrawal would exceed overdraft limit.")
         self._balance -= amount
@@ -82,30 +82,30 @@ class CheckingAccount(BankAccount):
 ::: callout
 
 Note that the `withdraw` method in the `CheckingAccount` class is overridden to provide a different
-implementation than the one in the `BankAccount` class. This is called method overriding, and it 
-allows us to define a different behavior for a method in a subclass. When we call the `withdraw` 
-method on an instance of `CheckingAccount`, it will use the overridden method, rather than the one 
+implementation than the one in the `BankAccount` class. This is called method overriding, and it
+allows us to define a different behavior for a method in a subclass. When we call the `withdraw`
+method on an instance of `CheckingAccount`, it will use the overridden method, rather than the one
 defined in the `BankAccount` class.
 
-However in `SavingsAccount`, we do not override the `withdraw` method, so it will use the one 
+However in `SavingsAccount`, we do not override the `withdraw` method, so it will use the one
 defined in the `BankAccount` class.
 
 More on overriding methods in a moment.
 
 :::
 
-You can see that the SavingsAccount class is defined in a similar way to the BankAccount class, but 
-it inherits from the BankAccount class by including it in parentheses after the class name. The 
-`__init__` method of the CheckingAccount class also has a call to `super().__init__()`. The 
-`super()` function is a way to refer specifically to the parent class, in this case, the BankAccount 
-class. This allows us to call the `__init__` method of the BankAccount class, which sets up all of 
+You can see that the SavingsAccount class is defined in a similar way to the BankAccount class, but
+it inherits from the BankAccount class by including it in parentheses after the class name. The
+`__init__` method of the CheckingAccount class also has a call to `super().__init__()`. The
+`super()` function is a way to refer specifically to the parent class, in this case, the BankAccount
+class. This allows us to call the `__init__` method of the BankAccount class, which sets up all of
 the properties that a BankAccount has.
 
 ### Applying Inheritance to Our Car Class
 
 For our `Car` class, let's create different sub classes depending on the kind of engine the car has.
-We can have a `GasolineCar` class and an `ElectricCar` class that both inherit from the `Car` class. 
-Both these classes will share a lot of the same properties and methods, but might have some 
+We can have a `GasolineCar` class and an `ElectricCar` class that both inherit from the `Car` class.
+Both these classes will share a lot of the same properties and methods, but might have some
 additional properties and methods that are specific to the type of car. Let's add the following code
 to our `src/vehicle_module/car.py` file:
 
@@ -113,17 +113,17 @@ to our `src/vehicle_module/car.py` file:
 class Car:
     car_count = 0
 
-    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "gasoline"):
+    def __init__(self, make, model, year, color = "grey", fuel = "gasoline"):
         # ... the rest of the Car class ...
 
 class GasolineCar(Car):
     pass # For now, a GasolineCar is just a Car, so we don't need to add any additional properties or methods
 
 class ElectricCar(Car):
-    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "electricity"):
+    def __init__(self, make, model, year, color = "grey", fuel = "electricity"):
         super().__init__(make=make, model=model, year=year, color=color, fuel=fuel)
 
-    def make_engine_noise(self) -> str:
+    def make_engine_noise(self):
         return "hmmmmmm"
 ```
 
@@ -133,19 +133,19 @@ Couldn't you do something like this?
 
 ```python
 class ElectricCar(Car):
-    def __init__(self, make: str, model: str, year: int, color: str = "grey"):
+    def __init__(self, make, model, year, color = "grey"):
         super().__init__(make=make, model=model, year=year, color=color, fuel="electricity")
 ```
 
 Yes, you could - however this would change the signature of the `__init__` method in the
 `ElectricCar` class, which means that you would not be able to create an instance of `ElectricCar`
 using the same parameters as you would for a `GasolineCar`. Anyone trying to use the `ElectricCar`
-class would have to know that it specifically has a slightly different `__init__` method than the 
-other cars. 
+class would have to know that it specifically has a slightly different `__init__` method than the
+other cars.
 
-This is not necessarily a bad thing, but it can lead to confusion if you have a lot of different 
-subclasses that all have different `__init__` methods. By keeping the same signature for the 
-`__init__` method, we can ensure that all of our car classes can be instantiated in the same way, 
+This is not necessarily a bad thing, but it can lead to confusion if you have a lot of different
+subclasses that all have different `__init__` methods. By keeping the same signature for the
+`__init__` method, we can ensure that all of our car classes can be instantiated in the same way,
 which makes it easier to use them interchangeably.
 
 :::
@@ -162,7 +162,7 @@ rather than the one defined in the `Car` class.
 
 When overriding methods, it's important to ensure that the new method has the same signature as
 the method being overridden. This means that the new method should have the same name, number of
-parameters, and return type as the method being overridden. 
+parameters, and return type as the method being overridden.
 
 :::
 
@@ -218,18 +218,18 @@ Failed tests: 0
 
 If we're thinking about this from the context of a game, there's actually maybe a level of less
 specificity that is below even the `Car` class, which is just a general `Vehicle` class. Cars are
-going to have a lot of the things we defined so far, but some of the elements are maybe more 
+going to have a lot of the things we defined so far, but some of the elements are maybe more
 general to all vehicles. We could create a `Vehicle` class that has all of the properties and
 methods that are common to all vehicles, and then have the `Car` class inherit from the `Vehicle`
 class. This way, we can have a more general class that defines the basic properties and methods.
 
 This is a great use case for something called an "abstract base class". An abstract base class is a
 class that is meant to be inherited from, but is not meant to be instantiated on its own. It can
-define abstract methods, which are methods that are declared but not implemented in the abstract 
+define abstract methods, which are methods that are declared but not implemented in the abstract
 base class. Subclasses that inherit from the abstract base class are then required to implement the
 abstract methods, or else the construction of the subclass will fail.
 
-Abstract base classes are implemented in Python using the `abc` module. Let's create a new file 
+Abstract base classes are implemented in Python using the `abc` module. Let's create a new file
 called `src/vehicle_module/vehicle.py` and add the following code to it:
 
 ```python
@@ -238,25 +238,25 @@ from abc import ABC, abstractmethod
 
 class Vehicle(ABC):
     car_count = 0
-    
+
     def __init__(self):
         self.speed = 0
         Vehicle.car_count += 1
 
     @abstractmethod
-    def make_engine_noise(self) -> str:
+    def make_engine_noise(self):
         pass
 
     @classmethod
-    def get_car_count(cls) -> int:
+    def get_car_count(cls):
         return cls.car_count
 ```
 
-You can see that we've transferred some of the properties and methods from the `Car` class to the 
+You can see that we've transferred some of the properties and methods from the `Car` class to the
 `Vehicle` class, since they feel like they are more general to all vehicles, rather than just cars.
-We have also defined an abstract method called `make_engine_noise` with the `@abstractmethod` 
-decorator, which means that any class that inherits from `Vehicle` will be required to implement 
-the `make_engine_noise` method. 
+We have also defined an abstract method called `make_engine_noise` with the `@abstractmethod`
+decorator, which means that any class that inherits from `Vehicle` will be required to implement
+the `make_engine_noise` method.
 
 Next, let's update our `Car` class to inherit from the `Vehicle` class:
 
@@ -268,38 +268,38 @@ from .vehicle import Vehicle
 class Car(Vehicle):
     # car_count = 0 # We can remove this line since the car_count property is now defined in the Vehicle class
 
-    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "gasoline"):
+    def __init__(self, make, model, year, color = "grey", fuel = "gasoline"):
         super().__init__() # Add a call to "super().__init__()" to call the __init__ method of the Vehicle class
-        self.make = make 
+        self.make = make
         self.model = model
         self.year = year
         self.color = color
         self.fuel = fuel
         # self.speed = 0 # we can remove this line since the speed property is now defined in the Vehicle class
 
-    def honk_horn(self) -> str:
+    def honk_horn(self):
         return "Honk! Honk!"
-    
-    def paint(self, new_color: str) -> None:
+
+    def paint(self, new_color):
         self.color = new_color
 
-    def make_engine_noise(self) -> str:
+    def make_engine_noise(self):
         if self.speed <= 10:
             return "putt putt"
         else:
             return "vroom!"
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f"A {self.color} {self.year} {self.make} {self.model} that runs on {self.fuel}."
 
     @property
-    def age(self) -> int:
+    def age(self):
         current_year = datetime.now().year
         return current_year - self.year
 
     # This entire method is now inherited from the Vehicle class, so we can remove it from the Car class
     # @classmethod
-    # def get_car_count(cls) -> int:
+    # def get_car_count(cls):
     #     return cls.car_count
 ```
 
@@ -323,20 +323,20 @@ What will happen when we run the following code? Why?
 
 ```python
 class Animal:
-    def __init__(self, name: str):
+    def __init__(self, name):
         print(f"Creating an animal named {name}")
         self.name = name
 
-    def whoami(self) -> str:
+    def whoami(self):
         return f"I am a {type(self)} named {self.name}"
 
 class Dog(Animal):
-    def __init__(self, name: str):
+    def __init__(self, name):
         print(f"Creating a dog named {name}")
         super().__init__(name=name)
 
 class Cat(Animal):
-    def __init__(self, name: str):
+    def __init__(self, name):
         print(f"Creating a cat named {name}")
 
 
@@ -395,14 +395,14 @@ Without running it, what do you think the following code will do? Will it run wi
 class Animal:
     PHYLUM = "Chordata"
 
-    def __init__(self, name: str):
+    def __init__(self, name):
         self.name = name
 
-    def whoami(self) -> str:
+    def whoami(self):
         return f"I am a {type(self)} named {self.name} in the phylum {self.PHYLUM}"
 
 class Snail(Animal):
-    def __init__(self, name: str):
+    def __init__(self, name):
         super().__init__(name=name)
 
 animal1 = Snail(name="Gary")
@@ -472,10 +472,10 @@ will inherit the `__init__` method from the `Animal` class through the `Mollusk`
 class Animal:
     PHYLUM = "Chordata"
 
-    def __init__(self, name: str):
+    def __init__(self, name):
         self.name = name
 
-    def whoami(self) -> str:
+    def whoami(self):
         return f"I am a {type(self)} named {self.name} in the phylum {self.PHYLUM}"
 
 class Mollusk(Animal):

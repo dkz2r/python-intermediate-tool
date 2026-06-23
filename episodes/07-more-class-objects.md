@@ -6,13 +6,17 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions
 
--
+- What are these methods that have `__` before and after their names?
+- What are static properties and methods, and how do they differ from instance properties and methods?
+- What are the `@property`, `@classmethod`, and `@staticmethod` decorators, and how do they work?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
--
+- Add a custom `__str__` method to our Car class to specify how it should be represented as a string.
+- Add a property to our Car class to calculate the age of the car based on the current year and the year it was made.
+- Add a static property to our Car class to keep track of how many cars have been created, and a class method to retrieve this count.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -30,9 +34,9 @@ operators. For example, we can define a `__str__` method, that will allow us to 
 object should be represented as a string when we call `str()` on it. Likewise, we can define
 `__eq__`, which would tell python how to behave when we compare two objects for equality.
 
-Several dunder methods are created automatically when we define a class, such as `__repr__`, which 
+Several dunder methods are created automatically when we define a class, such as `__repr__`, which
 provides a string representation of the object for debugging purposes, and `__class__`, which
-provides a reference to the class of the object. 
+provides a reference to the class of the object.
 
 Let's go back to our bank account example. We can see a list of all of the dunder methods our
 object has by using the `dir()` function:
@@ -41,7 +45,7 @@ object has by using the `dir()` function:
 print(dir(my_account))
 ```
 
-These all have basic implementations that are created automatically when we define the class, but 
+These all have basic implementations that are created automatically when we define the class, but
 we can override these with our own implementations if we want to add specific behavior.
 
 Try this for example: Let's define two class instances with identical properties, and then ask
@@ -78,28 +82,28 @@ parameter is the instance of the class that we are calling the method on. The me
 
 This is because the `==` operator is comparing the memory addresses of the two objects, which are
 different. If we want to compare the properties of the two objects instead, we can define our own
-`__eq__` method that tells python that two `BankAccount` objects are equal if their 
+`__eq__` method that tells python that two `BankAccount` objects are equal if their
 `account_holder`, `account_number`, and `balance` properties are all the same.
 
 ```python
 class BankAccount:
-    def __init__(self, account_holder: str, account_number: int, balance: float = 0.0):
+    def __init__(self, account_holder, account_number, balance = 0.0):
         self.account_holder = account_holder
         self.account_number = account_number
         self.balance = balance
 
-    def __eq__(self, other) -> bool:
+    def __eq__(self, other):
         return (self.account_holder == other.account_holder and
                 self.account_number == other.account_number and
                 self.balance == other.balance)
 
-    def deposit(self, amount: float) -> None:
+    def deposit(self, amount):
         if amount > 0:
             self.balance += amount
         else:
             raise ValueError("Deposit amount must be positive")
 
-    def withdraw(self, amount: float) -> None:
+    def withdraw(self, amount):
         if amount > 0:
             if self.balance >= amount:
                 self.balance -= amount
@@ -108,7 +112,7 @@ class BankAccount:
         else:
             raise ValueError("Withdrawal amount must be positive")
 
-    def get_balance(self) -> float:
+    def get_balance(self):
         return self.balance
 ```
 
@@ -121,27 +125,27 @@ print(account1 == account2)  # Output: True
 ```
 
 There are a large list of dunder methods that we can customize, and they can be used to add a lot of
-additional functionality to our classes. You can find a full list of them here: 
+additional functionality to our classes. You can find a full list of them here:
 https://docs.python.org/3/reference/datamodel.html#special-method-names
 
 ### Static Properties
 
 We've been dealing entirely with instance methods so far, which are stored on the specific instance
 of the class that is created when we call the constructor. However we can also define static
-properties and methods, which are stored on the class itself, and not on any specific instance. 
-These allow us to define functionality that is related to the class, but doesn't operate on any 
+properties and methods, which are stored on the class itself, and not on any specific instance.
+These allow us to define functionality that is related to the class, but doesn't operate on any
 specific instance of the class.
 
-Let's add a static property to our `BankAccount` class that automatically assigns the next 
-available account number to each new account that is created, rather than having to pass it in as 
+Let's add a static property to our `BankAccount` class that automatically assigns the next
+available account number to each new account that is created, rather than having to pass it in as
 a parameter to the constructor:
 
 ```python
 class BankAccount:
     # Static property to keep track of the next available account number
     next_account_number = 10000
-    
-    def __init__(self, account_holder: str, balance: float = 0.0):
+
+    def __init__(self, account_holder, balance = 0.0):
         self.account_holder = account_holder
         BankAccount.next_account_number += 1
         self.account_number = BankAccount.next_account_number
@@ -164,12 +168,12 @@ print(another_account.account_number)  # Output: 10002
 print(another_account.balance)         # Output: 2000.0
 ```
 
-We can still manually set the account number if we want to, but if we don't, it will automatically 
+We can still manually set the account number if we want to, but if we don't, it will automatically
 be assigned for us.
 
 ### Decorators in Classes
 
-Python has a number of built-in decorators that we can use to modify the behavior of our class 
+Python has a number of built-in decorators that we can use to modify the behavior of our class
 methods. There are a couple of decorators that are specific to classes, such as `@staticmethod` and
 `@property`, which allow us to more easily define our classes.
 
@@ -182,21 +186,21 @@ line must be placed directly above the method definition.
 
 :::
 
-In our `BankAccount` class, we currently have a method called `get_balance()` that returns the 
-current balance of the account. The user can call this method like `my_account.get_balance()`, but 
+In our `BankAccount` class, we currently have a method called `get_balance()` that returns the
+current balance of the account. The user can call this method like `my_account.get_balance()`, but
 it would be more natural to access the balance as a property, like `my_account.balance`. We can use
 the `@property` decorator to make this possible:
 
 ```python
 class BankAccount:
-    def __init__(self, account_holder: str, balance: float = 0.0):
+    def __init__(self, account_holder, balance = 0.0):
         # ... rest of the constructor ...
         self._balance = balance
 
     # ... rest of the class definition ...
 
     @property
-    def balance(self) -> float:
+    def balance(self):
         return self._balance
 ```
 
@@ -207,11 +211,11 @@ my_account = BankAccount(account_holder="Jimmy", balance=100.0)
 print(my_account.balance)  # Output: 100.0
 ```
 
-Similarly, we can explicitly define class or static methods using the `@classmethod` and 
-`@staticmethod` decorators, which can be useful for defining functionality that is related to the 
+Similarly, we can explicitly define class or static methods using the `@classmethod` and
+`@staticmethod` decorators, which can be useful for defining functionality that is related to the
 class, but doesn't operate on any specific instance of the class. For example, suppose we wanted to
-add a method to check if a deposit is valid - it should be a positive integer, and it shouldn't 
-exceed a certain limit. We can define this as a static method, since it doesn't operate on any 
+add a method to check if a deposit is valid - it should be a positive integer, and it shouldn't
+exceed a certain limit. We can define this as a static method, since it doesn't operate on any
 specific instance of the class:
 
 ```python
@@ -219,7 +223,7 @@ class BankAccount:
     # ... rest of the class definition ...
 
     @staticmethod
-    def is_valid_deposit(amount: float) -> bool:
+    def is_valid_deposit(amount):
         return amount > 0 and amount <= 10000
 ```
 
@@ -237,26 +241,26 @@ As well as calling it within the instance methods of the class:
 class BankAccount:
     # ... rest of the class definition ...
 
-    def deposit(self, amount: float) -> None:
+    def deposit(self, amount):
         if BankAccount.is_valid_deposit(amount):
             self._balance += amount
         else:
             raise ValueError("Invalid deposit amount")
 ```
 
-This let's us keep our code organized and modular - if the rules for defining a valid deposit 
+This let's us keep our code organized and modular - if the rules for defining a valid deposit
 change, we only need to update the `is_valid_deposit` method, and all of the code that relies on it
 will automatically use the updated logic.
 
 ## Updating our Car Class
 
-Let's go back to our `Car` class and make some updates. 
+Let's go back to our `Car` class and make some updates.
 
 ### Create a custom `__str__` method
 
 ```python
 class Car:
-    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "gasoline"):
+    def __init__(self, make, model, year, color = "grey", fuel = "gasoline"):
         self.make = make
         self.model = model
         self.year = year
@@ -264,19 +268,19 @@ class Car:
         self.fuel = fuel
         self.speed = 0
 
-    def honk_horn(self) -> str:
+    def honk_horn(self):
         return "Honk! Honk!"
 
-    def paint(self, new_color: str) -> None:
+    def paint(self, new_color):
         self.color = new_color
 
-    def make_engine_noise(self) -> str:
+    def make_engine_noise(self):
         if self.speed <= 10:
             return "putt putt"
         else:
             return "vroom!"
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f"A {self.color} {self.year} {self.make} {self.model} that runs on {self.fuel}."
 ```
 
@@ -289,7 +293,7 @@ class Car:
     # ... rest of the class definition ...
 
     @property
-    def age(self) -> int:
+    def age(self):
         current_year = datetime.now().year
         return current_year - self.year
 ```
@@ -300,12 +304,12 @@ class Car:
 class Car:
     car_count = 0
 
-    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = "gasoline"):
+    def __init__(self, make, model, year, color = "grey", fuel = "gasoline"):
         # ... rest of the constructor ...
         Car.car_count += 1
 
     @classmethod
-    def get_car_count(cls) -> int:
+    def get_car_count(cls):
         return cls.car_count
 ```
 
@@ -319,12 +323,12 @@ the code that prevents it from working as intended. Can you identify and fix the
 
 ```python
 class Animal:
-    def __init__(self, name: str):
+    def __init__(self, name):
         print(f"Creating an animal named {name}")
         self.name = name
 
 class Bird(Animal):
-    def whoami() -> str:
+    def whoami(self):
         return f"I am a bird. My name is irrelevant."
 ```
 
@@ -360,7 +364,7 @@ class. Without it, the method cannot access instance properties or methods.
 
 ## Challenge 2: The __str__ Method
 
-We looked at the `__eq__` method as an example of a dunder method that we can define to customize 
+We looked at the `__eq__` method as an example of a dunder method that we can define to customize
 the behavior of our class objects. Another common dunder method to define is the `__str__` method,
 which allows us to specify how our object should be represented as a string when we call `str()` on
 it.
@@ -370,7 +374,7 @@ output when run:
 
 ```python
 class Animal:
-    def __init__(self, name: str):
+    def __init__(self, name):
         print(f"Creating an animal named {name}")
         self.name = name
 
@@ -391,11 +395,11 @@ I am an animal named Moose.
 
 ```python
 class Animal:
-    def __init__(self, name: str):
+    def __init__(self, name):
         print(f"Creating an animal named {name}")
         self.name = name
 
-    def __str__(self) -> str:
+    def __str__(self):
         return f"I am an animal named {self.name}."
 
 ```
@@ -414,18 +418,18 @@ first parameter), we can also define class methods. These are methods that opera
 and so have `cls` as the first parameter. Instead of the `@staticmethod` decorator, they are defined
 using the `@classmethod` decorator.
 
-Start with the following code. We want to be able to easily keep track of how many animals of each 
+Start with the following code. We want to be able to easily keep track of how many animals of each
 species we have created since our code started running. To do this, we will need three things:
 
 - 1. A class property that is a dictionary that keeps track of how many animals of each species
     have been created.
 - 2. A way to update this dictionary every time a new instance of the `Animal` class is created.
 - 3. A class method that allows us to easily get the count of how many animals of a specific
-    species have been created. 
+    species have been created.
 
 ```python
 class Animal:
-    def __init__(self, name: str, species: str):
+    def __init__(self, name, species):
         print(f"Creating an animal named {name}")
         self.name = name
         self.species = species
@@ -453,14 +457,14 @@ from collections import defaultdict
 
 class Animal:
     animal_counts = defaultdict(int)
-    
-    def __init__(self, name: str, species: str):
+
+    def __init__(self, name, species):
         self.name = name
         self.species = species
         Animal.animal_counts[species] += 1
 
     @classmethod
-    def get_animal_count(cls, species: str) -> int:
+    def get_animal_count(cls, species):
         return cls.animal_counts.get(species, 0)
 
 ```
