@@ -118,7 +118,7 @@ Most Common value: ('pizza', 3)
 
 ### Creating Queues
 
-Another common task with iterable objects is to create a queue. Say our resturant wants to create a
+Another common task with iterable objects is to create a queue. Say our restaurant wants to create a
 system to track the the last three orders that were made, so we can see what is currently popular.
 We can make some code to do this, using a list to store the orders and removing them each time we
 add a new one:
@@ -172,7 +172,7 @@ deque(['noodles', 'pizza', 'sushi'], maxlen=3)
 
 Like we have a bunch of tools in the `collections` module to help us work with data in iterable
 forms, we also have a bunch of tools in the `itertools` module to help us work with how we iterate
-over data
+over data.
 
 ::: callout
 Many tools in the `itertools` package do not return a list object directly; instead, they return an
@@ -182,7 +182,7 @@ needed.
 
 ### Choosing groups of items
 
-Let's go back to our resturant example. Supposed we are focusing on pizzas. We have a list of all
+Let's go back to our restaurant example. Supposed we are focusing on pizzas. We have a list of all
 the toppings we have, and we would like to know all the different combinations of toppings someone
 could order. As usual, let's start by writing a simple implementation of this ourselves:
 
@@ -466,7 +466,7 @@ for make, number in my_counter.most_common(3):
 ### Challenge 3: Many Combinations
 
 Let's expand our pizza toppings example. We have 10 different toppings, and we just want to know
-how many different combinations toppings we can have on a pizza, based on the number of toppings
+how many different combinations of toppings we can have on a pizza, based on the number of toppings
 someone can choose. For example, if someone can only choose 3 toppings, how many different
 combinations of 3 toppings can we have? What about 4?
 
@@ -558,7 +558,7 @@ for i in range(1, len(toppings) + 1):
 
 ### Challenge 4: When to use `chain`?
 
-We mentioned earlier that some of the reasons to use `chain` are because of it's performance and
+We mentioned earlier that some of the reasons to use `chain` are because of its performance and
 memory efficiency. Try running the following code. What sort of results do you get?
 
 Try increasing the number of items in the lists, and see how it affects the performance of the code.
