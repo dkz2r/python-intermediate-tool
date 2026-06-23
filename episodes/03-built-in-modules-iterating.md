@@ -657,6 +657,35 @@ module useful for this challenge.
 
 ::: hint
 
+For question one, you can use a list comprehension to filter the log entries for the "login"
+action, and then use `Counter` to count the occurrences.
+
+:::
+
+::: hint
+
+Question 2 can be solved using a `defaultdict` that uses a `set` as it's default factory. Iterate
+over the log entries and update the set. (remember that you can add to a set using the `add()`
+method)
+
+:::
+
+::: hint
+
+In order to store the last 5 actions for each user, we can use a `deque` with a maximum length of 5.
+As we iterate over the entries, earlier entries will be automatically removed from the deque when
+new ones are added.
+
+In order to do this for each user, we can use a `defaultdict` that uses a `deque` as it's default
+factory, however we can't just call `defaultdict(deque(maxlen=5))` because that would create a
+single deque object for all users. Instead we can use a lambda function to create a new deque for
+each user:
+
+```python
+from collections import defaultdict, deque
+
+user_actions = defaultdict(lambda: deque(maxlen=5))
+```
 
 :::
 
@@ -667,7 +696,8 @@ module useful for this challenge.
 ```python
 from collections import Counter
 
-login_counts = Counter(entry["user"] for entry in log_entries if entry["action"] == "login")
+user_events = [entry for entry in log_entries if entry["action"] == "login"]
+login_counts = Counter(entry["user"] for entry in user_events)
 print(login_counts)
 ```
 
@@ -681,7 +711,8 @@ for entry in log_entries:
 print({user: list(actions) for user, actions in user_unique_actions.items()})
 ```
 
-3. To get the last 5 actions performed by each user, we can use `defaultdict` from the `collections` module and a `deque` to store the last 5 actions:
+3. To get the last 5 actions performed by each user, we can use `defaultdict` from the `collections`
+     module and a `deque` to store the last 5 actions:
 
 ```python
 from collections import defaultdict, deque

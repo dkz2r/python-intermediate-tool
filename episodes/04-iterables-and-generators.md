@@ -243,6 +243,13 @@ Fruits in both surveys: {'banana', 'orange', 'grape'}
 Fruits only in survey 1: {'apple'}
 ```
 
+Sets operate broadly similarly to lists, but the functions used to manipulate them are slightly
+different:
+
+- `add()` - Adds an element to the set. (instead of `append()` for lists)
+- `remove()` - Removes an element from the set. (instead of `pop()` for lists)
+- `union()` - Returns a new set with all elements from both sets. (instead of `extend()` for lists)
+
 ::::::::::::::::::::::::::::::::::::: challenge
 
 ## Challenge: Write a Dictionary Comprehension

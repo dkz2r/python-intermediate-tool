@@ -20,7 +20,7 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 1:
+## Challenge:
 
 
 :::::::::::::::: solution

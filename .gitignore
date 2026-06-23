@@ -54,3 +54,4 @@ renv/sandbox # OPTIONAL
 
 .vscode/
 .cspell/
+scratch/
