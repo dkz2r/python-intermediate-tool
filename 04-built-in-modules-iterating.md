@@ -371,13 +371,13 @@ print(next(topping_pairs)) # What happens here?
 
 Do you think that it will:
 
-A. Print "None", as there are no elements left in the iterator.
-B. Raise some kind of error.
-C. Print the first element again.
+1. Print "None", as there are no elements left in the iterator.
+2. Raise some kind of error.
+3. Print the first element again.
 
 :::::::::::::::: solution
 
-The correct answer is B. When we call `next()` on an iterator that has no more items to return, it
+The correct answer is 2. When we call `next()` on an iterator that has no more items to return, it
 raises a `StopIteration` exception. This is how Python signals that the iterator has been exhausted
 and there are no more items to iterate over.
 
