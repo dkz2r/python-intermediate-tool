@@ -7,7 +7,7 @@ exercises: 2
 :::::::::::::::::::::::::::::::::::::: questions
 
 - What is a class object?
-- How can I defined a class object in Python?
+- How can I define a class object in Python?
 - How can I use a class object in my module?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
@@ -73,7 +73,7 @@ the python community.
 
 ::: callout
 
-The `get_balance` method is an example of a "getter" method, which simple exposes a property of the
+The `get_balance` method is an example of a "getter" method, which simply exposes a property of the
 class. In this case, it allows us to access the `balance` property of the class without directly
 accessing the variable itself. This is a common pattern in object-oriented programming, and it can
 be useful for a number of reasons, such as allowing us to add additional logic when accessing the

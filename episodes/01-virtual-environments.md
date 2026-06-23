@@ -65,7 +65,7 @@ however there are a few key elements that set it apart:
 1. It is written in Rust, which gives it a significant speed improvement over pip and conda.
 2. It works with the `pyproject.toml` and `uv.lock` files, which allow for human and computer
        readable project files.
-3. It can install and manage it's own python versions.
+3. It can install and manage its own python versions.
 4. It works as a drop-in replacement for pip, eliminating the need to learn new commands.
 
 ## Creating a project with UV
@@ -141,7 +141,7 @@ uv venv
 ```
 
 Before we activate our environment, let's quickly check the location of the current python
-executable you are using is by starting a python interpreter and running the following commands:
+executable you are using by starting a python interpreter and running the following commands:
 
 ::: callout
 
