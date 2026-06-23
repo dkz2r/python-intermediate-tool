@@ -299,13 +299,13 @@ for x, y in zip(x_values, y_values):
     print(x, y)
 ```
 
-A. It will raise an error because the iterables are of different lengths.
-B. It will zip the iterables together, but only up to the length of the shorter iterable.
-C. It will zip the iterables together, and fill in missing values with `None`.
+1. It will raise an error because the iterables are of different lengths.
+2. It will zip the iterables together, but only up to the length of the shorter iterable.
+3. It will zip the iterables together, and fill in missing values with `None`.
 
 :::::::::::::::: solution
 
-The correct answer is B. The `zip` function will zip the iterables together, but only up to the
+The correct answer is 2. The `zip` function will zip the iterables together, but only up to the
 length of the shorter iterable. This means that when zipping, you don't need to necessarily have
 the same number of elements in each iterable, but you need to keep this in mind, since there is no
 explicit error raised.

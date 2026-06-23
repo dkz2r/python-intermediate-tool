@@ -67,19 +67,19 @@ contact: 'team@carpentries.org'
 episodes:
 - 00-introduction.md
 - 01-virtual-environments.md
-- 02-python-bts-and-bobs.md
+- 02-python-bits-and-bobs.md
 - 03-iterables-and-generators.md
 - 04-built-in-modules-iterating.md
 - 05-built-in-modules-logging.md
-- 06-creating-a-module.md
-- 07-class-objects.md
-- 08-more-class-objects.md
-- 09-extending-classes.md
-- 10-unit-testing.md
-- 11-composition.md
-- 12-static-code-analysis.md
-- 13-building-and-deploying.md
-- 99.3-built-in-modules-functools.md
+- 06-built-in-modules-functools.md
+- 07-creating-a-module.md
+- 08-class-objects.md
+- 09-more-class-objects.md
+- 10-extending-classes.md
+- 11-unit-testing.md
+- 12-composition.md
+- 13-static-code-analysis.md
+- 14-building-and-deploying.md
 - 99.4-built-in-modules-multiprocessing.md
 
 # Information for Learners
