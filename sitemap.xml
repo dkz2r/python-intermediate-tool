@@ -13,10 +13,19 @@
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/02-iterables-and-generators.html</loc>
   </url>
   <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/02-python-bits-and-bobs.html</loc>
+  </url>
+  <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/03-built-in-modules-iterating.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/03-class-objects.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/03-iterables-and-generators.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/04-built-in-modules-iterating.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/04-built-in-modules-logging.html</loc>
@@ -25,16 +34,25 @@
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/04-unit-testing.html</loc>
   </url>
   <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/05-built-in-modules-logging.html</loc>
+  </url>
+  <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/05-creating-a-module.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/05-extending-classes.html</loc>
   </url>
   <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/06-built-in-modules-functools.html</loc>
+  </url>
+  <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/06-class-objects.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/06-composition.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/07-creating-a-module.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/07-more-class-objects.html</loc>
@@ -46,7 +64,13 @@
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/08-building-and-deploying.html</loc>
   </url>
   <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/08-class-objects.html</loc>
+  </url>
+  <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/08-extending-classes.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/09-more-class-objects.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/09-unit-testing.html</loc>
@@ -55,10 +79,25 @@
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/10-composition.html</loc>
   </url>
   <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/10-extending-classes.html</loc>
+  </url>
+  <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/11-static-code-analysis.html</loc>
   </url>
   <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/11-unit-testing.html</loc>
+  </url>
+  <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/12-building-and-deploying.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/12-composition.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/13-static-code-analysis.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/14-building-and-deploying.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/404.html</loc>
@@ -100,10 +139,19 @@
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/02-iterables-and-generators.html</loc>
   </url>
   <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/02-python-bits-and-bobs.html</loc>
+  </url>
+  <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/03-built-in-modules-iterating.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/03-class-objects.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/03-iterables-and-generators.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/04-built-in-modules-iterating.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/04-built-in-modules-logging.html</loc>
@@ -112,16 +160,25 @@
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/04-unit-testing.html</loc>
   </url>
   <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/05-built-in-modules-logging.html</loc>
+  </url>
+  <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/05-creating-a-module.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/05-extending-classes.html</loc>
   </url>
   <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/06-built-in-modules-functools.html</loc>
+  </url>
+  <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/06-class-objects.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/06-composition.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/07-creating-a-module.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/07-more-class-objects.html</loc>
@@ -133,7 +190,13 @@
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/08-building-and-deploying.html</loc>
   </url>
   <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/08-class-objects.html</loc>
+  </url>
+  <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/08-extending-classes.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/09-more-class-objects.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/09-unit-testing.html</loc>
@@ -142,10 +205,25 @@
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/10-composition.html</loc>
   </url>
   <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/10-extending-classes.html</loc>
+  </url>
+  <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/11-static-code-analysis.html</loc>
   </url>
   <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/11-unit-testing.html</loc>
+  </url>
+  <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/12-building-and-deploying.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/12-composition.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/13-static-code-analysis.html</loc>
+  </url>
+  <url>
+    <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/14-building-and-deploying.html</loc>
   </url>
   <url>
     <loc>https://jonathan-hartman.github.io/python-intermediate-tool/instructor/404.html</loc>
