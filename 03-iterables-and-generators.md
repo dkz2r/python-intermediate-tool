@@ -107,39 +107,6 @@ in a similar way. The syntax for a dictionary comprehension is
 squared_dict = {x: x**2 for x in range(10)}
 ```
 
-## `zip` and `enumerate`
-
-We can iterate over a dictionary using a for loop like this:
-
-```python
-my_dict = {'a': 1, 'b': 2, 'c': 3}
-for key, value in my_dict.items():
-    print(key, value)
-```
-
-This works because the `items()` method of a dictionary returns an iterable of key-value pairs.
-The `zip` function is a built-in function that allows you to iterate over multiple iterables at the
-same time. It takes two or more iterables as arguments and returns an iterator that produces tuples
-containing the corresponding elements from each iterable.
-
-```python
-x_values = ["a", "b", "c"]
-y_values = [1, 2, 3]
-
-for x, y in zip(x_values, y_values):
-    print(x, y)
-```
-
-The `enumerate` function is related, as it allows you to iterate over an iterable while keeping
-track of the index of the current item. It takes an iterable as an argument and returns an iterator
-that produces tuples containing the index and the corresponding item from the iterable.
-
-```python
-my_list = ['a', 'b', 'c']
-for index, value in enumerate(my_list):
-    print(index, value)
-```
-
 ## Generator Functions
 
 A generator is a special type of iterable that allows you to generate values on the fly, rather
@@ -276,6 +243,13 @@ Fruits in both surveys: {'banana', 'orange', 'grape'}
 Fruits only in survey 1: {'apple'}
 ```
 
+Sets operate broadly similarly to lists, but the functions used to manipulate them are slightly
+different:
+
+- `add()` - Adds an element to the set. (instead of `append()` for lists)
+- `remove()` - Removes an element from the set. (instead of `pop()` for lists)
+- `union()` - Returns a new set with all elements from both sets. (instead of `extend()` for lists)
+
 ::::::::::::::::::::::::::::::::::::: challenge
 
 ## Challenge: Write a Dictionary Comprehension
@@ -325,13 +299,13 @@ for x, y in zip(x_values, y_values):
     print(x, y)
 ```
 
-A. It will raise an error because the iterables are of different lengths.
-B. It will zip the iterables together, but only up to the length of the shorter iterable.
-C. It will zip the iterables together, and fill in missing values with `None`.
+1. It will raise an error because the iterables are of different lengths.
+2. It will zip the iterables together, but only up to the length of the shorter iterable.
+3. It will zip the iterables together, and fill in missing values with `None`.
 
 :::::::::::::::: solution
 
-The correct answer is B. The `zip` function will zip the iterables together, but only up to the
+The correct answer is 2. The `zip` function will zip the iterables together, but only up to the
 length of the shorter iterable. This means that when zipping, you don't need to necessarily have
 the same number of elements in each iterable, but you need to keep this in mind, since there is no
 explicit error raised.

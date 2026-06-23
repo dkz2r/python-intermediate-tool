@@ -359,19 +359,17 @@ Modify the following code so that our logs look like this:
 [2026-06-21 19:48:17] [ERROR] (Line 9) - Message: Failed to connect to database
 ```
 
-Refer to the [official documentation](https://docs.python.org/3/library/logging.html#logrecord-attributes)
-for the available fields and how to set a custom logging format.
-
 ::: hint
 
-
+Refer to the [official documentation](https://docs.python.org/3/library/logging.html#logrecord-attributes)
+for the available fields and how to set a custom logging format.
 
 :::
 
 :::::::::::::::: solution
 
 We can set a custom logging format by using the `format` parameter in `basicConfig()`. We will use
-the `asctime` field for the timestamp, and the `levelname` field for the severity level.
+the `asctime` field for the timestamp, the `levelname` field for the severity level, and the `lineno` field for the line number.
 
 ```python
 import logging

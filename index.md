@@ -8,7 +8,7 @@ workshop. The learner will be assumed to have a basic understanding of the follo
 
 - Basic python syntax
 - Writing Conditionals and "For" loops
-- Installing and running third party libaries
+- Installing and running third party libraries
 - Basic Version control with git
 
 We will cover the following topics in the course of this workshop:
