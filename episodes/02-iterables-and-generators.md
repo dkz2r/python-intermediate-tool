@@ -1,14 +1,15 @@
-
-
 ---
-title: ''
+title: 'Iterables and Generators'
 teaching: 10
 exercises: 2
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions
 
--
+- What is an iterable in Python?
+- What is a generator in Python?
+- How can I succinctly create a list or dictionary in Python?
+- What are sets and how can I use them in Python?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -382,6 +383,9 @@ print("Unique students who attended at least one class:", num_unique_students)
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 
--
+- An iterable is any Python object that implements the `__iter__()` method, which returns an iterator.
+- Iterators also implement the `__next__()` method, which returns the next item in the sequence when called.
+- A generator is a special type of iterable that allows you to generate values on the fly, rather than storing them all in memory at once.
+- Sets are unordered collections of unique elements that support mathematical set operations like union, intersection, difference, and symmetric difference.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
