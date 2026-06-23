@@ -21,7 +21,7 @@ exercises: 2
 
 ## Unit Testing
 
-We have our little test file, but you might imagine that it's not particularly efficient to
+We have our little test files, but you might imagine that it's not particularly efficient to
 always write individual scripts to test our code. What if we had a lot of functions or classes?
 Or a lot of different ideas to test? What if our objects changed down the line? Our existing
 modules are going to be difficult to maintain, and, as you may have expected, there is already a
@@ -121,7 +121,7 @@ sys.path.insert(0, "./src")
 import vehicle_module
 
 def test_honk_horn():
-    assert vehicle_module.honk_horn(2) == "Honk! Honk! "
+    assert vehicle_module.horn_noises.honk_horn(2) == "Honk! Honk! "
 ```
 
 `pytest` uses the `assert` statement to check if the output of a function is what we expect. If the
@@ -227,9 +227,14 @@ You can see that all of the tests have passed. There is a small green pip for ea
 performed, and a summary at the end. Compare this to the test file we had before. We got rid of all
 of the if statements, and just use the `assert` statement to check if the output is what we expect.
 
-### Testing Edge Cases / Exceptions
+### Testing Exceptions
 
-Let's add an edge case to our tests. After our `test_honk_horn` function, add the following test:
+We usually want to test the most basic use case of our functions, but maybe we want to also check
+for some common Edge Cases - situations that are not necessarily expected, but that we want to
+anticipate and handle in our code. For example, what if the user provides a value of 0 for the
+`times` parameter in the `honk_horn`. What should happen?
+
+After our `test_honk_horn` function, add the following test:
 
 ```python
 def test_honk_horn_zero():
@@ -291,16 +296,166 @@ def honk_horn(times=1):
 
 Running the tests again, we can see that all the tests pass.
 
+### Edge Cases / Test Driven Development
+
+So we came up with a couple different ways that the `honk_horn` function might fail, based on
+different inputs, and we want to make sure our code handles these cases. We could edit the code file
+first, then write the tests, but a more common practice is to write the tests first, and then edit
+the code to make the tests pass. This is called "Test Driven Development" (TDD) and has a couple of
+benefits:
+
+- 1. It forces us to think about the different ways our code might fail, and how we want to handle
+       those cases ahead of time. (e.g. what should happen if the user provides a value of 0 for
+       the `times` parameter in the `honk_horn` function?)
+- 2. It gives us a safety net of tests that we can run after we make changes to our code, to make
+       sure we didn't break anything. (e.g. if we change the `honk_horn` function to raise a
+       `ValueError` for a value of 0, we can run our tests to make sure that the function still
+       works as expected for other values.)
+- 3. It mimics the process for bug hunting - we can write a test that reproduces the bug, then edit
+     the code to fix the bug, and then run the tests to make sure the bug is fixed and that we
+     didn't break anything else.
+
+Let's add an additional test for the `honk_horn` function that check for one of the edge cases
+we discussed earlier:
+
+```python
+def test_honk_horn_large_number():
+    with pytest.raises(ValueError):
+        vehicle_module.horn_noises.honk_horn(11)
+```
+
+Run the tests again:
+
+```bash
+uv run pytest
+```
+
+And we should get a message that our test failed, because the `honk_horn` function did not raise a
+`ValueError` for a value of 11. Let's update the `honk_horn` function to the following:
+
+```python
+def honk_horn(times=1):
+    if times < 1:
+        raise ValueError("Times must be at least 1")
+    if times > 10:
+        raise ValueError("Times must be at most 10")
+    return "Honk! " * times
+```
+
+::: callout
+
+What about some of the other edge cases we discussed earlier?
+
+Well, let's add them:
+
+```python
+def test_honk_horn_non_integer():
+    with pytest.raises(TypeError):
+        vehicle_module.horn_noises.honk_horn("Two")
+
+
+def test_honk_horn_negative():
+    with pytest.raises(ValueError):
+        vehicle_module.horn_noises.honk_horn(-1)
+```
+
+And run our tests again. They...pass?
+
+When python tries to multiple a string by a float, a negative integer, or another string, it will
+already raise a `TypeError` or `ValueError`. While we could add additional tests for these cases,
+it is not strictly necessary, as this functionality is implemented in the Python language itself.
+
+It's very easy to find yourself drowning in tests, and writing tests for each and every possible
+edge case. This can even be counterproductive, as it can make it difficult to maintain your tests,
+and can slow down your overall development process.
+
+:::
+
+
+### Testing Classes
+
+So that works well enough for the basic functions we wrote at the start, but what about testing
+the classes we made? The Vehicle, Car, GasolineCar and ElectricCar classes? We can test classes
+similarly to functions, by writing test functions that create instances of the class and check their
+behavior. Let's start by looking at the test cases we wrote previously.
+
+First off, we need to rename the file so that pytest can recognize it as a test file. Let's rename
+it to `test_car.py`.
+
+We want our tests to ensure that we are able to create a Car object, and that the methods on the
+Car object operate as expected on an instance.
+
+```python
+from vehicle_module.car import Car, ElectricCar, GasolineCar
+
+# ... existing code
+
+# Check that we can create a Car object
+car = Car(make="Toyota", model="Corolla", year=2020)
+if car.make == "Toyota" and car.model == "Corolla" and car.year == 2020:
+    passed_tests += 1
+else:
+    failed_tests += 1
+
+# Test the methods
+if car.honk_horn() == "Honk! Honk!":
+    passed_tests += 1
+else:
+    failed_tests += 1
+
+if car.make_engine_noise() == "putt putt":
+    passed_tests += 1
+else:
+    failed_tests += 1
+```
+
+In pytest form, this would look like the following:
+
+```python
+def test_car():
+    my_car = Car(make="TestMake", model="TestModel", year=2026)
+
+    assert my_car.make == "TestMake"
+    assert my_car.model == "TestModel"
+    assert my_car.year == 2026
+    assert my_car.color == "grey"
+    assert my_car.fuel == "gasoline"
+
+
+def test_car_noises():
+    my_car = Car(make="TestMake", model="TestModel", year=2026)
+
+    assert my_car.honk_horn() == "Honk! Honk!"
+    assert my_car.make_engine_noise() == "putt putt"
+```
+
+Note that we can use as many asserts as we like in each test function. If any one of the asserts
+fails, the test will fail.
+
 ### Fixtures
 
-One of the great features of pytest is the ability to use fixtures. Fixtures are a way to provide
-data, state or configurations to your tests. For example, we have a line in each of our tests that
-creates a new `Document` object. We can use a fixture to create this object once, and then use it
-in each of our tests. That way, if we need to change the way we create the object in the future, we
-only need to change it in one place.
+One of the strengths of pytest is the ability to create fixtures, which are reusable bits of code
+that can be used to quickly set up objects or data for our tests. For example, notice that in each
+of our tests so far, we have had to create a new instance of the `Car` object with the same set of
+parameters. As programmers, we are lazy! And this also could potentially create problems down the
+line - what if we have a series of tests, all of which create a new `Car` object, and then one day
+we decide to change the parameters of the `Car` object? We would have to edit each test
+individually, which is tedious and error-prone. Instead, we can create a fixture that creates a
+`Car` object for us, and then we can use that fixture in our tests.
 
-Let's create a fixture for our `Document` object. Open up `test_document.py` and add the following
-import at the top:
+::: callout
+
+Fixtures are special functions in pytest, but they are simple functions in the end. There's nothing
+stopping you from just creating a function that returns a `Car` object, and then calling that
+function in your tests. The difference is that fixtures are automatically discovered by pytest,
+allowing us to create session-level fixtures that need to be used everywhere, module level fixtures
+that are used in multiple test files, etc. Fixtures can also be set to be automatically applied, so
+we don't have to explicitly include them in our test functions.
+
+:::
+
+Let's create a fixture for our `Car` object. We're using a fixture that comes from `pytest` called
+`@pytest.fixture`, so we'll need to add an import to the top of the file:
 
 ```python
 import pytest
@@ -309,45 +464,37 @@ Then, add the following code below the imports:
 
 ```python
 @pytest.fixture
-def doc():
-    return Document(filepath="tests/example_file.txt")
+def my_car():
+    return Car(make="Toyota", model="Corolla", year=2020)
 ```
 
 Now, we can use this fixture in our tests. Update the test functions to accept a parameter called
-`doc`, and remove the line that creates the `Document` object. The updated test file
+`my_car`, and remove the line that creates the `Car` object. The updated test file
 should look like this:
 
 ```python
 import pytest
 
-from textanalysis_tool.document import Document
+from vehicle_module.car import Car, ElectricCar, GasolineCar
 
 @pytest.fixture
-def doc():
-    Document.CONTENT_PATTERN = r"(.*)"
-    return Document(filepath="tests/example_file.txt")
+def my_car():
+    return Car(make="Toyota", model="Corolla", year=2020)
 
-def test_create_document(doc):
-    assert doc.filepath == "tests/example_file.txt"
+def test_car(my_car):
+    assert my_car.make == "Toyota"
+    assert my_car.model == "Corolla"
+    assert my_car.year == 2020
+    assert my_car.color == "grey"
+    assert my_car.fuel == "gasoline"
 
-def test_document_word_count(doc):
-    assert doc.get_line_count() == 2
 
-def test_document_word_occurrence(doc):
-    assert doc.get_word_occurrence("test") == 2
+def test_car_noises(my_car):
+    assert my_car.honk_horn() == "Honk! Honk!"
+    assert my_car.make_engine_noise() == "putt putt"
 ```
 
-::: callout
-
-Because our Documents are validated by searching for a starting and ending regex pattern, our test
-files will not have that. We could ensure that our test files would, or we can just temporarily
-alter the search pattern for the duration of the test. `CONTENT_PATTERN` is a class level variable,
-so we need to modify it before the instance is created.
-
-:::
-
-Let's run our tests again. Nothing changed in the output, but our code is now cleaner and easier
-to maintain.
+Let's run our tests again with `uv run pytest`. Hopefully, all of our tests are still passing.
 
 ### Monkey Patching
 
@@ -357,94 +504,62 @@ that depends on an external resource, such as a database, file system or web res
 actually accessing the external resource, you can use monkey patching to replace the function that
 accesses the resource with a mock function that returns a predefined value.
 
-In our use case, we have a file called `example_file.txt` that we use to test our `Document`
-class. However, if we wanted to test the `Document` class with files that have different contents,
-would need to create a whole array of different test files. Instead, we can use monkey patching to
-replace the `open` function, so that instead of actually opening a file, it returns a string that
-we define.
+Remember in the last episode when we added our Car glyphs? Let's write a simple check to make sure
+that we are getting the correct glyph.
 
-Let's monkey patch the `open` function in our `test_document.py` file. First, we need to import the
-`monkeypatch` fixture from `unittest.mock` (a python built-in module). Add the following import at
-the top of the file:
+
+ Now in our test file, we can write a test that checks that the glyph is the correct size. However,
+ we don't really want to have to ensure that there is a file called `car.glyph` in the correct
+ location, instead we'll use monkey patching to replace the `open` function with a mock function
+ that returns a string that we define for the test. This way, we can test the behavior of the
+ `glyph` property and how it handles the contents of the file.
+
+ Let's add update our tests in `test_car.py` to include a test for the glyph. First, we need to add
+ an import for the `mock_open` at the top of the file:
 
 ```python
 from unittest.mock import mock_open
 ```
 
-Then, we can create a new fixture that monkey patches the `open` function. Add the following code
-below the `doc` fixture:
-
-```python
-@pytest.fixture(autouse=True)
-def mock_file(monkeypatch):
-    mock = mock_open(read_data="This is a test document. It contains words.\nIt is only a test document.")
-    monkeypatch.setattr("builtins.open", mock)
-    return mock
-```
-
-The other difference you'll notice is that we added the parameter `autouse=True` to the fixture.
-This means that, within this test file, this specific fixture will be automatically applied to all
-tests, without needing to explicitly include it as a parameter in each test function.
-
-Go ahead and delete the `example_file.txt` file, and run the tests again. Your tests should still
-pass, even though the file doesn't exist anymore. This is because we are using monkey patching to
-replace the `open` function with a mock function that returns the string we defined.
-
-### Edge Cases Again / Test Driven Development
-
-Let's go back and think about other things that might go wrong with our `Document` class. What if
-the user provides a file path that doesn't exist? What if the user provides a file that is not a
-text file? Or a file that is empty of content? Rather than write these into our class object, we
-can first write tests that will check for the behavior we expect or want in these edge cases, see
-if they fail, and then update our class object to make the tests pass. This is called "Test Driven
-Development" (TDD), and is a common practice in software development.
-
-Let's add a test for a file that is empty. In this case, we would want the initialization of the
-object to fail with a `ValueError`. However for this test, we can't use our fixtures from above, so
-we'll have to code it into the test. Add the following to `test_document.py`:
-
-```python
-def test_empty_file(monkeypatch):
-    # Mock an empty file
-    mock = mock_open(read_data="")
-    monkeypatch.setattr("builtins.open", mock)
-
-    with pytest.raises(ValueError):
-        Document(filepath="empty_file.txt")
-```
-
 ::: callout
 
-Because we are monkeypatching the `open` function, we don't actually need to have a file called
-`empty_file.txt` in our tests directory. The `open` function will be replaced with our mock
-function that returns an empty string. We are providing a file name here to be consistent with the
-`Document` class initialization, and we are using the name to act as additional information for
-later developers to clarify the intent of the test.
+Wait, why are we using `unittest.mock`? I thought we were using `pytest`? `pytest` is a great
+testing framework, but it works well with the built-in `unittest.mock` library, which is part of
+the Python standard library. `unittest.mock` provides a way to create mock objects and functions
+that can be used in tests.
+
+`pytest` does have its own mocking library called `pytest-mock`, but it is not part of the standard
+library, and is not included in the default `pytest`. We aren't going to cover this here.
 
 :::
 
-Run the tests again:
-
-```bash
-uv run pytest
-```
-
-It fails, as we expect. Now, let's update the `Document` class to raise a `ValueError` if the file
-is empty. Open up `document.py` and update the `get_content` method to the following:
+To use this in our test, we need to update our test to "monkeypatch" the `open` function. When our
+test tries to run the `glyph` property, it will try to open the file `car.glyph`, but instead of
+actually opening the file, it will use our mock function that returns a string that we define for
+the test. Our test looks like this:
 
 ```python
-...
-    def get_content(self, filepath: str) -> str:
-        raw_text = self.read(filepath)
-        if not raw_text:
-            raise ValueError(f"File {filepath} contains no content.")
+def test_car_glyph(my_car, monkeypatch):
+    file_content = """
+1234567890
+1234567890
+1234567890
+1234567890
+"""
+    mock = mock_open(read_data=file_content)
+    monkeypatch.setattr("builtins.open", mock)
 
-        match = re.search(self.CONTENT_PATTERN, raw_text, re.DOTALL)
-        if match:
-            return match.group(1).strip()
-        raise ValueError(f"File {filepath} is not a valid Project Gutenberg Text file.")
-...
+    assert isinstance(my_car.glyph, str)
+    assert my_car.glyph == file_content.strip()
 ```
+
+::: instructor
+
+Strictly speaking, I think it would be better to test the glyph property in a separate test file,
+like `test_vehicle.py`. We can mention this.
+
+:::
+
 
 ::::::::::::::::::::::::::::::::::::: challenge
 

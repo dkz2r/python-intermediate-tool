@@ -214,7 +214,7 @@ Passed tests: 6
 Failed tests: 0
 ```
 
-### Abstract Base Classes
+## Abstract Base Classes
 
 If we're thinking about this from the context of a game, there's actually maybe a level of less
 specificity that is below even the `Car` class, which is just a general `Vehicle` class. Cars are
@@ -314,6 +314,99 @@ Failed tests: 0
 
 Looks good! We've got a firm base to build on now!
 
+## Quick Side Project - ASCII Art!
+
+Let's look at an example of how to use an abstract base class to enforce a common interface. Let's
+start with our `Vehicle` class. Up until now, our Cars have been sort of theoretical, but let's make
+them real! Let's create a new directory at `src/vehicle_module/glyphs` and create a new file called
+`car.glyph`. Open a text editor and add the following text to the `car.glyph` file:
+
+```
+.|-XOX-|..
+...OOO....
+...XOX....
+.|-XOX-|..
+```
+
+This beautiful piece of ASCII art is a very square car viewed from above. The dots represent empty
+space.
+
+### Adding the Glyph to our module
+
+We have a new file in our project, but (and this is a problem for down the line, but we may as well
+address it here) when we package our module, the packaging process will only include the Python
+files we've written. We need to tell the packaging process specifically that we want to include
+this new file.
+
+In our `pyproject.toml` file, add the following lines:
+
+```toml
+[tool.setuptools.package-data]
+"vehicle_module" = ["glyph/*.car"]
+```
+
+## Required Properties
+
+Ok, why did we just add a little text image of a car to our project? We'll see how this comes into
+play a little down the line, but for now, let's say that as a rule, every Vehicle in our project
+must have a glyph file associated with it. It's ok if more than one Vehicle uses the same glyph
+file, but every Vehicle must have a glyph file.
+
+We can enforce this rule by adding a new abstract method to our `Vehicle` class, and telling Python
+that this is also a property. This is done nearly identically as the abstract methods, but we also
+add the `@property` decorator to the method. Let's add the following code to our `Vehicle` class:
+
+```python
+    @property
+    @abstractmethod
+    def glyph_file(self):
+        pass
+```
+
+Now, any class that inherits from `Vehicle` will be required to implement a `glyph_file` property. If it
+doesn't, it will be unable to instantiate and the script will fail. Try running our tests right now.
+You should see an error that looks like this:
+
+```
+E   TypeError: Can't instantiate abstract class Car without an implementation for abstract method 'glyph_file'
+```
+
+To fix this, we need to add a property to our `Car` class:
+
+```python
+    @property
+    def glyph_file(self):
+        return "car.glyph"
+```
+
+Note that it doesn't matter what the property returns, as long as it is defined. We could type in
+our string here, but it would be better to load in that file that we just added. We need a little
+bit of extra code to do that. Since each car only needs to know what the name of the file is, we
+can centralize the loading of the file in the `Vehicle` class. Let's add the following code to
+our `vehicle.py` file:
+
+```python
+from abc import ABC, abstractmethod
+from importlib.resources import files, as_file  # To load in our files from the package
+
+from . import glyph  # The directory we indicated in our pyproject.toml file
+```
+
+Then, we can add a `glyph` property to load in the file:
+
+```python
+    @property
+    def glyph(self):
+        resource = files(glyph).joinpath(self.glyph_file)  # Get the path to the file in the package
+        with as_file(resource) as path:  # Open the file
+            with open(path, "r", encoding="utf-8") as f:  # Read the file
+                glyph_string = f.read()  # And return the contents of the file
+        return glyph_string
+```
+
+Note that we are calling "self.glyph_file" here, which in the abstract base class here is just an
+abstract property. However the way we've set this up, all subclasses of `Vehicle` will be required
+to implement the `glyph_file` property, so this will work as expected.
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
