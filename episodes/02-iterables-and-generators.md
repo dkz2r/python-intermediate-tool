@@ -107,39 +107,6 @@ in a similar way. The syntax for a dictionary comprehension is
 squared_dict = {x: x**2 for x in range(10)}
 ```
 
-## `zip` and `enumerate`
-
-We can iterate over a dictionary using a for loop like this:
-
-```python
-my_dict = {'a': 1, 'b': 2, 'c': 3}
-for key, value in my_dict.items():
-    print(key, value)
-```
-
-This works because the `items()` method of a dictionary returns an iterable of key-value pairs.
-The `zip` function is a built-in function that allows you to iterate over multiple iterables at the
-same time. It takes two or more iterables as arguments and returns an iterator that produces tuples
-containing the corresponding elements from each iterable.
-
-```python
-x_values = ["a", "b", "c"]
-y_values = [1, 2, 3]
-
-for x, y in zip(x_values, y_values):
-    print(x, y)
-```
-
-The `enumerate` function is related, as it allows you to iterate over an iterable while keeping
-track of the index of the current item. It takes an iterable as an argument and returns an iterator
-that produces tuples containing the index and the corresponding item from the iterable.
-
-```python
-my_list = ['a', 'b', 'c']
-for index, value in enumerate(my_list):
-    print(index, value)
-```
-
 ## Generator Functions
 
 A generator is a special type of iterable that allows you to generate values on the fly, rather

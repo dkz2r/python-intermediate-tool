@@ -649,12 +649,49 @@ Using the methods we've talked about from the `itertools` module, write code tha
 following questions about the log entries:
 
 1. How many times did each user login?
-2. What are the last 5 actions performed by each user?
-3. What are all the unique actions performed by each user?
+2. What are all the unique actions performed by each user?
+3. Bonus: What were the last 5 actions performed by each user? (See the last hint for details)
+
+You will probably find the `Counter`, `defaultdict`, and `deque` objects from the `collections`
+module useful for this challenge.
+
+::: hint
+
+
+:::
 
 :::::::::::::::: solution
 
-1. To count
+1. To count the number of logins for each user, we can use `Counter` from the `collections` module:
+
+```python
+from collections import Counter
+
+login_counts = Counter(entry["user"] for entry in log_entries if entry["action"] == "login")
+print(login_counts)
+```
+
+2. To get all the unique actions performed by each user, we can use a `defaultdict` with a `set`:
+
+```python
+user_unique_actions = defaultdict(set)
+for entry in log_entries:
+    user_unique_actions[entry["user"]].add(entry["action"])
+
+print({user: list(actions) for user, actions in user_unique_actions.items()})
+```
+
+3. To get the last 5 actions performed by each user, we can use `defaultdict` from the `collections` module and a `deque` to store the last 5 actions:
+
+```python
+from collections import defaultdict, deque
+
+user_actions = defaultdict(lambda: deque(maxlen=5))
+for entry in log_entries:
+    user_actions[entry["user"]].append(entry["action"])
+
+print({user: list(actions) for user, actions in user_actions.items()})
+```
 
 ::::::::::::::::
 
