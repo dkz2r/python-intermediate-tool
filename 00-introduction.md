@@ -27,7 +27,7 @@ are unaware that many of these tools and techniques are already available in the
 libraries or are common programming patterns that can be easily implemented.
 
 Our goal is to give a broad and shallow overview of several of these elements, bringing as many of
-them together at the end into a single project.
+them together at the end into a single project as possible.
 
 ### Topics
 
