@@ -65,14 +65,21 @@ contact: 'team@carpentries.org'
 
 # Order of episodes in your lesson
 episodes:
+- 00-introduction.md
 - 01-virtual-environments.md
-- 02-creating-a-module.md
-- 03-class-objects.md
-- 04-unit-testing.md
-- 05-extending-classes.md
-- 06-composition.md
-- 07-static-code-analysis.md
-- 08-building-and-deploying.md
+- 02-iterables-and-generators.md
+- 03-built-in-modules-iterating.md
+- 04-built-in-modules-logging.md
+- 05-creating-a-module.md
+- 06-class-objects.md
+- 07-more-class-objects.md
+- 08-extending-classes.md
+- 09-unit-testing.md
+- 10-composition.md
+- 11-static-code-analysis.md
+- 12-building-and-deploying.md
+- 99.3-built-in-modules-functools.md
+- 99.4-built-in-modules-multiprocessing.md
 
 # Information for Learners
 learners:
