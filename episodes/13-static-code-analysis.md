@@ -50,6 +50,7 @@ uv run ruff check .
 Did you get any output? Depending on your IDE and it's settings, you might have already fixed some
 of the issues.
 
+
 The default configuration for `ruff` only checks for a few types of issues. We can customize the
 configuration by adding a section for `ruff` in our `pyproject.toml` file:
 
@@ -83,114 +84,67 @@ line-ending = "auto"
 # - "RUF": Ruff-specific rules
 # - "TID": Tidy Imports
 select = ["E", "W", "F", "I", "B", "PL", "C90", "N", "ERA", "RUF", "TID", "SIM"]
-
-# These are Personal preference
-# D203 - Don't require a space between the docstring and the class or function definition
-# D212 - The summary of the docstring can go on the line below the triple quotes
-ignore = ["D203", "D212"]
 ```
 
-This configuration adds a number of additional rules to check for. This is the output from running
-this one on our codebase:
+This configuration adds a number of additional rules to check for. This is part of the output from
+running `ruff` on our codebase:
 
 ```
 I001 [*] Import block is un-sorted or un-formatted
- --> src\textanalysis_tool\readers\epub_reader.py:1:1
+ --> src\vehicle_module\car.py:1:1
   |
-1 | / import re
+1 | / from datetime import datetime
 2 | |
-3 | | from bs4 import BeautifulSoup
-4 | | import ebooklib
-5 | |
-6 | | from textanalysis_tool.readers.base_reader import BaseReader
-  | |____________________________________________________________^
+3 | | from .vehicle import Vehicle
+4 | | from .engines.base_engine import BaseEngine
+5 | | from .engines.gas_engine import GasEngine
+  | |_________________________________________^
   |
 help: Organize imports
 
-E501 Line too long (136 > 100)
-  --> src\textanalysis_tool\readers\text_reader.py:10:101
-   |
- 8 | …
- 9 | …)\]"
-10 | …GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"
-   |                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-11 | …
-12 | …
-   |
-
-I001 [*] Import block is un-sorted or un-formatted
- --> tests\readers\test_html_reader.py:1:1
+F401 [*] `.engines.base_engine.BaseEngine` imported but unused
+ --> src\vehicle_module\car.py:4:34
   |
-1 | / import pytest
-2 | | from unittest.mock import mock_open
-3 | |
-4 | | from textanalysis_tool.readers.html_reader import HTMLReader
-  | |____________________________________________________________^
-5 |
-6 |   TEST_DATA = """
+3 | from .vehicle import Vehicle
+4 | from .engines.base_engine import BaseEngine
+  |                                  ^^^^^^^^^^
+5 | from .engines.gas_engine import GasEngine
   |
-help: Organize imports
+help: Remove unused import: `.engines.base_engine.BaseEngine`
 
-PLR2004 Magic value used in comparison, consider replacing `1234` with a constant variable
-  --> tests\readers\test_html_reader.py:41:30
+E501 Line too long (107 > 100)
+  --> src\vehicle_module\car.py:27:101
    |
-39 |     assert metadata["title"] == "Test Document"
-40 |     assert metadata["author"] == "Test Author"
-41 |     assert metadata["id"] == 1234
-   |                              ^^^^
+26 |     def __str__(self):
+27 |         return f"A {self.color} {self.year} {self.make} {self.model} that runs on {self.engine.fuel_type}."
+   |                                                                                                     ^^^^^^^
+28 |
+29 |     @property
    |
 
-I001 [*] Import block is un-sorted or un-formatted
- --> tests\readers\test_text_reader.py:1:1
+E501 Line too long (110 > 100)
+  --> src\vehicle_module\car.py:44:101
+   |
+43 | class GasolineCar(Car):
+44 |     pass  # For now, a GasolineCar is just a Car, so we don't need to add any additional properties or methods
+   |                                                                                                     ^^^^^^^^^^
+   |
+
+PLR2004 Magic value used in comparison, consider replacing `10` with a constant variable
+ --> src\vehicle_module\horn_noises.py:4:16
   |
-1 | / import pytest
-2 | | from unittest.mock import mock_open
-3 | |
-4 | | from textanalysis_tool.readers.text_reader import TextReader
-  | |____________________________________________________________^
-5 |
-6 |   TEST_DATA = """
+2 |     if times < 1:
+3 |         raise ValueError("Times must be at least 1")
+4 |     if times > 10:
+  |                ^^
+5 |         raise ValueError("Times must be at most 10")
+6 |     return ("Honk! " * times).strip()
   |
-help: Organize imports
 
-PLR2004 Magic value used in comparison, consider replacing `1234` with a constant variable
-  --> tests\readers\test_text_reader.py:40:30
-   |
-38 |     assert metadata["title"] == "Test Document"
-39 |     assert metadata["author"] == "Test Author"
-40 |     assert metadata["id"] == 1234
-   |                              ^^^^
-   |
+...
 
-PLR2004 Magic value used in comparison, consider replacing `1234` with a constant variable
-  --> tests\test_document.py:21:50
-   |
-19 |     assert doc.title == "Test Document"
-20 |     assert doc.author == "Test Author"
-21 |     assert isinstance(doc.id, int) and doc.id == 1234
-   |                                                  ^^^^
-   |
-
-PLR2004 Magic value used in comparison, consider replacing `2` with a constant variable
-  --> tests\test_document.py:26:30
-   |
-24 | def test_line_count():
-25 |     doc = Document(filepath="dummy_path.txt", reader=MockReader())
-26 |     assert doc.line_count == 2
-   |                              ^
-   |
-
-PLR2004 Magic value used in comparison, consider replacing `2` with a constant variable
-  --> tests\test_document.py:31:47
-   |
-29 | def test_get_word_occurrence():
-30 |     doc = Document(filepath="dummy_path.txt", reader=MockReader())
-31 |     assert doc.get_word_occurrence("test") == 2
-   |                                               ^
-   |
-
-Found 9 errors.
-[*] 3 fixable with the `--fix` option.
+Found 12 errors.
+[*] 6 fixable with the `--fix` option.
 ```
 
 ### Auto-fixing Issues
@@ -237,10 +191,10 @@ select = ["D", "E", "W", "F", "I", "B", "PL", "C90", "N", "ERA", "RUF", "TID", "
 To run `ruff` on a single file, we can specify the file path instead of a directory:
 
 ```bash
-uv run ruff check src/textanalysis_tool/document.py
+uv run ruff check src/vehicle_module/car.py
 ```
 
-It looks like we get six errors, all related to missing docstrings.
+You should get several errors related to missing docstrings.
 
 ### What exactly is a docstring?
 
@@ -260,19 +214,16 @@ Let's stick with the Google style for this project. Here's an example of a docst
 functions in our `Document` class:
 
 ```python
-def get_word_occurrence(self, word: str) -> int:
-    """
-    Count the number of occurrences of the given word in the document content.
+    def paint(self, new_color):
+        """
+        Paint the car with a new color.
 
-    Args:
-        word (str): The word to count occurrences of.
+        Args:
+            new_color (str): The new color for the car.
 
-    Returns:
-        int: The number of occurrences of the word in the document content.
-
-    """
-
-    return self.content.lower().count(word.lower())
+        Returns: None
+        """
+        self.color = new_color
 ```
 
 We can see that the Docstring is made up of different sections:
@@ -283,8 +234,9 @@ We can see that the Docstring is made up of different sections:
 
 ::: callout
 
-Docstrings are not interpreted by python, so don't affect the runtime behavior of your code. They
-are primarily for documentation purposes, and can be accessed using the built-in `help()` function.
+Docstrings are not interpreted by Python, so they don't affect the runtime behavior of your code.
+They are primarily for documentation purposes, and can be accessed using the built-in `help()`
+function.
 
 :::
 
@@ -292,17 +244,19 @@ Running the `ruff` command again shows that we have fixed one of the issues in t
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 1: Docstrings for the Document Class
+## Challenge 1: Docstrings for the Car Class
 
-Add a docstring for the `document.py` module, the `Document` class, and the `__init__` method of the
-`Document` class. Make sure to include a brief summary, as well as `Args` and `Returns` sections
+Add a docstring for the `car.py` file, the `Car` class, and the `__init__` method of the
+`Car` class. Make sure to include a brief summary, as well as `Args` and `Returns` sections
 where appropriate.
 
 Refer to the [Google Style Guide - Comments in Modules](https://google.github.io/styleguide/pyguide.html#s3.8.2-comments-in-modules)
 section for guidance.
 
+See if you can get `ruff` to report no issues for this file.
 
 :::::::::::::::: solution
+
 
 
 :::::::::::::::::::::::::
@@ -330,155 +284,77 @@ Then run it on our codebase:
 uv run mypy src
 ```
 
+Nothing... Ok, I guess we were perfect! Except `mypy` doesn't check for type hints in files that
+don't have any. Let's update our `pyproject.toml` file to tell `mypy` to check all files, even if
+they don't have any type hints.
+
+```toml
+[tool.mypy]
+# Check all files, even if they don't have any type hints
+check_untyped_defs = true
+```
+
 Your output might look something like this:
 
 ```
-src\textanalysis_tool\readers\html_reader.py:28: error: Item "None" of "PageElement | None" has no attribute "find_next_siblings"  [union-attr]
-src\textanalysis_tool\readers\html_reader.py:40: error: Return type "str" of "get_metadata" incompatible with return type "dict[Any, Any]" in supertype "textanalysis_tool.readers.base_reader.BaseReader"  [override]
-src\textanalysis_tool\readers\html_reader.py:43: error: Value of type "PageElement | None" is not indexable  [index]
-src\textanalysis_tool\readers\html_reader.py:44: error: Value of type "PageElement | None" is not indexable  [index]
-src\textanalysis_tool\readers\html_reader.py:45: error: Value of type "PageElement | None" is not indexable  [index]
-src\textanalysis_tool\readers\html_reader.py:47: error: Item "None" of "Match[str] | None" has no attribute "group"  [union-attr]
-src\textanalysis_tool\readers\html_reader.py:49: error: Incompatible return value type (got "dict[str, Any]", expected "str")  [return-value]
-src\textanalysis_tool\readers\epub_reader.py:3: error: Skipping analyzing "ebooklib": module is installed, but missing library stubs or py.typed marker  [import-untyped]
-src\textanalysis_tool\readers\epub_reader.py:3: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
-src\textanalysis_tool\readers\epub_reader.py:31: error: Item "None" of "Match[str] | None" has no attribute "group"  [union-attr]
-Found 9 errors in 2 files (checked 7 source files)
+src\vehicle_module\engines\hybrid_engine.py:8: error: Signature of "make_engine_noise" incompatible with supertype "vehicle_module.engines.base_engine.BaseEngine"  [override]
+src\vehicle_module\engines\hybrid_engine.py:8: note:      Superclass:
+src\vehicle_module\engines\hybrid_engine.py:8: note:          def make_engine_noise(self, rpm: Any) -> Any
+src\vehicle_module\engines\hybrid_engine.py:8: note:      Subclass:
+src\vehicle_module\engines\hybrid_engine.py:8: note:          def make_engine_noise(self) -> Any
+src\vehicle_module\engines\gas_engine.py:8: error: Signature of "make_engine_noise" incompatible with supertype "vehicle_module.engines.base_engine.BaseEngine"  [override]
+src\vehicle_module\engines\gas_engine.py:8: note:      Superclass:
+src\vehicle_module\engines\gas_engine.py:8: note:          def make_engine_noise(self, rpm: Any) -> Any
+src\vehicle_module\engines\gas_engine.py:8: note:      Subclass:
+src\vehicle_module\engines\gas_engine.py:8: note:          def make_engine_noise(self) -> Any
+src\vehicle_module\engines\electric_engine.py:8: error: Signature of "make_engine_noise" incompatible with supertype "vehicle_module.engines.base_engine.BaseEngine"  [override]
+src\vehicle_module\engines\electric_engine.py:8: note:      Superclass:
+src\vehicle_module\engines\electric_engine.py:8: note:          def make_engine_noise(self, rpm: Any) -> Any
+src\vehicle_module\engines\electric_engine.py:8: note:      Subclass:
+src\vehicle_module\engines\electric_engine.py:8: note:          def make_engine_noise(self) -> Any
+src\vehicle_module\engines\diesel_engine.py:8: error: Signature of "make_engine_noise" incompatible with supertype "vehicle_module.engines.base_engine.BaseEngine"  [override]
+src\vehicle_module\engines\diesel_engine.py:8: note:      Superclass:
+src\vehicle_module\engines\diesel_engine.py:8: note:          def make_engine_noise(self, rpm: Any) -> Any
+src\vehicle_module\engines\diesel_engine.py:8: note:      Subclass:
+src\vehicle_module\engines\diesel_engine.py:8: note:          def make_engine_noise(self) -> Any
+src\vehicle_module\car.py:10: error: Incompatible default for parameter "engine" (default has type "None", parameter has type "BaseEngine")  [assignment]
+src\vehicle_module\car.py:10: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True
+src\vehicle_module\car.py:10: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase
+src\vehicle_module\car.py:34: error: Missing positional argument "rpm" in call to "make_engine_noise" of "BaseEngine"  [call-arg]
+Found 6 errors in 5 files (checked 14 source files)
 ```
 
 These errors are slightly more complex than the ones reported by `ruff`, but they are also very
 useful, as the often point to places where our code might not handle all of the possible cases
 correctly.
 
+For example, what these errors point out is that in the BaseEngine class, the `make_engine_noise`
+method takes an `rpm` argument, but in the subclasses, we have overridden this method without
+including the `rpm` argument. This is a problem, as it means that the subclasses are not directly
+compatible with the base class, and this could lead to unexpected behavior if we try to use a
+subclass in place of the base class.
+
 ### Fixing Mypy Errors
 
 MyPy Errors can be a bit tricky to understand, as they often involve a more complex analysis of the
 code than `ruff`.
 
-For example, the first error is telling us that we are trying to access the `find_next_siblings`
-method on an object that could be `None`. This is a potential bug, as if the object is `None`,
-this will raise an `AttributeError` at runtime.
+For this first issue, we can zero in on the `BaseEngine` class and the `make_engine_noise` method.
+We can see that the method takes an `rpm` argument, but in the subclasses, don't ever use this
+argument. We can fix this by removing the `rpm` argument from the base class method.
 
-Looking at the project code, the issue is in the `HTMLReader` class, in the `get_content` method:
+Re-running `mypy` should now show that this issue has been resolved.
 
-```python
-    def get_content(self, filepath) -> dict:
-        soup = self.read(filepath)
-
-        # Find the first h1 tag (The book title)
-        title_h1 = soup.find("h1")
-
-        # Collect all the content after the first h1
-        content = []
-        for element in title_h1.find_next_siblings():
-            text = element.get_text(strip=True)
-
-            # Stop early if we hit this text, which indicate the end of the book
-            if "END OF THE PROJECT GUTENBERG EBOOK" in text:
-                break
-
-            if text:
-                content.append(text)
-
-        return "\n\n".join(content)
-```
-
-The `soup.find("h1")` call will return `None` if no `h1` tag is found in the HTML document. We
-should probably add a check for this case and raise a more informative error message.
-
-```python
-    def get_content(self, filepath) -> dict:
-        soup = self.read(filepath)
-
-        # Find the first h1 tag (The book title)
-        title_h1 = soup.find("h1")
-        if title_h1 is None:
-            raise ValueError(f"No <h1> tag found in the HTML document: {filepath}")
-
-        # Collect all the content after the first h1
-        content = []
-        for element in title_h1.find_next_siblings():
-            text = element.get_text(strip=True)
-
-            # Stop early if we hit this text, which indicate the end of the book
-            if "END OF THE PROJECT GUTENBERG EBOOK" in text:
-                break
-
-            if text:
-                content.append(text)
-
-        return "\n\n".join(content)
-```
-
-::: callout
-
-Note that we don't have to actually change the code in the for loop, as `mypy` is smart enough to
-understand that if `title_h1` is none, then the `ValueError` will be raised, and the code
-following it will not be executed.
-
-:::
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
 ## Challenge 1: Fix a Mypy Error
 
-Another error we get is related to the `get_metadata` method in the same class:
 
-```
-src\textanalysis_tool\readers\html_reader.py:45: error: Value of type "PageElement | None" is not indexable  [index]
-src\textanalysis_tool\readers\html_reader.py:46: error: Value of type "PageElement | None" is not indexable  [index]
-src\textanalysis_tool\readers\html_reader.py:47: error: Value of type "PageElement | None" is not indexable  [index]
-```
-
-Why is this error being reported? What can we do to fix it? (There's actually two issues here! One
-is a more specific `BeautifulSoup` issue, and the other is a more general Python issue.)
-
-::: hint
-
-Values in python dictionaries can be accessed in two ways:
-
-- Using the indexing syntax: `value = my_dict[key]`
-- Using the `get` method: `value = my_dict.get(key)`
-
-The indexing syntax will raise a `KeyError` if the key is not found in the dictionary, while the
-`get` method will return `None` (or a default value if provided) if the key is not found.
-
-:::
-
-::: hint
-
-There are several kinds of values that can be returned from a `BeautifulSoup.find` call, and we
-can't really be certain of which type we will get back. It could be a `Tag`, a `NavigableString`,
-a `PageElement`, or `None`.
-
-There is an alternative method called `select_one` that can be used to find elements using plain CSS
-selectors, and it always returns either a `Tag` or `None`, which lets us avoid some of the
-complexity of dealing with multiple possible types.
-
-`soup.find("meta", {"name": "dc.title"})` can be replaced with
-`soup.select_one('meta[name="dc.title"]')`
 
 :::
 
 :::::::::::::::: solution
-
-MyPy is pointing out that we are using the indexing syntax to access values in a dictionary, but
-given the way we are pulling the data out of the text, it is possible that the key might not even
-be present in the dictionary.
-
-We can fix this by using the `get` method instead, and providing a default value of `None` if the
-key is not found.
-
-```python
-title_element = soup.select_one('meta[name="dc.title"]')
-title = title_element.get("content") if title_element else "Unknown Title"
-
-author_element = soup.select_one('meta[name="dc.creator"]')
-author = author_element.get("content") if author_element else "Unknown Author"
-
-url_element = soup.select_one('meta[name="dcterms.source"]')
-url = url_element.get("content") if url_element else "Unknown URL"
-```
 
 
 :::::::::::::::::::::::::
@@ -488,13 +364,8 @@ url = url_element.get("content") if url_element else "Unknown URL"
 
 ## Challenge 2: Fixing Other Mypy Errors
 
-You should have at least one other mypy error in the `HTMLReader` class. Can you find it and fix
-it? Do you have any other mypy errors in other parts of the codebase? If so, can you fix those as
-well?
-
 :::::::::::::::: solution
 
-It will depend on your code!
 
 :::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::

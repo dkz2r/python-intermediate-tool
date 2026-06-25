@@ -26,286 +26,404 @@ is a design principle where a class is composed of one or more objects from othe
 than inheriting from them. This allows us to create complex functionality by combining several
 smaller, simpler classes.
 
-### Back to the Car Example
+### Back to the Bank Account Example
 
-Let's revisit our `Car` example from the Class Objects episode. As a reminder, our class looked like
-this:
+Let's revisit our `BankAccount` example from the Class Objects episode. As a reminder, our class
+looked like this:
 
-![Car Class object example](./fig/03-class-objects/car_class.PNG){alt='Car Class object example'}
+![BankAccount Class object example](./fig/03-class-objects/bank_account_class.PNG){alt='BankAccount Class object example'}
 
-But what if we wanted to add more functionality to our `Car` class? We talked about in the previous
-episode how we could use Inheritance to create specialized versions of the `Car` class, like this:
+But what if we wanted to add more functionality to our `BankAccount` class? We talked about in the
+previous episode how we could use Inheritance to create specialized versions of the `BankAccount`
+class, like this:
 
-![Car Inheritance example](./fig/05-extending-classes/class_inheritance.jpg){alt='Car Inheritance example'}
+![BankAccount Inheritance example](./fig/05-extending-classes/class_inheritance.jpg){alt='BankAccount Inheritance example'}
 
 The code might look something like this:
 
 ```python
-class Car:
-    def __init__(self, make: str, model: str, year: int, color: str = "grey", fuel: str = None):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.color = color
-        self.fuel = fuel
+class BankAccount:
+    # Static property to keep track of the next available account number
+    next_account_number = 10000
 
-    def honk(self) -> str:
-        return "beep"
+    def __init__(self, account_holder, balance = 0.0, interest_calculator = None):
+        self.account_holder = account_holder
+        BankAccount.next_account_number += 1
+        self.account_number = BankAccount.next_account_number
+        self._balance = balance
+    # ... the rest of the BankAccount class ...
 
-    def paint(self, new_color: str) -> None:
-        self.color = new_color
+class SavingsAccount(BankAccount):
+    def __init__(self, account_holder, balance = 0.0, interest_rate = 0.01):
+        super().__init__(account_holder=account_holder, balance=balance)
+        self.interest_rate = interest_rate
 
-    def noise(self) -> str:
-        raise NotImplementedError("Subclasses must implement this method")
+    def apply_interest(self):
+        self._balance += self._balance * self.interest_rate
 
-class CarGasEngine(Car)
-    def __init__(self, make: str, model: str, year: int, color: str = "grey"):
-        super().__init__(make, model, year, color, fuel="gasoline")
+class CheckingAccount(BankAccount):
+    def __init__(self, account_holder, balance = 0.0, overdraft_limit = 500.0):
+        super().__init__(account_holder=account_holder, balance=balance)
+        self.overdraft_limit = overdraft_limit
 
-    def noise(self, speed: int) -> str:
-        if speed <= 10:
-            return "put put put"
-        elif speed > 10:
-            return "vrooom"
-
-
-class CarElectricEngine(Car)
-    def __init__(self, make: str, model: str, year: int, color: str = "grey"):
-        super().__init__(make, model, year, color, fuel="electric")
-
-    def noise(self, speed: int) -> str:
-        return "hmmmmmm"
-
+    def withdraw(self, amount):
+        if self._balance - amount < -self.overdraft_limit:
+            raise ValueError("Withdrawal would exceed overdraft limit.")
+        self._balance -= amount
 ```
 
-But what happens if we start adding more kinds of engines? Or if our engines start getting more
-complex, with different properties and methods? Even worse, what if we want to add a new type of
-car component, like `Wheels`? Do we now need to start creating subclasses for every possible
-combination of car, engine, and wheels? We would end up with a lot of subclasses, some of
-which might have extremely similar (if not identical) functionality.
+But what happens if we start adding lots more kinds of accounts? Or if our accounts start getting
+more complex, with different properties and methods? What if we have a `BusinessAccount` that has
+different rules for interest and overdraft, or a `StudentAccount` that has different rules for fees?
+We could start creating a whole hierarchy of classes, like
+`BankAccount -> SavingsAccount -> BusinessSavingsAccount`, but this can quickly become unwieldy
+and hard to maintain. This is where Composition comes in.
 
-Instead, we can use a Compositional approach by making a new kind of class called `Engine`, and
-then including an instance of that class as a property of the `Car` class. This way, we can create
-different kinds of engines as separate classes, and then use them in our `Car` class without
-having to create a new subclass for each one. Here's how that would look:
+Instead, we can use a Compositional approach by making a new kind of class called
+`InterestCalculator`, and then including an instance of that class as a property of the
+`BankAccount` class. This way, we can create different kinds of interest calculators as separate
+classes, and then use them in our `BankAccount` class without having to create a new subclass for
+each one. Here's how that would look:
 
+::: instructor
+Need to remake this image
 ![Car Composition example](./fig/06-composition/car_composition.png){alt='Car Composition example'}
+:::
 
 ```python
-class Car:
-    def __init__(self, make: str, model: str, year: int, color: str = "grey", engine: Engine = None):
-        self.make = make
-        self.model = model
-        self.year = year
-        self.color = color
-        self.engine = engine
+class BankAccount:
+    # Static property to keep track of the next available account number
+    next_account_number = 10000
 
-    def honk(self) -> str:
-        return "beep"
+    def __init__(self, account_holder, balance = 0.0, interest_calculator = None):
+        self.account_holder = account_holder
+        BankAccount.next_account_number += 1
+        self.account_number = BankAccount.next_account_number
+        self._balance = balance
+        self.interest_calculator = interest_calculator or InterestCalculator()
 
-    def paint(self, new_color: str) -> None:
-        self.color = new_color
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
+        else:
+            raise ValueError("Deposit amount must be positive")
 
-    def noise(self, speed: int) -> str:
-        if self.engine:
-            return self.engine.noise(speed)
-        raise ValueError("Car must have an engine")
+    def withdraw(self, amount):
+        if amount > 0:
+            if self.balance >= amount:
+                self.balance -= amount
+            else:
+                raise ValueError("Insufficient funds")
+        else:
+            raise ValueError("Withdrawal amount must be positive")
+
+    def get_balance(self):
+        return self.balance
+
+    def apply_interest(self): # This method is now a part of the BankAccount
+        self.balance = self.interest_calculator.calculate_interest(self.balance)
 
 
-class Engine:
-    def __init__(self, fuel: str):
-        self.fuel = fuel
+class InterestCalculator:
+    def __init__(self, interest_rate = 0.00):
+        self.interest_rate = interest_rate
 
-    def noise(self, speed: int) -> str:
-        raise NotImplementedError("Subclasses must implement this method")
-
-class GasEngine(Engine):
-    def __init__(self):
-        super().__init__(fuel="gasoline")
-
-    def noise(self, speed: int) -> str:
-        if speed <= 10:
-            return "put put put"
-        elif speed > 10:
-            return "vrooom"
-
-class ElectricEngine(Engine):
-    def __init__(self):
-        super().__init__(fuel="electric")
-
-    def noise(self, speed: int) -> str:
-        return "hmmmmmm"
+    def calculate_interest(self, balance):
+        return balance + (balance * self.interest_rate)
 ```
 
 At first glance this might look even more complicated, but it has several advantages:
 
-- **Separation of Concerns**: The `Engine` class is responsible for engine-specific behavior, while
-  the `Car` class focuses on car-specific behavior. This makes the code easier to understand and
-  maintain.
-- **Reusability**: The `Engine` class can be reused in other contexts, such as in a `Truck` or
-    `Motorcycle` class, without duplicating code.
-- **Flexibility**: We can easily add new types of engines by creating new subclasses of `Engine`,
-    without having to modify the `Car` class or create new subclasses of `Car`.
+- **Separation of Concerns**: The `InterestCalculator` class is responsible for interest-specific
+  behavior, while the `BankAccount` class focuses on account-specific behavior. This makes the code
+  easier to understand and maintain.
+- **Reusability**: The `InterestCalculator` class can be reused in other contexts - we can create
+  accounts that use different interest calculators without having to create new subclasses of
+  `BankAccount`.
+- **Flexibility**: We can easily add new types of interest calculators by creating new subclasses
+  of `InterestCalculator`, without having to modify the `BankAccount` class or create new
+  subclasses of `BankAccount`.
 
-Think about if we added a `Tire` class as well. We could have different types of tires (e.g.,
-Road Tires, Racing Tires, Snow Tires, etc.) and then include an instance of the `Tire` class in the
-`Car` class. This would allow us to mix and match different types of engines and tires without
-having to create a new subclass for every possible combination.
+Think about if we wanted to add more functionality to our `BankAccount` class, like certain accounts
+that might have different rules for overdraft, or have additional features, like fraud detection or
+transaction history. We could create new classes for each of these features, and then include them
+as properties of the `BankAccount` class, rather than creating a new subclass for each combination
+of features:
 
+```python
+
+class BankAccount:
+    next_account_number = 10000
+
+    def __init__(
+        self,
+        account_holder,
+        balance=0.0,
+        interest_calculator=None,
+        overdraft_protection=None,
+        transaction_logger=None,
+        fraud_detector=None,
+    ):
+        BankAccount.next_account_number += 1
+        self.account_number = BankAccount.next_account_number
+        self.account_holder = account_holder
+        self._balance = balance
+        self.interest_calculator = interest_calculator or InterestCalculator()
+        self.overdraft_protection = overdraft_protection or OverdraftProtection()
+        self.transaction_logger = transaction_logger or TransactionLogger()
+        self.fraud_detector = fraud_detector or FraudDetector()
+
+    # ... the rest of the BankAccount class ...
+
+class InterestCalculator:
+    def __init__(self, interest_rate = 0.00):
+        self.interest_rate = interest_rate
+
+    def calculate_interest(self, balance):
+        return balance + (balance * self.interest_rate)
+
+class OverdraftProtection:
+    def __init__(self, limit=500.0):
+        self.limit = limit
+
+    def allows_withdrawal(self, balance, amount):
+        return (balance - amount) >= -self.limit
+
+class FraudDetector:
+    def __init__(self, max_single_transaction=10_000.0):
+        self.max_single_transaction = max_single_transaction
+
+    def is_suspicious(self, amount):
+        return amount > self.max_single_transaction
+
+class TransactionLogger:
+    def __init__(self, active=True):
+        self.active = active
+        self.history = []
+
+    def log(self, action, amount):
+        if self.active:
+            self.history.append(f"{action}: ${amount:.2f}")
+```
+
+Then, when it comes time to create a new `BankAccount`, we can choose which features we want to
+include and how they should behave, without having to create a new subclass for every combination
+of features:
+
+```python
+basic_account = BankAccount(account_holder="Michael", balance=100.0)
+savings_account = BankAccount(
+    account_holder="Christian",
+    balance=1000.0,
+    interest_calculator=InterestCalculator(interest_rate=0.02),
+)
+premium_account = BankAccount(
+    account_holder="Heath",
+    balance=5000.0,
+    interest_calculator=InterestCalculator(interest_rate=0.05),
+    overdraft_protection=OverdraftProtection(limit=1000.0),
+    transaction_logger=TransactionLogger(active=True),
+    fraud_detector=FraudDetector(max_single_transaction=50_000.0),
+)
+```
+
+This also makes it much easier to test our `BankAccount` class, since we can create mock versions
+of the other classes and pass them in, allowing us to isolate the `BankAccount` class and test its
+behavior without having to worry about how it interacts with the other classes. Likewise, this means
+that we can isolate and test the behaviors of the other classes without having to worry about how
+they interact with the `BankAccount` class.
+
+Finally, this also helps with organizing code. Each class can be in its own file, and we can group
+related classes together in a directory.
+
+::: instructor
+Need to remake this image
 ![Complete Car Composition example](./fig/06-composition/full_car_composition.png){alt='Complete Car Composition example'}
+:::
 
-## Refactoring our Document Example
+## Refactoring our Car Example
 
-Let's take this concept and apply it to our `Document` example from previous episodes. We can
-create a new class called `Reader` that is responsible for reading files and providing the content
-to the `Document` class. We can have a different reader type for each file format we want to
-support.
+Let's take this concept and apply it to our `Car` example from previous episodes. We can create a
+new class called `Engine` that is responsible for handling the engine-specific noises, and then
+include an instance of that as a property of the `Car` class. This way, we can create cars with
+different kinds of engines without having to create a new subclass for each one;
 
-To start with, let's create a directory for our readers called `readers`, and then create a base
-class called `BaseReader` in a file called `readers/base_reader.py`:
+To start with, let's create a directory for our engines called `src/vehicle_module/engines`, and
+then create a base class called `BaseEngine` in a file called `engines/base_engine.py`. This will
+be our "abstract base class" for all engines, and will define for us the exact methods that all
+engines must implement:
 
 ```python
 from abc import ABC, abstractmethod
 
-class BaseReader(ABC):
-    @abstractmethod
-    def get_content(self, filepath: str) -> str:
-        pass
+class BaseEngine(ABC):
+    def __init__(self, acceleration, top_speed, fuel_type):
+        self.acceleration = acceleration
+        self.top_speed = top_speed
+        self.fuel_type = fuel_type
 
     @abstractmethod
-    def get_metadata(self, filepath: str) -> dict:
+    def make_engine_noise(self, rpm):
         pass
 ```
 
-Then we'll create a `TextReader` class in a file called `readers/text_reader.py`. We'll move over
-the logic for reading and extracting content from a Project Gutenberg text file here:
+Next we'll make a pair of engine classes that inherit from `BaseEngine`, one for a `GasEngine` and
+one for an `ElectricEngine`. We'll put these in files called `engines/gas_engine.py` and
+`engines/electric_engine.py`, respectively:
 
+
+`engines/gas_engine.py`
 ```python
-import re
+from .base_engine import BaseEngine
 
-from .base_reader import BaseReader
+class GasEngine(BaseEngine):
+    def __init__(self, acceleration=20, top_speed=100, fuel_type="gasoline"):
+        super().__init__(acceleration, top_speed, fuel_type)
 
-
-class TextReader(BaseReader):
-    TITLE_PATTERN = r"^Title:\s*(.*?)\s*$"
-    AUTHOR_PATTERN = r"^Author:\s*(.*?)\s*$"
-    ID_PATTERN = r"^Release date:\s*.*?\[eBook #(\d+)\]"
-    CONTENT_PATTERN = r"\*\*\* START OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"
-
-    def read(self, filepath: str) -> str:
-        with open(filepath, encoding="utf-8") as file_obj:
-            return file_obj.read()
-
-    def _extract_metadata_element(self, pattern: str, text: str) -> str | None:
-        match = re.search(pattern, text, re.MULTILINE)
-        if match:
-            return match.group(1).strip()
-        return None
-
-    def get_content(self, filepath: str) -> str:
-        raw_text = self.read(filepath)
-        match = re.search(self.CONTENT_PATTERN, raw_text, re.DOTALL)
-        if match:
-            return match.group(1).strip()
-        raise ValueError(f"File {filepath} is not a valid Project Gutenberg Text file.")
-
-    def get_metadata(self, filepath: str) -> dict:
-        raw_text = self.read(filepath)
-
-        title = self._extract_metadata_element(self.TITLE_PATTERN, raw_text)
-        author = self._extract_metadata_element(self.AUTHOR_PATTERN, raw_text)
-        extracted_id = self._extract_metadata_element(self.ID_PATTERN, raw_text)
-
-        return {
-            "title": title,
-            "author": author,
-            "id": int(extracted_id) if extracted_id else None,
-        }
+    def make_engine_noise(self):
+        return "putt putt"
 ```
 
-Next, we'll do the same for the HTML code. Create a file called `readers/html_reader.py`:
-
+`engines/electric_engine.py`
 ```python
-import re
+from .base_engine import BaseEngine
 
-from bs4 import BeautifulSoup
+class ElectricEngine(BaseEngine):
+    def __init__(self, acceleration=50, top_speed=100, fuel_type="electric"):
+        super().__init__(acceleration, top_speed, fuel_type)
 
-from .base_reader import BaseReader
-
-
-class HTMLReader(BaseReader):
-    URL_PATTERN = "^https://www.gutenberg.org/files/([0-9]+)/.*"
-
-    def read(self, filepath) -> BeautifulSoup:
-        with open(filepath, encoding="utf-8") as file_obj:
-            parsed_file = BeautifulSoup(file_obj, features="html.parser")
-
-        if not parsed_file:
-            raise ValueError("The file could not be parsed as HTML.")
-
-        return parsed_file
-
-    def get_content(self, filepath) -> str:
-        parsed_file = self.read(filepath)
-
-        # Find the first h1 tag (The book title)
-        title_h1 = parsed_file.find("h1")
-
-        # Collect all the content after the first h1
-        content = []
-        for element in title_h1.find_next_siblings():
-            text = element.get_text(strip=True)
-
-            # Stop early if we hit this text, which indicate the end of the book
-            if "END OF THE PROJECT GUTENBERG EBOOK" in text:
-                break
-
-            if text:
-                content.append(text)
-
-        return "\n\n".join(content)
-
-    def get_metadata(self, filename) -> str:
-        parsed_file = self.read(filename)
-
-        title = parsed_file.find("meta", {"name": "dc.title"})["content"]
-        author = parsed_file.find("meta", {"name": "dc.creator"})["content"]
-        url = parsed_file.find("meta", {"name": "dcterms.source"})["content"]
-        extracted_id = re.search(self.URL_PATTERN, url, re.DOTALL)
-        id = int(extracted_id.group(1)) if extracted_id.group(1) else None
-
-        return {"title": title, "author": author, "id": id}
+    def make_engine_noise(self):
+        return "hmmmmmm!"
 ```
 
-Finally, we can update our `Document` class to use these readers. We'll add a new parameter to the
-`Document` constructor called `reader`, which will be an instance of a `BaseReader` subclass.
-Here's how the updated `Document` class might look:
+Now, in our `Car` class, we can include an instance of `BaseEngine` as a property, and then use that
+to make the engine noise:
 
 ```python
-from textanalysis_tool.readers.base_reader import BaseReader
+class Car(Vehicle):
+    def __init__(self, make, model, year, color="grey", engine=None):
+        super().__init__()
+        self.make = make
+        self.model = model
+        self.year = year
+        self.color = color
+        self.engine = engine or GasEngine()
+        self.handling = 2 # Add this in case you don't get through the challenges!
 
-class Document:
+    def honk_horn(self):
+        return "Honk! Honk!"
+
+    def paint(self, new_color):
+        self.color = new_color
+
+    def make_engine_noise(self):
+        return self.engine.make_engine_noise()
+
+    def __str__(self):
+        return f"A {self.color} {self.year} {self.make} {self.model} that runs on {self.engine.fuel_type}."
+
     @property
-    def gutenberg_url(self) -> str | None:
-        if self.id:
-            return f"https://www.gutenberg.org/cache/epub/{self.id}/pg{self.id}.txt"
-        return None
+    def age(self):
+        current_year = datetime.now().year
+        return current_year - self.year
 
     @property
-    def line_count(self) -> int:
-        return len(self.content.splitlines())
+    def fuel(self):
+        return self.engine.fuel_type
 
-    def __init__(self, filepath: str, reader: BaseReader):
-        self.filepath = filepath
-        self.content = reader.get_content(filepath)
+    @property
+    def glyph_file(self):
+        return "car.glyph"
+```
 
-        metadata = reader.get_metadata(filepath)
-        self.title = metadata.get("title")
-        self.author = metadata.get("author")
-        self.id = metadata.get("id")
+Finally, we can remove the `GasolineCar` and `ElectricCar` classes from our `car.py` file - if we
+want to create a gasoline car, we can just create a `Car` instance with a `GasEngine`, and if we
+want to create an electric car, we can create a `Car` instance with an `ElectricEngine`
 
-    def get_word_occurrence(self, word: str) -> int:
-        return self.content.lower().count(word.lower())
+
+## Revising our Tests
+
+Making this change means that our tests will need to be updated as well. To start with, we can
+remove the tests for the `GasolineCar` and `ElectricCar` classes, since those classes no longer
+exist.
+
+### Mocking The Engine
+
+Of the things we test in our `Car`, the two things that now rely on the engine are the
+`make_engine_noise` method and the `fuel` property. We can easily test this by creating a mock
+engine class just for our tests that looks exactly like an engine implementation, but returns
+exactly the values we want to test:
+
+```python
+class MockEngine(BaseEngine):
+    def __init__(self, acceleration=999, top_speed=9999, fuel_type="TEST FUEL"):
+        super().__init__(acceleration, top_speed, fuel_type)
+
+    def make_engine_noise(self):
+        return "TEST NOISE"
+```
+
+This MockEngine class will slot into our Car class exactly like our real engines, but we can limit
+the behavior to exactly what we want to test. This allows us to isolate the Car class and test its
+behavior without having to worry about how it interacts with the engine classes.
+
+```python
+class MockEngine(BaseEngine):
+    def __init__(self, acceleration=999, top_speed=9999, fuel_type="TEST FUEL"):
+        super().__init__(acceleration, top_speed, fuel_type)
+
+    def make_engine_noise(self):
+        return "TEST NOISE"
+
+
+@pytest.fixture
+def my_car():
+    return Car(make="Toyota", model="Corolla", year=2020, engine=MockEngine())
+
+
+def test_car(my_car):
+    assert my_car.make == "Toyota"
+    assert my_car.model == "Corolla"
+    assert my_car.year == 2020
+    assert my_car.color == "grey"
+    assert my_car.fuel == "TEST FUEL"
+
+
+def test_car_noises(my_car):
+    assert my_car.honk_horn() == "Honk! Honk!"
+    assert my_car.make_engine_noise() == "TEST NOISE"
+```
+
+## Testing The Engines
+
+Now, we can create a separate test file for our engines, testing the behavior of the `GasEngine`
+and `ElectricEngine` classes without having to worry about how they interact with the `Car` class:
+
+`tests/engines/test_gas_engine.py`
+```python
+from vehicle_module.engines.gas_engine import GasEngine
+
+
+def test_gas_engine():
+    engine = GasEngine(acceleration=30, top_speed=150, fuel_type="gasoline")
+    assert engine.acceleration == 30
+    assert engine.top_speed == 150
+    assert engine.fuel_type == "gasoline"
+    assert engine.make_engine_noise() == "putt putt"
+```
+
+`tests/engines/test_electric_engine.py`
+```python
+from vehicle_module.engines.electric_engine import ElectricEngine
+
+
+def test_electric_engine():
+    engine = ElectricEngine(acceleration=10, top_speed=120, fuel_type="electricity")
+    assert engine.acceleration == 10
+    assert engine.top_speed == 120
+    assert engine.fuel_type == "electricity"
+    assert engine.make_engine_noise() == "hmmmmmm!"
+
 ```
 
 ## Key Points
@@ -313,183 +431,111 @@ class Document:
 Ok, that's a lot of changes. So what was that all about?
 
 - **Modularity**: Our code is now made up of smaller, more focused classes. The code responsible for
-    reading files in and parsing the contents is separate from the code that represents a document
-    and provides analysis.
-- **Extensibility**: We can easily add support for new file formats by creating new reader classes
-    that inherit from `BaseReader`, without having to modify the `Document` class.
+    doing engine things is separate from the code that represents a car.
+- **Extensibility**: We can easily add support for new engine types by creating new engine classes
+    that inherit from `BaseEngine`, without having to modify the `Car` class.
 - **Maintainability**: Each class has a single responsibility, making it easier to understand and
     maintain.
-- **Reusability**: The reader classes can be reused in other contexts, such as in a different
-    application that needs to read and parse files.
+- **Reusability**: The engine classes can be reused in other contexts, such as in a different
+    application that needs to simulate vehicles.
 
-::: callout
-
-Also note that in the `Document` class, in the `__init__` method, the typehint for the `reader`
-parameter is `BaseReader`. This means that any subclass of `BaseReader` can be passed in, allowing
-for flexibility in the type of reader used.
-
-By using Inheritance and an abstract base class for the reader, we are essentially creating a
-promise that any subclass of `BaseReader` will implement the methods defined in the base class. This
-is how we can safely call `reader.get_content()` and `reader.get_metadata()` in the `Document`
-class - we no longer care what specific type of reader it is, as long as it adheres to the
-abstract base class interface.
-
-:::
-
-## Testing the New Objects
-
-We can now delete our two inherited classes `DocumentText` and `DocumentHTML`, and update our tests
-to use the new `TextReader` and `HTMLReader` classes. This, however means that we need to rewrite
-our tests to use the new `Document` constructor, which requires a `BaseReader` subclass instance.
-
-Because of our new Compositional design, we can now test the `Document` without a specific reader
-by using a mock reader. This allows us to isolate the `Document` class and test its functionality
-without relying on the actual file reading and parsing logic:
-
-```python
-import pytest
-
-from textanalysis_tool.document import Document
-from textanalysis_tool.readers.base_reader import BaseReader
-
-
-class MockReader(BaseReader):
-    def get_content(self, filepath: str) -> str:
-        return "This is a test document. It contains words.\nIt is only a test document."
-
-    def get_metadata(self, filepath: str) -> dict:
-        return {
-            "title": "Test Document",
-            "author": "Test Author",
-            "id": 1234,
-        }
-
-
-def test_create_document():
-    doc = Document(filepath="dummy_path.txt", reader=MockReader())
-    assert doc.title == "Test Document"
-    assert doc.author == "Test Author"
-    assert isinstance(doc.id, int) and doc.id == 1234
-
-
-def test_line_count():
-    doc = Document(filepath="dummy_path.txt", reader=MockReader())
-    assert doc.line_count == 2
-
-
-def test_get_word_occurrence():
-    doc = Document(filepath="dummy_path.txt", reader=MockReader())
-    assert doc.get_word_occurrence("test") == 2
-```
-
-::: callout
-
-This time we are using a `MockReader` class that implements the `BaseReader` interface. We could
-also use a fixture here, but this is simpler for demonstration purposes.
-
-:::
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 1: Writing Tests for the Readers
+## Challenge 1: Writing a New Engine
 
-Now that we have our `TextReader` and `HTMLReader` classes, we need to write tests for them. Create
-a new directory called `tests/readers`, and then create two new test files: `test_text_reader.py` and
-`test_html_reader.py`. Write tests for the `get_content` and `get_metadata` methods of each reader
-based on our previous tests for the `PlainTextDocument` and `HTMLDocument` classes.
+We want to add two new engine types to our project: `DieselEngine` and `HybridEngine` that inherit
+from `BaseEngine`. Write them so that the pass the following tests:
 
-:::::::::::::::: solution
-
-`tests/readers/test_text_reader.py`
-
+`src/vehicle_module/engines/diesel_engine.py`
 ```python
 import pytest
-from unittest.mock import mock_open
+from vehicle_module.engines.diesel_engine import DieselEngine
 
-from textanalysis_tool.readers.text_reader import TextReader
+@pytest.fixture
+def my_diesel_engine():
+    return DieselEngine(acceleration=15, top_speed=80, fuel_type="diesel")
 
-TEST_DATA = """
-Title: Test Document
+def test_diesel_engine(my_diesel_engine):
+    assert my_diesel_engine.acceleration == 15
+    assert my_diesel_engine.top_speed == 80
+    assert my_diesel_engine.fuel_type == "diesel"
+    assert my_diesel_engine.make_engine_noise() == "grrrrrr"
+```
 
-Author: Test Author
-
-Release date: January 1, 2001 [eBook #1234]
-                Most recently updated: February 2, 2002
-
-*** START OF THE PROJECT GUTENBERG EBOOK TEST ***
-This is a test document. It contains words.
-It is only a test document.
-*** END OF THE PROJECT GUTENBERG EBOOK TEST ***
-"""
-
-
-@pytest.fixture(autouse=True)
-def mock_file(monkeypatch):
-    mock = mock_open(read_data=TEST_DATA)
-    monkeypatch.setattr("builtins.open", mock)
-    return mock
+`src/vehicle_module/engines/hybrid_engine.py`
+```python
+import pytest
+from vehicle_module.engines.hybrid_engine import HybridEngine
 
 
-def test_get_content():
-    reader = TextReader()
-    content = reader.get_content("dummy_path.txt")
-    assert "This is a test document." in content
-    assert "It is only a test document." in content
+@pytest.fixture
+def my_hybrid_engine():
+    return HybridEngine(acceleration=20, top_speed=100, fuel_type="electric")
 
 
-def test_get_metadata():
-    reader = TextReader()
-    metadata = reader.get_metadata("dummy_path.txt")
-    assert metadata["title"] == "Test Document"
-    assert metadata["author"] == "Test Author"
-    assert metadata["id"] == 1234
+def test_hybrid_engine(my_hybrid_engine):
+    assert my_hybrid_engine.acceleration == 20
+    assert my_hybrid_engine.top_speed == 100
+    assert my_hybrid_engine.fuel_type == "electric"
+    assert my_hybrid_engine.make_engine_noise() == "hmmmmmm"
+
+
+def test_hybrid_engine_switch_mode(my_hybrid_engine):
+    assert my_hybrid_engine.fuel_type == "electric"
+    my_hybrid_engine.switch_mode()
+    assert my_hybrid_engine.fuel_type == "gasoline"
+
+
+def test_hybrid_engine_mode_engine_noise(my_hybrid_engine):
+    assert my_hybrid_engine.make_engine_noise() == "hmmmmmm"
+    my_hybrid_engine.switch_mode()
+    assert my_hybrid_engine.make_engine_noise() == "putt putt"
 
 ```
 
-`tests/readers/test_html_reader.py`
+::: hint
 
+For the `HybridEngine`, you will need to implement a method called `switch_mode` that changes the
+`fuel_type` property from "electric" to "gasoline" and vice versa. The `make_engine_noise` method
+will then need to return different values depending on the current `fuel_type`.
+
+:::
+
+:::::::::::::::: solution
+
+`src/vehicle_module/engines/diesel_engine.py`
 ```python
-import pytest
-from unittest.mock import mock_open
+from .base_engine import BaseEngine
 
-from textanalysis_tool.readers.html_reader import HTMLReader
+class DieselEngine(BaseEngine):
+    def __init__(self, acceleration=15, top_speed=80, fuel_type="diesel"):
+        super().__init__(acceleration, top_speed, fuel_type)
 
-TEST_DATA = """
-<head>
-  <meta name="dc.title" content="Test Document">
-  <meta name="dcterms.source" content="https://www.gutenberg.org/files/1234/1234-h/1234-h.htm">
-  <meta name="dc.creator" content="Test Author">
-</head>
-<body>
-  <h1>Test Document</h1>
-  <p>
-    This is a test document. It contains words.
-    It is only a test document.
-  </p>
-</body>
-"""
+    def make_engine_noise(self):
+        return "grrrrrr"
+```
+
+`src/vehicle_module/engines/hybrid_engine.py`
+```python
+from .base_engine import BaseEngine
 
 
-@pytest.fixture(autouse=True)
-def mock_file(monkeypatch):
-    mock = mock_open(read_data=TEST_DATA)
-    monkeypatch.setattr("builtins.open", mock)
-    return mock
+class HybridEngine(BaseEngine):
+    def __init__(self, acceleration=5, top_speed=40, fuel_type="hybrid"):
+        super().__init__(acceleration, top_speed, fuel_type)
 
+    def make_engine_noise(self):
+        if self.fuel_type == "electric":
+            return "hmmmmmm"
+        else:
+            return "putt putt"
 
-def test_get_content():
-    reader = HTMLReader()
-    content = reader.get_content("dummy_path.html")
-    assert "This is a test document." in content
-    assert "It is only a test document." in content
-
-
-def test_get_metadata():
-    reader = HTMLReader()
-    metadata = reader.get_metadata("dummy_path.html")
-    assert metadata["title"] == "Test Document"
-    assert metadata["author"] == "Test Author"
-    assert metadata["id"] == 1234
+    def switch_mode(self):
+        if self.fuel_type == "electric":
+            self.fuel_type = "gasoline"
+        else:
+            self.fuel_type = "electric"
 
 ```
 
@@ -498,92 +544,127 @@ def test_get_metadata():
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 2: Adding a New Reader
+## Challenge 2: Creating a New Car Component
 
-We have one last file type we haven't added support for yet: Epub. Create a new reader class for
-epub files called `EpubReader` in a file called `readers/epub_reader.py`. You can use the
-`ebooklib` package to read epub files. You can install it with pip:
+In addition to engines, we want to add a new component to our `Car` class: a `Wheel` class that
+represents the wheels of the car.
 
-```bash
-uv add Ebooklib
-```
-
-You can refer to the [package documentation here](https://docs.sourcefabric.org/projects/ebooklib/en/latest/tutorial.html)
-
-::: hint
-
-To get the metadata from an epub file, you can use the `get_metadata` method of the `EpubBook`
-class. Project Gutenberg uses the "Dublin Core" metadata standard, so the namespace is "DC".
-
-Here's an example of how to get the title:
+1. Create a new abstract base class called `BaseWheel` that defines the interface for all wheels. It should have the following properties and methods:
+   - `pressure`: The air pressure in the wheels (in BAR)
+   - `material`: The material of the wheel (e.g., rubber, alloy)
+2. The `BaseWheel` class should implement the following method:
 
 ```python
-book.get_metadata(namespace="DC", name="title")[0][0]
+    def get_handling_score(self):
+        # Ideal pressure is 2.3 BAR, so the score is based off of how far the current pressure is from 2.3.
+        pressure_score = abs(self.pressure - 2.3) / 2.3
+
+        # The handling score is a 50/50 mix of the pressure score and tread depth.
+        handling = (1 - pressure_score) * 0.5 + (self.tread / 10) * 0.5
+
+        # Ensure that handling is between 0 and 3
+        handling = min(3, round(handling * 3))
+
+        return handling
 ```
 
-The `get_metadata` method returns a list of tuples, where the first element is the value and the
-second element is the attributes, so we need to access the first element of the first tuple to get
-the actual title.
-
-The other metadata fields we need are "creator" (author) and "source" (id).
-
-:::
-
-::: hint
-
-To get the content from an epub file, we can iterate over all of the "items" in the book that are
-a document, then use `BeautifulSoup` to extract the text from the HTML content.
-
-```python
-for item in book.get_items_of_type(ebooklib.ITEM_DOCUMENT):
-    soup = BeautifulSoup(item.get_content(), features="html.parser")
-    text = soup.get_text()
-    # Do something with the text
-```
-
-:::
+3. Create two subclasses of `BaseWheel`: `RacingWheel` and `OffRoadWheel`. You can set the default
+  values for pressure and tread in the constructors of these classes.
+4. Create a test file for `src/vehicle_module/wheels` that tests the behavior of the `BaseWheel`.
+  Ensure that "pressure" is a positive floating point number, and that tread is an integer between
+  0 and 10, and that it raises a ValueError if the values are incorrect.
+5. Add tests for `get_handling_score` to ensure that it always returns a value between 0 and 3.
 
 :::::::::::::::: solution
 
+`src/vehicle_module/wheels/base_wheel.py`
 ```python
-import re
-
-from bs4 import BeautifulSoup
-import ebooklib
-
-from textanalysis_tool.readers.base_reader import BaseReader
+from abc import ABC, abstractmethod
 
 
-class EPUBReader(BaseReader):
-    SOURCE_URL_PATTERN = "https://www.gutenberg.org/files/([0-9]+)/[0-9]+-h/[0-9]+-h.htm"
+class BaseWheels(ABC):
+    def __init__(self, pressure, tread):
+        if not isinstance(pressure, (int, float)) or pressure <= 0:
+            raise ValueError("Tire pressure must be a positive number.")
 
-    def read(self, filepath: str) -> ebooklib.epub.EpubBook:
-        book = ebooklib.epub.read_epub(filepath)
-        if not book:
-            raise ValueError("The file could not be parsed as EPUB.")
-        return book
+        if not isinstance(tread, int) or not (1 <= tread <= 10):
+            raise ValueError("Tread must be an integer between 1 and 10.")
 
-    def get_content(self, filepath):
-        book = self.read(filepath)
-        text = ""
-        for section in book.get_items_of_type(ebooklib.ITEM_DOCUMENT):
-            content = section.get_content()
-            soup = BeautifulSoup(content, features="html.parser")
-            text += soup.get_text()
-        return text
+        self.pressure = pressure
+        self.tread = tread
 
-    def get_metadata(self, filepath) -> dict:
-        book = self.read(filepath)
+    def get_handling_score(self):
+        # Ideal pressure is 2.3 BAR, so the score is based off of how far the current pressure is from 2.3.
+        pressure_score = abs(self.pressure - 2.3) / 2.3
 
-        source_url = book.get_metadata(namespace="DC", name="source")[0][0]
-        extracted_id = re.search(self.SOURCE_URL_PATTERN, source_url, re.DOTALL).group(1)
+        # The handling score is a 50/50 mix of the pressure score and tread depth.
+        handling = (1 - pressure_score) * 0.5 + (self.tread / 10) * 0.5
 
-        metadata = {
-            "title": book.get_metadata(namespace="DC", name="title")[0][0],
-            "author": book.get_metadata(namespace="DC", name="creator")[0][0],
-            "extracted_id": int(extracted_id) if extracted_id else None,
-        }
-        return metadata
+        # Ensure that handling is between 0 and 3
+        handling = min(3, round(handling * 3))
+
+        return handling
+
+```
+
+`src/vehicle_module/wheels/racing_wheel.py`
+```python
+from .base_wheel import BaseWheels
+
+class RacingWheel(BaseWheels):
+    def __init__(self, pressure=2.5, tread=8):
+        super().__init__(pressure, tread)
+```
+
+`src/vehicle_module/wheels/off_road_wheel.py`
+```python
+from .base_wheel import BaseWheels
+
+class OffRoadWheel(BaseWheels):
+    def __init__(self, pressure=2.0, tread=10):
+        super().__init__(pressure, tread)
+```
+
+`tests/wheels/test_base_wheel.py`
+```python
+import pytest
+
+from vehicle_module.wheels.base_wheel import BaseWheels
+
+def test_base_wheel_valid_initialization():
+    wheel = BaseWheels(pressure=2.5, tread=8)
+    assert wheel.pressure == 2.5
+    assert wheel.tread == 8
+
+def test_base_wheel_invalid_pressure():
+    with pytest.raises(ValueError):
+        BaseWheels(pressure=-1, tread=5)
+
+    with pytest.raises(ValueError):
+        BaseWheels(pressure=0, tread=5)
+
+    with pytest.raises(ValueError):
+        BaseWheels(pressure="high", tread=5)
+
+def test_base_wheel_invalid_tread():
+    with pytest.raises(ValueError):
+        BaseWheels(pressure=2.5, tread=0)
+
+    with pytest.raises(ValueError):
+        BaseWheels(pressure=2.5, tread=11)
+
+    with pytest.raises(ValueError):
+        BaseWheels(pressure=2.5, tread="deep")
+
+def test_get_handling_score():
+    wheel = BaseWheels(pressure=2.3, tread=10)
+    assert 0 <= wheel.get_handling_score() <= 3
+
+    wheel = BaseWheels(pressure=1.0, tread=5)
+    assert 0 <= wheel.get_handling_score() <= 3
+
+    wheel = BaseWheels(pressure=3.0, tread=1)
+    assert 0 <= wheel.get_handling_score() <= 3
 ```
 
 :::::::::::::::::::::::::
