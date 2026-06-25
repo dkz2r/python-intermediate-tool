@@ -345,10 +345,9 @@ argument. We can fix this by removing the `rpm` argument from the base class met
 
 Re-running `mypy` should now show that this issue has been resolved.
 
-
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 1: Fix a Mypy Error
+## Challenge 1: Fix a Ruff Error
 
 
 
@@ -362,7 +361,7 @@ Re-running `mypy` should now show that this issue has been resolved.
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 2: Fixing Other Mypy Errors
+## Challenge 2: Fix a MyPy Error
 
 :::::::::::::::: solution
 
