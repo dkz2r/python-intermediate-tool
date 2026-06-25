@@ -560,193 +560,222 @@ like `test_vehicle.py`. We can mention this.
 
 :::
 
-
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 1: Write a simple test
+## Challenge: Fix a simple bug
 
-Create a file called `text_utilities.py` in the `src/textanalysis_tool` directory. In this file,
-paste the following function:
+We have a simple bug in our `honk_horn` function. When the string is returned, it always has a
+space at the end, which is not what we want. Update the `test_honk_horn` test to check that the
+string returned has no space at the end, then update the `honk_horn` function to fix the bug.
 
-
-```python
-def create_acronym(phrase: str) -> str:
-    """Create an acronym from a phrase.
-
-    Args:
-        phrase (str): The phrase to create an acronym from.
-
-    Returns:
-        str: The acronym.
-    """
-    if not isinstance(phrase, str):
-        raise TypeError("Phrase must be a string.")
-
-    words = phrase.split()
-    if len(words) == 0:
-        raise ValueError("Phrase must contain at least one word.")
-
-    articles = {"a", "an", "the", "and", "but", "or", "nor", "on", "at", "to", "by", "in"}
-
-    acronym = ""
-    for word in words:
-        if word.lower() not in articles:
-            acronym += word[0].upper()
-
-    return acronym
-```
-
-Create the following test cases for this function:
-
-- A test that checks if the acronym for "As Soon As Possible" is "ASAP" and that the acronym for
-    "For Your Information" is "FYI".
-- A test that checks that the function raises a `TypeError` when the input is not a string.
-- A test that checks that the function raises a `ValueError` when the input is an empty string.
-
-Are there any other edge cases you can think of? Write a test to prove that your edge case is not
-handled by this function as it is currently written.
-
-::: hint
-
-Remember that to use pytest, you need to create a file that starts with `test_` and that the test
-functions need to start with `test_` as well.
-
-:::
-
-::: hint
-
-You can use the `pytest.raises` context manager to check for specific exceptions. For example:
-
-```python
-def test_raises_error():
-    with pytest.raises(FileNotFoundError):
-        read_my_file("non_existent_file.txt")
-```
-
-:::
-
-::: hint
-
-What happens if the phrase contains only articles? For example, "and the or by"?
-
-:::
+Does this change affect any other tests? If so, update those tests as well.
 
 :::::::::::::::: solution
 
-in the `tests` directory, create a file called `test_text_utilities.py`:
+In `test/test_vehicle_module.py`, update the `test_honk_horn` function to the following:
 
 ```python
-import pytest
-
-from textanalysis_tool.text_utilities import create_acronym
-
-
-def test_create_acronym():
-    assert create_acronym("As Soon As Possible") == "ASAP"
-    assert create_acronym("For Your Information") == "FYI"
-
-
-def test_create_acronym_invalid_type():
-    with pytest.raises(TypeError):
-        create_acronym(123)
-
-
-def test_create_acronym_empty_string():
-    with pytest.raises(ValueError):
-        create_acronym("")
-
-
-def test_create_acronym_no_valid_words():
-    with pytest.raises(ValueError):
-        create_acronym("and the or")
-
+def test_honk_horn():
+    assert vehicle_module.horn_noises.honk_horn(2) == "Honk! Honk!" # Remove the space at the end
 ```
 
-Run the tests with `uv run pytest`.
-
-In the `create_acronym` function, we need to add a check after we finish iterating through the
-words to see if the acronym is empty. If it is, we can raise a `ValueError`:
+Then update the `honk_horn` function in `src/vehicle_module/horn_noises.py` to the following:
 
 ```python
-    ...
-
-    if not acronym:
-        raise ValueError("Phrase must contain at least one non-article word.")
-
-    return acronym
+def honk_horn(times=1):
+    if times < 1:
+        raise ValueError("Times must be at least 1")
+    if times > 10:
+        raise ValueError("Times must be at most 10")
+    return ("Honk! " * times).strip()
 ```
 
+If you also have the `test_play_engine_sound` test, this change will result in this test now
+failing. Update the `test_play_engine_sound` function in `test/test_vehicle_module.py` so that it
+now passes by removing the space at the end of the expected string:
+
+```python
+def test_play_engine_sound():
+    assert vehicle_module.engine_noise.play_engine_sound(3000) == "Honk!\nVroom! Engine at 3000 RPM"
+```
 
 :::::::::::::::::::::::::
 :::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-## Challenge 2: Additional Edge Case
+## Challenge: Practice Writing Tests
 
-Try adding a test for another edge case for our Document class, this time for a file that is not
-actually a text file, for example, a binary file or an image file. Then, update the `Document`
-class to make the test pass.
+If you didn't have a chance to add the `play_engine_sound` function from the earlier episode, let's
+do that now. Create a file called `src/vehicle_module/engine_noise.py` and add the following code to it:
+
+```python
+from vehicle_module.horn_noises import honk_horn
+
+
+def play_engine_sound(rpm):
+    return honk_horn(1) + f"\nVroom! Engine at {rpm} RPM"
+```
+
+1. Write a test for this function in `test/test_vehicle_module.py` called `test_play_engine_sound`.
+2. Think of any common edge cases that might break this function, and write tests for those as well.
+3. Update the `play_engine_sound` function to handle those edge cases, and make sure all of your
+     tests still pass.
+
+:::::::::::::::: solution
+
+Some ideas for tests:
+
+```python
+def test_play_engine_sound():
+    assert vehicle_module.engine_noise.play_engine_sound(3000) == "Honk!\nVroom! Engine at 3000 RPM"
+
+def test_play_engine_sound_negative_rpm():
+    with pytest.raises(ValueError):
+        vehicle_module.engine_noise.play_engine_sound(-1000)
+
+def test_play_engine_sound_non_integer_rpm():
+    with pytest.raises(TypeError):
+        vehicle_module.engine_noise.play_engine_sound("Three Thousand")
+```
+
+The updated `play_engine_sound` function could look like this:
+
+```python
+def play_engine_sound(rpm):
+    if not isinstance(rpm, int):
+        raise TypeError("RPM must be an integer")
+    if rpm < 0:
+        raise ValueError("RPM must be a non-negative integer")
+
+    return honk_horn(1) + f"\nVroom! Engine at {rpm} RPM"
+```
+
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge: Test Drive Development - Part 1
+
+Another edge case for the `play_engine_sound` function could be that the parameter `rpm` is 0. This
+is not a failure case - the engine is just not running. We want to update the `play_engine_sound`
+function to handle this case, returning an entirely different string in the case that `rpm` is 0.
+
+Start by writing a test for this case, then update the function to make the test pass.
+
+:::::::::::::::: solution
+
+The test in `test/test_vehicle_module.py` could look something like this:
+
+```python
+def test_play_engine_sound_zero_rpm():
+    assert vehicle_module.engine_noise.play_engine_sound(0) == "Honk!\nThe engine is off"
+```
+
+And the updated function in `src/vehicle_module/engine_noise.py` could look like this:
+
+```python
+def play_engine_sound(rpm):
+    if not isinstance(rpm, int):
+        raise TypeError("RPM must be an integer")
+    if rpm < 0:
+        raise ValueError("RPM must be a non-negative integer")
+
+    if rpm == 0:
+        return honk_horn(1) + "\nThe engine is off"
+
+    return honk_horn(1) + f"\nVroom! Engine at {rpm} RPM"
+```
+
+:::::::::::::::::::::::::
+:::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: challenge
+
+## Challenge: Test Drive Development - Part 2
+
+We give our project to a co-worker and they let us know that the `glyph` property will accept any
+size glyph, which he suggests will break the display of the glyph in the terminal of our final
+project.
+
+We should add a test to our file that tries to monkeypatch in a glyph that is not the correct size,
+and check that the `glyph` property raises a `ValueError` when it is accessed. The glyph must be
+exactly 4 lines of 10 characters each.
+
+1. Create a new test in the `test/test_car.py` file called `test_car_glyph_invalid_size`.
+2. Use the `monkeypatch` fixture to replace the `open` function with a mock function that returns a
+   string that is not 4 lines of 10 characters each.
+3. Ensure that this new test fails when you run `uv run pytest`.
+4. Update the `glyph` property in the `Car` class to raise a `ValueError` if the glyph is not 4
+   lines of 10 characters each.
+5. Run the tests again and ensure that all tests pass.
+
+Use the test we made in the monkey patching section as a starting point.
 
 ::: hint
 
-You can mock a binary file by using the `mock_open` function from the `unittest.mock` module, and
-using the `read_data` parameter to provide binary data like `b'\x00\x01\x02'`.
+Use the `pytest.raises` context manager to check that a `ValueError` is raised when the `glyph`
+property is accessed with an invalid glyph.
 
 :::
 
 ::: hint
 
-In the `Document` class, we need to check if the data read from the file is binary data. The `read`
-method of a file object is clever enough to return binary data as a `bytes` object, so we can check
-if the data in `self._content` is an instance of type `bytes`. If it is, we can raise a
-`ValueError`.
+You can use the `strip` and `splitlines` methods to get a list of lines from the glyph string.
 
+:::
+
+::: hint
+
+The `any` function we talked about earlier can be used with a small generator expression to check
+if any of the lines are not 10 characters long.
+
+As a reminder:
 ```python
-text_data = "This is a test string."
-if isinstance(text_data, bytes):
-    raise ValueError("File is not a valid text file.")
-
-binary_data = b'\x00\x01\x02'
-if isinstance(binary_data, bytes):
-    raise ValueError("File is not a valid text file.")
+any((condition that resolves to True/False) for element in iterable)
 ```
 
 :::
 
 :::::::::::::::: solution
 
-You can create a test that simulates opening a binary file by using the `mock_open` function from
-the `unittest.mock` module. Here's an example of how you might write such a test:
+The test in `test/test_car.py` should look like something this:
 
 ```python
-def test_binary_file(monkeypatch):
-    # Mock a binary file
-    mock = mock_open(read_data=b'\x00\x01\x02')
+def test_car_glyph_invalid_size(my_car, monkeypatch):
+    file_content = """
+1234567890
+123456789
+1234567890
+1234567890
+"""
+    mock = mock_open(read_data=file_content)
     monkeypatch.setattr("builtins.open", mock)
 
     with pytest.raises(ValueError):
-        Document(filepath="binary_file.bin")
+        _ = my_car.glyph
 ```
 
-And then, in the `Document` class, you can check if the data read from the file is binary data like
-this:
+
+And the function in `src/vehicle_module/vehicle.py` should look like this:
 
 ```python
-...
-    def get_content(self, filepath: str) -> str:
-        raw_text = self.read(filepath)
-        if not raw_text:
-            raise ValueError(f"File {filepath} contains no content.")
+    # ... existing code
 
-        if isinstance(raw_text, bytes):
-            raise ValueError(f"File {self.filepath} is not a valid text file.")
+    @property
+    def glyph(self):
+        resource = files(glyph).joinpath(self.glyph_file)  # Get the path to the file in the package
+        with as_file(resource) as path:  # Open the file
+            with open(path, "r", encoding="utf-8") as f:  # Read the file
+                glyph_string = f.read()  # And return the contents of the file
 
-        match = re.search(self.CONTENT_PATTERN, raw_text, re.DOTALL)
-        if match:
-            return match.group(1).strip()
-        raise ValueError(f"File {filepath} is not a valid Project Gutenberg Text file.")
-...
+        # Ensure that the glyph is 4 lines of 10 characters each
+        lines = glyph_string.strip().splitlines()
+        if len(lines) != 4 or any(len(line) != 10 for line in lines):
+            raise ValueError("Glyph must be exactly 4 lines of 10 characters each")
+
+        return glyph_string
 ```
 
 :::::::::::::::::::::::::
