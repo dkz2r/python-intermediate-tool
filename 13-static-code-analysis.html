@@ -412,7 +412,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Static Code Analysis</h1>
-        <p>Last updated on 2026-06-23 |
+        <p>Last updated on 2026-06-26 |
 
         <a href="https://github.com/jonathan-hartman/python-intermediate-tool/edit/main/episodes/13-static-code-analysis.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -516,112 +516,66 @@ for <code>ruff</code> in our <code>pyproject.toml</code> file:</p>
 <span id="cb3-26"><a href="#cb3-26" tabindex="-1" aria-label="code-block-3-26"></a><span class="co"># - "ERA": Remove commented out code</span></span>
 <span id="cb3-27"><a href="#cb3-27" tabindex="-1" aria-label="code-block-3-27"></a><span class="co"># - "RUF": Ruff-specific rules</span></span>
 <span id="cb3-28"><a href="#cb3-28" tabindex="-1" aria-label="code-block-3-28"></a><span class="co"># - "TID": Tidy Imports</span></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1" aria-label="code-block-3-29"></a><span class="dt">select</span> <span class="op">=</span> <span class="op">[</span><span class="st">"E"</span><span class="op">,</span> <span class="st">"W"</span><span class="op">,</span> <span class="st">"F"</span><span class="op">,</span> <span class="st">"I"</span><span class="op">,</span> <span class="st">"B"</span><span class="op">,</span> <span class="st">"PL"</span><span class="op">,</span> <span class="st">"C90"</span><span class="op">,</span> <span class="st">"N"</span><span class="op">,</span> <span class="st">"ERA"</span><span class="op">,</span> <span class="st">"RUF"</span><span class="op">,</span> <span class="st">"TID"</span><span class="op">,</span> <span class="st">"SIM"</span><span class="op">]</span></span>
-<span id="cb3-30"><a href="#cb3-30" tabindex="-1" aria-label="code-block-3-30"></a></span>
-<span id="cb3-31"><a href="#cb3-31" tabindex="-1" aria-label="code-block-3-31"></a><span class="co"># These are Personal preference</span></span>
-<span id="cb3-32"><a href="#cb3-32" tabindex="-1" aria-label="code-block-3-32"></a><span class="co"># D203 - Don't require a space between the docstring and the class or function definition</span></span>
-<span id="cb3-33"><a href="#cb3-33" tabindex="-1" aria-label="code-block-3-33"></a><span class="co"># D212 - The summary of the docstring can go on the line below the triple quotes</span></span>
-<span id="cb3-34"><a href="#cb3-34" tabindex="-1" aria-label="code-block-3-34"></a><span class="dt">ignore</span> <span class="op">=</span> <span class="op">[</span><span class="st">"D203"</span><span class="op">,</span> <span class="st">"D212"</span><span class="op">]</span></span></code></pre>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1" aria-label="code-block-3-29"></a><span class="dt">select</span> <span class="op">=</span> <span class="op">[</span><span class="st">"E"</span><span class="op">,</span> <span class="st">"W"</span><span class="op">,</span> <span class="st">"F"</span><span class="op">,</span> <span class="st">"I"</span><span class="op">,</span> <span class="st">"B"</span><span class="op">,</span> <span class="st">"PL"</span><span class="op">,</span> <span class="st">"C90"</span><span class="op">,</span> <span class="st">"N"</span><span class="op">,</span> <span class="st">"ERA"</span><span class="op">,</span> <span class="st">"RUF"</span><span class="op">,</span> <span class="st">"TID"</span><span class="op">,</span> <span class="st">"SIM"</span><span class="op">]</span></span></code></pre>
 </div>
 <p>This configuration adds a number of additional rules to check for.
-This is the output from running this one on our codebase:</p>
+This is part of the output from running <code>ruff</code> on our
+codebase:</p>
 <pre><code>I001 [*] Import block is un-sorted or un-formatted
- --&gt; src\textanalysis_tool\readers\epub_reader.py:1:1
+ --&gt; src\vehicle_module\car.py:1:1
   |
-1 | / import re
+1 | / from datetime import datetime
 2 | |
-3 | | from bs4 import BeautifulSoup
-4 | | import ebooklib
-5 | |
-6 | | from textanalysis_tool.readers.base_reader import BaseReader
-  | |____________________________________________________________^
+3 | | from .vehicle import Vehicle
+4 | | from .engines.base_engine import BaseEngine
+5 | | from .engines.gas_engine import GasEngine
+  | |_________________________________________^
   |
 help: Organize imports
 
-E501 Line too long (136 &gt; 100)
-  --&gt; src\textanalysis_tool\readers\text_reader.py:10:101
-   |
- 8 | …
- 9 | …)\]"
-10 | …GUTENBERG EBOOK .*? \*\*\*(.*?)\*\*\* END OF THE PROJECT GUTENBERG EBOOK .*? \*\*\*"
-   |                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-11 | …
-12 | …
-   |
-
-I001 [*] Import block is un-sorted or un-formatted
- --&gt; tests\readers\test_html_reader.py:1:1
+F401 [*] `.engines.base_engine.BaseEngine` imported but unused
+ --&gt; src\vehicle_module\car.py:4:34
   |
-1 | / import pytest
-2 | | from unittest.mock import mock_open
-3 | |
-4 | | from textanalysis_tool.readers.html_reader import HTMLReader
-  | |____________________________________________________________^
-5 |
-6 |   TEST_DATA = """
+3 | from .vehicle import Vehicle
+4 | from .engines.base_engine import BaseEngine
+  |                                  ^^^^^^^^^^
+5 | from .engines.gas_engine import GasEngine
   |
-help: Organize imports
+help: Remove unused import: `.engines.base_engine.BaseEngine`
 
-PLR2004 Magic value used in comparison, consider replacing `1234` with a constant variable
-  --&gt; tests\readers\test_html_reader.py:41:30
+E501 Line too long (107 &gt; 100)
+  --&gt; src\vehicle_module\car.py:27:101
    |
-39 |     assert metadata["title"] == "Test Document"
-40 |     assert metadata["author"] == "Test Author"
-41 |     assert metadata["id"] == 1234
-   |                              ^^^^
+26 |     def __str__(self):
+27 |         return f"A {self.color} {self.year} {self.make} {self.model} that runs on {self.engine.fuel_type}."
+   |                                                                                                     ^^^^^^^
+28 |
+29 |     @property
    |
 
-I001 [*] Import block is un-sorted or un-formatted
- --&gt; tests\readers\test_text_reader.py:1:1
+E501 Line too long (110 &gt; 100)
+  --&gt; src\vehicle_module\car.py:44:101
+   |
+43 | class GasolineCar(Car):
+44 |     pass  # For now, a GasolineCar is just a Car, so we don't need to add any additional properties or methods
+   |                                                                                                     ^^^^^^^^^^
+   |
+
+PLR2004 Magic value used in comparison, consider replacing `10` with a constant variable
+ --&gt; src\vehicle_module\horn_noises.py:4:16
   |
-1 | / import pytest
-2 | | from unittest.mock import mock_open
-3 | |
-4 | | from textanalysis_tool.readers.text_reader import TextReader
-  | |____________________________________________________________^
-5 |
-6 |   TEST_DATA = """
+2 |     if times &lt; 1:
+3 |         raise ValueError("Times must be at least 1")
+4 |     if times &gt; 10:
+  |                ^^
+5 |         raise ValueError("Times must be at most 10")
+6 |     return ("Honk! " * times).strip()
   |
-help: Organize imports
 
-PLR2004 Magic value used in comparison, consider replacing `1234` with a constant variable
-  --&gt; tests\readers\test_text_reader.py:40:30
-   |
-38 |     assert metadata["title"] == "Test Document"
-39 |     assert metadata["author"] == "Test Author"
-40 |     assert metadata["id"] == 1234
-   |                              ^^^^
-   |
+...
 
-PLR2004 Magic value used in comparison, consider replacing `1234` with a constant variable
-  --&gt; tests\test_document.py:21:50
-   |
-19 |     assert doc.title == "Test Document"
-20 |     assert doc.author == "Test Author"
-21 |     assert isinstance(doc.id, int) and doc.id == 1234
-   |                                                  ^^^^
-   |
-
-PLR2004 Magic value used in comparison, consider replacing `2` with a constant variable
-  --&gt; tests\test_document.py:26:30
-   |
-24 | def test_line_count():
-25 |     doc = Document(filepath="dummy_path.txt", reader=MockReader())
-26 |     assert doc.line_count == 2
-   |                              ^
-   |
-
-PLR2004 Magic value used in comparison, consider replacing `2` with a constant variable
-  --&gt; tests\test_document.py:31:47
-   |
-29 | def test_get_word_occurrence():
-30 |     doc = Document(filepath="dummy_path.txt", reader=MockReader())
-31 |     assert doc.get_word_occurrence("test") == 2
-   |                                               ^
-   |
-
-Found 9 errors.
-[*] 3 fixable with the `--fix` option.</code></pre>
+Found 12 errors.
+[*] 6 fixable with the `--fix` option.</code></pre>
 <div class="section level3">
 <h3 id="auto-fixing-issues">Auto-fixing Issues<a class="anchor" aria-label="anchor" href="#auto-fixing-issues"></a></h3>
 <p>You notice right away that the end of the message says that 3 of the
@@ -674,10 +628,9 @@ path instead of a directory:</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">BASH<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="ex">uv</span> run ruff check src/textanalysis_tool/document.py</span></code></pre>
+<pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="ex">uv</span> run ruff check src/vehicle_module/car.py</span></code></pre>
 </div>
-<p>It looks like we get six errors, all related to missing
-docstrings.</p>
+<p>You should get several errors related to missing docstrings.</p>
 <div class="section level3">
 <h3 id="what-exactly-is-a-docstring">What exactly is a docstring?<a class="anchor" aria-label="anchor" href="#what-exactly-is-a-docstring"></a></h3>
 <p>A docstring is a special type of comment that is used to document a
@@ -700,19 +653,16 @@ class:</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="kw">def</span> get_word_occurrence(<span class="va">self</span>, word: <span class="bu">str</span>) <span class="op">-&gt;</span> <span class="bu">int</span>:</span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a>    <span class="co">"""</span></span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a><span class="co">    Count the number of occurrences of the given word in the document content.</span></span>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a>    <span class="kw">def</span> paint(<span class="va">self</span>, new_color):</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a>        <span class="co">"""</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a><span class="co">        Paint the car with a new color.</span></span>
 <span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a><span class="co">    Args:</span></span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a><span class="co">        word (str): The word to count occurrences of.</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a><span class="co">        Args:</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a><span class="co">            new_color (str): The new color for the car.</span></span>
 <span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a><span class="co">    Returns:</span></span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a><span class="co">        int: The number of occurrences of the word in the document content.</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a></span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1" aria-label="code-block-9-11"></a><span class="co">    """</span></span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1" aria-label="code-block-9-12"></a></span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1" aria-label="code-block-9-13"></a>    <span class="cf">return</span> <span class="va">self</span>.content.lower().count(word.lower())</span></code></pre>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a><span class="co">        Returns: None</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a><span class="co">        """</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a>        <span class="va">self</span>.color <span class="op">=</span> new_color</span></code></pre>
 </div>
 <p>We can see that the Docstring is made up of different sections:</p>
 <ul><li>A brief summary of what the function does</li>
@@ -727,30 +677,32 @@ returns</li>
 <span class="callout-header">Callout</span>
 <div class="callout-inner">
 <div class="callout-content">
-<p>Docstrings are not interpreted by python, so don’t affect the runtime
-behavior of your code. They are primarily for documentation purposes,
-and can be accessed using the built-in <code>help()</code> function.</p>
+<p>Docstrings are not interpreted by Python, so they don’t affect the
+runtime behavior of your code. They are primarily for documentation
+purposes, and can be accessed using the built-in <code>help()</code>
+function.</p>
 </div>
 </div>
 </div>
 <p>Running the <code>ruff</code> command again shows that we have fixed
 one of the issues in this file.</p>
-<div id="challenge-1-docstrings-for-the-document-class" class="callout challenge">
+<div id="challenge-1-docstrings-for-the-car-class" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-1-docstrings-for-the-document-class" class="callout-inner">
-<h3 class="callout-title">Challenge 1: Docstrings for the Document
-Class</h3>
+<div id="challenge-1-docstrings-for-the-car-class" class="callout-inner">
+<h3 class="callout-title">Challenge 1: Docstrings for the Car Class</h3>
 <div class="callout-content">
-<p>Add a docstring for the <code>document.py</code> module, the
-<code>Document</code> class, and the <code>__init__</code> method of the
-<code>Document</code> class. Make sure to include a brief summary, as
-well as <code>Args</code> and <code>Returns</code> sections where
+<p>Add a docstring for the <code>car.py</code> file, the
+<code>Car</code> class, and the <code>__init__</code> method of the
+<code>Car</code> class. Make sure to include a brief summary, as well as
+<code>Args</code> and <code>Returns</code> sections where
 appropriate.</p>
 <p>Refer to the <a href="https://google.github.io/styleguide/pyguide.html#s3.8.2-comments-in-modules" class="external-link">Google
 Style Guide - Comments in Modules</a> section for guidance.</p>
+<p>See if you can get <code>ruff</code> to report no issues for this
+file.</p>
 </div>
 </div>
 </div>
@@ -790,161 +742,74 @@ in.</p>
 </h3>
 <pre class="sourceCode bash" tabindex="0"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="ex">uv</span> run mypy src</span></code></pre>
 </div>
+<p>Nothing… Ok, I guess we were perfect! Except <code>mypy</code>
+doesn’t check for type hints in files that don’t have any. Let’s update
+our <code>pyproject.toml</code> file to tell <code>mypy</code> to check
+all files, even if they don’t have any type hints.</p>
+<div class="codewrapper sourceCode" id="cb12">
+<h3 class="code-label">TOML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode toml" tabindex="0"><code class="sourceCode toml"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="kw">[tool.mypy]</span></span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a><span class="co"># Check all files, even if they don't have any type hints</span></span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a><span class="dt">check_untyped_defs</span> <span class="op">=</span> <span class="cn">true</span></span></code></pre>
+</div>
 <p>Your output might look something like this:</p>
-<pre><code>src\textanalysis_tool\readers\html_reader.py:28: error: Item "None" of "PageElement | None" has no attribute "find_next_siblings"  [union-attr]
-src\textanalysis_tool\readers\html_reader.py:40: error: Return type "str" of "get_metadata" incompatible with return type "dict[Any, Any]" in supertype "textanalysis_tool.readers.base_reader.BaseReader"  [override]
-src\textanalysis_tool\readers\html_reader.py:43: error: Value of type "PageElement | None" is not indexable  [index]
-src\textanalysis_tool\readers\html_reader.py:44: error: Value of type "PageElement | None" is not indexable  [index]
-src\textanalysis_tool\readers\html_reader.py:45: error: Value of type "PageElement | None" is not indexable  [index]
-src\textanalysis_tool\readers\html_reader.py:47: error: Item "None" of "Match[str] | None" has no attribute "group"  [union-attr]
-src\textanalysis_tool\readers\html_reader.py:49: error: Incompatible return value type (got "dict[str, Any]", expected "str")  [return-value]
-src\textanalysis_tool\readers\epub_reader.py:3: error: Skipping analyzing "ebooklib": module is installed, but missing library stubs or py.typed marker  [import-untyped]
-src\textanalysis_tool\readers\epub_reader.py:3: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
-src\textanalysis_tool\readers\epub_reader.py:31: error: Item "None" of "Match[str] | None" has no attribute "group"  [union-attr]
-Found 9 errors in 2 files (checked 7 source files)</code></pre>
+<pre><code>src\vehicle_module\engines\hybrid_engine.py:8: error: Signature of "make_engine_noise" incompatible with supertype "vehicle_module.engines.base_engine.BaseEngine"  [override]
+src\vehicle_module\engines\hybrid_engine.py:8: note:      Superclass:
+src\vehicle_module\engines\hybrid_engine.py:8: note:          def make_engine_noise(self, rpm: Any) -&gt; Any
+src\vehicle_module\engines\hybrid_engine.py:8: note:      Subclass:
+src\vehicle_module\engines\hybrid_engine.py:8: note:          def make_engine_noise(self) -&gt; Any
+src\vehicle_module\engines\gas_engine.py:8: error: Signature of "make_engine_noise" incompatible with supertype "vehicle_module.engines.base_engine.BaseEngine"  [override]
+src\vehicle_module\engines\gas_engine.py:8: note:      Superclass:
+src\vehicle_module\engines\gas_engine.py:8: note:          def make_engine_noise(self, rpm: Any) -&gt; Any
+src\vehicle_module\engines\gas_engine.py:8: note:      Subclass:
+src\vehicle_module\engines\gas_engine.py:8: note:          def make_engine_noise(self) -&gt; Any
+src\vehicle_module\engines\electric_engine.py:8: error: Signature of "make_engine_noise" incompatible with supertype "vehicle_module.engines.base_engine.BaseEngine"  [override]
+src\vehicle_module\engines\electric_engine.py:8: note:      Superclass:
+src\vehicle_module\engines\electric_engine.py:8: note:          def make_engine_noise(self, rpm: Any) -&gt; Any
+src\vehicle_module\engines\electric_engine.py:8: note:      Subclass:
+src\vehicle_module\engines\electric_engine.py:8: note:          def make_engine_noise(self) -&gt; Any
+src\vehicle_module\engines\diesel_engine.py:8: error: Signature of "make_engine_noise" incompatible with supertype "vehicle_module.engines.base_engine.BaseEngine"  [override]
+src\vehicle_module\engines\diesel_engine.py:8: note:      Superclass:
+src\vehicle_module\engines\diesel_engine.py:8: note:          def make_engine_noise(self, rpm: Any) -&gt; Any
+src\vehicle_module\engines\diesel_engine.py:8: note:      Subclass:
+src\vehicle_module\engines\diesel_engine.py:8: note:          def make_engine_noise(self) -&gt; Any
+src\vehicle_module\car.py:10: error: Incompatible default for parameter "engine" (default has type "None", parameter has type "BaseEngine")  [assignment]
+src\vehicle_module\car.py:10: note: PEP 484 prohibits implicit Optional. Accordingly, mypy has changed its default to no_implicit_optional=True
+src\vehicle_module\car.py:10: note: Use https://github.com/hauntsaninja/no_implicit_optional to automatically upgrade your codebase
+src\vehicle_module\car.py:34: error: Missing positional argument "rpm" in call to "make_engine_noise" of "BaseEngine"  [call-arg]
+Found 6 errors in 5 files (checked 14 source files)</code></pre>
 <p>These errors are slightly more complex than the ones reported by
 <code>ruff</code>, but they are also very useful, as the often point to
 places where our code might not handle all of the possible cases
 correctly.</p>
+<p>For example, what these errors point out is that in the BaseEngine
+class, the <code>make_engine_noise</code> method takes an
+<code>rpm</code> argument, but in the subclasses, we have overridden
+this method without including the <code>rpm</code> argument. This is a
+problem, as it means that the subclasses are not directly compatible
+with the base class, and this could lead to unexpected behavior if we
+try to use a subclass in place of the base class.</p>
 <div class="section level3">
 <h3 id="fixing-mypy-errors">Fixing Mypy Errors<a class="anchor" aria-label="anchor" href="#fixing-mypy-errors"></a></h3>
 <p>MyPy Errors can be a bit tricky to understand, as they often involve
 a more complex analysis of the code than <code>ruff</code>.</p>
-<p>For example, the first error is telling us that we are trying to
-access the <code>find_next_siblings</code> method on an object that
-could be <code>None</code>. This is a potential bug, as if the object is
-<code>None</code>, this will raise an <code>AttributeError</code> at
-runtime.</p>
-<p>Looking at the project code, the issue is in the
-<code>HTMLReader</code> class, in the <code>get_content</code>
-method:</p>
-<div class="codewrapper sourceCode" id="cb13">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a>    <span class="kw">def</span> get_content(<span class="va">self</span>, filepath) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a>        soup <span class="op">=</span> <span class="va">self</span>.read(filepath)</span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a></span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a>        <span class="co"># Find the first h1 tag (The book title)</span></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1" aria-label="code-block-13-5"></a>        title_h1 <span class="op">=</span> soup.find(<span class="st">"h1"</span>)</span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1" aria-label="code-block-13-6"></a></span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1" aria-label="code-block-13-7"></a>        <span class="co"># Collect all the content after the first h1</span></span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1" aria-label="code-block-13-8"></a>        content <span class="op">=</span> []</span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1" aria-label="code-block-13-9"></a>        <span class="cf">for</span> element <span class="kw">in</span> title_h1.find_next_siblings():</span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1" aria-label="code-block-13-10"></a>            text <span class="op">=</span> element.get_text(strip<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb13-11"><a href="#cb13-11" tabindex="-1" aria-label="code-block-13-11"></a></span>
-<span id="cb13-12"><a href="#cb13-12" tabindex="-1" aria-label="code-block-13-12"></a>            <span class="co"># Stop early if we hit this text, which indicate the end of the book</span></span>
-<span id="cb13-13"><a href="#cb13-13" tabindex="-1" aria-label="code-block-13-13"></a>            <span class="cf">if</span> <span class="st">"END OF THE PROJECT GUTENBERG EBOOK"</span> <span class="kw">in</span> text:</span>
-<span id="cb13-14"><a href="#cb13-14" tabindex="-1" aria-label="code-block-13-14"></a>                <span class="cf">break</span></span>
-<span id="cb13-15"><a href="#cb13-15" tabindex="-1" aria-label="code-block-13-15"></a></span>
-<span id="cb13-16"><a href="#cb13-16" tabindex="-1" aria-label="code-block-13-16"></a>            <span class="cf">if</span> text:</span>
-<span id="cb13-17"><a href="#cb13-17" tabindex="-1" aria-label="code-block-13-17"></a>                content.append(text)</span>
-<span id="cb13-18"><a href="#cb13-18" tabindex="-1" aria-label="code-block-13-18"></a></span>
-<span id="cb13-19"><a href="#cb13-19" tabindex="-1" aria-label="code-block-13-19"></a>        <span class="cf">return</span> <span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>.join(content)</span></code></pre>
-</div>
-<p>The <code>soup.find("h1")</code> call will return <code>None</code>
-if no <code>h1</code> tag is found in the HTML document. We should
-probably add a check for this case and raise a more informative error
-message.</p>
-<div class="codewrapper sourceCode" id="cb14">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a>    <span class="kw">def</span> get_content(<span class="va">self</span>, filepath) <span class="op">-&gt;</span> <span class="bu">dict</span>:</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a>        soup <span class="op">=</span> <span class="va">self</span>.read(filepath)</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a>        <span class="co"># Find the first h1 tag (The book title)</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1" aria-label="code-block-14-5"></a>        title_h1 <span class="op">=</span> soup.find(<span class="st">"h1"</span>)</span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1" aria-label="code-block-14-6"></a>        <span class="cf">if</span> title_h1 <span class="kw">is</span> <span class="va">None</span>:</span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1" aria-label="code-block-14-7"></a>            <span class="cf">raise</span> <span class="pp">ValueError</span>(<span class="ss">f"No &lt;h1&gt; tag found in the HTML document: </span><span class="sc">{</span>filepath<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1" aria-label="code-block-14-8"></a></span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1" aria-label="code-block-14-9"></a>        <span class="co"># Collect all the content after the first h1</span></span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1" aria-label="code-block-14-10"></a>        content <span class="op">=</span> []</span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1" aria-label="code-block-14-11"></a>        <span class="cf">for</span> element <span class="kw">in</span> title_h1.find_next_siblings():</span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1" aria-label="code-block-14-12"></a>            text <span class="op">=</span> element.get_text(strip<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1" aria-label="code-block-14-13"></a></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1" aria-label="code-block-14-14"></a>            <span class="co"># Stop early if we hit this text, which indicate the end of the book</span></span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1" aria-label="code-block-14-15"></a>            <span class="cf">if</span> <span class="st">"END OF THE PROJECT GUTENBERG EBOOK"</span> <span class="kw">in</span> text:</span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1" aria-label="code-block-14-16"></a>                <span class="cf">break</span></span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1" aria-label="code-block-14-17"></a></span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1" aria-label="code-block-14-18"></a>            <span class="cf">if</span> text:</span>
-<span id="cb14-19"><a href="#cb14-19" tabindex="-1" aria-label="code-block-14-19"></a>                content.append(text)</span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1" aria-label="code-block-14-20"></a></span>
-<span id="cb14-21"><a href="#cb14-21" tabindex="-1" aria-label="code-block-14-21"></a>        <span class="cf">return</span> <span class="st">"</span><span class="ch">\n\n</span><span class="st">"</span>.join(content)</span></code></pre>
-</div>
-<div id="callout2" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<span class="callout-header">Callout</span>
-<div class="callout-inner">
-<div class="callout-content">
-<p>Note that we don’t have to actually change the code in the for loop,
-as <code>mypy</code> is smart enough to understand that if
-<code>title_h1</code> is none, then the <code>ValueError</code> will be
-raised, and the code following it will not be executed.</p>
-</div>
-</div>
-</div>
-<div id="challenge-1-fix-a-mypy-error" class="callout challenge">
+<p>For this first issue, we can zero in on the <code>BaseEngine</code>
+class and the <code>make_engine_noise</code> method. We can see that the
+method takes an <code>rpm</code> argument, but in the subclasses, don’t
+ever use this argument. We can fix this by removing the <code>rpm</code>
+argument from the base class method.</p>
+<p>Re-running <code>mypy</code> should now show that this issue has been
+resolved.</p>
+<div id="challenge-1-fix-a-ruff-error" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-1-fix-a-mypy-error" class="callout-inner">
-<h3 class="callout-title">Challenge 1: Fix a Mypy Error</h3>
+<div id="challenge-1-fix-a-ruff-error" class="callout-inner">
+<h3 class="callout-title">Challenge 1: Fix a Ruff Error</h3>
 <div class="callout-content">
-<p>Another error we get is related to the <code>get_metadata</code>
-method in the same class:</p>
-<pre><code>src\textanalysis_tool\readers\html_reader.py:45: error: Value of type "PageElement | None" is not indexable  [index]
-src\textanalysis_tool\readers\html_reader.py:46: error: Value of type "PageElement | None" is not indexable  [index]
-src\textanalysis_tool\readers\html_reader.py:47: error: Value of type "PageElement | None" is not indexable  [index]</code></pre>
-<p>Why is this error being reported? What can we do to fix it? (There’s
-actually two issues here! One is a more specific
-<code>BeautifulSoup</code> issue, and the other is a more general Python
-issue.)</p>
-</div>
-</div>
-</div>
-<div id="accordionHint1" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint1" aria-expanded="false" aria-controls="collapseHint1">
-  <h4 class="accordion-header" id="headingHint1"> Give me a hint </h4>
-</button>
-<div id="collapseHint1" class="accordion-collapse collapse" aria-labelledby="headingHint1" data-bs-parent="#accordionHint1">
-<div class="accordion-body">
-<p>Values in python dictionaries can be accessed in two ways:</p>
-<ul><li>Using the indexing syntax: <code>value = my_dict[key]</code>
-</li>
-<li>Using the <code>get</code> method:
-<code>value = my_dict.get(key)</code>
-</li>
-</ul><p>The indexing syntax will raise a <code>KeyError</code> if the key is
-not found in the dictionary, while the <code>get</code> method will
-return <code>None</code> (or a default value if provided) if the key is
-not found.</p>
-</div>
-</div>
-</div>
-</div>
-<div id="accordionHint2" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button hint-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHint2" aria-expanded="false" aria-controls="collapseHint2">
-  <h4 class="accordion-header" id="headingHint2"> Give me a hint </h4>
-</button>
-<div id="collapseHint2" class="accordion-collapse collapse" aria-labelledby="headingHint2" data-bs-parent="#accordionHint2">
-<div class="accordion-body">
-<p>There are several kinds of values that can be returned from a
-<code>BeautifulSoup.find</code> call, and we can’t really be certain of
-which type we will get back. It could be a <code>Tag</code>, a
-<code>NavigableString</code>, a <code>PageElement</code>, or
-<code>None</code>.</p>
-<p>There is an alternative method called <code>select_one</code> that
-can be used to find elements using plain CSS selectors, and it always
-returns either a <code>Tag</code> or <code>None</code>, which lets us
-avoid some of the complexity of dealing with multiple possible
-types.</p>
-<p><code>soup.find("meta", {"name": "dc.title"})</code> can be replaced
-with <code>soup.select_one('meta[name="dc.title"]')</code></p>
-</div>
+
 </div>
 </div>
 </div>
@@ -955,41 +820,20 @@ with <code>soup.select_one('meta[name="dc.title"]')</code></p>
 </button>
 <div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
-<p>MyPy is pointing out that we are using the indexing syntax to access
-values in a dictionary, but given the way we are pulling the data out of
-the text, it is possible that the key might not even be present in the
-dictionary.</p>
-<p>We can fix this by using the <code>get</code> method instead, and
-providing a default value of <code>None</code> if the key is not
-found.</p>
-<div class="codewrapper sourceCode" id="cb16">
-<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" tabindex="-1" aria-label="code-block-16-1"></a>title_element <span class="op">=</span> soup.select_one(<span class="st">'meta[name="dc.title"]'</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" tabindex="-1" aria-label="code-block-16-2"></a>title <span class="op">=</span> title_element.get(<span class="st">"content"</span>) <span class="cf">if</span> title_element <span class="cf">else</span> <span class="st">"Unknown Title"</span></span>
-<span id="cb16-3"><a href="#cb16-3" tabindex="-1" aria-label="code-block-16-3"></a></span>
-<span id="cb16-4"><a href="#cb16-4" tabindex="-1" aria-label="code-block-16-4"></a>author_element <span class="op">=</span> soup.select_one(<span class="st">'meta[name="dc.creator"]'</span>)</span>
-<span id="cb16-5"><a href="#cb16-5" tabindex="-1" aria-label="code-block-16-5"></a>author <span class="op">=</span> author_element.get(<span class="st">"content"</span>) <span class="cf">if</span> author_element <span class="cf">else</span> <span class="st">"Unknown Author"</span></span>
-<span id="cb16-6"><a href="#cb16-6" tabindex="-1" aria-label="code-block-16-6"></a></span>
-<span id="cb16-7"><a href="#cb16-7" tabindex="-1" aria-label="code-block-16-7"></a>url_element <span class="op">=</span> soup.select_one(<span class="st">'meta[name="dcterms.source"]'</span>)</span>
-<span id="cb16-8"><a href="#cb16-8" tabindex="-1" aria-label="code-block-16-8"></a>url <span class="op">=</span> url_element.get(<span class="st">"content"</span>) <span class="cf">if</span> url_element <span class="cf">else</span> <span class="st">"Unknown URL"</span></span></code></pre>
+
 </div>
 </div>
 </div>
 </div>
-</div>
-<div id="challenge-2-fixing-other-mypy-errors" class="callout challenge">
+<div id="challenge-2-fix-a-mypy-error" class="callout challenge">
 <div class="callout-square">
 <i class="callout-icon" data-feather="zap"></i>
 </div>
 <span class="callout-header">Challenge</span>
-<div id="challenge-2-fixing-other-mypy-errors" class="callout-inner">
-<h3 class="callout-title">Challenge 2: Fixing Other Mypy Errors</h3>
+<div id="challenge-2-fix-a-mypy-error" class="callout-inner">
+<h3 class="callout-title">Challenge 2: Fix a MyPy Error</h3>
 <div class="callout-content">
-<p>You should have at least one other mypy error in the
-<code>HTMLReader</code> class. Can you find it and fix it? Do you have
-any other mypy errors in other parts of the codebase? If so, can you fix
-those as well?</p>
+
 </div>
 </div>
 </div>
@@ -1000,7 +844,7 @@ those as well?</p>
 </button>
 <div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
-<p>It will depend on your code!</p>
+
 </div>
 </div>
 </div>
@@ -1087,8 +931,8 @@ any links that you are not going to use.
   "url": "https://jonathan-hartman.github.io/python-intermediate-tool/13-static-code-analysis.html",
   "identifier": "https://jonathan-hartman.github.io/python-intermediate-tool/13-static-code-analysis.html",
   "dateCreated": "2025-08-23",
-  "dateModified": "2026-06-23",
-  "datePublished": "2026-06-23"
+  "dateModified": "2026-06-26",
+  "datePublished": "2026-06-26"
 }
 
   </script><script>
