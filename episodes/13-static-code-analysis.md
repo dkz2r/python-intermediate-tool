@@ -350,9 +350,6 @@ Re-running `mypy` should now show that this issue has been resolved.
 ## Challenge 1: Fix a Ruff Error
 
 
-
-:::
-
 :::::::::::::::: solution
 
 
