@@ -17,6 +17,16 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
+::: prereq
+
+Going into this episode we are going to assume that you have the following:
+
+- A GitHub account
+- A local installation of Git that is authenticated with your GitHub account
+- An account on TestPyPI with 2-Factor Authentication enabled
+
+:::
+
 ## Building Locally
 
 Since we have been using `uv` all along and have our `pyproject.toml` set up, building our package
@@ -30,17 +40,29 @@ You should see some output that looks like this:
 
 ```
 Building source distribution...
-Building wheel from source distribution...
-Successfully built dist\textanalysis_tool-0.1.0.tar.gz
-Successfully built dist\textanalysis_tool-0.1.0-py3-none-any.whl
+running egg_info
+creating src\vehicle_module.egg-info
+writing src\vehicle_module.egg-info\PKG-INFO
+writing dependency_links to src\vehicle_module.egg-info\dependency_links.txt
+writing top-level names to src\vehicle_module.egg-info\top_level.txt
+writing manifest file 'src\vehicle_module.egg-info\SOURCES.txt'
+reading manifest file 'src\vehicle_module.egg-info\SOURCES.txt'
+
+... Many lines of output ...
+
+adding 'vehicle_module_demo-0.1.0.dist-info/top_level.txt'
+adding 'vehicle_module_demo-0.1.0.dist-info/RECORD'
+removing build\bdist.win-amd64\wheel
+Successfully built dist\vehicle_module_demo-0.1.0.tar.gz
+Successfully built dist\vehicle_module_demo-0.1.0-py3-none-any.whl
 ```
 
 And a new directory called `dist/` should appear in your project folder. Inside that directory,
 you should see two files:
 
-- `textanalysis_tool-0.1.0-py3-none-any.whl`: This is the wheel file, which is a built package
+- `vehicle_module_demo-0.1.0-py3-none-any.whl`: This is the wheel file, which is a built package
    that can be installed.
-- `textanalysis_tool-0.1.0.tar.gz`: This is the source distribution, which contains the source code
+- `vehicle_module_demo-0.1.0.tar.gz`: This is the source distribution, which contains the source code
    of your package.
 
 ### What Exactly are these files?
@@ -112,7 +134,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: textanalysis-tool
+        name: vehicle_module_demo
         path: dist/
 
     # Create GitHub Release with artifacts
@@ -203,7 +225,7 @@ The Release can be found by clicking on the "Releases" link on the right side of
 repository page. You should see a new release with the tag `0.1.0`, and the built package files
 attached as assets.
 
-Finally, the package can be found on TestPyPI by going to https://test.pypi.org/project/textanalysis-tool-{my-name}/.
+Finally, the package can be found on TestPyPI by going to https://test.pypi.org/project/vehicle-module-{my-name}/.
 
 ## Installing our package from TestPyPI
 
@@ -222,14 +244,14 @@ uv activate
 Then install our package from TestPyPI using pip:
 
 ```bash
-uv pip install --index-url https://test.pypi.org/simple/ textanalysis-tool-{my-name}
+uv pip install --index-url https://test.pypi.org/simple/ vehicle-module-{my-name}
 ```
 
 You should see output indicating that pip is downloading and installing our package. Once the
 installation is complete, you can verify that the package is installed by running:
 
 ```bash
-uv pip show textanalysis-tool-{my-name}
+uv pip show vehicle-module-{my-name}
 ```
 
 ## Continuous Integration / Continuous Deployment (CI/CD)
@@ -292,7 +314,7 @@ jobs:
     - name: Upload Artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: textanalysis-tool
+        name: vehicle-module
         path: dist/
 
     # Create GitHub Release with artifacts
